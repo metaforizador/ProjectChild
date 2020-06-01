@@ -8,7 +8,6 @@ public class AnswerData : Answer { }
 [System.Serializable]
 public class Answer : ScriptableObject {
 
-    public new string name;
     public string text;
 
 }
