@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class DialogueScript : MonoBehaviour
@@ -8,11 +9,14 @@ public class DialogueScript : MonoBehaviour
     private TextMeshProUGUI question;
 
     [SerializeField]
-    private GameObject answerListView, answerButtonPrefab;
-    
+    private GameObject answerListView;
+
+    [SerializeField]
+    private Button answerButtonPrefab;
+
     void Start() {
         for (int i = 0; i < 5; i++) {
-            GameObject button = Instantiate(answerButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            Button button = Instantiate(answerButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
             // Add button to the list and set the scale to 1 (parent.transform changes it to 0,6)
             button.transform.parent = answerListView.transform;
@@ -20,10 +24,13 @@ public class DialogueScript : MonoBehaviour
 
             // Set text to answer button
             button.GetComponentInChildren<TextMeshProUGUI>().text = "Answer: " + i;
+
+            // Set on click listener to the button
+            button.onClick.AddListener(() => answerClicked());
         }
     }
 
-    void Update() {
-        
+    void answerClicked() {
+        Debug.Log("You have clicked the button!");
     }
 }

@@ -418,7 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   question: {fileID: 4656141937823107608}
   answerListView: {fileID: 3279512784395711710}
-  answerButtonPrefab: {fileID: 5213288774062009117, guid: 3262db225ec569543867da529c8ee108,
+  answerButtonPrefab: {fileID: 7090141678139661471, guid: 3262db225ec569543867da529c8ee108,
     type: 3}
 --- !u!1 &4656141937823107614
 GameObject:
@@ -800,7 +800,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 295.9, y: -114.12}
-  m_SizeDelta: {x: 20, y: 198.3493}
+  m_SizeDelta: {x: 19.99992, y: 198.3493}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5475400215538417502
 CanvasRenderer:
@@ -823,7 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -859,10 +859,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.5647059, g: 0.5647059, b: 0.5647059, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
