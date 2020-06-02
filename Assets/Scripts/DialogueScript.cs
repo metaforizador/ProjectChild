@@ -43,7 +43,7 @@ public class DialogueScript : MonoBehaviour
         }
 
         // Delay for testing purposes
-        Invoke("DelayStart", 2f);
+        Invoke("DelayStart", 1f);
     }
 
     void DelayStart() {
