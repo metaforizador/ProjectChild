@@ -31,8 +31,7 @@ public class DialogueScript : MonoBehaviour
             // Set on click listener to the button
             button.onClick.AddListener(() => AnswerClicked());
         }
-
-        StartTypingSentence();
+        Helper.Instance.WriteOutText(questionText, question);
     }
 
     void AnswerClicked() {
