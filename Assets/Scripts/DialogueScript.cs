@@ -37,32 +37,4 @@ public class DialogueScript : MonoBehaviour
     void AnswerClicked() {
         Debug.Log("You have clicked the button!");
     }
-
-    void StartTypingSentence() {
-        // Start drawing text one letter at a time
-        StartCoroutine(TypeSentence());
-    }
-
-    IEnumerator TypeSentence() {
-        question.text = "";
-        foreach (char letter in questionText.ToCharArray()) {
-            question.text += letter;
-
-            // If all the letters are written, sentence is complete
-            if (question.text.Length == questionText.Length)
-                ShowAnswers();
-
-            float writeSpeed = 0.05f;
-
-            // If letter is something which requires little "pause", wait a little bit longer
-            if (letter.Equals(',') || letter.Equals('.') || letter.Equals('?') || letter.Equals('!'))
-                writeSpeed = 0.3f;
-
-            yield return new WaitForSeconds(writeSpeed);
-        }
-    }
-
-    void ShowAnswers() {
-
-    }
 }
