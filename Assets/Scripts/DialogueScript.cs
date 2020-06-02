@@ -10,10 +10,15 @@ public class DialogueScript : MonoBehaviour
     private TextMeshProUGUI questionView;
 
     [SerializeField]
-    private GameObject answerListView;
+    private GameObject answerListView, answersObject;
 
     [SerializeField]
     private Button answerButtonPrefab;
+
+    [SerializeField]
+    private float answersYPosition;
+
+    public LeanTweenType tweenType;
 
     private string question = "Hmm, so you lived before the war. What was it like, mom?";
 
@@ -40,6 +45,6 @@ public class DialogueScript : MonoBehaviour
     }
 
     void ShowAnswers() {
-        Debug.Log("Writing complete");
+        LeanTween.moveLocalY(answersObject, answersYPosition, 0.5f).setEase(tweenType);
     }
 }

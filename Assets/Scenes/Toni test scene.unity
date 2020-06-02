@@ -121,18 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &1222228677 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4656141937823107608, guid: 75a7daf1ffc4f5041b4361e9f496836e,
-    type: 3}
-  m_PrefabInstance: {fileID: 4656141938242335420}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1242756602
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,16 +303,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2200328785664737359, guid: 75a7daf1ffc4f5041b4361e9f496836e,
-        type: 3}
-      propertyPath: question
-      value: 
-      objectReference: {fileID: 1222228677}
-    - target: {fileID: 2200328785664737359, guid: 75a7daf1ffc4f5041b4361e9f496836e,
-        type: 3}
-      propertyPath: questionView
-      value: 
-      objectReference: {fileID: 1222228677}
     - target: {fileID: 3454634722743893266, guid: 75a7daf1ffc4f5041b4361e9f496836e,
         type: 3}
       propertyPath: m_AnchorMax.x
