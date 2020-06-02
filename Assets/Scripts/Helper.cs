@@ -18,33 +18,37 @@ public class Helper : MonoBehaviour
         }
     }
 
+    // Writing complete method
+    public delegate void WritingComplete();
+    private float writeSpeed = 0.05f;
+    private float writeSpeedLittlePause = 0.3f;
 
-    // Write out text
-    private TextMeshProUGUI textView;
-    private string textToWrite;
-
-    public void WriteOutText(string textToWrite, TextMeshProUGUI textView) {
-        this.textToWrite = textToWrite;
-        this.textView = textView;
-
-        StartCoroutine(TypeSentence());
+    /// <summary>
+    /// Writes out text 1 letter at a time.
+    /// </summary>
+    /// <param name="textToWrite">Text to write on the text view</param>
+    /// <param name="textView">Text view where to write</param>
+    /// <param name="methodToCall">Method to call after the writing is complete</param>
+    public void WriteOutText(string textToWrite, TextMeshProUGUI textView, WritingComplete methodToCall) {
+        StartCoroutine(TypeSentence(textToWrite, textView, methodToCall));
     }
 
-    IEnumerator TypeSentence() {
+    private IEnumerator TypeSentence(string textToWrite, TextMeshProUGUI textView, WritingComplete methodToCall) {
         textView.text = "";
         foreach (char letter in textToWrite.ToCharArray()) {
             textView.text += letter;
 
             // If all the letters are written, sentence is complete
-            //if (textView.text.Length == textToWrite.Length)
+            if (textView.text.Length == textToWrite.Length)
+                methodToCall();
 
-            float writeSpeed = 0.05f;
+            float speedToWrite = this.writeSpeed;
 
             // If letter is something which requires little "pause", wait a little bit longer
             if (letter.Equals(',') || letter.Equals('.') || letter.Equals('?') || letter.Equals('!'))
-                writeSpeed = 0.3f;
+                speedToWrite = this.writeSpeedLittlePause;
 
-            yield return new WaitForSeconds(writeSpeed);
+            yield return new WaitForSeconds(speedToWrite);
         }
     }
 }

@@ -320,6 +320,11 @@ PrefabInstance:
       propertyPath: question
       value: 
       objectReference: {fileID: 1222228677}
+    - target: {fileID: 2200328785664737359, guid: 75a7daf1ffc4f5041b4361e9f496836e,
+        type: 3}
+      propertyPath: questionView
+      value: 
+      objectReference: {fileID: 1222228677}
     - target: {fileID: 3454634722743893266, guid: 75a7daf1ffc4f5041b4361e9f496836e,
         type: 3}
       propertyPath: m_AnchorMax.x

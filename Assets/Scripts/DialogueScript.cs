@@ -7,7 +7,7 @@ public class DialogueScript : MonoBehaviour
 {
 
     [SerializeField]
-    private TextMeshProUGUI question;
+    private TextMeshProUGUI questionView;
 
     [SerializeField]
     private GameObject answerListView;
@@ -15,7 +15,7 @@ public class DialogueScript : MonoBehaviour
     [SerializeField]
     private Button answerButtonPrefab;
 
-    private string questionText = "Hmm, so you lived before the war. What was it like, mom?";
+    private string question = "Hmm, so you lived before the war. What was it like, mom?";
 
     void Start() {
         for (int i = 0; i < 5; i++) {
@@ -31,10 +31,15 @@ public class DialogueScript : MonoBehaviour
             // Set on click listener to the button
             button.onClick.AddListener(() => AnswerClicked());
         }
-        Helper.Instance.WriteOutText(questionText, question);
+
+        Helper.Instance.WriteOutText(question, questionView, ShowAnswers);
     }
 
     void AnswerClicked() {
         Debug.Log("You have clicked the button!");
+    }
+
+    void ShowAnswers() {
+        Debug.Log("Writing complete");
     }
 }
