@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -14,6 +15,8 @@ public class DialogueScript : MonoBehaviour
     [SerializeField]
     private Button answerButtonPrefab;
 
+    private string questionText = "Hmm, did you live before the war. What was it like, mom?";
+
     void Start() {
         for (int i = 0; i < 5; i++) {
             Button button = Instantiate(answerButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -26,11 +29,41 @@ public class DialogueScript : MonoBehaviour
             button.GetComponentInChildren<TextMeshProUGUI>().text = "Answer: " + i;
 
             // Set on click listener to the button
-            button.onClick.AddListener(() => answerClicked());
+            button.onClick.AddListener(() => AnswerClicked());
+        }
+
+        StartTypingSentence();
+    }
+
+    void AnswerClicked() {
+        Debug.Log("You have clicked the button!");
+    }
+
+    void StartTypingSentence() {
+        // Start drawing text one letter at a time
+        StartCoroutine(TypeSentence());
+    }
+
+    IEnumerator TypeSentence() {
+        question.text = "";
+        foreach (char letter in questionText.ToCharArray()) {
+            question.text += letter;
+
+            // If all the letters are written, sentence is complete
+            if (question.text.Length == questionText.Length)
+                ShowAnswers();
+
+            float writeSpeed = 0.05f;
+
+            // If letter is something which requires little "pause", wait a little bit longer
+            if (letter.Equals(',') || letter.Equals('.') || letter.Equals('?') || letter.Equals('!'))
+                writeSpeed = 0.3f;
+
+            yield return new WaitForSeconds(writeSpeed);
         }
     }
 
-    void answerClicked() {
-        Debug.Log("You have clicked the button!");
+    void ShowAnswers() {
+
     }
 }
