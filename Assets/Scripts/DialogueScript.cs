@@ -10,19 +10,24 @@ public class DialogueScript : MonoBehaviour
     private TextMeshProUGUI questionView;
 
     [SerializeField]
-    private GameObject answerListView, answersObject;
+    private GameObject questionObject, answerListView, answersObject;
 
     [SerializeField]
     private Button answerButtonPrefab;
 
     [SerializeField]
-    private float answersYPosition;
+    private float answersYPosition, answersYStartPosition;
 
     public LeanTweenType tweenType;
 
     private string question = "Hmm, so you lived before the war. What was it like, mom?";
 
     void Start() {
+
+        // Hide panels
+        questionObject.transform.LeanScale(new Vector3(0, 0, 0), 0f);
+        answersObject.transform.LeanMoveLocalY(answersYStartPosition, 0f);
+
         for (int i = 0; i < 5; i++) {
             Button button = Instantiate(answerButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
@@ -37,6 +42,16 @@ public class DialogueScript : MonoBehaviour
             button.onClick.AddListener(() => AnswerClicked());
         }
 
+        // Delay for testing purposes
+        Invoke("DelayStart", 2f);
+    }
+
+    void DelayStart() {
+        // Animate question
+        LeanTween.scale(questionObject, new Vector3(0.6734007f, 0.6734007f, 0.6734007f), 0.5f).setEase(tweenType).setOnComplete(writeOutQuestion);
+    }
+
+    void writeOutQuestion() {
         Helper.Instance.WriteOutText(question, questionView, ShowAnswers);
     }
 
