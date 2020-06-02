@@ -15,7 +15,7 @@ public class DialogueScript : MonoBehaviour
     [SerializeField]
     private Button answerButtonPrefab;
 
-    private string questionText = "Hmm, did you live before the war. What was it like, mom?";
+    private string questionText = "Hmm, so you lived before the war. What was it like, mom?";
 
     void Start() {
         for (int i = 0; i < 5; i++) {
