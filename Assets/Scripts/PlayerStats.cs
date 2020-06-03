@@ -19,5 +19,5 @@ public class PlayerStats : MonoBehaviour
     }
 
     [SerializeField]
-    private int hp, shieldRegen, armor, resistance, attackSpd, fireRate, dodge, critical, movementSpd;
+    private int hp, shield, xp, shieldRegen, armor, resistance, attackSpd, fireRate, dodge, critical, movementSpd;
 }
