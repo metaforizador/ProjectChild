@@ -9,8 +9,17 @@ public struct DialogueFile {
     [XmlElement("questionText")]
     public string questionText;
 
-    [XmlElement("answer")]
-    public string answer;
+    [XmlArray("answers")]
+    [XmlArrayItem("answer")]
+    public Answer[] answers;
+}
+
+public struct Answer {
+    [XmlElement("answerText")]
+    public string answerText;
+
+    [XmlElement("answerType")]
+    public string answerType;
 }
 
 [XmlRoot("root"), XmlType("questions")]

@@ -4,10 +4,18 @@
 		<question>
 			<questionText>So much violence. Mom, when is this going to end?</questionText>
 			<answers>
-				<answer>Answer 1</answer>
-				<answer>Answer 2</answer>
-				<answer>Answer 3</answer>
-				<answer>Answer 4</answer>
+				<answer>
+					<answerText>Tomorrow</answerText>
+					<answerType>Stoic</answerType>
+				</answer>
+				<answer>
+					<answerText>Never</answerText>
+					<answerType>Stoic</answerType>
+				</answer>
+				<answer>
+					<answerText>Yesterday</answerText>
+					<answerType>Stoic</answerType>
+				</answer>
 			</answers>
 		</question>
 	</questions>
