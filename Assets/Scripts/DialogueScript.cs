@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -25,7 +26,7 @@ public class DialogueScript : MonoBehaviour
     void Start() {
 
         // Hide panels
-        questionObject.transform.LeanScale(new Vector3(0, 0, 0), 0f);
+        questionObject.transform.localScale = new Vector3(0, 0, 0);
         answersObject.transform.LeanMoveLocalY(answersYStartPosition, 0f);
 
         for (int i = 0; i < 5; i++) {
