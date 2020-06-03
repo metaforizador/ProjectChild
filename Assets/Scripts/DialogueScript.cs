@@ -16,7 +16,7 @@ public class DialogueScript : MonoBehaviour
     private Button answerButtonPrefab;
 
     [SerializeField]
-    private float answersYPosition, answersYStartPosition;
+    private float answersYStartPosition;
 
     public LeanTweenType tweenType;
 
@@ -48,7 +48,7 @@ public class DialogueScript : MonoBehaviour
 
     void DelayStart() {
         // Animate question
-        LeanTween.scale(questionObject, new Vector3(0.6734007f, 0.6734007f, 0.6734007f), 0.5f).setEase(tweenType).setOnComplete(writeOutQuestion);
+        LeanTween.scale(questionObject, new Vector3(1, 1, 1), 0.5f).setEase(tweenType).setOnComplete(writeOutQuestion);
     }
 
     void writeOutQuestion() {
@@ -60,6 +60,6 @@ public class DialogueScript : MonoBehaviour
     }
 
     void ShowAnswers() {
-        LeanTween.moveLocalY(answersObject, answersYPosition, 0.5f).setEase(tweenType);
+        LeanTween.moveLocalY(answersObject, 0, 0.5f).setEase(tweenType);
     }
 }
