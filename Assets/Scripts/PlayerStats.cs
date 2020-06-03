@@ -17,4 +17,7 @@ public class PlayerStats : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    [SerializeField]
+    private int hp, shieldRegen, armor, resistance, attackSpd, fireRate, dodge, critical, movementSpd;
 }
