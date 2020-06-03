@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+	<questions>
+		<question>
+			<questionText>So much violence. Mom, when is this going to end?</questionText>
+			<answers>
+				<answer>Answer 1</answer>
+				<answer>Answer 2</answer>
+				<answer>Answer 3</answer>
+				<answer>Answer 4</answer>
+			</answers>
+		</question>
+	</questions>
+</root>

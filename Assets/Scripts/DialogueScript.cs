@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
 
 public class DialogueScript : MonoBehaviour
 {
@@ -24,6 +25,11 @@ public class DialogueScript : MonoBehaviour
     private string question = "Hmm, so you lived before the war. What was it like, mom?";
 
     void Start() {
+        XMLDialogueParser data = XMLDialogueParser.Load(Path.Combine(Application.dataPath, "Resources/XMLFiles/Dialogues.xml"));
+        foreach (DialogueFile o in data.questions) {
+            Debug.Log(o.questionText);
+        }
+
 
         // Hide panels
         questionObject.transform.localScale = new Vector3(0, 0, 0);
