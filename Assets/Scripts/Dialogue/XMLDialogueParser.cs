@@ -90,7 +90,7 @@ public class XMLDialogueParser {
     /// </summary>
     /// <param name="type">WordsType of the reply</param>
     /// <returns>Random reply</returns>
-    public static Reply GetRandomReply(DialogueScript.WordsType type) {
+    public static string GetRandomReply(DialogueScript.WordsType type) {
         // Create an array for the replies
         List<Reply> replies = new List<Reply>();
 
@@ -103,6 +103,9 @@ public class XMLDialogueParser {
         }
 
         // If count is 5, random returns values between 0 and 4
-        return replies[UnityEngine.Random.Range(0, replies.Count)];
+
+        Reply randomReply = replies[UnityEngine.Random.Range(0, replies.Count)];
+
+        return randomReply.replyText;
     }
 }

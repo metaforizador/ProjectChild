@@ -25,6 +25,7 @@ public class DialogueScript : MonoBehaviour {
 
     private string curArea = "Level1";
     private string question;
+    private string reply;
 
     void OnEnable() {
         // Hide panels
@@ -41,6 +42,9 @@ public class DialogueScript : MonoBehaviour {
 
         // Loop through all the answers
         for (int i = 0; i < answers.Length; i++) {
+            string text = answers[i].answerText;
+            WordsType type = answers[i].answerType;
+
             Button button = Instantiate(answerButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
             // Add button to the list and set the scale to 1 (parent.transform changes it to 0,6)
@@ -48,38 +52,50 @@ public class DialogueScript : MonoBehaviour {
             button.transform.localScale = Vector3.one;
 
             // Set text to answer button
-            button.GetComponentInChildren<TextMeshProUGUI>().text = answers[i].answerText;
+            button.GetComponentInChildren<TextMeshProUGUI>().text = text;
 
             // Set on click listener to the button
-            button.onClick.AddListener(() => AnswerClicked());
+            button.onClick.AddListener(() => AnswerClicked(type));
         }
 
         // Delay for testing purposes
         Invoke("DelayStart", 1f);
     }
 
-    void DelayStart() {
-        // Animate question
-        LeanTween.scale(questionObject, new Vector3(1, 1, 1), 0.5f).setEase(tweenType).setOnComplete(WriteOutQuestion);
+    private void DelayStart() {
+        LeanTween.scale(questionObject, new Vector3(1, 1, 1), 0.5f).
+            setEase(tweenType).
+            setOnComplete(() => WriteOutChildTalking(question,                          // Write out child talk
+            () => LeanTween.moveLocalY(answersObject, 0, 0.5f).setEase(tweenType)));    // Show answers on complete
     }
 
     /// <summary>
-    /// Starts writing out question.
-    /// 
-    /// This method is needed so that it can be passed as an OnComplete parameter to LeanTween.
+    /// Writes out the text when child talks.
     /// </summary>
-    void WriteOutQuestion() {
-        Helper.Instance.WriteOutText(question, questionView, ShowAnswers);
-    }
-
-    void AnswerClicked() {
-        Debug.Log("You have clicked the button!");
+    /// <param name="text">text to write</param>
+    /// <param name="methodOnComplete">method to do after writing is complete</param>
+    private void WriteOutChildTalking(string text, Helper.WritingComplete methodOnComplete) {
+        Helper.Instance.WriteOutText(text, questionView, methodOnComplete);
     }
 
     /// <summary>
-    /// Moves answers so that user can see them.
+    /// Shows random reply when an answer is clicked.
     /// </summary>
-    void ShowAnswers() {
-        LeanTween.moveLocalY(answersObject, 0, 0.5f).setEase(tweenType);
+    /// <param name="type">WordsType of the reply to show</param>
+    private void AnswerClicked(WordsType type) {
+        reply = XMLDialogueParser.GetRandomReply(type);
+        LeanTween.moveLocalY(answersObject, answersYStartPosition, 0.5f).
+            setEase(tweenType).
+            setOnComplete(() => Helper.Instance.WriteOutText(reply, questionView,       // Write out child talk
+            () => Invoke("CloseDialogue", 1)));                                         // Invoke close dialogue on complete
+    }
+
+    /// <summary>
+    /// Closes dialogue after child has replied.
+    /// </summary>
+    private void CloseDialogue() {
+        LeanTween.scale(questionObject, new Vector3(0, 0, 0), 0.5f).
+            setEase(tweenType).
+            setOnComplete(() => Destroy(gameObject));   // Destroy after dialogue is closed
     }
 }
