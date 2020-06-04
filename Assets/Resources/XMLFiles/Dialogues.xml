@@ -2,6 +2,7 @@
 <root>
 	<questions>
 		<question>
+			<area>Level1</area>
 			<questionText>So much violence. Mom, when is this going to end?</questionText>
 			<answers>
 				<answer>
@@ -15,6 +16,42 @@
 				<answer>
 					<answerText>Yesterday</answerText>
 					<answerType>Stoic</answerType>
+				</answer>
+			</answers>
+		</question>
+		<question>
+			<area>Level1</area>
+			<questionText>What is this place?</questionText>
+			<answers>
+				<answer>
+					<answerText>Your worst nightmare</answerText>
+					<answerType>Nihilistic</answerType>
+				</answer>
+				<answer>
+					<answerText>A zoo</answerText>
+					<answerType>Nihilistic</answerType>
+				</answer>
+				<answer>
+					<answerText>My home</answerText>
+					<answerType>Nihilistic</answerType>
+				</answer>
+			</answers>
+		</question>
+		<question>
+			<area>Level2</area>
+			<questionText>Mom, do you think that I'm a parasite?</questionText>
+			<answers>
+				<answer>
+					<answerText>Yes</answerText>
+					<answerType>Nurturing</answerType>
+				</answer>
+				<answer>
+					<answerText>No</answerText>
+					<answerType>Nurturing</answerType>
+				</answer>
+				<answer>
+					<answerText>Maybe</answerText>
+					<answerType>Nurturing</answerType>
 				</answer>
 			</answers>
 		</question>

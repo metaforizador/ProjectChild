@@ -5,7 +5,10 @@ using System.Xml.Serialization;
 using System.IO;
 using System;
 
-public struct DialogueFile {
+public struct Question {
+    [XmlElement("area")]
+    public string area;
+
     [XmlElement("questionText")]
     public string questionText;
 
@@ -19,7 +22,7 @@ public struct Answer {
     public string answerText;
 
     [XmlElement("answerType")]
-    public string answerType;
+    public DialogueScript.AnswerType answerType;
 }
 
 [XmlRoot("root"), XmlType("questions")]
@@ -27,7 +30,7 @@ public class XMLDialogueParser {
 
     [XmlArray("questions")]
     [XmlArrayItem("question")]
-    public List<DialogueFile> questions = new List<DialogueFile>();
+    public List<Question> questions = new List<Question>();
 
     public static XMLDialogueParser Load(string path) {
         try {
