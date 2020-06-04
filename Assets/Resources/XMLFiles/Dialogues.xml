@@ -6,16 +6,16 @@
 			<questionText>So much violence. Mom, when is this going to end?</questionText>
 			<answers>
 				<answer>
+					<answerType>Stoic</answerType>
 					<answerText>Tomorrow</answerText>
-					<answerType>Stoic</answerType>
 				</answer>
 				<answer>
+					<answerType>Stoic</answerType>
 					<answerText>Never</answerText>
-					<answerType>Stoic</answerType>
 				</answer>
 				<answer>
-					<answerText>Yesterday</answerText>
 					<answerType>Stoic</answerType>
+					<answerText>Yesterday</answerText>
 				</answer>
 			</answers>
 		</question>
@@ -24,16 +24,16 @@
 			<questionText>What is this place?</questionText>
 			<answers>
 				<answer>
+					<answerType>Nihilistic</answerType>
 					<answerText>Your worst nightmare</answerText>
-					<answerType>Nihilistic</answerType>
 				</answer>
 				<answer>
+					<answerType>Nihilistic</answerType>
 					<answerText>A zoo</answerText>
-					<answerType>Nihilistic</answerType>
 				</answer>
 				<answer>
-					<answerText>My home</answerText>
 					<answerType>Nihilistic</answerType>
+					<answerText>My home</answerText>
 				</answer>
 			</answers>
 		</question>
@@ -42,18 +42,40 @@
 			<questionText>Mom, do you think that I'm a parasite?</questionText>
 			<answers>
 				<answer>
+					<answerType>Nurturing</answerType>
 					<answerText>Yes</answerText>
-					<answerType>Nurturing</answerType>
 				</answer>
 				<answer>
+					<answerType>Nurturing</answerType>
 					<answerText>No</answerText>
-					<answerType>Nurturing</answerType>
 				</answer>
 				<answer>
-					<answerText>Maybe</answerText>
 					<answerType>Nurturing</answerType>
+					<answerText>Maybe</answerText>
 				</answer>
 			</answers>
 		</question>
 	</questions>
+	<replies>
+		<reply>
+			<replyType>Stoic</replyType>
+			<replyText>You are so wise!</replyText>
+		</reply>
+		<reply>
+			<replyType>Stoic</replyType>
+			<replyText>Ooh mama!</replyText>
+		</reply>
+		<reply>
+			<replyType>Stoic</replyType>
+			<replyText>When I get out of this womb, I'm going to be as wise as you!</replyText>
+		</reply>
+		<reply>
+			<replyType>Nihilistic</replyType>
+			<replyText>...</replyText>
+		</reply>
+		<reply>
+			<replyType>Nurturing</replyType>
+			<replyText>I just want to cuddle here close to you.</replyText>
+		</reply>
+	</replies>
 </root>

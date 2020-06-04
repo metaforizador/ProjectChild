@@ -18,11 +18,19 @@ public struct Question {
 }
 
 public struct Answer {
+    [XmlElement("answerType")]
+    public DialogueScript.WordsType answerType;
+
     [XmlElement("answerText")]
     public string answerText;
+}
 
-    [XmlElement("answerType")]
-    public DialogueScript.AnswerType answerType;
+public struct Reply {
+    [XmlElement("replyType")]
+    public DialogueScript.WordsType replyType;
+
+    [XmlElement("replyText")]
+    public string replyText;
 }
 
 [XmlRoot("root"), XmlType("questions")]
@@ -32,7 +40,13 @@ public class XMLDialogueParser {
     [XmlArrayItem("question")]
     public List<Question> questions = new List<Question>();
 
-    public static XMLDialogueParser Load(string path) {
+    [XmlArray("replies")]
+    [XmlArrayItem("reply")]
+    public List<Reply> replies = new List<Reply>();
+
+    private static string path = Path.Combine(Application.dataPath, "Resources/XMLFiles/Dialogues.xml");
+
+    public static XMLDialogueParser Load() {
         try {
             XmlSerializer serializer = new XmlSerializer(typeof(XMLDialogueParser));
             using (FileStream stream = new FileStream(path, FileMode.Open)) {
@@ -48,13 +62,13 @@ public class XMLDialogueParser {
     /// <summary>
     /// Returns a random question which is filtered by the parameter value.
     /// </summary>
-    /// <param name="area">area for the question</param>
-    /// <returns>random question</returns>
+    /// <param name="area">Area for the question</param>
+    /// <returns>Random question</returns>
     public static Question GetRandomQuestion(string area) {
         // Create an array for the questions
         List<Question> questions = new List<Question>();
 
-        XMLDialogueParser data = Load(Path.Combine(Application.dataPath, "Resources/XMLFiles/Dialogues.xml"));
+        XMLDialogueParser data = Load();
         // Add all questions to list which belong to this area
         foreach (Question o in data.questions) {
             if (o.area.Equals(area)) {
@@ -67,12 +81,28 @@ public class XMLDialogueParser {
             throw new Exception($"There are no questions defined for {area}!");
         }
 
-        int questionIndex = 0;
-        // If there are more than 1 questions in this area, randomize question
-        if (questions.Count > 1) {
-            questionIndex = UnityEngine.Random.Range(0, questions.Count);   // If count is 5, random returns values between 0 and 4
+        // If count is 5, random returns values between 0 and 4
+        return questions[UnityEngine.Random.Range(0, questions.Count)];
+    }
+
+    /// <summary>
+    /// Returns a random reply which is filtered by the parameter type.
+    /// </summary>
+    /// <param name="type">WordsType of the reply</param>
+    /// <returns>Random reply</returns>
+    public static Reply GetRandomReply(DialogueScript.WordsType type) {
+        // Create an array for the replies
+        List<Reply> replies = new List<Reply>();
+
+        XMLDialogueParser data = Load();
+        // Add all replies to list which belong to provided type
+        foreach (Reply r in data.replies) {
+            if (r.replyType == type) {
+                replies.Add(r);
+            }
         }
 
-        return questions[questionIndex];
+        // If count is 5, random returns values between 0 and 4
+        return replies[UnityEngine.Random.Range(0, replies.Count)];
     }
 }

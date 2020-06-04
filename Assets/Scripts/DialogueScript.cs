@@ -5,10 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 
-public class DialogueScript : MonoBehaviour
-{
+public class DialogueScript : MonoBehaviour {
 
-    public enum AnswerType {Stoic, Nurturing, Idealistic, Nihilistic, Rational, Beligerent};
+    public enum WordsType {Stoic, Nurturing, Idealistic, Nihilistic, Rational, Beligerent};
 
     [SerializeField]
     private TextMeshProUGUI questionView;
