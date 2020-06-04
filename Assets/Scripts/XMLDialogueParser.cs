@@ -44,4 +44,35 @@ public class XMLDialogueParser {
             return null;
         }
     }
+
+    /// <summary>
+    /// Returns a random question which is filtered by the parameter value.
+    /// </summary>
+    /// <param name="area">area for the question</param>
+    /// <returns>random question</returns>
+    public static Question GetRandomQuestion(string area) {
+        // Create an array for the questions
+        List<Question> questions = new List<Question>();
+
+        XMLDialogueParser data = Load(Path.Combine(Application.dataPath, "Resources/XMLFiles/Dialogues.xml"));
+        // Add all questions to list which belong to this area
+        foreach (Question o in data.questions) {
+            if (o.area.Equals(area)) {
+                questions.Add(o);
+            }
+        }
+
+        // Throw error if no questions are found with provided parameter
+        if (questions.Count == 0) {
+            throw new Exception($"There are no questions defined for {area}!");
+        }
+
+        int questionIndex = 0;
+        // If there are more than 1 questions in this area, randomize question
+        if (questions.Count > 1) {
+            questionIndex = UnityEngine.Random.Range(0, questions.Count);   // If count is 5, random returns values between 0 and 4
+        }
+
+        return questions[questionIndex];
+    }
 }

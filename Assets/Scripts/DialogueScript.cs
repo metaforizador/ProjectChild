@@ -27,37 +27,20 @@ public class DialogueScript : MonoBehaviour
     private string curArea = "Level1";
     private string question;
 
-    void Start() {
-        // Create an array for the questions and answers
-        List<Question> questions = new List<Question>();
-        Answer[] answers = new Answer[0];
-
-        XMLDialogueParser data = XMLDialogueParser.Load(Path.Combine(Application.dataPath, "Resources/XMLFiles/Dialogues.xml"));
-        // Add all questions to list which belong to this area
-        foreach (Question o in data.questions) {
-            if (o.area.Equals(this.curArea)) {
-                questions.Add(o);
-            }
-            question = o.questionText;
-            answers = o.answers;
-        }
-
-        int questionIndex = 0;
-        // If there are more than 1 questions in this area, randomize question
-        if (questions.Count > 1) {
-            questionIndex = Random.Range(0, questions.Count);   // If count is 5, random returns values between 0 and 4
-        }
-
-        // Set question text and answers
-        Question q = questions[questionIndex];
-        question = q.questionText;
-        answers = q.answers;
-
-
+    void OnEnable() {
         // Hide panels
         questionObject.transform.localScale = new Vector3(0, 0, 0);
         answersObject.transform.LeanMoveLocalY(answersYStartPosition, 0f);
+    }
 
+    void Start() {
+        // Set question text and answers
+        Answer[] answers = new Answer[0];
+        Question q = XMLDialogueParser.GetRandomQuestion(curArea);  // Load random question from xml
+        question = q.questionText;
+        answers = q.answers;
+
+        // Loop through all the answers
         for (int i = 0; i < answers.Length; i++) {
             Button button = Instantiate(answerButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
@@ -78,10 +61,15 @@ public class DialogueScript : MonoBehaviour
 
     void DelayStart() {
         // Animate question
-        LeanTween.scale(questionObject, new Vector3(1, 1, 1), 0.5f).setEase(tweenType).setOnComplete(writeOutQuestion);
+        LeanTween.scale(questionObject, new Vector3(1, 1, 1), 0.5f).setEase(tweenType).setOnComplete(WriteOutQuestion);
     }
 
-    void writeOutQuestion() {
+    /// <summary>
+    /// Starts writing out question.
+    /// 
+    /// This method is needed so that it can be passed as an OnComplete parameter to LeanTween.
+    /// </summary>
+    void WriteOutQuestion() {
         Helper.Instance.WriteOutText(question, questionView, ShowAnswers);
     }
 
@@ -89,6 +77,9 @@ public class DialogueScript : MonoBehaviour
         Debug.Log("You have clicked the button!");
     }
 
+    /// <summary>
+    /// Moves answers so that user can see them.
+    /// </summary>
     void ShowAnswers() {
         LeanTween.moveLocalY(answersObject, 0, 0.5f).setEase(tweenType);
     }
