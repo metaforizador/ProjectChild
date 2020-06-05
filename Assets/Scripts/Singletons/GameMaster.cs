@@ -54,7 +54,7 @@ public class GameMaster : MonoBehaviour {
     public void QuitGame() {
         if (Application.isEditor) {
             // Helps when testing in editor
-            UnityEditor.EditorApplication.ExitPlaymode();
+            //UnityEditor.EditorApplication.ExitPlaymode();
         } else {
             Application.Quit();
         }

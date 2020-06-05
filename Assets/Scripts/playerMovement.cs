@@ -9,7 +9,7 @@ public class playerMovement : MonoBehaviour
 
     //only used for test purposes
     public GameObject masterCanvas;
-    private bool menu = true;
+    private bool menu = false;
 
     public float speed = 6f;
     public float gravity = -9.81f;
