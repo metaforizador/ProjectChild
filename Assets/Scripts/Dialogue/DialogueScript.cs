@@ -26,6 +26,7 @@ public class DialogueScript : MonoBehaviour {
     private string curArea = "Level1";
     private string question;
     private string reply;
+    private List<Button> answerButtons = new List<Button>();
 
     void OnEnable() {
         // Hide panels
@@ -33,7 +34,7 @@ public class DialogueScript : MonoBehaviour {
         answersObject.transform.LeanMoveLocalY(answersYStartPosition, 0f);
     }
 
-    void Start() {
+    public void ShowDialogue() {
         // Set question text and answers
         Answer[] answers = new Answer[0];
         Question q = XMLDialogueParser.GetRandomQuestion(curArea);  // Load random question from xml
@@ -46,6 +47,7 @@ public class DialogueScript : MonoBehaviour {
             WordsType type = answers[i].answerType;
 
             Button button = Instantiate(answerButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            answerButtons.Add(button);
 
             // Add button to the list and set the scale to 1 (parent.transform changes it to 0,6)
             button.transform.parent = answerListView.transform;
@@ -58,11 +60,11 @@ public class DialogueScript : MonoBehaviour {
             button.onClick.AddListener(() => AnswerClicked(type));
         }
 
-        // Delay for testing purposes
-        Invoke("DelayStart", 1f);
+        // Delay a tiny bit to work around the initial fps hiccup (HOPEFULLY TEMPORARY SOLUTION)
+        Invoke("ShowQuestion", 0.5f);
     }
 
-    private void DelayStart() {
+    private void ShowQuestion() {
         LeanTween.scale(questionObject, new Vector3(1, 1, 1), 0.5f).
             setEase(tweenType).
             setOnComplete(() => WriteOutChildTalking(question,                          // Write out child talk
@@ -96,6 +98,17 @@ public class DialogueScript : MonoBehaviour {
     private void CloseDialogue() {
         LeanTween.scale(questionObject, new Vector3(0, 0, 0), 0.5f).
             setEase(tweenType).
-            setOnComplete(() => Destroy(gameObject));   // Destroy after dialogue is closed
+            setOnComplete(ResetValues);
+    }
+
+    private void ResetValues() {
+        // Reset question text
+        questionView.text = "";
+
+        // Remove buttons
+        foreach (Button btn in answerButtons) {
+            Destroy(btn.gameObject);
+        }
+        answerButtons.Clear();
     }
 }
