@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
-{
+public class PlayerStats : MonoBehaviour {
     
     // Make class static and destroy if script already exists
     private static PlayerStats _instance; // **<- reference link to the class
@@ -73,5 +72,8 @@ public class PlayerStats : MonoBehaviour
         dodge = save.dodge;
         critical = save.critical;
         movementSpd = save.movementSpd;
+
+        hp = maxHp;
+        shield = maxShield;
     }
 }
