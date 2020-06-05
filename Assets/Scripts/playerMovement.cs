@@ -7,6 +7,10 @@ public class playerMovement : MonoBehaviour
     public CharacterController controller;
     public Transform cam;
 
+    //only used for test purposes
+    public GameObject masterCanvas;
+    private bool menu = true;
+
     public float speed = 6f;
     public float gravity = -9.81f;
     public float jumpHeight = 10f;
@@ -52,5 +56,15 @@ public class playerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+        //toggle button for dialogue system (demo only)
+        if (Input.GetButtonDown("test"))
+        {
+            menu = !menu;
+
+            Debug.Log(menu);
+
+            masterCanvas.SetActive(menu);
+        }
     }
 }
