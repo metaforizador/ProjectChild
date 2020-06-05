@@ -50,4 +50,13 @@ public class GameMaster : MonoBehaviour {
             Debug.Log("No game saved!");
         }
     }
+
+    public void QuitGame() {
+        if (Application.isEditor) {
+            // Helps when testing in editor
+            UnityEditor.EditorApplication.ExitPlaymode();
+        } else {
+            Application.Quit();
+        }
+    }
 }
