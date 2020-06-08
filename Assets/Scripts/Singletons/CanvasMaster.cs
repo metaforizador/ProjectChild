@@ -16,11 +16,12 @@ public class CanvasMaster : MonoBehaviour {
         }
     }
 
-    public GameObject dialogueCanvas;
+    public GameObject dialogueCanvas, statGainCanvas;
 
     void Start() {
         // Enable canvases when game starts to fix fps hiccups when opening them
         dialogueCanvas.SetActive(true);
+        statGainCanvas.SetActive(true);
     }
 
     public void OpenDialogue() {
@@ -28,6 +29,6 @@ public class CanvasMaster : MonoBehaviour {
     }
 
     public void ShowStatGain(string gainedStats) {
-
+        statGainCanvas.GetComponent<StatGainCanvas>().ShowStatGain(gainedStats);
     }
 }
