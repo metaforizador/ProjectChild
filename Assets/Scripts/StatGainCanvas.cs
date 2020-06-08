@@ -7,7 +7,7 @@ using TMPro;
 public class StatGainCanvas : MonoBehaviour {
 
     [SerializeField]
-    private float hideYPosition, showYPosition;
+    private float hideYPosition;
 
     [SerializeField]
     private GameObject statObject;
@@ -18,8 +18,8 @@ public class StatGainCanvas : MonoBehaviour {
     public LeanTweenType tweenType;
 
     private string gainTextStart = "You increased your ";
-    private string gainTextEnd = "stats!";
-    private float timeToShow = 5;
+    private string gainTextEnd = " stats!";
+    private float timeToShow = 3;
     private float transitionSpd = 1;
 
     void OnEnable() {
@@ -33,7 +33,7 @@ public class StatGainCanvas : MonoBehaviour {
 
     public void ShowStatGain(string gainedStats) {
         textView.text = gainTextStart + gainedStats + gainTextEnd;
-        LeanTween.moveLocalY(statObject, showYPosition, transitionSpd).
+        LeanTween.moveLocalY(statObject, 0, transitionSpd).
             setEase(tweenType).
             setOnComplete(() => Invoke("HideStatGain", timeToShow));
     }
