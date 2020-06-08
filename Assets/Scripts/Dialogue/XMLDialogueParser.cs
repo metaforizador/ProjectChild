@@ -19,7 +19,7 @@ public struct Question {
 
 public struct Answer {
     [XmlElement("answerType")]
-    public DialogueScript.WordsType answerType;
+    public WordsType answerType;
 
     [XmlElement("answerText")]
     public string answerText;
@@ -27,7 +27,7 @@ public struct Answer {
 
 public struct Reply {
     [XmlElement("replyType")]
-    public DialogueScript.WordsType replyType;
+    public WordsType replyType;
 
     [XmlElement("replyText")]
     public string replyText;
@@ -90,7 +90,7 @@ public class XMLDialogueParser {
     /// </summary>
     /// <param name="type">WordsType of the reply</param>
     /// <returns>Random reply</returns>
-    public static string GetRandomReply(DialogueScript.WordsType type) {
+    public static string GetRandomReply(WordsType type) {
         // Create an array for the replies
         List<Reply> replies = new List<Reply>();
 

@@ -26,4 +26,8 @@ public class CanvasMaster : MonoBehaviour {
     public void OpenDialogue() {
         dialogueCanvas.GetComponent<DialogueScript>().ShowDialogue();
     }
+
+    public void ShowStatGain(string gainedStats) {
+
+    }
 }

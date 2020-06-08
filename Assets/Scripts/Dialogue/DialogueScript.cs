@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 
-public class DialogueScript : MonoBehaviour {
+public enum WordsType { Stoic, Nurturing, Idealistic, Nihilistic, Rational, Beligerent };
 
-    public enum WordsType {Stoic, Nurturing, Idealistic, Nihilistic, Rational, Beligerent};
+public class DialogueScript : MonoBehaviour {
 
     [SerializeField]
     private TextMeshProUGUI questionView;
@@ -81,15 +81,43 @@ public class DialogueScript : MonoBehaviour {
     }
 
     /// <summary>
-    /// Shows random reply when an answer is clicked.
+    /// Shows reply and increases stats when answer is clicked.
     /// </summary>
     /// <param name="type">WordsType of the reply to show</param>
     private void AnswerClicked(WordsType type) {
+        // Show random reply
         reply = XMLDialogueParser.GetRandomReply(type);
         LeanTween.moveLocalY(answersObject, answersYStartPosition, 0.5f).
             setEase(tweenType).
             setOnComplete(() => Helper.Instance.WriteOutText(reply, questionView,       // Write out child talk
             () => Invoke("CloseDialogue", 1)));                                         // Invoke close dialogue on complete
+
+        // Increase stats
+        PlayerStats p = PlayerStats.Instance;
+        int amount = 1;
+        switch (type) {
+            case WordsType.Stoic:
+                p.IncreaseArmor(amount);
+                p.IncreaseResistance(amount);
+                break;
+            case WordsType.Nurturing:
+                p.IncreaseMaxHp(amount);
+                p.IncreaseShieldRegen(amount);
+                break;
+            case WordsType.Idealistic:
+                p.IncreaseAttackSpd(amount);
+                p.IncreaseFireRate(amount);
+                break;
+            case WordsType.Nihilistic:
+                p.IncreaseDodge(amount);
+                break;
+            case WordsType.Rational:
+                p.IncreaseCritical(amount);
+                break;
+            case WordsType.Beligerent:
+                p.IncreaseMovementSpd(amount);
+                break;
+        }
     }
 
     /// <summary>
