@@ -28,10 +28,22 @@ public class DialogueScript : MonoBehaviour {
     private string reply;
     private List<Button> answerButtons = new List<Button>();
 
+    private Dictionary<WordsType, AudioClip> audios = new Dictionary<WordsType, AudioClip>();
+    private AudioSource audioSource;
+
     void OnEnable() {
         // Hide panels
         questionObject.transform.localScale = new Vector3(0, 0, 0);
         answersObject.transform.LeanMoveLocalY(answersYStartPosition, 0f);
+
+        // Load sounds for answers
+        audioSource = GetComponent<AudioSource>();
+        string path = "SoundEffects/Dialogue/";
+        audios.Add(WordsType.Stoic, (AudioClip)Resources.Load(path + "StoicWords"));
+        audios.Add(WordsType.Nurturing, (AudioClip)Resources.Load(path + "NurturingWords"));
+        audios.Add(WordsType.Idealistic, (AudioClip)Resources.Load(path + "IdealisticWords"));
+        audios.Add(WordsType.Nihilistic, (AudioClip)Resources.Load(path + "NihilisticWords"));
+        audios.Add(WordsType.Rational, (AudioClip)Resources.Load(path + "RationalWords"));
     }
 
     public void ShowDialogue() {
@@ -94,6 +106,9 @@ public class DialogueScript : MonoBehaviour {
 
         // Increase stats
         PlayerStats.Instance.RandomizeGainedStat(type);
+
+        // Play sound effect
+        audioSource.PlayOneShot(audios[type]);
     }
 
     /// <summary>
