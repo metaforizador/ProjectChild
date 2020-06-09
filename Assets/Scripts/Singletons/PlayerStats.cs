@@ -30,6 +30,7 @@ public class PlayerStats : MonoBehaviour {
     }
 
     private const float MAX_BASE_STAT_VALUES = 15, STARTING_STAT = 1;
+    private const int XP_MULTIPLIER = 100;
 
     // Stats to save and load
     // Nurturing
@@ -58,7 +59,7 @@ public class PlayerStats : MonoBehaviour {
     public Stat fireRate { get; private set; }
 
     [SerializeField]    // Other stats
-    private int level, xp;
+    private int level, xp, nextLevelUpXp;
 
     // Temporary stats
     [SerializeField]
@@ -87,6 +88,7 @@ public class PlayerStats : MonoBehaviour {
 
         level = 1;
         xp = 0;
+        nextLevelUpXp = XP_MULTIPLIER;
 
         hp = 100;
         shield = 100;
@@ -117,6 +119,7 @@ public class PlayerStats : MonoBehaviour {
 
         save.level = level;
         save.xp = xp;
+        save.nextLevelUpXp = nextLevelUpXp;
     }
 
     public void LoadPlayerStats(Save save) {
@@ -142,6 +145,7 @@ public class PlayerStats : MonoBehaviour {
 
         level = save.level;
         xp = save.xp;
+        nextLevelUpXp = save.nextLevelUpXp;
     }
 
     private bool IncreaseStatValue(Stat stat) {
@@ -161,6 +165,7 @@ public class PlayerStats : MonoBehaviour {
     public void RandomizeGainedStat(WordsType type) {
         Stat[] stats;
 
+        // Set correct stats to the array
         switch (type) {
             case WordsType.Nurturing:
                 stats = new Stat[] { shieldRecovery, staminaRecovery, ammoRecovery };
@@ -182,6 +187,7 @@ public class PlayerStats : MonoBehaviour {
                 break;
         }
 
+        // Increase random stat from the array
         List<int> maxedStats = new List<int>();
         while (true) {
 
@@ -207,5 +213,24 @@ public class PlayerStats : MonoBehaviour {
                 break;
             }
         }
+    }
+
+    public void GainXP(int amount) {
+        xp += amount;
+
+        if (xp >= nextLevelUpXp) {
+            LevelUp();
+        }
+    }
+
+    private void LevelUp() {
+        level ++; // Increase level
+
+        // Get next xp multiplier
+        int xpToAdd = level * XP_MULTIPLIER;   // Level 5 = 500;
+
+        nextLevelUpXp += xpToAdd;
+
+        // ADD LEVEL UP STUFF TO OPEN DIALOGUE LATER
     }
 }

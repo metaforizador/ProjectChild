@@ -16,6 +16,6 @@ public class Save {
     // Nihilistic
     public Stat attackSpd, movementSpd, fireRate, skillCooldown;
     // Other stats
-    public int level, xp;
+    public int level, xp, nextLevelUpXp;
 
 }
