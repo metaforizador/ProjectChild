@@ -29,7 +29,7 @@ public class PlayerStats : MonoBehaviour {
         }
     }
 
-    private const float MAX_LEVEL = 99, MAX_BASE_STAT_VALUES = 15, STARTING_STAT = 1;
+    private const float MAX_BASE_STAT_VALUES = 15, STARTING_STAT = 1;
 
     // Stats to save and load
     // Nurturing
@@ -197,13 +197,13 @@ public class PlayerStats : MonoBehaviour {
             if (!increased) {
                 maxedStats.Add(index);
             } else {
-                CanvasMaster.Instance.ShowStatGain($"You gained a {stat.name} stat bonus!");
+                CanvasMaster.Instance.ShowStatGain(StatGainCanvas.CreateGainStatText(stat));
                 break;
             }
 
             if (maxedStats.Count == stats.Length) {
                 // Inform player that all stats are maxed out
-                CanvasMaster.Instance.ShowStatGain($"All stats for {type.ToString()} answers are maxed out!");
+                CanvasMaster.Instance.ShowStatGain(StatGainCanvas.CreateStatsMaxedText(type));
                 break;
             }
         }

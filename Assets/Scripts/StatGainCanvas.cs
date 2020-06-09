@@ -20,6 +20,14 @@ public class StatGainCanvas : MonoBehaviour {
     private float timeToShow = 3;
     private float transitionSpd = 1;
 
+    public static string CreateGainStatText(Stat stat) {
+        return $"You gained '{stat.name}' stat bonus!";
+    }
+
+    public static string CreateStatsMaxedText(WordsType type) {
+        return $"All stats for '{type.ToString()}' answers are maxed out!";
+    }
+
     void OnEnable() {
         // Hide panel
         statObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, hideYPosition);
