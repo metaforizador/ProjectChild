@@ -18,4 +18,9 @@ public class Save {
     // Other stats
     public int level, xp, nextLevelUpXp;
 
+    //////// Player stats ////////
+    // string = areas, List<string> = questions
+    public Dictionary<string, List<string>> askedQuestions;
+    // WordsType = type of reply, List<string> = replies
+    public Dictionary<WordsType, List<string>> givenReplies;
 }

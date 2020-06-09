@@ -22,6 +22,7 @@ public class GameMaster : MonoBehaviour {
     private Save CreateSaveGameObject() {
         Save save = new Save();
         PlayerStats.Instance.SavePlayerStats(save);
+        CanvasMaster.Instance.SaveCanvasValues(save);
 
         return save;
     }
@@ -43,6 +44,7 @@ public class GameMaster : MonoBehaviour {
             FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
             Save save = (Save)bf.Deserialize(file);
             PlayerStats.Instance.LoadPlayerStats(save);
+            CanvasMaster.Instance.LoadCanvasValues(save);
             file.Close();
 
             Debug.Log("Game Loaded");

@@ -81,8 +81,36 @@ public class XMLDialogueParser {
             throw new Exception($"There are no questions defined for {area}!");
         }
 
-        // If count is 5, random returns values between 0 and 4
-        return questions[UnityEngine.Random.Range(0, questions.Count)];
+        // Retrieve already asked questions and loop through remaining ones
+        Dictionary<string, List<string>> askedQuestions = CanvasMaster.Instance.askedQuestions;
+
+        // If askedQuestions doesn't have current area as key yet, create new key
+        if (!askedQuestions.ContainsKey(area)) {
+            askedQuestions.Add(area, new List<string>());
+        }
+
+        Question question;
+        while (true) {
+            // If count is 5, random returns values between 0 and 4
+            question = questions[UnityEngine.Random.Range(0, questions.Count)];
+
+            // If question has already been asked, randomize new one
+            if (askedQuestions[area].Contains(question.questionText)) {
+                continue;
+            }
+
+            // Add question to asked questions
+            askedQuestions[area].Add(question.questionText);
+
+            // If all of the questions have been asked from this area, clear list
+            if (askedQuestions[area].Count == questions.Count) {
+                askedQuestions[area].Clear();
+            }
+
+            break;
+        }
+
+        return question;
     }
 
     /// <summary>
