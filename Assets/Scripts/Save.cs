@@ -19,8 +19,8 @@ public class Save {
     public int level, xp, nextLevelUpXp;
 
     //////// Player stats ////////
-    // string = areas, List<string> = questions
-    public Dictionary<string, List<string>> askedQuestions;
+    // Mood = mood for question, List<string> = questions
+    public Dictionary<Mood, List<string>> askedQuestions;
     // WordsType = type of reply, List<string> = replies
     public Dictionary<WordsType, List<string>> givenReplies;
 }

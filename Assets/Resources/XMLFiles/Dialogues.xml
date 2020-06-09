@@ -2,7 +2,7 @@
 <root>
 	<questions>
 		<question>
-			<area>Level1</area>
+			<mood>Joyful</mood>
 			<questionText>So much violence. Mom, when is this going to end?</questionText>
 			<answers>
 				<answer>
@@ -20,7 +20,7 @@
 			</answers>
 		</question>
 		<question>
-			<area>Level1</area>
+			<mood>Joyful</mood>
 			<questionText>What is this place?</questionText>
 			<answers>
 				<answer>
@@ -38,7 +38,7 @@
 			</answers>
 		</question>
 		<question>
-			<area>Level2</area>
+			<mood>Gloomy</mood>
 			<questionText>Mom, do you think that I'm a parasite?</questionText>
 			<answers>
 				<answer>

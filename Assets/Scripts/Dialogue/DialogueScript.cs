@@ -6,6 +6,7 @@ using TMPro;
 using System.IO;
 
 public enum WordsType { Stoic, Nurturing, Idealistic, Nihilistic, Rational };
+public enum Mood { Depressing, Joyful, Beautiful, Gloomy }
 
 public class DialogueScript : MonoBehaviour {
 
@@ -23,7 +24,7 @@ public class DialogueScript : MonoBehaviour {
 
     public LeanTweenType tweenType;
 
-    private string curArea = "Level1";
+    private Mood curMood = Mood.Joyful;
     private string question;
     private string reply;
     private List<Button> answerButtons = new List<Button>();
@@ -49,7 +50,7 @@ public class DialogueScript : MonoBehaviour {
     public void ShowDialogue() {
         // Set question text and answers
         Answer[] answers = new Answer[0];
-        Question q = XMLDialogueParser.GetRandomQuestion(curArea);  // Load random question from xml
+        Question q = XMLDialogueParser.GetRandomQuestion(curMood);  // Load random question from xml
         question = q.questionText;
         answers = q.answers;
 
