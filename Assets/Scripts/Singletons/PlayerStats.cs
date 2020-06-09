@@ -2,6 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct Stat {
+    public float value;
+
+    public Stat(float value) {
+        this.value = value;
+    }
+}
+
 public class PlayerStats : MonoBehaviour {
     
     // Make class static and destroy if script already exists
@@ -18,141 +27,134 @@ public class PlayerStats : MonoBehaviour {
         }
     }
 
-    private const int MAX_HEALTH_VALUES = 999, MAX_LEVEL = 99, MAX_BASE_STAT_VALUES = 25, MAX_PERCENTAGE = 70;
+    private const float MAX_LEVEL = 99, MAX_BASE_STAT_VALUES = 25, STARTING_STAT = 1;
 
     // Stats to save and load
-    [SerializeField]
-    private int maxHp, maxShield, level, xp, shieldRegen, armor, resistance, attackSpd, fireRate, movementSpd, dodge, critical;
+    // Nurturing
+    public Stat shieldRecovery { get; private set; }
+    public Stat staminaRecovery { get; private set; }
+    public Stat ammoRecovery { get; private set; }
+
+    // Rational
+    public Stat dodgeRate { get; private set; }
+    public Stat criticalRate { get; private set; }
+    public Stat rareItemFindRate { get; private set; }
+
+    // Idealistic
+    public Stat piercingDmg { get; private set; }
+    public Stat kineticDmg { get; private set; }
+    public Stat energyDmg { get; private set; }
+
+    // Stoic
+    public Stat piercingRes { get; private set; }
+    public Stat kineticRes { get; private set; }
+    public Stat energyRes { get; private set; }
+
+    // Nihilistic
+    public Stat attackSpd { get; private set; }
+    public Stat movementSpd { get; private set; }
+    public Stat fireRate { get; private set; }
+
+    [SerializeField]    // Other stats
+    private int level, xp;
 
     // Temporary stats
     [SerializeField]
-    private int hp, shield;
-
-    // STATS WHICH HAS NOT BEEN TALKED ABOUT:
-    /*- Damages and resistances: Electric, Fire, Plasma, Explosive
-     *- Damage stat itself?
-     *- Item type finding rate
-     *- Item rarity finding rate
-     * */
+    private float hp, shield, stamina, ammo;
 
     private void SetDefaultStats() {
-        maxHp = 70;         // max = MAX_HEALTH_VALUES
-        maxShield = 70;     // max = MAX_HEALTH_VALUES
-        level = 1;          // max = MAX_LEVEL
-        xp = 0;             
-        shieldRegen = 1;    // max = MAX_BASE_STAT_VALUES
-        armor = 1;          // max = MAX_BASE_STAT_VALUES
-        resistance = 1;     // max = MAX_BASE_STAT_VALUES
-        attackSpd = 1;      // max = MAX_BASE_STAT_VALUES    
-        fireRate = 1;       // max = MAX_BASE_STAT_VALUES
-        movementSpd = 1;    // max = MAX_BASE_STAT_VALUES
-        dodge = 10;         // max = MAX_PERCENTAGE
-        critical = 10;      // max = MAX_PERCENTAGE
+        shieldRecovery = new Stat(STARTING_STAT);
+        staminaRecovery = new Stat(STARTING_STAT);
+        ammoRecovery = new Stat(STARTING_STAT);
 
-        hp = maxHp;
-        shield = maxShield;
+        dodgeRate = new Stat(STARTING_STAT);
+        criticalRate = new Stat(STARTING_STAT);
+        rareItemFindRate = new Stat(STARTING_STAT);
+
+        piercingDmg = new Stat(STARTING_STAT);
+        kineticDmg = new Stat(STARTING_STAT);
+        energyDmg = new Stat(STARTING_STAT);
+
+        piercingRes = new Stat(STARTING_STAT);
+        kineticRes = new Stat(STARTING_STAT);
+        energyRes = new Stat(STARTING_STAT);
+
+        attackSpd = new Stat(STARTING_STAT);
+        movementSpd = new Stat(STARTING_STAT);
+        fireRate = new Stat(STARTING_STAT);
+
+        level = 1;
+        xp = 0;
+
+        hp = 100;
+        shield = 100;
+        stamina = 100;
+        ammo = 100;
     }
 
     public void SavePlayerStats(Save save) {
-        save.maxHp = maxHp;
-        save.maxShield = maxShield;
+        save.shieldRecovery = shieldRecovery;
+        save.staminaRecovery = staminaRecovery;
+        save.ammoRecovery = ammoRecovery;
+
+        save.dodgeRate = dodgeRate;
+        save.criticalRate = criticalRate;
+        save.rareItemFindRate = rareItemFindRate;
+
+        save.piercingDmg = piercingDmg;
+        save.kineticDmg = kineticDmg;
+        save.energyDmg = energyDmg;
+
+        save.piercingRes = piercingRes;
+        save.kineticRes = kineticRes;
+        save.energyRes = energyRes;
+
+        save.attackSpd = attackSpd;
+        save.movementSpd = movementSpd;
+        save.fireRate = fireRate;
+
         save.level = level;
         save.xp = xp;
-        save.shieldRegen = shieldRegen;
-        save.armor = armor;
-        save.resistance = resistance;
-        save.attackSpd = attackSpd;
-        save.fireRate = fireRate;
-        save.movementSpd = movementSpd;
-        save.dodge = dodge;
-        save.critical = critical;
     }
 
     public void LoadPlayerStats(Save save) {
-        maxHp = save.maxHp;
-        maxShield = save.maxShield;
+        shieldRecovery = save.shieldRecovery;
+        staminaRecovery = save.staminaRecovery;
+        ammoRecovery = save.ammoRecovery;
+
+        dodgeRate = save.dodgeRate;
+        criticalRate = save.criticalRate;
+        rareItemFindRate = save.rareItemFindRate;
+
+        piercingDmg = save.piercingDmg;
+        kineticDmg = save.kineticDmg;
+        energyDmg = save.energyDmg;
+
+        piercingRes = save.piercingRes;
+        kineticRes = save.kineticRes;
+        energyRes = save.energyRes;
+
+        attackSpd = save.attackSpd;
+        movementSpd = save.movementSpd;
+        fireRate = save.fireRate;
+
         level = save.level;
         xp = save.xp;
-        shieldRegen = save.shieldRegen;
-        armor = save.armor;
-        resistance = save.resistance;
-        attackSpd = save.attackSpd;
-        fireRate = save.fireRate;
-        movementSpd = save.movementSpd;
-        dodge = save.dodge;
-        critical = save.critical;
-
-        hp = maxHp;
-        shield = maxShield;
     }
 
-    public void IncreaseMaxHp(int amount) {
-        maxHp += amount;
+    private void IncreaseStatValue(Stat stat, float amount) {
+        if (stat.value == MAX_BASE_STAT_VALUES) {
+            // Inform player somehow (ADD LATER)
+            return;
+        }
 
-        if (maxHp >= MAX_HEALTH_VALUES)
-            maxHp = MAX_HEALTH_VALUES;
+        stat.value += amount;
+
+        if (stat.value >= MAX_BASE_STAT_VALUES) {
+            // Inform player that stat is now maxed out (ADD LATER)
+            stat.value = MAX_BASE_STAT_VALUES;
+        }
     }
 
-    public void IncreaseMaxShield(int amount) {
-        maxShield += amount;
 
-        if (maxShield >= MAX_HEALTH_VALUES)
-            maxShield = MAX_HEALTH_VALUES;
-    }
-
-    public void IncreaseShieldRegen(int amount) {
-        shieldRegen += amount;
-
-        if (shieldRegen >= MAX_BASE_STAT_VALUES)
-            shieldRegen = MAX_BASE_STAT_VALUES;
-    }
-
-    public void IncreaseArmor(int amount) {
-        armor += amount;
-
-        if (armor >= MAX_BASE_STAT_VALUES)
-            armor = MAX_BASE_STAT_VALUES;
-    }
-
-    public void IncreaseResistance(int amount) {
-        resistance += amount;
-
-        if (resistance >= MAX_BASE_STAT_VALUES)
-            resistance = MAX_BASE_STAT_VALUES;
-    }
-
-    public void IncreaseAttackSpd(int amount) {
-        attackSpd += amount;
-
-        if (attackSpd >= MAX_BASE_STAT_VALUES)
-            attackSpd = MAX_BASE_STAT_VALUES;
-    }
-
-    public void IncreaseFireRate(int amount) {
-        fireRate += amount;
-
-        if (fireRate >= MAX_BASE_STAT_VALUES)
-            fireRate = MAX_BASE_STAT_VALUES;
-    }
-
-    public void IncreaseMovementSpd(int amount) {
-        movementSpd += amount;
-
-        if (movementSpd >= MAX_BASE_STAT_VALUES)
-            movementSpd = MAX_BASE_STAT_VALUES;
-    }
-
-    public void IncreaseDodge(int amount) {
-        dodge += amount;
-
-        if (dodge >= MAX_PERCENTAGE)
-            dodge = MAX_PERCENTAGE;
-    }
-
-    public void IncreaseCritical(int amount) {
-        critical += amount;
-
-        if (critical >= MAX_PERCENTAGE)
-            critical = MAX_PERCENTAGE;
-    }
 }
