@@ -17,8 +17,6 @@ public class StatGainCanvas : MonoBehaviour {
 
     public LeanTweenType tweenType;
 
-    private string gainTextStart = "You increased your ";
-    private string gainTextEnd = " stats!";
     private float timeToShow = 3;
     private float transitionSpd = 1;
 
@@ -31,8 +29,8 @@ public class StatGainCanvas : MonoBehaviour {
         statObject.transform.LeanMoveY(hideYPosition, 0f);
     }
 
-    public void ShowStatGain(string gainedStats) {
-        textView.text = gainTextStart + gainedStats + gainTextEnd;
+    public void ShowStatGain(string statGainText) {
+        textView.text = statGainText;
         LeanTween.moveLocalY(statObject, 0, transitionSpd).
             setEase(tweenType).
             setOnComplete(() => Invoke("HideStatGain", timeToShow));

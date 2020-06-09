@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 
-public enum WordsType { Stoic, Nurturing, Idealistic, Nihilistic, Rational, Beligerent };
+public enum WordsType { Stoic, Nurturing, Idealistic, Nihilistic, Rational };
 
 public class DialogueScript : MonoBehaviour {
 
@@ -93,40 +93,7 @@ public class DialogueScript : MonoBehaviour {
             () => Invoke("CloseDialogue", 1)));                                         // Invoke close dialogue on complete
 
         // Increase stats
-        PlayerStats p = PlayerStats.Instance;
-        int amount = 1;
-        string statText = "";
-        switch (type) {
-            case WordsType.Stoic:
-                p.IncreaseArmor(amount);
-                p.IncreaseResistance(amount);
-                statText = "Armor & Resistance";
-                break;
-            case WordsType.Nurturing:
-                p.IncreaseMaxHp(amount);
-                p.IncreaseShieldRegen(amount);
-                statText = "Maximum health & Shield regen";
-                break;
-            case WordsType.Idealistic:
-                p.IncreaseAttackSpd(amount);
-                p.IncreaseFireRate(amount);
-                statText = "Attack speed & Fire rate";
-                break;
-            case WordsType.Nihilistic:
-                p.IncreaseDodge(amount);
-                statText = "Dodge";
-                break;
-            case WordsType.Rational:
-                p.IncreaseCritical(amount);
-                statText = "Critical";
-                break;
-            case WordsType.Beligerent:
-                p.IncreaseMovementSpd(amount);
-                statText = "Movement speed";
-                break;
-        }
-
-        CanvasMaster.Instance.ShowStatGain(statText);
+        PlayerStats.Instance.RandomizeGainedStat(type);
     }
 
     /// <summary>

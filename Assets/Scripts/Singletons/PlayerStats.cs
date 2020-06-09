@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct Stat {
+public class Stat {
+    public string name;
     public float value;
 
-    public Stat(float value) {
+    public Stat(string name, float value) {
+        this.name = name;
         this.value = value;
     }
 }
@@ -27,7 +29,7 @@ public class PlayerStats : MonoBehaviour {
         }
     }
 
-    private const float MAX_LEVEL = 99, MAX_BASE_STAT_VALUES = 25, STARTING_STAT = 1;
+    private const float MAX_LEVEL = 99, MAX_BASE_STAT_VALUES = 15, STARTING_STAT = 1;
 
     // Stats to save and load
     // Nurturing
@@ -63,25 +65,25 @@ public class PlayerStats : MonoBehaviour {
     private float hp, shield, stamina, ammo;
 
     private void SetDefaultStats() {
-        shieldRecovery = new Stat(STARTING_STAT);
-        staminaRecovery = new Stat(STARTING_STAT);
-        ammoRecovery = new Stat(STARTING_STAT);
+        shieldRecovery = new Stat("Shield recovery", STARTING_STAT);
+        staminaRecovery = new Stat("Stamina recovery", STARTING_STAT);
+        ammoRecovery = new Stat("Ammo recovery", STARTING_STAT);
 
-        dodgeRate = new Stat(STARTING_STAT);
-        criticalRate = new Stat(STARTING_STAT);
-        rareItemFindRate = new Stat(STARTING_STAT);
+        dodgeRate = new Stat("Dodge rate", STARTING_STAT);
+        criticalRate = new Stat("Critical rate", STARTING_STAT);
+        rareItemFindRate = new Stat("Rare item find rate", STARTING_STAT);
 
-        piercingDmg = new Stat(STARTING_STAT);
-        kineticDmg = new Stat(STARTING_STAT);
-        energyDmg = new Stat(STARTING_STAT);
+        piercingDmg = new Stat("Piercing damage", STARTING_STAT);
+        kineticDmg = new Stat("Kinetic damage", STARTING_STAT);
+        energyDmg = new Stat("Energy damage", STARTING_STAT);
 
-        piercingRes = new Stat(STARTING_STAT);
-        kineticRes = new Stat(STARTING_STAT);
-        energyRes = new Stat(STARTING_STAT);
+        piercingRes = new Stat("Piercing resistance", STARTING_STAT);
+        kineticRes = new Stat("Kinetic resistance", STARTING_STAT);
+        energyRes = new Stat("Energy resistance", STARTING_STAT);
 
-        attackSpd = new Stat(STARTING_STAT);
-        movementSpd = new Stat(STARTING_STAT);
-        fireRate = new Stat(STARTING_STAT);
+        attackSpd = new Stat("Attack speed", STARTING_STAT);
+        movementSpd = new Stat("Movement speed", STARTING_STAT);
+        fireRate = new Stat("Fire rate", STARTING_STAT);
 
         level = 1;
         xp = 0;
@@ -142,19 +144,68 @@ public class PlayerStats : MonoBehaviour {
         xp = save.xp;
     }
 
-    private void IncreaseStatValue(Stat stat, float amount) {
-        if (stat.value == MAX_BASE_STAT_VALUES) {
-            // Inform player somehow (ADD LATER)
-            return;
-        }
+    private bool IncreaseStatValue(Stat stat) {
+        // If stats is already full, return false
+        if (stat.value == MAX_BASE_STAT_VALUES)
+            return false;
 
-        stat.value += amount;
+        stat.value += 1;
 
         if (stat.value >= MAX_BASE_STAT_VALUES) {
-            // Inform player that stat is now maxed out (ADD LATER)
             stat.value = MAX_BASE_STAT_VALUES;
         }
+
+        return true;
     }
 
+    public void RandomizeGainedStat(WordsType type) {
+        Stat[] stats;
 
+        switch (type) {
+            case WordsType.Nurturing:
+                stats = new Stat[] { shieldRecovery, staminaRecovery, ammoRecovery };
+                break;
+            case WordsType.Rational:
+                stats = new Stat[] { dodgeRate, criticalRate, rareItemFindRate };
+                break;
+            case WordsType.Idealistic:
+                stats = new Stat[] { piercingDmg, kineticDmg, energyDmg };
+                break;
+            case WordsType.Stoic:
+                stats = new Stat[] { piercingRes, kineticRes, energyRes };
+                break;
+            case WordsType.Nihilistic:
+                stats = new Stat[] { attackSpd, movementSpd, fireRate };
+                break;
+            default:
+                stats = new Stat[3]; // Not possible, but removes error "unassigned variable"
+                break;
+        }
+
+        List<int> maxedStats = new List<int>();
+        while (true) {
+
+            int index = Random.Range(0, 3);
+
+            // If stat is already checked and maxed out, randomize new index
+            if (maxedStats.Contains(index))
+                continue;
+
+            Stat stat = stats[index];
+            bool increased = IncreaseStatValue(stat);
+
+            if (!increased) {
+                maxedStats.Add(index);
+            } else {
+                CanvasMaster.Instance.ShowStatGain($"You gained a {stat.name} stat bonus!");
+                break;
+            }
+
+            if (maxedStats.Count == stats.Length) {
+                // Inform player that all stats are maxed out
+                CanvasMaster.Instance.ShowStatGain($"All stats for {type.ToString()} answers are maxed out!");
+                break;
+            }
+        }
+    }
 }
