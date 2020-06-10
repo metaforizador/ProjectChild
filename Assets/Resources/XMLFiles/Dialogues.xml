@@ -2,11 +2,7 @@
 <root>
 	<questions>
 		<question>
-<<<<<<< HEAD
 			<area>Level1</area>
-=======
-			<mood>Joyful</mood>
->>>>>>> toni
 			<questionText>So much violence. Mom, when is this going to end?</questionText>
 			<answers>
 				<answer>
@@ -24,11 +20,7 @@
 			</answers>
 		</question>
 		<question>
-<<<<<<< HEAD
 			<area>Level1</area>
-=======
-			<mood>Joyful</mood>
->>>>>>> toni
 			<questionText>What is this place?</questionText>
 			<answers>
 				<answer>
@@ -46,11 +38,7 @@
 			</answers>
 		</question>
 		<question>
-<<<<<<< HEAD
 			<area>Level2</area>
-=======
-			<mood>Gloomy</mood>
->>>>>>> toni
 			<questionText>Mom, do you think that I'm a parasite?</questionText>
 			<answers>
 				<answer>

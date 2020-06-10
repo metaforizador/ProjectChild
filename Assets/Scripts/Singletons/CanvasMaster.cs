@@ -16,47 +16,14 @@ public class CanvasMaster : MonoBehaviour {
         }
     }
 
-<<<<<<< HEAD
     public GameObject dialogueCanvas;
-=======
-    public GameObject dialogueCanvas, statGainCanvas;
-
-    // Store questions and replies so they can be looped through
-    public Dictionary<Mood, List<string>> askedQuestions { get; private set; }
-    public Dictionary<WordsType, List<string>> givenReplies { get; private set; }
->>>>>>> toni
 
     void Start() {
         // Enable canvases when game starts to fix fps hiccups when opening them
         dialogueCanvas.SetActive(true);
-<<<<<<< HEAD
-=======
-        statGainCanvas.SetActive(true);
-
-        // Initialize saved questions and replies
-        askedQuestions = new Dictionary<Mood, List<string>>();
-        givenReplies = new Dictionary<WordsType, List<string>>();
-    }
-
-    public void SaveCanvasValues(Save save) {
-        save.askedQuestions = askedQuestions;
-        save.givenReplies = givenReplies;
-    }
-
-    public void LoadCanvasValues(Save save) {
-        askedQuestions = save.askedQuestions;
-        givenReplies = save.givenReplies;
->>>>>>> toni
     }
 
     public void OpenDialogue() {
         dialogueCanvas.GetComponent<DialogueScript>().ShowDialogue();
     }
-<<<<<<< HEAD
-=======
-
-    public void ShowStatGain(string gainedStats) {
-        statGainCanvas.GetComponent<StatGainCanvas>().ShowStatGain(gainedStats);
-    }
->>>>>>> toni
 }
