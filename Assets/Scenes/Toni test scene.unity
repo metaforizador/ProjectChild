@@ -303,10 +303,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 466369725, guid: 6d338ee6e03563e4db19846f8a3e78df, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 9217446715748446010}
     - target: {fileID: 5520579357708227706, guid: 6d338ee6e03563e4db19846f8a3e78df,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -417,16 +413,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Master Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 5520579357710334656, guid: 6d338ee6e03563e4db19846f8a3e78df,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 9217446715748446010}
-    - target: {fileID: 5520579358019451136, guid: 6d338ee6e03563e4db19846f8a3e78df,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 9217446715748446010}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d338ee6e03563e4db19846f8a3e78df, type: 3}
 --- !u!1001 &9217446715748446009
@@ -498,15 +484,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73e82742c32c3c84bb0f9cd85d8594ee, type: 3}
---- !u!114 &9217446715748446010 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5509095400073917003, guid: 73e82742c32c3c84bb0f9cd85d8594ee,
-    type: 3}
-  m_PrefabInstance: {fileID: 9217446715748446009}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bfddb0a95a53f44f8f29ee4c55f785c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
