@@ -22,6 +22,10 @@ public class GameMaster : MonoBehaviour {
     private Save CreateSaveGameObject() {
         Save save = new Save();
         PlayerStats.Instance.SavePlayerStats(save);
+<<<<<<< HEAD
+=======
+        CanvasMaster.Instance.SaveCanvasValues(save);
+>>>>>>> toni
 
         return save;
     }
@@ -43,6 +47,10 @@ public class GameMaster : MonoBehaviour {
             FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
             Save save = (Save)bf.Deserialize(file);
             PlayerStats.Instance.LoadPlayerStats(save);
+<<<<<<< HEAD
+=======
+            CanvasMaster.Instance.LoadCanvasValues(save);
+>>>>>>> toni
             file.Close();
 
             Debug.Log("Game Loaded");
@@ -54,7 +62,11 @@ public class GameMaster : MonoBehaviour {
     public void QuitGame() {
         if (Application.isEditor) {
             // Helps when testing in editor
+<<<<<<< HEAD
             //UnityEditor.EditorApplication.ExitPlaymode();
+=======
+            UnityEditor.EditorApplication.ExitPlaymode();
+>>>>>>> toni
         } else {
             Application.Quit();
         }
