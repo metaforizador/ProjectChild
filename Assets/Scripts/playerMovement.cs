@@ -8,7 +8,7 @@ public class playerMovement : MonoBehaviour
     public Transform cam;
 
     //only used for test purposes
-    public GameObject masterCanvas;
+    public GameObject testCanvas;
     private bool menu = false;
 
     public float speed = 6f;
@@ -64,7 +64,7 @@ public class playerMovement : MonoBehaviour
 
             Debug.Log(menu);
 
-            masterCanvas.SetActive(menu);
+            testCanvas.SetActive(menu);
         }
     }
 }
