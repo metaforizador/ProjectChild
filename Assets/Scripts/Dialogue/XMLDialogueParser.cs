@@ -44,7 +44,7 @@ public class XMLDialogueParser {
     [XmlArrayItem("reply")]
     public List<Reply> replies = new List<Reply>();
 
-    private static string path = Path.Combine(Application.dataPath, "Resources/XMLFiles/Dialogues.xml");
+    private static string path = Path.Combine(Application.streamingAssetsPath, "XMLFiles/Dialogues.xml");
 
     public static XMLDialogueParser Load() {
         try {
