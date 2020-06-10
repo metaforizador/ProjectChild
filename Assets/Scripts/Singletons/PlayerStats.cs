@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-<<<<<<< HEAD
-=======
 [System.Serializable]
 public class Stat {
     public string name;
@@ -15,7 +13,6 @@ public class Stat {
     }
 }
 
->>>>>>> toni
 public class PlayerStats : MonoBehaviour {
     
     // Make class static and destroy if script already exists
@@ -32,65 +29,6 @@ public class PlayerStats : MonoBehaviour {
         }
     }
 
-<<<<<<< HEAD
-    // Stats to save and load (Declare defaults here)
-    [SerializeField]
-    private int maxHp, maxShield, level, xp, shieldRegen, armor, resistance, attackSpd, fireRate, dodge, critical, movementSpd;
-
-    // Temporary stats
-    [SerializeField]
-    private int hp, shield;
-
-    private void SetDefaultStats() {
-        maxHp = 70;
-        maxShield = 70;
-        level = 1;
-        xp = 0;
-        shieldRegen = 12;
-        armor = 8;
-        resistance = 8;
-        attackSpd = 13;
-        fireRate = 13;
-        dodge = 20;
-        critical = 20;
-        movementSpd = 12;
-
-        hp = maxHp;
-        shield = maxShield;
-    }
-
-    public void SavePlayerStats(Save save) {
-        save.maxHp = maxHp;
-        save.maxShield = maxShield;
-        save.level = level;
-        save.xp = xp;
-        save.shieldRegen = shieldRegen;
-        save.armor = armor;
-        save.resistance = resistance;
-        save.attackSpd = attackSpd;
-        save.fireRate = fireRate;
-        save.dodge = dodge;
-        save.critical = critical;
-        save.movementSpd = movementSpd;
-    }
-
-    public void LoadPlayerStats(Save save) {
-        maxHp = save.maxHp;
-        maxShield = save.maxShield;
-        level = save.level;
-        xp = save.xp;
-        shieldRegen = save.shieldRegen;
-        armor = save.armor;
-        resistance = save.resistance;
-        attackSpd = save.attackSpd;
-        fireRate = save.fireRate;
-        dodge = save.dodge;
-        critical = save.critical;
-        movementSpd = save.movementSpd;
-
-        hp = maxHp;
-        shield = maxShield;
-=======
     private const float MAX_BASE_STAT_VALUES = 15, STARTING_STAT = 1;
     private const int XP_MULTIPLIER = 100;
 
@@ -294,6 +232,5 @@ public class PlayerStats : MonoBehaviour {
         nextLevelUpXp += xpToAdd;
 
         // ADD LEVEL UP STUFF TO OPEN DIALOGUE LATER
->>>>>>> toni
     }
 }

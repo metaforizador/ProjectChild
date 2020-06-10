@@ -5,16 +5,10 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 
-<<<<<<< HEAD
-public class DialogueScript : MonoBehaviour {
-
-    public enum WordsType {Stoic, Nurturing, Idealistic, Nihilistic, Rational, Beligerent};
-=======
 public enum WordsType { Stoic, Nurturing, Idealistic, Nihilistic, Rational };
 public enum Mood { Depressing, Joyful, Beautiful, Gloomy }
 
 public class DialogueScript : MonoBehaviour {
->>>>>>> toni
 
     [SerializeField]
     private TextMeshProUGUI questionView;
@@ -30,27 +24,18 @@ public class DialogueScript : MonoBehaviour {
 
     public LeanTweenType tweenType;
 
-<<<<<<< HEAD
-    private string curArea = "Level1";
-=======
     private Mood curMood = Mood.Joyful;
->>>>>>> toni
     private string question;
     private string reply;
     private List<Button> answerButtons = new List<Button>();
 
-<<<<<<< HEAD
-=======
     private Dictionary<WordsType, AudioClip> audios = new Dictionary<WordsType, AudioClip>();
     private AudioSource audioSource;
 
->>>>>>> toni
     void OnEnable() {
         // Hide panels
         questionObject.transform.localScale = new Vector3(0, 0, 0);
         answersObject.transform.LeanMoveLocalY(answersYStartPosition, 0f);
-<<<<<<< HEAD
-=======
 
         // Load sounds for answers
         audioSource = GetComponent<AudioSource>();
@@ -60,17 +45,12 @@ public class DialogueScript : MonoBehaviour {
         audios.Add(WordsType.Idealistic, (AudioClip)Resources.Load(path + "IdealisticWords"));
         audios.Add(WordsType.Nihilistic, (AudioClip)Resources.Load(path + "NihilisticWords"));
         audios.Add(WordsType.Rational, (AudioClip)Resources.Load(path + "RationalWords"));
->>>>>>> toni
     }
 
     public void ShowDialogue() {
         // Set question text and answers
         Answer[] answers = new Answer[0];
-<<<<<<< HEAD
-        Question q = XMLDialogueParser.GetRandomQuestion(curArea);  // Load random question from xml
-=======
         Question q = XMLDialogueParser.GetRandomQuestion(curMood);  // Load random question from xml
->>>>>>> toni
         question = q.questionText;
         answers = q.answers;
 
@@ -114,32 +94,22 @@ public class DialogueScript : MonoBehaviour {
     }
 
     /// <summary>
-<<<<<<< HEAD
-    /// Shows random reply when an answer is clicked.
-    /// </summary>
-    /// <param name="type">WordsType of the reply to show</param>
-    private void AnswerClicked(WordsType type) {
-=======
     /// Shows reply and increases stats when answer is clicked.
     /// </summary>
     /// <param name="type">WordsType of the reply to show</param>
     private void AnswerClicked(WordsType type) {
         // Show random reply
->>>>>>> toni
         reply = XMLDialogueParser.GetRandomReply(type);
         LeanTween.moveLocalY(answersObject, answersYStartPosition, 0.5f).
             setEase(tweenType).
             setOnComplete(() => Helper.Instance.WriteOutText(reply, questionView,       // Write out child talk
             () => Invoke("CloseDialogue", 1)));                                         // Invoke close dialogue on complete
-<<<<<<< HEAD
-=======
 
         // Increase stats
         PlayerStats.Instance.RandomizeGainedStat(type);
 
         // Play sound effect
         audioSource.PlayOneShot(audios[type]);
->>>>>>> toni
     }
 
     /// <summary>

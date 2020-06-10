@@ -130,8 +130,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-<<<<<<< HEAD
-=======
 --- !u!1 &529386622
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +286,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
->>>>>>> toni
 --- !u!1 &982041705
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,8 +572,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-<<<<<<< HEAD
-=======
 --- !u!1 &1230643687
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,7 +763,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
->>>>>>> toni
 --- !u!1 &1886144176
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,11 +953,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-<<<<<<< HEAD
-  m_AnchoredPosition: {x: 9, y: -3}
-=======
   m_AnchoredPosition: {x: 0, y: 0}
->>>>>>> toni
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &372132766870879813
@@ -1085,8 +1075,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-<<<<<<< HEAD
-=======
 --- !u!1 &1935868904006035469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,7 +1111,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
->>>>>>> toni
 --- !u!1 &2651296201017467922
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,19 +1143,11 @@ RectTransform:
   m_Father: {fileID: 5520579357011019054}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -18.100006}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
-=======
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 1}
->>>>>>> toni
 --- !u!222 &1256121447074875462
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1244,19 +1223,11 @@ RectTransform:
   m_Father: {fileID: 5520579357849947438}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1188, y: 668}
-  m_Pivot: {x: 0.5, y: 1}
-=======
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
->>>>>>> toni
 --- !u!222 &5520579357011019052
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1640,10 +1611,7 @@ RectTransform:
   - {fileID: 5520579358216948262}
   - {fileID: 5520579357849947438}
   - {fileID: 5520579358866669635}
-<<<<<<< HEAD
-=======
   - {fileID: 1230643688}
->>>>>>> toni
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1725,10 +1693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueCanvas: {fileID: 5520579358866669639}
-<<<<<<< HEAD
-=======
   statGainCanvas: {fileID: 1230643687}
->>>>>>> toni
 --- !u!1 &5520579357710334658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,17 +1858,10 @@ RectTransform:
   m_Father: {fileID: 5520579357708227706}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -334}
-  m_SizeDelta: {x: 1188, y: 668}
-=======
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
->>>>>>> toni
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5520579357849947439
 Canvas:
@@ -2236,11 +2194,7 @@ PrefabInstance:
     - target: {fileID: 4656141937457191336, guid: 75a7daf1ffc4f5041b4361e9f496836e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-<<<<<<< HEAD
-      value: 594
-=======
       value: -27
->>>>>>> toni
       objectReference: {fileID: 0}
     - target: {fileID: 4656141937457191336, guid: 75a7daf1ffc4f5041b4361e9f496836e,
         type: 3}
@@ -2260,11 +2214,7 @@ PrefabInstance:
     - target: {fileID: 4656141937457191336, guid: 75a7daf1ffc4f5041b4361e9f496836e,
         type: 3}
       propertyPath: m_AnchorMin.x
-<<<<<<< HEAD
-      value: 0
-=======
       value: 0.5
->>>>>>> toni
       objectReference: {fileID: 0}
     - target: {fileID: 4656141937457191336, guid: 75a7daf1ffc4f5041b4361e9f496836e,
         type: 3}
@@ -2274,11 +2224,7 @@ PrefabInstance:
     - target: {fileID: 4656141937457191336, guid: 75a7daf1ffc4f5041b4361e9f496836e,
         type: 3}
       propertyPath: m_AnchorMax.x
-<<<<<<< HEAD
-      value: 0
-=======
       value: 0.5
->>>>>>> toni
       objectReference: {fileID: 0}
     - target: {fileID: 4656141937457191336, guid: 75a7daf1ffc4f5041b4361e9f496836e,
         type: 3}
