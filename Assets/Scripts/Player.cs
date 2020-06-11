@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     private Stat[] recoveries, recoveryMultipliers;
     private float recoveryDelay = 0.2f;
     private float recoveryBaseValue;
-    private const float RECOVERY_MIN_SPEED = 1, RECOVERY_MAX_SPEED = 5;
+    private const float RECOVERY_MIN_SPEED = 1, RECOVERY_MAX_SPEED = 4;
 
     void Start() {
         hp = new Stat(MAX_VALUE);
@@ -39,24 +39,28 @@ public class Player : MonoBehaviour
         alive = true;
 
         hp.value = MAX_VALUE;
-        shield.value = 10;
+        shield.value = MAX_VALUE;
         stamina.value = MAX_VALUE;
         ammo.value = MAX_VALUE;
 
         StartCoroutine(RestoreRecoveries());
     }
 
+    /// <summary>
+    /// Restores recoverable value according to provided time delay.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
     IEnumerator RestoreRecoveries() {
         while (alive) {
             for (int i = 0; i < recoveries.Length; i++) {
                 Stat recovery = recoveries[i];
 
+                // If value is not full
                 if (recovery.value < MAX_VALUE) {
+                    // Get the level of multiplier from PlayerStats
                     float multiplier = recoveryMultipliers[i].value;
 
-                    // If multiplier is 0, dont use it 
-                    recovery.value += multiplier == 0 ? 
-                        recoveryBaseValue : recoveryBaseValue * multiplier;
+                    recovery.value += RECOVERY_MIN_SPEED + (recoveryBaseValue * multiplier);
 
                     if (recovery.value > MAX_VALUE)
                         recovery.value = MAX_VALUE;
@@ -65,10 +69,6 @@ public class Player : MonoBehaviour
 
             yield return new WaitForSeconds(recoveryDelay);
         }
-    }
-
-    void Update() {
-
     }
 
     private void Die() {
