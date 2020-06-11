@@ -6,6 +6,7 @@ public class playerMovement : MonoBehaviour
 {
     public CharacterController controller;
     public Transform cam;
+    public Animator animator;
 
     //only used for test purposes
     public GameObject masterCanvas;
@@ -14,6 +15,8 @@ public class playerMovement : MonoBehaviour
     public float speed = 6f;
     public float gravity = -9.81f;
     public float jumpHeight = 10f;
+
+    private Vector3 xzMovement;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -27,7 +30,11 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
+        //checks if player is the air
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        animator.SetFloat("Speed", GetComponent<CharacterController>().velocity.magnitude);
+        Debug.Log(GetComponent<CharacterController>().velocity.magnitude);
 
         if(isGrounded && velocity.y < 0)
         {
@@ -45,17 +52,25 @@ public class playerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            xzMovement = moveDir.normalized * speed * Time.deltaTime;
         }
 
-        if(Input.GetButtonDown("Jump") && isGrounded)
+        if (isGrounded)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
+            animator.SetBool("Jumping", false);
 
+            if (Input.GetButtonDown("Jump"))
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                animator.SetTrigger("Jump");
+                animator.SetBool("Jumping", true);
+            }
+        }
+        
         velocity.y += gravity * Time.deltaTime;
 
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime + xzMovement);
+        xzMovement = new Vector3(0, 0, 0);
 
         //toggle button for dialogue system (demo only)
         if (Input.GetButtonDown("test"))
