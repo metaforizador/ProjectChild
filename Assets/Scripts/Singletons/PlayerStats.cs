@@ -58,8 +58,10 @@ public class PlayerStats : MonoBehaviour {
     public Stat movementSpd { get; private set; }
     public Stat fireRate { get; private set; }
 
-    [SerializeField]    // Other stats
-    private int level, xp, nextLevelUpXp;
+    // Other stats
+    public int level { get; private set; }
+    public int xp { get; private set; }
+    public int nextLevelUpXp { get; private set; }
 
     // Temporary stats
     [SerializeField]
