@@ -14,25 +14,25 @@ public class PlayerStatsCanvas : MonoBehaviour {
     public void OnEnable() {
         PlayerStats p = PlayerStats.Instance;
 
-        shieldNum.text = p.shieldRecovery.value.ToString();
-        staminaNum.text = p.staminaRecovery.value.ToString();
-        ammoNum.text = p.ammoRecovery.value.ToString();
+        shieldNum.text = p.shieldRecovery.level.ToString();
+        staminaNum.text = p.staminaRecovery.level.ToString();
+        ammoNum.text = p.ammoRecovery.level.ToString();
 
-        dodgeNum.text = p.dodgeRate.value.ToString();
-        criticalNum.text = p.criticalRate.value.ToString();
-        rareItemFindNum.text = p.rareItemFindRate.value.ToString();
+        dodgeNum.text = p.dodgeRate.level.ToString();
+        criticalNum.text = p.criticalRate.level.ToString();
+        rareItemFindNum.text = p.rareItemFindRate.level.ToString();
 
-        piercingDmgNum.text = p.piercingDmg.value.ToString();
-        kineticDmgNum.text = p.kineticDmg.value.ToString();
-        energyDmgNum.text = p.energyDmg.value.ToString();
+        piercingDmgNum.text = p.piercingDmg.level.ToString();
+        kineticDmgNum.text = p.kineticDmg.level.ToString();
+        energyDmgNum.text = p.energyDmg.level.ToString();
 
-        piercingResNum.text = p.piercingRes.value.ToString();
-        kineticResNum.text = p.kineticRes.value.ToString();
-        energyResNum.text = p.energyRes.value.ToString();
+        piercingResNum.text = p.piercingRes.level.ToString();
+        kineticResNum.text = p.kineticRes.level.ToString();
+        energyResNum.text = p.energyRes.level.ToString();
 
-        attackNum.text = p.attackSpd.value.ToString();
-        movementNum.text = p.movementSpd.value.ToString();
-        fireRateNum.text = p.fireRate.value.ToString();
+        attackNum.text = p.attackSpd.level.ToString();
+        movementNum.text = p.movementSpd.level.ToString();
+        fireRateNum.text = p.fireRate.level.ToString();
 
         levelNum.text = p.level.ToString();
         xpNum.text = p.xp.ToString();

@@ -4,16 +4,24 @@ using UnityEngine;
 
 [System.Serializable]
 public class Stat {
-    public string name;
-    public float value;
+    public float level;
 
-    public Stat(float value) {
-        this.value = value;
+    [System.NonSerialized]
+    public string name;
+
+    [System.NonSerialized]
+    public float realMinValue, realMaxValue, valuePerLevel;
+
+    public Stat(string name, float level, float realMinValue, float realMaxValue) {
+        this.name = name;
+        this.level = level;
+        this.realMinValue = realMinValue;
+        this.realMaxValue = realMaxValue;
+        this.valuePerLevel = (realMaxValue - realMinValue) / PlayerStats.MAX_BASE_STAT_VALUES;
     }
 
-    public Stat(string name, float value) {
-        this.name = name;
-        this.value = value;
+    public void LoadStat(Stat loadFrom) {
+        this.level = loadFrom.level;
     }
 }
 
@@ -36,6 +44,9 @@ public class PlayerStats : MonoBehaviour {
     public const float MAX_BASE_STAT_VALUES = 15;
     private const float STARTING_STAT = 0;
     private const int XP_MULTIPLIER = 100;
+
+    // Real min and max values for stats
+    private const float RECOVERY_MIN_SPEED = 1, RECOVERY_MAX_SPEED = 4;
 
     // Stats to save and load
     // Nurturing
@@ -69,25 +80,25 @@ public class PlayerStats : MonoBehaviour {
     public int nextLevelUpXp { get; private set; }
 
     private void SetDefaultStats() {
-        shieldRecovery = new Stat("Shield recovery", STARTING_STAT);
-        staminaRecovery = new Stat("Stamina recovery", STARTING_STAT);
-        ammoRecovery = new Stat("Ammo recovery", STARTING_STAT);
+        shieldRecovery = new Stat("Shield recovery", STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
+        staminaRecovery = new Stat("Stamina recovery", STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
+        ammoRecovery = new Stat("Ammo recovery", STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
 
-        dodgeRate = new Stat("Dodge rate", STARTING_STAT);
-        criticalRate = new Stat("Critical rate", STARTING_STAT);
-        rareItemFindRate = new Stat("Rare item find rate", STARTING_STAT);
+        dodgeRate = new Stat("Dodge rate", STARTING_STAT, 0, 0);
+        criticalRate = new Stat("Critical rate", STARTING_STAT, 0, 0);
+        rareItemFindRate = new Stat("Rare item find rate", STARTING_STAT, 0, 0);
 
-        piercingDmg = new Stat("Piercing damage", STARTING_STAT);
-        kineticDmg = new Stat("Kinetic damage", STARTING_STAT);
-        energyDmg = new Stat("Energy damage", STARTING_STAT);
+        piercingDmg = new Stat("Piercing damage", STARTING_STAT, 0, 0);
+        kineticDmg = new Stat("Kinetic damage", STARTING_STAT, 0, 0);
+        energyDmg = new Stat("Energy damage", STARTING_STAT, 0, 0);
 
-        piercingRes = new Stat("Piercing resistance", STARTING_STAT);
-        kineticRes = new Stat("Kinetic resistance", STARTING_STAT);
-        energyRes = new Stat("Energy resistance", STARTING_STAT);
+        piercingRes = new Stat("Piercing resistance", STARTING_STAT, 0, 0);
+        kineticRes = new Stat("Kinetic resistance", STARTING_STAT, 0, 0);
+        energyRes = new Stat("Energy resistance", STARTING_STAT, 0, 0);
 
-        attackSpd = new Stat("Attack speed", STARTING_STAT);
-        movementSpd = new Stat("Movement speed", STARTING_STAT);
-        fireRate = new Stat("Fire rate", STARTING_STAT);
+        attackSpd = new Stat("Attack speed", STARTING_STAT, 0, 0);
+        movementSpd = new Stat("Movement speed", STARTING_STAT, 0, 0);
+        fireRate = new Stat("Fire rate", STARTING_STAT, 0, 0);
 
         level = 1;
         xp = 0;
@@ -121,25 +132,26 @@ public class PlayerStats : MonoBehaviour {
     }
 
     public void LoadPlayerStats(Save save) {
-        shieldRecovery = save.shieldRecovery;
-        staminaRecovery = save.staminaRecovery;
-        ammoRecovery = save.ammoRecovery;
+        Debug.Log(save.piercingDmg.name);
+        shieldRecovery.LoadStat(save.shieldRecovery);
+        staminaRecovery.LoadStat(save.staminaRecovery);
+        ammoRecovery.LoadStat(save.ammoRecovery);
 
-        dodgeRate = save.dodgeRate;
-        criticalRate = save.criticalRate;
-        rareItemFindRate = save.rareItemFindRate;
+        dodgeRate.LoadStat(save.dodgeRate);
+        criticalRate.LoadStat(save.criticalRate);
+        rareItemFindRate.LoadStat(save.rareItemFindRate);
 
-        piercingDmg = save.piercingDmg;
-        kineticDmg = save.kineticDmg;
-        energyDmg = save.energyDmg;
+        piercingDmg.LoadStat(save.piercingDmg);
+        kineticDmg.LoadStat(save.kineticDmg);
+        energyDmg.LoadStat(save.energyDmg);
 
-        piercingRes = save.piercingRes;
-        kineticRes = save.kineticRes;
-        energyRes = save.energyRes;
+        piercingRes.LoadStat(save.piercingRes);
+        kineticRes.LoadStat(save.kineticRes);
+        energyRes.LoadStat(save.energyRes);
 
-        attackSpd = save.attackSpd;
-        movementSpd = save.movementSpd;
-        fireRate = save.fireRate;
+        attackSpd.LoadStat(save.attackSpd);
+        movementSpd.LoadStat(save.movementSpd);
+        fireRate.LoadStat(save.fireRate);
 
         level = save.level;
         xp = save.xp;
@@ -148,13 +160,13 @@ public class PlayerStats : MonoBehaviour {
 
     private bool IncreaseStatValue(Stat stat) {
         // If stats is already full, return false
-        if (stat.value == MAX_BASE_STAT_VALUES)
+        if (stat.level == MAX_BASE_STAT_VALUES)
             return false;
 
-        stat.value += 1;
+        stat.level += 1;
 
-        if (stat.value >= MAX_BASE_STAT_VALUES) {
-            stat.value = MAX_BASE_STAT_VALUES;
+        if (stat.level >= MAX_BASE_STAT_VALUES) {
+            stat.level = MAX_BASE_STAT_VALUES;
         }
 
         return true;

@@ -2,11 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
-{
+public class Player : MonoBehaviour {
+
+    /// <summary>
+    /// Holds temporary stat values.
+    /// 
+    /// This class is needed so that stat values can be passed as
+    /// a reference and not as a value.
+    /// </summary>
+    [System.Serializable]
+    class TempStat {
+        public float value;
+
+        public TempStat(float value) {
+            this.value = value;
+        }
+    }
+
     // Temporary stats
     [SerializeField]
-    private Stat hp, shield, stamina, ammo;
+    private TempStat hp, shield, stamina, ammo;
 
     [SerializeField]
     private bool alive;
@@ -15,22 +30,20 @@ public class Player : MonoBehaviour
 
     private PlayerStats stats;
 
-    private Stat[] recoveries, recoveryMultipliers;
+    private Stat[] recoveryStats;
+    private TempStat[] recoveries;
     private float recoveryDelay = 0.2f;
-    private float recoveryBaseValue;
-    private const float RECOVERY_MIN_SPEED = 1, RECOVERY_MAX_SPEED = 4;
 
     void Start() {
-        hp = new Stat(MAX_VALUE);
-        shield = new Stat(MAX_VALUE);
-        stamina = new Stat(MAX_VALUE);
-        ammo = new Stat(MAX_VALUE);
+        hp = new TempStat(MAX_VALUE);
+        shield = new TempStat(MAX_VALUE);
+        stamina = new TempStat(MAX_VALUE);
+        ammo = new TempStat(MAX_VALUE);
 
         stats = PlayerStats.Instance;
 
-        recoveries = new Stat[] { shield, stamina, ammo };
-        recoveryMultipliers = new Stat[] { stats.shieldRecovery, stats.staminaRecovery, stats.ammoRecovery };
-        recoveryBaseValue = (RECOVERY_MAX_SPEED - RECOVERY_MIN_SPEED) / PlayerStats.MAX_BASE_STAT_VALUES;
+        recoveries = new TempStat[] { shield, stamina, ammo };
+        recoveryStats = new Stat[] { stats.shieldRecovery, stats.staminaRecovery, stats.ammoRecovery };
 
         ResetValues();
     }
@@ -53,14 +66,14 @@ public class Player : MonoBehaviour
     IEnumerator RestoreRecoveries() {
         while (alive) {
             for (int i = 0; i < recoveries.Length; i++) {
-                Stat recovery = recoveries[i];
+                TempStat recovery = recoveries[i];
 
                 // If value is not full
                 if (recovery.value < MAX_VALUE) {
-                    // Get the level of multiplier from PlayerStats
-                    float multiplier = recoveryMultipliers[i].value;
+                    // Get minimum, level and valuerPerLevel from stat
+                    Stat stat = recoveryStats[i];
 
-                    recovery.value += RECOVERY_MIN_SPEED + (recoveryBaseValue * multiplier);
+                    recovery.value += stat.realMinValue + (stat.valuePerLevel * stat.level);
 
                     if (recovery.value > MAX_VALUE)
                         recovery.value = MAX_VALUE;
