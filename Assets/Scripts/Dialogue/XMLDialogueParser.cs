@@ -64,13 +64,12 @@ public class XMLDialogueParser {
     /// </summary>
     /// <param name="mood">Mood for the question</param>
     /// <returns>Random question</returns>
-    public static Question GetRandomQuestion(Mood mood) {
+    public static Question GetRandomQuestion(XMLDialogueParser holder, Mood mood) {
         // Create an array for the questions
         List<Question> questions = new List<Question>();
 
-        XMLDialogueParser data = Load();
         // Add all questions to list which belong to this mood
-        foreach (Question o in data.questions) {
+        foreach (Question o in holder.questions) {
             if (o.mood.Equals(mood)) {
                 questions.Add(o);
             }
@@ -118,13 +117,12 @@ public class XMLDialogueParser {
     /// </summary>
     /// <param name="type">WordsType of the reply</param>
     /// <returns>Random reply</returns>
-    public static string GetRandomReply(WordsType type) {
+    public static string GetRandomReply(XMLDialogueParser holder, WordsType type) {
         // Create an array for the replies
         List<Reply> replies = new List<Reply>();
 
-        XMLDialogueParser data = Load();
         // Add all replies to list which belong to provided type
-        foreach (Reply r in data.replies) {
+        foreach (Reply r in holder.replies) {
             if (r.replyType == type) {
                 replies.Add(r);
             }

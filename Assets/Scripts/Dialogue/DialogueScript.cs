@@ -24,6 +24,7 @@ public class DialogueScript : MonoBehaviour {
 
     public LeanTweenType tweenType;
 
+    private XMLDialogueParser dialogues;
     private Mood curMood = Mood.Joyful;
     private string question;
     private string reply;
@@ -32,7 +33,10 @@ public class DialogueScript : MonoBehaviour {
     private Dictionary<WordsType, AudioClip> audios = new Dictionary<WordsType, AudioClip>();
     private AudioSource audioSource;
 
-    void OnEnable() {
+    public void Initialize() {
+        // Load dialogues beforehand so they don't cause fps hiccup on enable
+        dialogues = XMLDialogueParser.Load();
+        
         // Hide panels
         questionObject.transform.localScale = new Vector3(0, 0, 0);
         answersObject.transform.LeanMoveLocalY(answersYStartPosition, 0f);
@@ -47,10 +51,10 @@ public class DialogueScript : MonoBehaviour {
         audios.Add(WordsType.Rational, (AudioClip)Resources.Load(path + "RationalWords"));
     }
 
-    public void ShowDialogue() {
+    void OnEnable() {
         // Set question text and answers
         Answer[] answers = new Answer[0];
-        Question q = XMLDialogueParser.GetRandomQuestion(curMood);  // Load random question from xml
+        Question q = XMLDialogueParser.GetRandomQuestion(dialogues, curMood);  // Load random question from xml
         question = q.questionText;
         answers = q.answers;
 
@@ -74,14 +78,14 @@ public class DialogueScript : MonoBehaviour {
         }
 
         // Delay a tiny bit to work around the initial fps hiccup (HOPEFULLY TEMPORARY SOLUTION)
-        Invoke("ShowQuestion", 0.5f);
-    }
-
-    private void ShowQuestion() {
         LeanTween.scale(questionObject, new Vector3(1, 1, 1), 0.5f).
             setEase(tweenType).
             setOnComplete(() => WriteOutChildTalking(question,                          // Write out child talk
             () => LeanTween.moveLocalY(answersObject, 0, 0.5f).setEase(tweenType)));    // Show answers on complete
+    }
+
+    private void ShowQuestion() {
+        
     }
 
     /// <summary>
@@ -99,7 +103,7 @@ public class DialogueScript : MonoBehaviour {
     /// <param name="type">WordsType of the reply to show</param>
     private void AnswerClicked(WordsType type) {
         // Show random reply
-        reply = XMLDialogueParser.GetRandomReply(type);
+        reply = XMLDialogueParser.GetRandomReply(dialogues, type);
         LeanTween.moveLocalY(answersObject, answersYStartPosition, 0.5f).
             setEase(tweenType).
             setOnComplete(() => Helper.Instance.WriteOutText(reply, questionView,       // Write out child talk
@@ -130,5 +134,8 @@ public class DialogueScript : MonoBehaviour {
             Destroy(btn.gameObject);
         }
         answerButtons.Clear();
+
+        // Disable
+        gameObject.SetActive(false);
     }
 }
