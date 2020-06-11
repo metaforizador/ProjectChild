@@ -7,6 +7,10 @@ public class Stat {
     public string name;
     public float value;
 
+    public Stat(float value) {
+        this.value = value;
+    }
+
     public Stat(string name, float value) {
         this.name = name;
         this.value = value;
@@ -14,7 +18,7 @@ public class Stat {
 }
 
 public class PlayerStats : MonoBehaviour {
-    
+
     // Make class static and destroy if script already exists
     private static PlayerStats _instance; // **<- reference link to the class
     public static PlayerStats Instance { get { return _instance; } }
@@ -29,7 +33,8 @@ public class PlayerStats : MonoBehaviour {
         }
     }
 
-    private const float MAX_BASE_STAT_VALUES = 15, STARTING_STAT = 1;
+    public const float MAX_BASE_STAT_VALUES = 15;
+    private const float STARTING_STAT = 0;
     private const int XP_MULTIPLIER = 100;
 
     // Stats to save and load
@@ -63,10 +68,6 @@ public class PlayerStats : MonoBehaviour {
     public int xp { get; private set; }
     public int nextLevelUpXp { get; private set; }
 
-    // Temporary stats
-    [SerializeField]
-    private float hp, shield, stamina, ammo;
-
     private void SetDefaultStats() {
         shieldRecovery = new Stat("Shield recovery", STARTING_STAT);
         staminaRecovery = new Stat("Stamina recovery", STARTING_STAT);
@@ -91,11 +92,6 @@ public class PlayerStats : MonoBehaviour {
         level = 1;
         xp = 0;
         nextLevelUpXp = XP_MULTIPLIER;
-
-        hp = 100;
-        shield = 100;
-        stamina = 100;
-        ammo = 100;
     }
 
     public void SavePlayerStats(Save save) {
