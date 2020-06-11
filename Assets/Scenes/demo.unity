@@ -1041,6 +1041,12 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1247298179 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5520579357849947426, guid: 6d338ee6e03563e4db19846f8a3e78df,
+    type: 3}
+  m_PrefabInstance: {fileID: 560005722}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1337772842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,7 +1463,7 @@ MonoBehaviour:
   controller: {fileID: 1694378050}
   cam: {fileID: 963194228}
   animator: {fileID: 8296172668191077897}
-  masterCanvas: {fileID: 0}
+  testCanvas: {fileID: 1247298179}
   speed: 75
   gravity: -100
   jumpHeight: 40
