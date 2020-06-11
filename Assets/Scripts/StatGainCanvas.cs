@@ -28,13 +28,9 @@ public class StatGainCanvas : MonoBehaviour {
         return $"All stats for '{type.ToString()}' answers are maxed out!";
     }
 
-    void OnEnable() {
+    public void Initialize() {
         // Hide panel
         statObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, hideYPosition);
-    }
-
-    void onStart() {
-        statObject.transform.LeanMoveY(hideYPosition, 0f);
     }
 
     public void ShowStatGain(string statGainText) {
@@ -45,6 +41,8 @@ public class StatGainCanvas : MonoBehaviour {
     }
 
     private void HideStatGain() {
-        LeanTween.moveLocalY(statObject, hideYPosition, transitionSpd).setEase(tweenType);
+        LeanTween.moveLocalY(statObject, hideYPosition, transitionSpd).
+            setEase(tweenType).
+            setOnComplete(() => gameObject.SetActive(false));
     }
 }

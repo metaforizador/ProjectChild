@@ -25,7 +25,7 @@ public class CanvasMaster : MonoBehaviour {
     void Start() {
         // Enable canvases when game starts to fix fps hiccups when opening them
         dialogueCanvas.GetComponent<DialogueScript>().Initialize();
-        statGainCanvas.SetActive(true);
+        statGainCanvas.GetComponent<StatGainCanvas>().Initialize();
 
         // Initialize saved questions and replies
         askedQuestions = new Dictionary<Mood, List<string>>();
@@ -47,6 +47,7 @@ public class CanvasMaster : MonoBehaviour {
     }
 
     public void ShowStatGain(string gainedStats) {
+        statGainCanvas.SetActive(true);
         statGainCanvas.GetComponent<StatGainCanvas>().ShowStatGain(gainedStats);
     }
 
