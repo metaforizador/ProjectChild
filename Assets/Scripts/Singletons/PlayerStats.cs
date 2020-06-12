@@ -83,6 +83,7 @@ public class PlayerStats : MonoBehaviour {
     // Real min and max values for stats
     private const float RECOVERY_MIN_SPEED = 1, RECOVERY_MAX_SPEED = 4;
     private const float RESISTANCE_MIN_PERCENT = 0, RESISTANCE_MAX_PERCENT = 60;
+    private const float DODGE_MIN_PERCENT = 0, DODGE_MAX_PERCENT = 50;
 
     // Stats to save and load
     // Nurturing
@@ -120,7 +121,7 @@ public class PlayerStats : MonoBehaviour {
         staminaRecovery = new Stat("Stamina recovery", STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
         ammoRecovery = new Stat("Ammo recovery", STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
 
-        dodgeRate = new Stat("Dodge rate", STARTING_STAT, 0, 0);
+        dodgeRate = new Stat("Dodge rate", STARTING_STAT, DODGE_MIN_PERCENT, DODGE_MAX_PERCENT);
         criticalRate = new Stat("Critical rate", STARTING_STAT, 0, 0);
         rareItemFindRate = new Stat("Rare item find rate", STARTING_STAT, 0, 0);
 

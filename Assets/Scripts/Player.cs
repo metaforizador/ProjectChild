@@ -98,6 +98,14 @@ public class Player : MonoBehaviour {
     }
 
     public void TakeDamage(DamageType type, float amount) {
+        // Check if damage got dodged
+        int hitRandomPercentValue = Random.Range(1, 101); // 101 since then it returns values from 1 to 100
+
+        if (hitRandomPercentValue <= stats.dodgeRate.currentValue) {
+            Debug.Log("Dodged");
+            return;
+        }
+        
         // Calculate resistance to given damage type
         switch (type) {
             case DamageType.Piercing:
