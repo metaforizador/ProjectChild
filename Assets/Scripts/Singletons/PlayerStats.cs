@@ -2,26 +2,61 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DamageType { Piercing, Kinetic, Energy };
+
 [System.Serializable]
 public class Stat {
-    public float level;
+    public int level { get; private set; }
 
+    // Name of the stat
     [System.NonSerialized]
     public string name;
 
+    // Current value of the stat which gets affected by the level
     [System.NonSerialized]
-    public float realMinValue, realMaxValue, valuePerLevel;
+    private float CurrentValue;
+    public float currentValue { get { return CurrentValue;} }
 
-    public Stat(string name, float level, float realMinValue, float realMaxValue) {
+    // Used for calculating current value of the stat
+    [System.NonSerialized]
+    private float minValue, maxValue, valuePerLevel;
+
+    public Stat(string name, int level, float minValue, float maxValue) {
         this.name = name;
-        this.level = level;
-        this.realMinValue = realMinValue;
-        this.realMaxValue = realMaxValue;
-        this.valuePerLevel = (realMaxValue - realMinValue) / PlayerStats.MAX_BASE_STAT_VALUES;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.valuePerLevel = (maxValue - minValue) / PlayerStats.MAX_BASE_STAT_VALUES;
+        SetLevel(level);
     }
 
+    /// <summary>
+    /// Loads necessary values from the serialized stat.
+    /// </summary>
+    /// <param name="loadFrom">Loaded stat</param>
     public void LoadStat(Stat loadFrom) {
         this.level = loadFrom.level;
+    }
+
+    /// <summary>
+    /// Sets current level and calculates currentValue based on level.
+    /// </summary>
+    /// <param name="level">Level to set</param>
+    private void SetLevel(int level) {
+        this.level = level;
+        this.CurrentValue = minValue + (valuePerLevel * this.level);
+    }
+
+    /// <summary>
+    /// Increases level of the stat if it is not full.
+    /// </summary>
+    /// <returns>True if level was not full before increasing</returns>
+    public bool IncreaseLevel() {
+        if (this.level == PlayerStats.MAX_BASE_STAT_VALUES) {
+            return false;
+        }
+
+        SetLevel(this.level + 1);
+        return true;
     }
 }
 
@@ -42,11 +77,12 @@ public class PlayerStats : MonoBehaviour {
     }
 
     public const float MAX_BASE_STAT_VALUES = 15;
-    private const float STARTING_STAT = 0;
+    private const int STARTING_STAT = 0;
     private const int XP_MULTIPLIER = 100;
 
     // Real min and max values for stats
     private const float RECOVERY_MIN_SPEED = 1, RECOVERY_MAX_SPEED = 4;
+    private const float RESISTANCE_MIN_PERCENT = 0, RESISTANCE_MAX_PERCENT = 60;
 
     // Stats to save and load
     // Nurturing
@@ -92,9 +128,9 @@ public class PlayerStats : MonoBehaviour {
         kineticDmg = new Stat("Kinetic damage", STARTING_STAT, 0, 0);
         energyDmg = new Stat("Energy damage", STARTING_STAT, 0, 0);
 
-        piercingRes = new Stat("Piercing resistance", STARTING_STAT, 0, 0);
-        kineticRes = new Stat("Kinetic resistance", STARTING_STAT, 0, 0);
-        energyRes = new Stat("Energy resistance", STARTING_STAT, 0, 0);
+        piercingRes = new Stat("Piercing resistance", STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
+        kineticRes = new Stat("Kinetic resistance", STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
+        energyRes = new Stat("Energy resistance", STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
 
         attackSpd = new Stat("Attack speed", STARTING_STAT, 0, 0);
         movementSpd = new Stat("Movement speed", STARTING_STAT, 0, 0);
@@ -158,20 +194,6 @@ public class PlayerStats : MonoBehaviour {
         nextLevelUpXp = save.nextLevelUpXp;
     }
 
-    private bool IncreaseStatValue(Stat stat) {
-        // If stats is already full, return false
-        if (stat.level == MAX_BASE_STAT_VALUES)
-            return false;
-
-        stat.level += 1;
-
-        if (stat.level >= MAX_BASE_STAT_VALUES) {
-            stat.level = MAX_BASE_STAT_VALUES;
-        }
-
-        return true;
-    }
-
     public void RandomizeGainedStat(WordsType type) {
         Stat[] stats;
 
@@ -208,7 +230,7 @@ public class PlayerStats : MonoBehaviour {
                 continue;
 
             Stat stat = stats[index];
-            bool increased = IncreaseStatValue(stat);
+            bool increased = stat.IncreaseLevel();
 
             if (!increased) {
                 maxedStats.Add(index);

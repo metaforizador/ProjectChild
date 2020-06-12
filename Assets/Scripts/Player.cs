@@ -34,6 +34,9 @@ public class Player : MonoBehaviour {
     private TempStat[] recoveries;
     private float recoveryDelay = 0.2f;
 
+    // Testing purposes
+    public float testDamageKeyU = 5;
+
     void Start() {
         hp = new TempStat(MAX_VALUE);
         shield = new TempStat(MAX_VALUE);
@@ -73,7 +76,8 @@ public class Player : MonoBehaviour {
                     // Get minimum, level and valuerPerLevel from stat
                     Stat stat = recoveryStats[i];
 
-                    recovery.value += stat.realMinValue + (stat.valuePerLevel * stat.level);
+                    recovery.value += stat.currentValue;
+                    Debug.Log(stat.currentValue);
 
                     if (recovery.value > MAX_VALUE)
                         recovery.value = MAX_VALUE;
@@ -84,7 +88,42 @@ public class Player : MonoBehaviour {
         }
     }
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.U)) {
+            TakeDamage(DamageType.Piercing, testDamageKeyU);
+        }
+    }
+
+    public void TakeDamage(DamageType type, float amount) {
+        switch (type) {
+            case DamageType.Piercing:
+
+                break;
+            case DamageType.Kinetic:
+                break;
+            case DamageType.Energy:
+                break;
+        }
+
+        float rest = 0;
+        if (shield.value > 0) {
+            shield.value -= amount;
+
+            if (shield.value < 0) {
+                rest = Mathf.Abs(shield.value);
+                shield.value = 0;
+            }
+        }
+
+        hp.value -= rest;
+
+        if (hp.value <= 0)
+            Die();
+    }
+
     private void Die() {
         alive = false;
+        hp.value = 0;
+        shield.value = 0;
     }
 }
