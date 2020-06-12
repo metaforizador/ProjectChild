@@ -251,9 +251,9 @@ public class PlayerStats : MonoBehaviour {
     public void GainXP(int amount) {
         xp += amount;
 
-        if (xp >= nextLevelUpXp) {
-            LevelUp();
-        }
+        // Check if you gain level or multiple levels
+        while (xp >= nextLevelUpXp)
+                LevelUp();
     }
 
     private void LevelUp() {

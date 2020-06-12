@@ -35,7 +35,8 @@ public class Player : MonoBehaviour {
     private float recoveryDelay = 0.2f;
 
     // Testing purposes
-    public float testDamageKeyU = 5;
+    public float testDamageKeyU = 20;
+    public int testXpKeyX = 20;
 
     void Start() {
         hp = new TempStat(MAX_VALUE);
@@ -94,6 +95,11 @@ public class Player : MonoBehaviour {
         // Test taking damage
         if (Input.GetKeyDown(KeyCode.U)) {
             TakeDamage(DamageType.Piercing, testDamageKeyU);
+        }
+        
+        // Test gaining xp
+        if (Input.GetKeyDown(KeyCode.X)) {
+            stats.GainXP(testXpKeyX);
         }
     }
 
