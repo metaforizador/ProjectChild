@@ -51,6 +51,9 @@ public class Player : MonoBehaviour {
         ResetValues();
     }
 
+    /// <summary>
+    /// Resets necessary values when spawning.
+    /// </summary>
     private void ResetValues() {
         alive = true;
 
@@ -77,7 +80,6 @@ public class Player : MonoBehaviour {
                     Stat stat = recoveryStats[i];
 
                     recovery.value += stat.currentValue;
-                    Debug.Log(stat.currentValue);
 
                     if (recovery.value > MAX_VALUE)
                         recovery.value = MAX_VALUE;
@@ -89,23 +91,27 @@ public class Player : MonoBehaviour {
     }
 
     void Update() {
+        // Test taking damage
         if (Input.GetKeyDown(KeyCode.U)) {
             TakeDamage(DamageType.Piercing, testDamageKeyU);
         }
     }
 
     public void TakeDamage(DamageType type, float amount) {
+        // Calculate resistance to given damage type
         switch (type) {
             case DamageType.Piercing:
-
+                amount -= amount * (stats.piercingRes.currentValue / 100);
                 break;
             case DamageType.Kinetic:
+                amount -= amount * (stats.kineticRes.currentValue / 100);
                 break;
             case DamageType.Energy:
+                amount -= amount * (stats.energyRes.currentValue / 100);
                 break;
         }
 
-        float rest = 0;
+        float rest = 0; // Damage left after hitting the shield
         if (shield.value > 0) {
             shield.value -= amount;
 
