@@ -6,7 +6,7 @@ using TMPro;
 using System.IO;
 
 public enum WordsType { Stoic, Nurturing, Idealistic, Nihilistic, Rational };
-public enum Mood { Depressing, Joyful, Beautiful, Gloomy }
+public enum Mood { Uncertain, Joyful, Hopeless, Gloomy, Curious }
 
 public class DialogueScript : MonoBehaviour {
 
