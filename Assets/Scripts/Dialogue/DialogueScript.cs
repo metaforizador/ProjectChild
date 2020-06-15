@@ -25,7 +25,7 @@ public class DialogueScript : MonoBehaviour {
     public LeanTweenType tweenType;
 
     private XMLDialogueParser dialogues;
-    private Mood curMood = Mood.Joyful;
+    private Mood curMood; // RETRIEVE THIS VALUE LATER IN PROGRESS
     private string question;
     private string reply;
     private List<Button> answerButtons = new List<Button>();
@@ -52,6 +52,9 @@ public class DialogueScript : MonoBehaviour {
     }
 
     void OnEnable() {
+        // Randomize mood for testing purposes
+        curMood = (Mood)Mood.ToObject(typeof(Mood), Random.Range(0, 4));
+
         // Set question text and answers
         Answer[] answers = new Answer[0];
         Question q = XMLDialogueParser.GetRandomQuestion(dialogues, curMood);  // Load random question from xml
