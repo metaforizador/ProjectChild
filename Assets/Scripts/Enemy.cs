@@ -47,11 +47,25 @@ public class Enemy : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("PlayerBullet")) {
-            TakeDamage(player.CalculateBulletDamage());
+            float damage;
+            DamageType type;
+            player.CalculateBulletDamage(out damage, out type);
+            TakeDamage(damage, type);
         }
     }
 
-    public void TakeDamage(float amount) {
+    public void TakeDamage(float amount, DamageType type) {
+        switch (type) {
+            case DamageType.Piercing:
+                amount -= amount * (piercingRes / 100);
+                break;
+            case DamageType.Kinetic:
+                amount -= amount * (kineticRes / 100);
+                break;
+            case DamageType.Energy:
+                amount -= amount * (energyRes / 100);
+                break;
+        }
         hp -= amount;
 
         if (hp <= 0) {

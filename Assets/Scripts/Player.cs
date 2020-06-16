@@ -107,7 +107,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public float CalculateBulletDamage() {
+    public void CalculateBulletDamage(out float damage, out DamageType damageType) {
         float damageToCause = weaponDamage;
 
         // Add percentage to damage based on damage stats
@@ -123,7 +123,8 @@ public class Player : MonoBehaviour {
                 break;
         }
 
-        return damageToCause;
+        damage = damageToCause;
+        damageType = weaponType;
     }
 
     public void TakeDamage(DamageType type, float amount) {
