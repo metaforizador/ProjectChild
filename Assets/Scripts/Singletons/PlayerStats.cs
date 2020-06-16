@@ -4,62 +4,6 @@ using UnityEngine;
 
 public enum DamageType { Piercing, Kinetic, Energy };
 
-[System.Serializable]
-public class Stat {
-    public int level { get; private set; }
-
-    // Name of the stat
-    [System.NonSerialized]
-    public string name;
-
-    // Current value of the stat which gets affected by the level
-    [System.NonSerialized]
-    private float CurrentValue;
-    public float currentValue { get { return CurrentValue;} }
-
-    // Used for calculating current value of the stat
-    [System.NonSerialized]
-    private float minValue, maxValue, valuePerLevel;
-
-    public Stat(string name, int level, float minValue, float maxValue) {
-        this.name = name;
-        this.minValue = minValue;
-        this.maxValue = maxValue;
-        this.valuePerLevel = (maxValue - minValue) / PlayerStats.MAX_BASE_STAT_VALUES;
-        SetLevel(level);
-    }
-
-    /// <summary>
-    /// Loads necessary values from the serialized stat.
-    /// </summary>
-    /// <param name="loadFrom">Loaded stat</param>
-    public void LoadStat(Stat loadFrom) {
-        this.level = loadFrom.level;
-    }
-
-    /// <summary>
-    /// Sets current level and calculates currentValue based on level.
-    /// </summary>
-    /// <param name="level">Level to set</param>
-    private void SetLevel(int level) {
-        this.level = level;
-        this.CurrentValue = minValue + (valuePerLevel * this.level);
-    }
-
-    /// <summary>
-    /// Increases level of the stat if it is not full.
-    /// </summary>
-    /// <returns>True if level was not full before increasing</returns>
-    public bool IncreaseLevel() {
-        if (this.level == PlayerStats.MAX_BASE_STAT_VALUES) {
-            return false;
-        }
-
-        SetLevel(this.level + 1);
-        return true;
-    }
-}
-
 public class PlayerStats : MonoBehaviour {
 
     // Make class static and destroy if script already exists
@@ -76,7 +20,6 @@ public class PlayerStats : MonoBehaviour {
         }
     }
 
-    public const int STARTING_STAT = 0, MAX_BASE_STAT_VALUES = 15;
     private const int XP_MULTIPLIER = 100;
 
     // Real min and max values for stats
@@ -116,25 +59,25 @@ public class PlayerStats : MonoBehaviour {
     public int nextLevelUpXp { get; private set; }
 
     private void SetDefaultStats() {
-        shieldRecovery = new Stat("Shield recovery", STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
-        staminaRecovery = new Stat("Stamina recovery", STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
-        ammoRecovery = new Stat("Ammo recovery", STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
+        shieldRecovery = new Stat("Shield recovery", Stat.STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
+        staminaRecovery = new Stat("Stamina recovery", Stat.STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
+        ammoRecovery = new Stat("Ammo recovery", Stat.STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
 
-        dodgeRate = new Stat("Dodge rate", STARTING_STAT, DODGE_MIN_PERCENT, DODGE_MAX_PERCENT);
-        criticalRate = new Stat("Critical rate", STARTING_STAT, 0, 0);
-        rareItemFindRate = new Stat("Rare item find rate", STARTING_STAT, 0, 0);
+        dodgeRate = new Stat("Dodge rate", Stat.STARTING_STAT, DODGE_MIN_PERCENT, DODGE_MAX_PERCENT);
+        criticalRate = new Stat("Critical rate", Stat.STARTING_STAT, 0, 0);
+        rareItemFindRate = new Stat("Rare item find rate", Stat.STARTING_STAT, 0, 0);
 
-        piercingDmg = new Stat("Piercing damage", STARTING_STAT, 0, 0);
-        kineticDmg = new Stat("Kinetic damage", STARTING_STAT, 0, 0);
-        energyDmg = new Stat("Energy damage", STARTING_STAT, 0, 0);
+        piercingDmg = new Stat("Piercing damage", Stat.STARTING_STAT, 0, 0);
+        kineticDmg = new Stat("Kinetic damage", Stat.STARTING_STAT, 0, 0);
+        energyDmg = new Stat("Energy damage", Stat.STARTING_STAT, 0, 0);
 
-        piercingRes = new Stat("Piercing resistance", STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
-        kineticRes = new Stat("Kinetic resistance", STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
-        energyRes = new Stat("Energy resistance", STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
+        piercingRes = new Stat("Piercing resistance", Stat.STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
+        kineticRes = new Stat("Kinetic resistance", Stat.STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
+        energyRes = new Stat("Energy resistance", Stat.STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
 
-        attackSpd = new Stat("Attack speed", STARTING_STAT, 0, 0);
-        movementSpd = new Stat("Movement speed", STARTING_STAT, 0, 0);
-        fireRate = new Stat("Fire rate", STARTING_STAT, 0, 0);
+        attackSpd = new Stat("Attack speed", Stat.STARTING_STAT, 0, 0);
+        movementSpd = new Stat("Movement speed", Stat.STARTING_STAT, 0, 0);
+        fireRate = new Stat("Fire rate", Stat.STARTING_STAT, 0, 0);
 
         level = 1;
         xp = 0;
