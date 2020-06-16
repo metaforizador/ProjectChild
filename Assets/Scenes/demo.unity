@@ -187,7 +187,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 41463006}
-  m_LocalRotation: {x: 0.10405206, y: -0.0014356518, z: 0.00015021447, w: 0.9945708}
+  m_LocalRotation: {x: 0.10405205, y: -0.0014698785, z: 0.00015379526, w: 0.9945708}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -758,7 +758,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.11047278, y: 0.0050211838, z: -0.00055812753, w: 0.9938663}
+  m_LocalRotation: {x: 0.11047271, y: 0.005140915, z: -0.00057143613, w: 0.9938657}
   m_LocalPosition: {x: 0, y: 66.9, z: -130}
   m_LocalScale: {x: 7, y: 7, z: 7}
   m_Children: []
@@ -822,13 +822,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1303431371}
-  m_LocalRotation: {x: -0, y: 0.14339942, z: -0, w: 0.989665}
-  m_LocalPosition: {x: 1.2314285, y: 1.462857, z: 4.4342856}
+  m_LocalRotation: {x: -0, y: -0.0052558784, z: -0, w: 0.9999862}
+  m_LocalPosition: {x: 1.2314285, y: 1.462857, z: 4.434285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1694378051}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 16.489, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.60200006, z: 0}
 --- !u!1 &1337772842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,7 +1170,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691366957}
-  m_LocalRotation: {x: 0.110472776, y: 0.0050211833, z: -0.00055813044, w: 0.9938663}
+  m_LocalRotation: {x: 0.11047271, y: 0.0051409164, z: -0.00057143933, w: 0.9938657}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1251,7 +1251,7 @@ MonoBehaviour:
   gravity: -100
   jumpHeight: 30
   firingSpeed: 0.2
-  bulletSpeed: 10
+  bulletSpeed: 200
   bullet: {fileID: 2328461022139732333, guid: 655ccb662003eb146a6f3599e6815c59, type: 3}
   bulletPoint: {fileID: 1303431371}
   groundCheck: {fileID: 915861557}
@@ -1600,7 +1600,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104842998}
-  m_LocalRotation: {x: 0.18255737, y: -0.000000017082895, z: 0.0000000040333714, w: 0.98319525}
+  m_LocalRotation: {x: 0.18255739, y: 0.00000001675157, z: -0.0000000022489326, w: 0.98319525}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
