@@ -22,11 +22,6 @@ public class PlayerStats : MonoBehaviour {
 
     private const int XP_MULTIPLIER = 100;
 
-    // Real min and max values for stats
-    private const float RECOVERY_MIN_SPEED = 1, RECOVERY_MAX_SPEED = 4;
-    private const float RESISTANCE_MIN_PERCENT = 0, RESISTANCE_MAX_PERCENT = 60;
-    private const float DODGE_MIN_PERCENT = 0, DODGE_MAX_PERCENT = 50;
-
     // Stats to save and load
     // Nurturing
     public Stat shieldRecovery { get; private set; }
@@ -59,25 +54,25 @@ public class PlayerStats : MonoBehaviour {
     public int nextLevelUpXp { get; private set; }
 
     private void SetDefaultStats() {
-        shieldRecovery = new Stat("Shield recovery", Stat.STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
-        staminaRecovery = new Stat("Stamina recovery", Stat.STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
-        ammoRecovery = new Stat("Ammo recovery", Stat.STARTING_STAT, RECOVERY_MIN_SPEED, RECOVERY_MAX_SPEED);
+        shieldRecovery = new Stat("Shield recovery", Stat.STARTING_STAT, Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED);
+        staminaRecovery = new Stat("Stamina recovery", Stat.STARTING_STAT, Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED);
+        ammoRecovery = new Stat("Ammo recovery", Stat.STARTING_STAT, Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED);
 
-        dodgeRate = new Stat("Dodge rate", Stat.STARTING_STAT, DODGE_MIN_PERCENT, DODGE_MAX_PERCENT);
-        criticalRate = new Stat("Critical rate", Stat.STARTING_STAT, 0, 0);
-        rareItemFindRate = new Stat("Rare item find rate", Stat.STARTING_STAT, 0, 0);
+        dodgeRate = new Stat("Dodge rate", Stat.STARTING_STAT, Stat.DODGE_MIN_PERCENT, Stat.DODGE_MAX_PERCENT);
+        criticalRate = new Stat("Critical rate", Stat.STARTING_STAT, Stat.CRITICAL_MIN_PERCENT, Stat.CRITICAL_MAX_PERCENT);
+        rareItemFindRate = new Stat("Rare item find rate", Stat.STARTING_STAT, Stat.RARE_FIND_MIN_PERCENT, Stat.RARE_FIND_MAX_PERCENT);
 
-        piercingDmg = new Stat("Piercing damage", Stat.STARTING_STAT, 0, 0);
-        kineticDmg = new Stat("Kinetic damage", Stat.STARTING_STAT, 0, 0);
-        energyDmg = new Stat("Energy damage", Stat.STARTING_STAT, 0, 0);
+        piercingDmg = new Stat("Piercing damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT);
+        kineticDmg = new Stat("Kinetic damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT);
+        energyDmg = new Stat("Energy damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT);
 
-        piercingRes = new Stat("Piercing resistance", Stat.STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
-        kineticRes = new Stat("Kinetic resistance", Stat.STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
-        energyRes = new Stat("Energy resistance", Stat.STARTING_STAT, RESISTANCE_MIN_PERCENT, RESISTANCE_MAX_PERCENT);
+        piercingRes = new Stat("Piercing resistance", Stat.STARTING_STAT, Stat.RESISTANCE_MIN_PERCENT, Stat.RESISTANCE_MAX_PERCENT);
+        kineticRes = new Stat("Kinetic resistance", Stat.STARTING_STAT, Stat.RESISTANCE_MIN_PERCENT, Stat.RESISTANCE_MAX_PERCENT);
+        energyRes = new Stat("Energy resistance", Stat.STARTING_STAT, Stat.RESISTANCE_MIN_PERCENT, Stat.RESISTANCE_MAX_PERCENT);
 
-        attackSpd = new Stat("Attack speed", Stat.STARTING_STAT, 0, 0);
-        movementSpd = new Stat("Movement speed", Stat.STARTING_STAT, 0, 0);
-        fireRate = new Stat("Fire rate", Stat.STARTING_STAT, 0, 0);
+        attackSpd = new Stat("Attack speed", Stat.STARTING_STAT, Stat.ATTACK_MIN_SPEED, Stat.ATTACK_MAX_SPEED);
+        movementSpd = new Stat("Movement speed", Stat.STARTING_STAT, Stat.MOVEMENT_MIN_SPEED, Stat.MOVEMENT_MAX_SPEED);
+        fireRate = new Stat("Fire rate", Stat.STARTING_STAT, Stat.FIRE_RATE_MIN_SPEED, Stat.FIRE_RATE_MAX_SPEED);
 
         level = 1;
         xp = 0;

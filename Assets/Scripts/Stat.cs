@@ -8,6 +8,17 @@ public class Stat {
 
     public const int STARTING_STAT = 0, MAX_BASE_STAT_VALUES = 15;
 
+    // Real min and max values for stats
+    public const float RECOVERY_MIN_SPEED = 1, RECOVERY_MAX_SPEED = 4;
+    public const float RESISTANCE_MIN_PERCENT = 0, RESISTANCE_MAX_PERCENT = 60;
+    public const float DAMAGE_MIN_PERCENT = 0, DAMAGE_MAX_PERCENT = 250;
+    public const float DODGE_MIN_PERCENT = 10, DODGE_MAX_PERCENT = 50;
+    public const float CRITICAL_MIN_PERCENT = 10, CRITICAL_MAX_PERCENT = 75;
+    public const float RARE_FIND_MIN_PERCENT = 10, RARE_FIND_MAX_PERCENT = 80;
+    public const float ATTACK_MIN_SPEED = 10, ATTACK_MAX_SPEED = 30;
+    public const float FIRE_RATE_MIN_SPEED = 10, FIRE_RATE_MAX_SPEED = 30;
+    public const float MOVEMENT_MIN_SPEED = 0, MOVEMENT_MAX_SPEED = 3;
+
     // Name of the stat
     [System.NonSerialized]
     public string name;
@@ -43,7 +54,19 @@ public class Stat {
     /// <param name="level">Level to set</param>
     private void SetLevel(int level) {
         this.level = level;
-        this.CurrentValue = minValue + (valuePerLevel * this.level);
+        this.CurrentValue = CalculateValue(this.minValue, this.maxValue, this.level);
+    }
+
+    /// <summary>
+    /// Calculates the current value of stat.
+    /// </summary>
+    /// <param name="min">minimum allowed value</param>
+    /// <param name="max">maximum allowed value</param>
+    /// <param name="level">current level of the stat</param>
+    /// <returns></returns>
+    public static float CalculateValue(float min, float max, int level) {
+        float valuePerLevel = (max - min) / MAX_BASE_STAT_VALUES;
+        return min + (valuePerLevel * level);
     }
 
     /// <summary>
