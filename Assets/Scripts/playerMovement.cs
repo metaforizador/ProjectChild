@@ -37,7 +37,7 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
         //checks if player is the air
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isGrounded = Physics.CheckBox(groundCheck.position, new Vector3(5, groundDistance, 5), Quaternion.identity, groundMask);
 
         //sets animator attributes
         animator.SetFloat("Speed", GetComponent<CharacterController>().velocity.magnitude);
