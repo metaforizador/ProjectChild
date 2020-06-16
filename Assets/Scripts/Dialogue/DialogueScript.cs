@@ -87,10 +87,6 @@ public class DialogueScript : MonoBehaviour {
             () => LeanTween.moveLocalY(answersObject, 0, 0.5f).setEase(tweenType)));    // Show answers on complete
     }
 
-    private void ShowQuestion() {
-        
-    }
-
     /// <summary>
     /// Writes out the text when child talks.
     /// </summary>

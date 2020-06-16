@@ -10,11 +10,11 @@ public class Save {
     // Rational
     public Stat dodgeRate, criticalRate, rareItemFindRate;
     // Idealistic
-    public Stat piercingDmg, kineticDmg, fireDmg, energyDmg, slashDmg;
+    public Stat piercingDmg, kineticDmg, energyDmg;
     // Stoic
-    public Stat piercingRes, kineticRes, fireRes, energyRes, slashRes;
+    public Stat piercingRes, kineticRes, energyRes;
     // Nihilistic
-    public Stat attackSpd, movementSpd, fireRate, skillCooldown;
+    public Stat attackSpd, movementSpd, fireRate;
     // Other stats
     public int level, xp, nextLevelUpXp;
 

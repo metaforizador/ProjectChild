@@ -76,8 +76,7 @@ public class PlayerStats : MonoBehaviour {
         }
     }
 
-    public const float MAX_BASE_STAT_VALUES = 15;
-    private const int STARTING_STAT = 0;
+    public const int STARTING_STAT = 0, MAX_BASE_STAT_VALUES = 15;
     private const int XP_MULTIPLIER = 100;
 
     // Real min and max values for stats
