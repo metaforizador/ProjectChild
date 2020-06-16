@@ -34,6 +34,10 @@ public class Player : MonoBehaviour {
     private TempStat[] recoveries;
     private float recoveryDelay = 0.2f;
 
+    // CHANGE LATER WHEN WEAPONS ARE IMPLEMENTED
+    private float weaponDamage = 20;
+    private DamageType weaponType = DamageType.Piercing;
+
     // Testing purposes
     public float testDamageKeyU = 20;
     public int testXpKeyX = 20;
@@ -101,6 +105,25 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.X)) {
             stats.GainXP(testXpKeyX);
         }
+    }
+
+    public float CalculateBulletDamage() {
+        float damageToCause = weaponDamage;
+
+        // Add percentage to damage based on damage stats
+        switch (weaponType) {
+            case DamageType.Piercing:
+                damageToCause += damageToCause * (stats.piercingDmg.currentValue / 100);
+                break;
+            case DamageType.Kinetic:
+                damageToCause += damageToCause * (stats.kineticDmg.currentValue / 100);
+                break;
+            case DamageType.Energy:
+                damageToCause += damageToCause * (stats.energyDmg.currentValue / 100);
+                break;
+        }
+
+        return damageToCause;
     }
 
     public void TakeDamage(DamageType type, float amount) {

@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     private EnemySO scriptableObject;
 
+    private Player player;
+
     private float hp, shield, stamina, ammo;
     private bool alive;
 
@@ -15,6 +17,8 @@ public class Enemy : MonoBehaviour {
         attackSpd, movementSpd, fireRate;
 
     void Start() {
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+
         hp = 100;
         shield = 100;
         stamina = 100;
@@ -39,6 +43,12 @@ public class Enemy : MonoBehaviour {
         attackSpd = Stat.CalculateValue(Stat.ATTACK_MIN_SPEED, Stat.ATTACK_MAX_SPEED, scriptableObject.attackSpd);
         movementSpd = Stat.CalculateValue(Stat.MOVEMENT_MIN_SPEED, Stat.MOVEMENT_MAX_SPEED, scriptableObject.movementSpd);
         fireRate = Stat.CalculateValue(Stat.FIRE_RATE_MIN_SPEED, Stat.FIRE_RATE_MAX_SPEED, scriptableObject.fireRate);
+    }
+
+    void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.CompareTag("PlayerBullet")) {
+            TakeDamage(player.CalculateBulletDamage());
+        }
     }
 
     public void TakeDamage(float amount) {
