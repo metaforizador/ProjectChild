@@ -2,29 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : CharacterParent {
 
     [SerializeField]
     private EnemySO scriptableObject;
 
     private Player player;
 
-    private float hp, shield, stamina, ammo;
-    private bool alive;
-
-    private float shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,
-        piercingDmg, kineticDmg, energyDmg, piercingRes, kineticRes, energyRes,
-        attackSpd, movementSpd, fireRate;
-
-    void Start() {
+    public override void Start() {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
-        hp = 100;
-        shield = 100;
-        stamina = 100;
-        ammo = 100;
-        alive = true;
-
+        // Calculate stats from scriptableObject values
         shieldRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.shieldRecovery);
         staminaRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.staminaRecovery);
         ammoRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.ammoRecovery);
@@ -43,39 +31,16 @@ public class Enemy : MonoBehaviour {
         attackSpd = Stat.CalculateValue(Stat.ATTACK_MIN_SPEED, Stat.ATTACK_MAX_SPEED, scriptableObject.attackSpd);
         movementSpd = Stat.CalculateValue(Stat.MOVEMENT_MIN_SPEED, Stat.MOVEMENT_MAX_SPEED, scriptableObject.movementSpd);
         fireRate = Stat.CalculateValue(Stat.FIRE_RATE_MIN_SPEED, Stat.FIRE_RATE_MAX_SPEED, scriptableObject.fireRate);
+
+        base.Start();
     }
 
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("PlayerBullet")) {
             float damage;
             DamageType type;
-            player.CalculateBulletDamage(out damage, out type);
-            TakeDamage(damage, type);
+            player.CalculateBulletDamage(out type, out damage);
+            TakeDamage(type, damage);
         }
-    }
-
-    public void TakeDamage(float amount, DamageType type) {
-        switch (type) {
-            case DamageType.Piercing:
-                amount -= amount * (piercingRes / 100);
-                break;
-            case DamageType.Kinetic:
-                amount -= amount * (kineticRes / 100);
-                break;
-            case DamageType.Energy:
-                amount -= amount * (energyRes / 100);
-                break;
-        }
-        hp -= amount;
-
-        if (hp <= 0) {
-            Die();
-        }
-    }
-
-    private void Die() {
-        hp = 0;
-        alive = false;
-        Destroy(gameObject); // Destroy for now
     }
 }

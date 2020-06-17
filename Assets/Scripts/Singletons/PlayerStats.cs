@@ -130,6 +130,8 @@ public class PlayerStats : MonoBehaviour {
         level = save.level;
         xp = save.xp;
         nextLevelUpXp = save.nextLevelUpXp;
+
+        RefreshPlayerForStatChanges();
     }
 
     public void RandomizeGainedStat(WordsType type) {
@@ -183,6 +185,16 @@ public class PlayerStats : MonoBehaviour {
                 break;
             }
         }
+
+        RefreshPlayerForStatChanges();
+    }
+
+    private void RefreshPlayerForStatChanges() {
+        // Refresh player stats
+        GameObject go = GameObject.FindWithTag("Player");
+
+        if (go != null)
+            go.GetComponent<Player>().RefreshStats();
     }
 
     public void GainXP(int amount) {
