@@ -51,6 +51,18 @@ public class playerMovement : MonoBehaviour
             animator.SetBool("Shooting", false);
         }
 
+        //sets animator attributes
+        animator.SetFloat("Speed", GetComponent<CharacterController>().velocity.magnitude);
+
+        if (Input.GetButton("Fire1")){
+
+            animator.SetBool("Shooting", true);
+        }
+        else
+        {
+            animator.SetBool("Shooting", false);
+        }
+
         if(isGrounded && velocity.y < 0)
         {
             velocity.y = 0;

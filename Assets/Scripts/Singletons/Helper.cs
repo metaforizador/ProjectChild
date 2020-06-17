@@ -34,21 +34,23 @@ public class Helper : MonoBehaviour
     }
 
     private IEnumerator TypeSentence(string textToWrite, TextMeshProUGUI textView, WritingComplete methodToCall) {
-        textView.text = "";
-        foreach (char letter in textToWrite.ToCharArray()) {
-            textView.text += letter;
+        textView.text = textToWrite;
+        textView.maxVisibleCharacters = 0;
 
-            // If all the letters are written, sentence is complete
-            if (textView.text.Length == textToWrite.Length)
-                methodToCall();
+        for (int i = 1; i <= textToWrite.Length; i++) {
+            textView.maxVisibleCharacters = i;
+            char curLetter = textToWrite[i - 1];    // Get current character to know when to pause
 
             float speedToWrite = this.writeSpeed;
 
             // If letter is something which requires little "pause", wait a little bit longer
-            if (letter.Equals(',') || letter.Equals('.') || letter.Equals('?') || letter.Equals('!'))
+            if (curLetter.Equals(',') || curLetter.Equals('.') || curLetter.Equals('?') || curLetter.Equals('!'))
                 speedToWrite = this.writeSpeedLittlePause;
 
             yield return new WaitForSeconds(speedToWrite);
         }
+
+        // Call listener method when writing is complete
+        methodToCall();
     }
 }
