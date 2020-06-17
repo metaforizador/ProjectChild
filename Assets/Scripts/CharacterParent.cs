@@ -5,15 +5,13 @@ using UnityEngine;
 public class CharacterParent : MonoBehaviour {
 
     // Temporary stats
-    [SerializeField]
-    private float hp, shield, stamina, ammo;
+    protected float hp, shield, stamina, ammo;
 
-    public float shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,
+    protected float shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,
         rareItemFindRate, piercingDmg, kineticDmg, energyDmg, piercingRes, kineticRes, energyRes,
         attackSpd, movementSpd, fireRate;
 
-    [SerializeField]
-    private bool alive;
+    protected bool alive;
 
     private const float MAX_VALUE = 100;
 
