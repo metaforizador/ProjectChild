@@ -2093,12 +2093,6 @@ Transform:
   m_Father: {fileID: 2090021084}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1609869698 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5520579357849947426, guid: 6d338ee6e03563e4db19846f8a3e78df,
-    type: 3}
-  m_PrefabInstance: {fileID: 5520579357511183191}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1629141011
 GameObject:
   m_ObjectHideFlags: 0
@@ -2503,6 +2497,7 @@ GameObject:
   - component: {fileID: 1730013047}
   - component: {fileID: 1730013046}
   - component: {fileID: 1730013045}
+  - component: {fileID: 1730013048}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2543,10 +2538,14 @@ MonoBehaviour:
   controller: {fileID: 1730013045}
   cam: {fileID: 1143117835}
   animator: {fileID: 1238822733}
-  testCanvas: {fileID: 1609869698}
+  masterCanvas: {fileID: 0}
   speed: 75
   gravity: -100
   jumpHeight: 40
+  firingSpeed: 0.2
+  bulletSpeed: 10
+  bullet: {fileID: 0}
+  bulletPoint: {fileID: 0}
   groundCheck: {fileID: 68226521}
   groundDistance: 0.4
   groundMask:
@@ -2569,6 +2568,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1730013048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730013044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb44c61e66e1ee4eadc604b68426669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  shield: 0
+  stamina: 0
+  ammo: 0
+  shieldRecovery: 0
+  staminaRecovery: 0
+  ammoRecovery: 0
+  dodgeRate: 0
+  criticalRate: 0
+  rareItemFindRate: 0
+  piercingDmg: 0
+  kineticDmg: 0
+  energyDmg: 0
+  piercingRes: 0
+  kineticRes: 0
+  energyRes: 0
+  attackSpd: 0
+  movementSpd: 0
+  fireRate: 0
+  alive: 0
+  testDamageKeyU: 20
+  testXpKeyX: 20
 --- !u!1 &1751331355
 GameObject:
   m_ObjectHideFlags: 0

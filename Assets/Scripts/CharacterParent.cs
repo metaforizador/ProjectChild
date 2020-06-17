@@ -17,7 +17,8 @@ public class CharacterParent : MonoBehaviour {
 
     private const float MAX_VALUE = 100;
 
-    private float recoveryDelay = 0.2f;
+    private const float RECOVERY_DELAY = 0.2f;
+    private const float CRITICAL_HIT_MULTIPLIER = 2;    // Doubles the damage
 
     // CHANGE LATER WHEN WEAPONS ARE IMPLEMENTED
     private float weaponDamage = 50;
@@ -76,7 +77,7 @@ public class CharacterParent : MonoBehaviour {
                     ammo = MAX_VALUE;
             }
 
-            yield return new WaitForSeconds(recoveryDelay);
+            yield return new WaitForSeconds(RECOVERY_DELAY);
         }
     }
 
@@ -96,15 +97,19 @@ public class CharacterParent : MonoBehaviour {
                 break;
         }
 
+        // Check if it was a critical hit
+        if (Helper.CheckPercentage(criticalRate)) {
+            Debug.Log("Critical hit");
+            damageToCause *= CRITICAL_HIT_MULTIPLIER;
+        }
+
         damage = damageToCause;
         damageType = weaponType;
     }
 
     public void TakeDamage(DamageType type, float amount) {
         // Check if damage got dodged
-        int hitRandomPercentValue = Random.Range(1, 101); // 101 since then it returns values from 1 to 100
-
-        if (hitRandomPercentValue <= dodgeRate) {
+        if (Helper.CheckPercentage(dodgeRate)) {
             Debug.Log("Dodged");
             return;
         }
