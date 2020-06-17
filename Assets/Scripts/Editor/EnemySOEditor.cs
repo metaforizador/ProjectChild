@@ -41,7 +41,7 @@ public class EnemySOEditor : Editor {
         serializedObject.Update();
 
         EditorGUILayout.PropertyField(nameProp);
-        EditorGUILayout.LabelField($"Recovery speed: {Stat.RECOVERY_MIN_SPEED} - {Stat.RECOVERY_MAX_SPEED}", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField($"Recovery speed: {Stat.RECOVERY_MIN_SPEED}% - {Stat.RECOVERY_MAX_SPEED}% every {Stat.RECOVERY_DELAY} second", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(shieldRecovery);
         EditorGUILayout.PropertyField(staminaRecovery);
         EditorGUILayout.PropertyField(ammoRecovery);
@@ -52,7 +52,7 @@ public class EnemySOEditor : Editor {
         EditorGUILayout.LabelField($"Critical hit rate: {Stat.CRITICAL_MIN_PERCENT}% - {Stat.CRITICAL_MAX_PERCENT}%", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(criticalRate);
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField($"Damage boost: {Stat.DAMAGE_MIN_PERCENT}% - {Stat.DAMAGE_MAX_PERCENT}%", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField($"Damage: {Stat.DAMAGE_MIN_BOOST} - {Stat.DAMAGE_MAX_BOOST} * base damage", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(piercingDmg);
         EditorGUILayout.PropertyField(kineticDmg);
         EditorGUILayout.PropertyField(energyDmg);
@@ -62,13 +62,13 @@ public class EnemySOEditor : Editor {
         EditorGUILayout.PropertyField(kineticRes);
         EditorGUILayout.PropertyField(energyRes);
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField($"Movements speed boost: {Stat.MOVEMENT_MIN_SPEED} - {Stat.MOVEMENT_MAX_SPEED}", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField($"Movement speed: {Stat.MOVEMENT_MIN_SPEED} - {Stat.MOVEMENT_MAX_SPEED} * base speed", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(movementSpd);
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField($"Attack speed: {Stat.ATTACK_MIN_SPEED} - {Stat.ATTACK_MAX_SPEED}", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField($"Attack speed: {Stat.ATTACK_MIN_SPEED} - {Stat.ATTACK_MAX_SPEED} * base speed", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(attackSpd);
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField($"Fire rate speed: {Stat.FIRE_RATE_MIN_SPEED} - {Stat.FIRE_RATE_MAX_SPEED}", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField($"Fire rate speed: {Stat.FIRE_RATE_MIN_SPEED} - {Stat.FIRE_RATE_MAX_SPEED} * base speed", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(fireRate);
 
         serializedObject.ApplyModifiedProperties();

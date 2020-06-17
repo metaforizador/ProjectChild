@@ -62,9 +62,9 @@ public class PlayerStats : MonoBehaviour {
         criticalRate = new Stat("Critical rate", Stat.STARTING_STAT, Stat.CRITICAL_MIN_PERCENT, Stat.CRITICAL_MAX_PERCENT);
         rareItemFindRate = new Stat("Rare item find rate", Stat.STARTING_STAT, Stat.RARE_FIND_MIN_PERCENT, Stat.RARE_FIND_MAX_PERCENT);
 
-        piercingDmg = new Stat("Piercing damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT);
-        kineticDmg = new Stat("Kinetic damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT);
-        energyDmg = new Stat("Energy damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT);
+        piercingDmg = new Stat("Piercing damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST);
+        kineticDmg = new Stat("Kinetic damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST);
+        energyDmg = new Stat("Energy damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST);
 
         piercingRes = new Stat("Piercing resistance", Stat.STARTING_STAT, Stat.RESISTANCE_MIN_PERCENT, Stat.RESISTANCE_MAX_PERCENT);
         kineticRes = new Stat("Kinetic resistance", Stat.STARTING_STAT, Stat.RESISTANCE_MIN_PERCENT, Stat.RESISTANCE_MAX_PERCENT);

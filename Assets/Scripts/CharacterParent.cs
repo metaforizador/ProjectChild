@@ -15,9 +15,6 @@ public class CharacterParent : MonoBehaviour {
 
     private const float MAX_VALUE = 100;
 
-    private const float RECOVERY_DELAY = 0.2f;
-    private const float CRITICAL_HIT_MULTIPLIER = 2;    // Doubles the damage
-
     // CHANGE LATER WHEN WEAPONS ARE IMPLEMENTED
     private float weaponDamage = 50;
     private DamageType weaponType = DamageType.Piercing;
@@ -75,7 +72,7 @@ public class CharacterParent : MonoBehaviour {
                     ammo = MAX_VALUE;
             }
 
-            yield return new WaitForSeconds(RECOVERY_DELAY);
+            yield return new WaitForSeconds(Stat.RECOVERY_DELAY);
         }
     }
 
@@ -85,20 +82,20 @@ public class CharacterParent : MonoBehaviour {
         // Add percentage to damage based on damage stats
         switch (weaponType) {
             case DamageType.Piercing:
-                damageToCause += damageToCause * (piercingDmg / 100);
+                damageToCause *= piercingDmg;
                 break;
             case DamageType.Kinetic:
-                damageToCause += damageToCause * (kineticDmg / 100);
+                damageToCause *= kineticDmg;
                 break;
             case DamageType.Energy:
-                damageToCause += damageToCause * (energyDmg / 100);
+                damageToCause *= energyDmg;
                 break;
         }
 
         // Check if it was a critical hit
         if (Helper.CheckPercentage(criticalRate)) {
             Debug.Log("Critical hit");
-            damageToCause *= CRITICAL_HIT_MULTIPLIER;
+            damageToCause *= Stat.CRITICAL_HIT_MULTIPLIER;
         }
 
         damage = damageToCause;

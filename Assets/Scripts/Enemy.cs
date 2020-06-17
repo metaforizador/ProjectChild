@@ -20,9 +20,9 @@ public class Enemy : CharacterParent {
         dodgeRate = Stat.CalculateValue(Stat.DODGE_MIN_PERCENT, Stat.DODGE_MAX_PERCENT, scriptableObject.dodgeRate);
         criticalRate = Stat.CalculateValue(Stat.CRITICAL_MIN_PERCENT, Stat.CRITICAL_MAX_PERCENT, scriptableObject.criticalRate);
 
-        piercingDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT, scriptableObject.piercingDmg);
-        kineticDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT, scriptableObject.kineticDmg);
-        energyDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT, scriptableObject.energyDmg);
+        piercingDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST, scriptableObject.piercingDmg);
+        kineticDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST, scriptableObject.kineticDmg);
+        energyDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST, scriptableObject.energyDmg);
 
         piercingRes = Stat.CalculateValue(Stat.RESISTANCE_MIN_PERCENT, Stat.RESISTANCE_MAX_PERCENT, scriptableObject.piercingRes);
         kineticRes = Stat.CalculateValue(Stat.RESISTANCE_MIN_PERCENT, Stat.RESISTANCE_MAX_PERCENT, scriptableObject.kineticRes);
