@@ -99,7 +99,8 @@ public class CharacterParent : MonoBehaviour {
                 thisBullet.transform.position = bulletPoint.transform.position;
                 thisBullet.transform.rotation = bulletPoint.transform.rotation;
                 thisBullet.GetComponent<Rigidbody>().velocity = transform.forward.normalized * weaponBulletSpeed;
-                yield return new WaitForSeconds(weaponFireSpeed);
+
+                yield return new WaitForSeconds(weaponFireSpeed / fireRate); // Shorten delay by fire rate
             }
             yield return 0;
         }
