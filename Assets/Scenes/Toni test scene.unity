@@ -2538,14 +2538,11 @@ MonoBehaviour:
   controller: {fileID: 1730013045}
   cam: {fileID: 1143117835}
   animator: {fileID: 1238822733}
+  playerScript: {fileID: 0}
   masterCanvas: {fileID: 0}
   speed: 75
   gravity: -100
   jumpHeight: 40
-  firingSpeed: 0.2
-  bulletSpeed: 10
-  bullet: {fileID: 0}
-  bulletPoint: {fileID: 0}
   groundCheck: {fileID: 68226521}
   groundDistance: 0.4
   groundMask:
@@ -2580,26 +2577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb44c61e66e1ee4eadc604b68426669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
-  shield: 0
-  stamina: 0
-  ammo: 0
-  shieldRecovery: 0
-  staminaRecovery: 0
-  ammoRecovery: 0
-  dodgeRate: 0
-  criticalRate: 0
-  rareItemFindRate: 0
-  piercingDmg: 0
-  kineticDmg: 0
-  energyDmg: 0
-  piercingRes: 0
-  kineticRes: 0
-  energyRes: 0
-  attackSpd: 0
-  movementSpd: 0
-  fireRate: 0
-  alive: 0
+  shooting: 0
+  weaponBullet: {fileID: 0}
   testDamageKeyU: 20
   testXpKeyX: 20
 --- !u!1 &1751331355

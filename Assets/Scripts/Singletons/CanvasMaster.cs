@@ -16,7 +16,7 @@ public class CanvasMaster : MonoBehaviour {
         }
     }
 
-    public GameObject dialogueCanvas, statGainCanvas, statsCanvas;
+    public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas;
 
     // Store questions and replies so they can be looped through
     public Dictionary<Mood, List<string>> askedQuestions { get; private set; }
@@ -30,6 +30,13 @@ public class CanvasMaster : MonoBehaviour {
         // Initialize saved questions and replies
         askedQuestions = new Dictionary<Mood, List<string>>();
         givenReplies = new Dictionary<WordsType, List<string>>();
+    }
+
+    void Update() {
+        // Open Debug menu
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            testCanvas.SetActive(!testCanvas.activeSelf);
+        }
     }
 
     public void SaveCanvasValues(Save save) {
