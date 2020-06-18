@@ -13,6 +13,7 @@ public class Player : CharacterParent {
     public int testXpKeyX = 20;
 
     public override void Start() {
+        characterType = CharacterType.Player;
         stats = PlayerStats.Instance;
 
         RefreshStats();
@@ -40,6 +41,15 @@ public class Player : CharacterParent {
         attackSpd = stats.attackSpd.currentValue;
         movementSpd = stats.movementSpd.currentValue;
         fireRate = stats.fireRate.currentValue;
+    }
+
+    void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.CompareTag("Bullet")) {
+            bulletController bullet = collision.gameObject.GetComponent<bulletController>();
+            if (bullet.shooter == CharacterType.Enemy) {
+                TakeDamage(bullet.damageType, bullet.damage);
+            }
+        }
     }
 
     void Update() {

@@ -9,17 +9,16 @@ public class Enemy : CharacterParent {
 
     private Player player;
 
-    private float fireCounter;
-    public float firingSpeed;
-    public float bulletSpeed;
-    public GameObject bulletPoint;
-    public GameObject bullet;
+    private enum State {Idle, Shooting, Dying};
+    private State curState = State.Idle;
+
     public float turnSpeed;
     private float turnSmoothVelocity;
     private float turnSmoothTime = 0.1f;
 
     public override void Start() {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        characterType = CharacterType.Enemy;
 
         // Calculate stats from scriptableObject values
         shieldRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.shieldRecovery);
@@ -45,37 +44,38 @@ public class Enemy : CharacterParent {
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("PlayerBullet")) {
-            float damage;
-            DamageType type;
-            player.CalculateBulletDamage(out type, out damage);
-            TakeDamage(type, damage);
+        if (collision.gameObject.CompareTag("Bullet")) {
+            bulletController bullet = collision.gameObject.GetComponent<bulletController>();
+            if (bullet.shooter == CharacterType.Player) {
+                TakeDamage(bullet.damageType, bullet.damage);
+            }
         }
     }
 
     private void Update()
     {
+        // Don't run update if enemy is not alive
+        if (!alive)
+            return;
+
         //Shooting mechanics
 
-        //if shooting
-        if (true)
-        {
-            fireCounter -= Time.deltaTime;
+        // If player is close enough and enemy is able to see the player
+        if (true) {
+            curState = State.Shooting;
+            shooting = true;
+        } else {
+            curState = State.Idle;
+            shooting = false;
+        }
 
+        //if shooting
+        if (curState == State.Shooting)
+        {
             //enemy turns towards player while shooting
             Vector3 targetDirection = GameObject.Find("Player").transform.position - transform.position;
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turnSpeed * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDirection);
-        }
-
-        if (fireCounter < 0)
-        {
-            GameObject thisBullet = Instantiate(bullet);
-            thisBullet.transform.position = bulletPoint.transform.position;
-            thisBullet.transform.rotation = bulletPoint.transform.rotation;
-            thisBullet.GetComponent<Rigidbody>().velocity = transform.forward.normalized * bulletSpeed;
-
-            fireCounter = firingSpeed;
         }
 
         //resets firing interval counter after shooting

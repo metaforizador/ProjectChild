@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &195257733
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 195257734}
+  m_Layer: 0
+  m_Name: BulletPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &195257734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195257733}
+  m_LocalRotation: {x: -0, y: -0.005255879, z: -0, w: 0.99998623}
+  m_LocalPosition: {x: -0.007, y: 0, z: 0.61}
+  m_LocalScale: {x: 0.23333335, y: 0.23333335, z: 0.23333335}
+  m_Children: []
+  m_Father: {fileID: 4063860401967760988}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0.60200006, z: 0}
 --- !u!1 &4063860401967760984
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,7 +60,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.4, y: 152.19, z: 193.6}
   m_LocalScale: {x: 30, y: 30, z: 30}
-  m_Children: []
+  m_Children:
+  - {fileID: 195257734}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -60,7 +91,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 84a4b7826b1f9904d9bb801b53eba4a0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,4 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2284ce256198574da82b9417f119c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptableObject: {fileID: 0}
+  weaponBullet: {fileID: 2328461022139732333, guid: 655ccb662003eb146a6f3599e6815c59,
+    type: 3}
+  scriptableObject: {fileID: 11400000, guid: 6ebdebf7526581448bbd6f6103fe6bce, type: 2}
+  turnSpeed: 1

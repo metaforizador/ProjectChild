@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterParent : MonoBehaviour {
 
+    public enum CharacterType { Player, Enemy };
+
     // Temporary stats
     protected float hp, shield, stamina, ammo;
 
@@ -12,14 +14,24 @@ public class CharacterParent : MonoBehaviour {
         attackSpd, movementSpd, fireRate;
 
     protected bool alive;
+    public bool shooting;
 
     private const float MAX_VALUE = 100;
+
+    protected CharacterType characterType;
 
     // CHANGE LATER WHEN WEAPONS ARE IMPLEMENTED
     private float weaponDamage = 50;
     private DamageType weaponType = DamageType.Piercing;
+    public GameObject weaponBullet;
+    private GameObject bulletPoint;
+    private float weaponBulletSpeed = 100;
+    private float weaponFireSpeed = 0.5f; // Seconds
 
     public virtual void Start() {
+        // Retrieve bullet point
+        bulletPoint = transform.Find("BulletPoint").gameObject;
+
         hp = MAX_VALUE;
         shield = MAX_VALUE;
         stamina = MAX_VALUE;
@@ -40,6 +52,7 @@ public class CharacterParent : MonoBehaviour {
         ammo = MAX_VALUE;
 
         StartCoroutine(RestoreRecoveries());
+        StartCoroutine(Shooting());
     }
 
     /// <summary>
@@ -76,7 +89,23 @@ public class CharacterParent : MonoBehaviour {
         }
     }
 
-    public void CalculateBulletDamage(out DamageType damageType, out float damage) {
+    IEnumerator Shooting() {
+        while (alive) {
+            if (shooting) {
+                GameObject thisBullet = Instantiate(weaponBullet);
+                float damage = CalculateBulletDamage();
+                thisBullet.GetComponent<bulletController>().Initialize(characterType, damage, weaponType);
+             
+                thisBullet.transform.position = bulletPoint.transform.position;
+                thisBullet.transform.rotation = bulletPoint.transform.rotation;
+                thisBullet.GetComponent<Rigidbody>().velocity = transform.forward.normalized * weaponBulletSpeed;
+                yield return new WaitForSeconds(weaponFireSpeed);
+            }
+            yield return 0;
+        }
+    }
+
+    private float CalculateBulletDamage() {
         float damageToCause = weaponDamage;
 
         // Add percentage to damage based on damage stats
@@ -98,8 +127,7 @@ public class CharacterParent : MonoBehaviour {
             damageToCause *= Stat.CRITICAL_HIT_MULTIPLIER;
         }
 
-        damage = damageToCause;
-        damageType = weaponType;
+        return damageToCause;
     }
 
     public void TakeDamage(DamageType type, float amount) {

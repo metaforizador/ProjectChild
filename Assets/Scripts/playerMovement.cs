@@ -7,6 +7,7 @@ public class playerMovement : MonoBehaviour
     public CharacterController controller;
     public Transform cam;
     public Animator animator;
+    public Player playerScript;
 
     //only used for test purposes
     public GameObject masterCanvas;
@@ -15,12 +16,6 @@ public class playerMovement : MonoBehaviour
     public float speed = 6f;
     public float gravity = -9.81f;
     public float jumpHeight = 10f;
-    public float firingSpeed = 0.2f;
-    public float bulletSpeed = 10f;
-    public GameObject bullet;
-    public GameObject bulletPoint;
-
-    float fireCounter;
 
     private Vector3 xzMovement;
 
@@ -33,6 +28,10 @@ public class playerMovement : MonoBehaviour
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
+
+    void Start() {
+        playerScript = GetComponent<Player>();
+    }
 
     void Update()
     {
@@ -113,29 +112,15 @@ public class playerMovement : MonoBehaviour
 
         if (animator.GetBool("Shooting"))
         {
-            fireCounter -= Time.deltaTime;
+            playerScript.shooting = true;
 
             //player turns towards camera while shooting
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             //set rotation to angle for smoothing effect
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        }
-
-        if(fireCounter < 0)
-        {
-            GameObject thisBullet = Instantiate(bullet);
-            thisBullet.transform.position = bulletPoint.transform.position;
-            thisBullet.transform.rotation = bulletPoint.transform.rotation;
-            thisBullet.GetComponent<Rigidbody>().velocity = transform.forward.normalized * bulletSpeed;
-
-            fireCounter = firingSpeed;
-        }
-
-        //resets firing interval counter after shooting
-        if(animator.GetBool("Shooting") == false)
-        {
-            fireCounter = 0;
+        } else {
+            playerScript.shooting = false;
         }
     }
 }
