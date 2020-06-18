@@ -30,8 +30,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7707216951185695408}
   m_LocalRotation: {x: -0, y: -0.45396402, z: -0, w: 0.89102006}
-  m_LocalPosition: {x: 46.81, y: 1.86, z: 21.16}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 4}
+  m_LocalPosition: {x: 44.12, y: 2.37, z: 44.9}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -173,8 +173,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.016666668
-        value: 0.41428578
+        time: 0
+        value: 0.699999
         inSlope: 0
         outSlope: 0
         tangentMode: 0
