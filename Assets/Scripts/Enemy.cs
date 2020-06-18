@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : CharacterParent {
 
     [SerializeField]
     private EnemySO scriptableObject;
@@ -28,12 +28,7 @@ public class Enemy : MonoBehaviour {
     void Start() {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
-        hp = 100;
-        shield = 100;
-        stamina = 100;
-        ammo = 100;
-        alive = true;
-
+        // Calculate stats from scriptableObject values
         shieldRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.shieldRecovery);
         staminaRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.staminaRecovery);
         ammoRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.ammoRecovery);
@@ -52,14 +47,16 @@ public class Enemy : MonoBehaviour {
         attackSpd = Stat.CalculateValue(Stat.ATTACK_MIN_SPEED, Stat.ATTACK_MAX_SPEED, scriptableObject.attackSpd);
         movementSpd = Stat.CalculateValue(Stat.MOVEMENT_MIN_SPEED, Stat.MOVEMENT_MAX_SPEED, scriptableObject.movementSpd);
         fireRate = Stat.CalculateValue(Stat.FIRE_RATE_MIN_SPEED, Stat.FIRE_RATE_MAX_SPEED, scriptableObject.fireRate);
+
+        base.Start();
     }
 
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("PlayerBullet")) {
             float damage;
             DamageType type;
-            player.CalculateBulletDamage(out damage, out type);
-            TakeDamage(damage, type);
+            player.CalculateBulletDamage(out type, out damage);
+            TakeDamage(type, damage);
         }
     }
 

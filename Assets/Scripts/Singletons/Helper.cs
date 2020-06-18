@@ -53,4 +53,19 @@ public class Helper : MonoBehaviour
         // Call listener method when writing is complete
         methodToCall();
     }
+
+    /// <summary>
+    /// Checks if provided percentage is below randomized percentage.
+    /// </summary>
+    /// <param name="percentage">percentage to check</param>
+    /// <returns>true if success</returns>
+    public static bool CheckPercentage(float percentage) {
+        // Randomize percentage
+        int randomPercentValue = Random.Range(1, 101); // 101 since then it returns values from 1 to 100
+
+        if (randomPercentValue <= percentage)
+            return true;
+
+        return false;
+    }
 }
