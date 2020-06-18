@@ -28,6 +28,9 @@ public class Enemy : CharacterParent {
     void Start() {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
+        //Added for testing
+        hp = 500;
+
         // Calculate stats from scriptableObject values
         shieldRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.shieldRecovery);
         staminaRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.staminaRecovery);
@@ -60,7 +63,7 @@ public class Enemy : CharacterParent {
         }
     }
 
-    public void TakeDamage(float amount, DamageType type) {
+    public void TakeDamage(DamageType type, float amount) {
         switch (type) {
             case DamageType.Piercing:
                 amount -= amount * (piercingRes / 100);
@@ -72,6 +75,7 @@ public class Enemy : CharacterParent {
                 amount -= amount * (energyRes / 100);
                 break;
         }
+
         hp -= amount;
 
         if (hp <= 0) {
