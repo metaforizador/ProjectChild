@@ -9,13 +9,6 @@ public class Enemy : CharacterParent {
 
     private Player player;
 
-    private float hp, shield, stamina, ammo;
-    private bool alive;
-
-    private float shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,
-        piercingDmg, kineticDmg, energyDmg, piercingRes, kineticRes, energyRes,
-        attackSpd, movementSpd, fireRate;
-
     private float fireCounter;
     public float firingSpeed;
     public float bulletSpeed;
@@ -25,7 +18,7 @@ public class Enemy : CharacterParent {
     private float turnSmoothVelocity;
     private float turnSmoothTime = 0.1f;
 
-    void Start() {
+    public override void Start() {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
         // Calculate stats from scriptableObject values
@@ -58,31 +51,6 @@ public class Enemy : CharacterParent {
             player.CalculateBulletDamage(out type, out damage);
             TakeDamage(type, damage);
         }
-    }
-
-    public void TakeDamage(float amount, DamageType type) {
-        switch (type) {
-            case DamageType.Piercing:
-                amount -= amount * (piercingRes / 100);
-                break;
-            case DamageType.Kinetic:
-                amount -= amount * (kineticRes / 100);
-                break;
-            case DamageType.Energy:
-                amount -= amount * (energyRes / 100);
-                break;
-        }
-        hp -= amount;
-
-        if (hp <= 0) {
-            Die();
-        }
-    }
-
-    private void Die() {
-        hp = 0;
-        alive = false;
-        Destroy(gameObject); // Destroy for now
     }
 
     private void Update()
