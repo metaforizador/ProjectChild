@@ -5,8 +5,10 @@ using UnityEngine;
 public class playerMovement : MonoBehaviour
 {
     public CharacterController controller;
-    public Transform cam;
+    public Camera cam;
     public Animator animator;
+
+    public GameObject crosshair;
 
     //only used for test purposes
     public GameObject masterCanvas;
@@ -77,7 +79,7 @@ public class playerMovement : MonoBehaviour
 
         if(direction.magnitude >= 0.1f)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
 
             if (animator.GetBool("Shooting") == false)
             {
@@ -123,7 +125,7 @@ public class playerMovement : MonoBehaviour
             fireCounter -= Time.deltaTime;
 
             //player turns towards camera while shooting
-            float targetAngle = Mathf.Atan2(0, 1) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(0, 1) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
             Debug.Log(direction.x + " " + direction.z);
             //set rotation to angle for smoothing effect
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
@@ -132,12 +134,31 @@ public class playerMovement : MonoBehaviour
             
         }
 
+        //if raycast doesnt hit, get a point along the ray
+
         if(fireCounter < 0)
         {
+            Vector3 crosshairPoint = new Vector3(0, 0, 0);
+            Vector3 bulletDirection = new Vector3(0, 0, 0);
+
+            RaycastHit hit;
+            Ray ray = cam.ScreenPointToRay(crosshair.transform.position);
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~9))
+            {
+                crosshairPoint = hit.point;
+                bulletDirection = crosshairPoint - bulletPoint.transform.position;
+            }
+            else
+            {
+                crosshairPoint = ray.GetPoint(1000);
+                bulletDirection = crosshairPoint - bulletPoint.transform.position;
+            }
+
             GameObject thisBullet = Instantiate(bullet);
             thisBullet.transform.position = bulletPoint.transform.position;
             thisBullet.transform.rotation = bulletPoint.transform.rotation;
-            thisBullet.GetComponent<Rigidbody>().velocity = transform.forward.normalized * bulletSpeed;
+            thisBullet.GetComponent<Rigidbody>().velocity = bulletDirection.normalized * bulletSpeed;
 
             fireCounter = firingSpeed;
         }
