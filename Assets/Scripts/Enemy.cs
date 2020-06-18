@@ -9,8 +9,8 @@ public class Enemy : CharacterParent {
 
     private Player player;
 
-    private enum State {Idle, Shooting, Dying};
-    private State curState = State.Idle;
+    private enum State {Patrolling, Shooting, Dying};
+    private State curState = State.Patrolling;
 
     public float turnSpeed;
     private float turnSmoothVelocity;
@@ -65,7 +65,7 @@ public class Enemy : CharacterParent {
             curState = State.Shooting;
             shooting = true;
         } else {
-            curState = State.Idle;
+            curState = State.Patrolling;
             shooting = false;
         }
 
