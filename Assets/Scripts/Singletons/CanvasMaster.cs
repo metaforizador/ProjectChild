@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasMaster : MonoBehaviour {
     // Make class static and destroy if script already exists
@@ -17,6 +18,8 @@ public class CanvasMaster : MonoBehaviour {
     }
 
     public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas;
+
+    public Image hpBar, shieldBar, ammoBar, staminaBar;
 
     // Store questions and replies so they can be looped through
     public Dictionary<Mood, List<string>> askedQuestions { get; private set; }
@@ -60,5 +63,9 @@ public class CanvasMaster : MonoBehaviour {
 
     public void ShowStats() {
         statsCanvas.SetActive(!statsCanvas.activeSelf);
+    }
+
+    public void AdjustHUDBar(Image bar, float amount) {
+        bar.fillAmount = amount / 100;
     }
 }

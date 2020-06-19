@@ -7,7 +7,42 @@ public class CharacterParent : MonoBehaviour {
     public enum CharacterType { Player, Enemy };
 
     // Temporary stats
-    protected float hp, shield, stamina, ammo;
+    private float hp, shield, stamina, ammo;
+
+    public float HP { get { return hp; }
+        private set {
+            hp = value;
+            if (characterType == CharacterType.Player)
+                cm.AdjustHUDBar(cm.hpBar, hp);
+        }
+    }
+
+    public float SHIELD {
+        get { return shield; }
+        private set {
+            shield = value;
+            if (characterType == CharacterType.Player)
+                cm.AdjustHUDBar(cm.shieldBar, shield);
+        }
+    }
+
+    public float STAMINA {
+        get { return stamina; }
+        private set {
+            stamina = value;
+            if (characterType == CharacterType.Player)
+                cm.AdjustHUDBar(cm.staminaBar, stamina);
+        }
+    }
+
+    public float AMMO {
+        get { return ammo; }
+        private set {
+            ammo = value;
+            if (characterType == CharacterType.Player)
+                cm.AdjustHUDBar(cm.ammoBar, ammo);
+        }
+    }
 
     protected float shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,
         rareItemFindRate, piercingDmg, kineticDmg, energyDmg, piercingRes, kineticRes, energyRes,
@@ -20,24 +55,36 @@ public class CharacterParent : MonoBehaviour {
 
     protected CharacterType characterType;
 
-    // CHANGE LATER WHEN WEAPONS ARE IMPLEMENTED
-    private float weaponDamage = 50;
-    private DamageType weaponType = DamageType.Piercing;
+    private CanvasMaster cm;
+
+    [SerializeField]
+    private WeaponSO weapon;
+
+    // Weapon values
+    private float weaponDamage;
+    private DamageType weaponType;
+    private float weaponBulletSpeed;
+    private float weaponBulletConsumption;
+    private float weaponRateOfFire;
+    // Weapon prefab stuff
     public GameObject weaponBullet;
     private GameObject bulletPoint;
-    private float weaponBulletSpeed = 100;
-    private float weaponFireSpeed = 0.5f; // Seconds
 
     public virtual void Start() {
+        cm = CanvasMaster.Instance;
         // Retrieve bullet point
         bulletPoint = transform.Find("BulletPoint").gameObject;
 
-        hp = MAX_VALUE;
-        shield = MAX_VALUE;
-        stamina = MAX_VALUE;
-        ammo = MAX_VALUE;
-
+        RetrieveWeaponValues();
         ResetValues();
+    }
+
+    private void RetrieveWeaponValues() {
+        weaponDamage = weapon.damagePerBullet;
+        weaponType = weapon.weaponType;
+        weaponBulletSpeed = weapon.bulletSpeed;
+        weaponBulletConsumption = weapon.bulletConsumption;
+        weaponRateOfFire = weapon.rateOfFire;
     }
 
     /// <summary>
@@ -46,10 +93,10 @@ public class CharacterParent : MonoBehaviour {
     private void ResetValues() {
         alive = true;
 
-        hp = MAX_VALUE;
-        shield = MAX_VALUE;
-        stamina = MAX_VALUE;
-        ammo = MAX_VALUE;
+        HP = MAX_VALUE;
+        SHIELD = MAX_VALUE;
+        STAMINA = MAX_VALUE;
+        AMMO = MAX_VALUE;
 
         StartCoroutine(RestoreRecoveries());
         StartCoroutine(Shooting());
@@ -62,27 +109,27 @@ public class CharacterParent : MonoBehaviour {
     IEnumerator RestoreRecoveries() {
         while (alive) {
             // Recover shield
-            if (shield < MAX_VALUE) {
-                shield += shieldRecovery;
+            if (SHIELD < MAX_VALUE) {
+                SHIELD += shieldRecovery;
 
-                if (shield > MAX_VALUE)
-                    shield = MAX_VALUE;
+                if (SHIELD > MAX_VALUE)
+                    SHIELD = MAX_VALUE;
             }
 
             // Recover stamina
-            if (stamina < MAX_VALUE) {
-                stamina += staminaRecovery;
+            if (STAMINA < MAX_VALUE) {
+                STAMINA += staminaRecovery;
 
-                if (stamina > MAX_VALUE)
-                    stamina = MAX_VALUE;
+                if (STAMINA > MAX_VALUE)
+                    STAMINA = MAX_VALUE;
             }
 
             // Recover ammo
-            if (ammo < MAX_VALUE) {
-                ammo += ammoRecovery;
+            if (AMMO < MAX_VALUE) {
+                AMMO += ammoRecovery;
 
-                if (ammo > MAX_VALUE)
-                    ammo = MAX_VALUE;
+                if (AMMO > MAX_VALUE)
+                    AMMO = MAX_VALUE;
             }
 
             yield return new WaitForSeconds(Stat.RECOVERY_DELAY);
@@ -91,16 +138,17 @@ public class CharacterParent : MonoBehaviour {
 
     IEnumerator Shooting() {
         while (alive) {
-            if (shooting) {
+            if (shooting && (AMMO >= weaponBulletConsumption)) {
+                AMMO -= weaponBulletConsumption;
                 GameObject thisBullet = Instantiate(weaponBullet);
                 float damage = CalculateBulletDamage();
                 thisBullet.GetComponent<bulletController>().Initialize(characterType, damage, weaponType);
-             
+
                 thisBullet.transform.position = bulletPoint.transform.position;
                 thisBullet.transform.rotation = bulletPoint.transform.rotation;
                 thisBullet.GetComponent<Rigidbody>().velocity = transform.forward.normalized * weaponBulletSpeed;
 
-                yield return new WaitForSeconds(weaponFireSpeed / fireRate); // Shorten delay by fire rate
+                yield return new WaitForSeconds(weaponRateOfFire / fireRate); // Shorten delay by fire rate
             }
             yield return 0;
         }
@@ -152,25 +200,25 @@ public class CharacterParent : MonoBehaviour {
         }
 
         float rest = 0; // Damage left after hitting the shield
-        if (shield > 0) {
-            shield -= amount;
+        if (SHIELD > 0) {
+            SHIELD -= amount;
 
-            if (shield < 0) {
-                rest = Mathf.Abs(shield);
-                shield = 0;
+            if (SHIELD < 0) {
+                rest = Mathf.Abs(SHIELD);
+                SHIELD = 0;
             }
         }
 
-        hp -= rest;
+        HP -= rest;
 
-        if (hp <= 0)
+        if (HP <= 0)
             Die();
     }
 
     private void Die() {
         alive = false;
-        hp = 0;
-        shield = 0;
+        HP = 0;
+        SHIELD = 0;
 
         Destroy(gameObject); // Destroy for now
     }

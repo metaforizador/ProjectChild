@@ -16,6 +16,6 @@ MonoBehaviour:
   weaponPrefab: {fileID: 0}
   damagePerBullet: 13
   weaponType: 0
-  bulletSpeed: 50
+  bulletSpeed: 200
   bulletConsumption: 3
   rateOfFire: 0.3
