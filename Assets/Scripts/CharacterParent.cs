@@ -40,7 +40,7 @@ public class CharacterParent : MonoBehaviour {
         private set {
             ammo = value;
             if (characterType == CharacterType.Player)
-                cm.AdjustHUDBar(cm.ammoBar, ammo);
+                cm.AdjustAmmoAmount(weapon.ammoSize, ammo);
         }
     }
 
@@ -83,7 +83,7 @@ public class CharacterParent : MonoBehaviour {
         weaponDamage = weapon.damagePerBullet;
         weaponType = weapon.weaponType;
         weaponBulletSpeed = weapon.bulletSpeed;
-        weaponBulletConsumption = weapon.bulletConsumption;
+        weaponBulletConsumption = 100 / weapon.ammoSize; // Gets percentage
         weaponRateOfFire = weapon.rateOfFire;
     }
 

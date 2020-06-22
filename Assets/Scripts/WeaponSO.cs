@@ -13,9 +13,8 @@ public class WeaponSO : ScriptableObject {
     public DamageType weaponType;
     [Header("Meters in second")]
     public float bulletSpeed;
-    [Header("Amount of percentage a bullet consumes ammo")]
-    [Range(0f, 100f)]
-    public float bulletConsumption;
+    [Header("Amount of bullets in 1 clip")]
+    public int ammoSize;
     [Header("Shoot bullet every {value} second")]
     public float rateOfFire;
 }

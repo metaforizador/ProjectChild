@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CanvasMaster : MonoBehaviour {
     // Make class static and destroy if script already exists
@@ -19,7 +20,8 @@ public class CanvasMaster : MonoBehaviour {
 
     public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas;
 
-    public Image hpBar, shieldBar, ammoBar, staminaBar;
+    public Image hpBar, shieldBar, staminaBar;
+    public TextMeshProUGUI ammoText;
 
     // Store questions and replies so they can be looped through
     public Dictionary<Mood, List<string>> askedQuestions { get; private set; }
@@ -67,5 +69,10 @@ public class CanvasMaster : MonoBehaviour {
 
     public void AdjustHUDBar(Image bar, float amount) {
         bar.fillAmount = amount / 100;
+    }
+
+    public void AdjustAmmoAmount(int max, float current) {
+        int currentAmmo = (int) Mathf.Floor(max * (current / 100));
+        ammoText.text = $"{currentAmmo}/{max}";
     }
 }
