@@ -14,13 +14,14 @@ public class PlayerStats : MonoBehaviour {
         if (_instance == null) {
             _instance = this;
             DontDestroyOnLoad(gameObject);
-            SetDefaultStats();
         } else {
             Destroy(gameObject);
         }
     }
 
     private const int XP_MULTIPLIER = 100;
+
+    private HUDCanvas hud;
 
     // Stats to save and load
     // Nurturing
@@ -49,9 +50,16 @@ public class PlayerStats : MonoBehaviour {
     public Stat fireRate { get; private set; }
 
     // Other stats
-    public int level { get; private set; }
+    private int LEVEL;
+    // Update canvas UI element when level changes
+    public int level { get { return LEVEL; }private set { LEVEL = value; hud.AdjustPlayerLevel(LEVEL); } }
     public int xp { get; private set; }
     public int nextLevelUpXp { get; private set; }
+
+    void Start() {
+        hud = CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>();
+        SetDefaultStats();
+    }
 
     private void SetDefaultStats() {
         shieldRecovery = new Stat("Shield recovery", Stat.STARTING_STAT, Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED);

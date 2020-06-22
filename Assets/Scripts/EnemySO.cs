@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemySO : ScriptableObject {
 
     public new string name;
+    public int level;
 
     [Range(Stat.STARTING_STAT, Stat.MAX_BASE_STAT_VALUES)]
     public int shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,

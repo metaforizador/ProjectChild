@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemySOEditor : Editor {
 
     public SerializedProperty
-        nameProp,
+        nameProp, level,
         // Stats
         shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,
         piercingDmg, kineticDmg, energyDmg, piercingRes, kineticRes, energyRes,
@@ -16,6 +16,7 @@ public class EnemySOEditor : Editor {
     void OnEnable() {
         // Setup the SerializedProperties
         nameProp = serializedObject.FindProperty("name");
+        level = serializedObject.FindProperty("level");
         // Stats
         shieldRecovery = serializedObject.FindProperty("shieldRecovery");
         staminaRecovery = serializedObject.FindProperty("staminaRecovery");
@@ -41,6 +42,9 @@ public class EnemySOEditor : Editor {
         serializedObject.Update();
 
         EditorGUILayout.PropertyField(nameProp);
+        EditorGUILayout.LabelField("Level is the amount of points the enemy should\nhave in stats" +
+            "(Example: Level 10 could have\n'Critical hit: 3', 'piercingDmg: 2' & 'Fire rate 5'", EditorStyles.boldLabel, GUILayout.Height(50));
+        EditorGUILayout.PropertyField(level);
         EditorGUILayout.LabelField($"Recovery speed: {Stat.RECOVERY_MIN_SPEED}% - {Stat.RECOVERY_MAX_SPEED}% every {Stat.RECOVERY_DELAY} second", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(shieldRecovery);
         EditorGUILayout.PropertyField(staminaRecovery);

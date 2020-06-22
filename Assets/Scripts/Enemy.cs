@@ -12,6 +12,8 @@ public class Enemy : CharacterParent {
     private enum State {Patrolling, Shooting, Dying};
     private State curState = State.Patrolling;
 
+    public int level { get; private set; }
+
     public float turnSpeed;
     private float turnSmoothVelocity;
     private float turnSmoothTime = 0.1f;

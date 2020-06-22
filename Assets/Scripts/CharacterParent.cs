@@ -13,7 +13,7 @@ public class CharacterParent : MonoBehaviour {
         private set {
             hp = value;
             if (characterType == CharacterType.Player)
-                cm.AdjustHUDBar(cm.hpBar, hp);
+                hud.AdjustHUDBar(hud.hpBar, hp);
         }
     }
 
@@ -22,7 +22,7 @@ public class CharacterParent : MonoBehaviour {
         private set {
             shield = value;
             if (characterType == CharacterType.Player)
-                cm.AdjustHUDBar(cm.shieldBar, shield);
+                hud.AdjustHUDBar(hud.shieldBar, shield);
         }
     }
 
@@ -31,7 +31,7 @@ public class CharacterParent : MonoBehaviour {
         private set {
             stamina = value;
             if (characterType == CharacterType.Player)
-                cm.AdjustHUDBar(cm.staminaBar, stamina);
+                hud.AdjustHUDBar(hud.staminaBar, stamina);
         }
     }
 
@@ -40,7 +40,7 @@ public class CharacterParent : MonoBehaviour {
         private set {
             ammo = value;
             if (characterType == CharacterType.Player)
-                cm.AdjustAmmoAmount(weapon.ammoSize, ammo);
+                hud.AdjustAmmoAmount(weapon.ammoSize, ammo);
         }
     }
 
@@ -55,7 +55,7 @@ public class CharacterParent : MonoBehaviour {
 
     protected CharacterType characterType;
 
-    private CanvasMaster cm;
+    private HUDCanvas hud;
 
     [SerializeField]
     private WeaponSO weapon;
@@ -71,7 +71,7 @@ public class CharacterParent : MonoBehaviour {
     private GameObject bulletPoint;
 
     public virtual void Start() {
-        cm = CanvasMaster.Instance;
+        hud = CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>();
         // Retrieve bullet point
         bulletPoint = transform.Find("BulletPoint").gameObject;
 
