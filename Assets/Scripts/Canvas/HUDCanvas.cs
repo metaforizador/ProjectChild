@@ -23,12 +23,11 @@ public class HUDCanvas : MonoBehaviour {
             enemyShieldBar.fillAmount = currentEnemy.SHIELD / 100;
             enemyHpBar.fillAmount = currentEnemy.HP / 100;
 
-            // If enemy health is 0, hide stats after some time
+            // If enemy health is 0, reset texts
             if (currentEnemy.HP == 0) {
                 enemyAlive = false;
                 enemyHpBar.fillAmount = 0;
                 enemyShieldBar.fillAmount = 0;
-                Invoke("HideEnemyStats", hideEnemyStatsTime);
             }
         }
     }
@@ -65,6 +64,9 @@ public class HUDCanvas : MonoBehaviour {
 
         // Cancel possible "HideEnemyStats" Invoke if player shoots the enemy
         CancelInvoke();
+
+        // Hide stats after some time of the latest hit
+        Invoke("HideEnemyStats", hideEnemyStatsTime);
     }
 
     private void HideEnemyStats() {
