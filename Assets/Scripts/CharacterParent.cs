@@ -55,7 +55,7 @@ public class CharacterParent : MonoBehaviour {
 
     protected CharacterType characterType;
 
-    private HUDCanvas hud;
+    protected HUDCanvas hud;
 
     [SerializeField]
     private WeaponSO weapon;
@@ -179,7 +179,7 @@ public class CharacterParent : MonoBehaviour {
         return damageToCause;
     }
 
-    public void TakeDamage(DamageType type, float amount) {
+    protected virtual void TakeDamage(DamageType type, float amount) {
         // Check if damage got dodged
         if (Helper.CheckPercentage(dodgeRate)) {
             Debug.Log("Dodged");

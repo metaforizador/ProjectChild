@@ -2217,7 +2217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1206784314
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2898,6 +2898,10 @@ MonoBehaviour:
   staminaBar: {fileID: 1871249241}
   ammoText: {fileID: 7361008028461103887}
   playerLevel: {fileID: 253814266}
+  enemyObject: {fileID: 1206784313}
+  enemyHpBar: {fileID: 1187664192}
+  enemyShieldBar: {fileID: 765550577}
+  enemyLevel: {fileID: 1354995644}
 --- !u!1 &1642239397
 GameObject:
   m_ObjectHideFlags: 0

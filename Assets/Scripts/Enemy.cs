@@ -54,6 +54,11 @@ public class Enemy : CharacterParent {
         }
     }
 
+    protected override void TakeDamage(DamageType type, float amount) {
+        base.TakeDamage(type, amount);
+        hud.ShowEnemyStats(this);
+    }
+
     private void Update()
     {
         // Don't run update if enemy is not alive
