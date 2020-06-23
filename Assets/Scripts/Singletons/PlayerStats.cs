@@ -50,11 +50,12 @@ public class PlayerStats : MonoBehaviour {
     public Stat fireRate { get; private set; }
 
     // Other stats
-    private int LEVEL;
+    private int LEVEL, XP;
     // Update canvas UI element when level changes
     public int level { get { return LEVEL; }private set { LEVEL = value; hud.AdjustPlayerLevel(LEVEL); } }
-    public int xp { get; private set; }
+    public int xp { get { return XP; } private set { XP = value; hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, XP); } }
     public int nextLevelUpXp { get; private set; }
+    public int lastLevelUpXp { get; private set; }
 
     void Start() {
         hud = CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>();
@@ -85,6 +86,7 @@ public class PlayerStats : MonoBehaviour {
         level = 1;
         xp = 0;
         nextLevelUpXp = XP_MULTIPLIER;
+        lastLevelUpXp = 0;
     }
 
     public void SavePlayerStats(Save save) {
@@ -111,6 +113,7 @@ public class PlayerStats : MonoBehaviour {
         save.level = level;
         save.xp = xp;
         save.nextLevelUpXp = nextLevelUpXp;
+        save.lastLevelUpXp = lastLevelUpXp;
     }
 
     public void LoadPlayerStats(Save save) {
@@ -138,6 +141,7 @@ public class PlayerStats : MonoBehaviour {
         level = save.level;
         xp = save.xp;
         nextLevelUpXp = save.nextLevelUpXp;
+        lastLevelUpXp = save.lastLevelUpXp;
 
         RefreshPlayerForStatChanges();
     }

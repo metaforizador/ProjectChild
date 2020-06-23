@@ -6,7 +6,7 @@ using TMPro;
 
 public class HUDCanvas : MonoBehaviour {
     // Player
-    public Image hpBar, shieldBar, staminaBar;
+    public Image hpBar, shieldBar, staminaBar, xpBar;
     public TextMeshProUGUI ammoText, playerLevel;
 
     // Enemy
@@ -34,6 +34,12 @@ public class HUDCanvas : MonoBehaviour {
 
     public void AdjustHUDBar(Image bar, float amount) {
         bar.fillAmount = amount / 100;
+    }
+
+    public void AdjustHUDBarXP(float lastLevelXP, float nextLevelXP, float curXP) {
+        nextLevelXP -= lastLevelXP;
+        curXP -= lastLevelXP;
+        xpBar.fillAmount = curXP / nextLevelXP;
     }
 
     public void AdjustAmmoAmount(int max, float current) {
