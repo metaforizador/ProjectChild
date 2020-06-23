@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f622394048bc7341976b4bd1422a2a3, type: 3}
   m_Name: Bazooka
   m_EditorClassIdentifier: 
-  name: 
+  name: Bazooka
   weaponPrefab: {fileID: 0}
-  damagePerBullet: 0
-  weaponType: 0
-  bulletSpeed: 0
-  ammoSize: 0
-  rateOfFire: 0
+  damagePerBullet: 75
+  weaponType: 1
+  bulletSpeed: 400
+  ammoSize: 10
+  rateOfFire: 1

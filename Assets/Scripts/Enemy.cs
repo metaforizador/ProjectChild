@@ -42,6 +42,8 @@ public class Enemy : CharacterParent {
         movementSpd = Stat.CalculateValue(Stat.MOVEMENT_MIN_SPEED, Stat.MOVEMENT_MAX_SPEED, scriptableObject.movementSpd);
         fireRate = Stat.CalculateValue(Stat.FIRE_RATE_MIN_SPEED, Stat.FIRE_RATE_MAX_SPEED, scriptableObject.fireRate);
 
+        level = scriptableObject.level;
+
         base.Start();
     }
 
