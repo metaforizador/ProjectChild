@@ -215,6 +215,8 @@ public class PlayerStats : MonoBehaviour {
         // Check if you gain level or multiple levels
         while (xp >= nextLevelUpXp)
                 LevelUp();
+
+        hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, xp);
     }
 
     private void LevelUp() {
@@ -223,6 +225,10 @@ public class PlayerStats : MonoBehaviour {
         // Get next xp multiplier
         int xpToAdd = level * XP_MULTIPLIER;   // Level 5 = 500;
 
+        // Set last level up xp to current nextlevelupxp
+        lastLevelUpXp = nextLevelUpXp;
+
+        // Calculate next level up xp
         nextLevelUpXp += xpToAdd;
 
         // ADD LEVEL UP STUFF TO OPEN DIALOGUE LATER

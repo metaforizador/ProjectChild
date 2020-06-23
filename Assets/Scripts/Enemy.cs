@@ -91,4 +91,9 @@ public class Enemy : CharacterParent {
         //    fireCounter = 0;
         //}
     }
+
+    protected override void Die() {
+        PlayerStats.Instance.GainXP(scriptableObject.xp);
+        base.Die();
+    }
 }

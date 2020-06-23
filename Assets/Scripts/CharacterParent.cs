@@ -215,7 +215,7 @@ public class CharacterParent : MonoBehaviour {
             Die();
     }
 
-    private void Die() {
+    protected virtual void Die() {
         alive = false;
         HP = 0;
         SHIELD = 0;
