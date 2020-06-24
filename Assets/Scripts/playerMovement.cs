@@ -31,6 +31,15 @@ public class playerMovement : MonoBehaviour
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
+    public GameObject bullet;
+    public GameObject bulletPoint;
+
+    //these need to be retrieved from the player script at some point
+    public float bulletSpeed;
+    public float firingSpeed;
+
+    private float fireCounter = 0;
+
     void Start() {
         playerScript = GetComponent<Player>();
     }

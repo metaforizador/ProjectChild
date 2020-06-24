@@ -22,9 +22,6 @@ public class Enemy : CharacterParent {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         characterType = CharacterType.Enemy;
 
-        //Added for testing
-        hp = 500;
-
         // Calculate stats from scriptableObject values
         shieldRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.shieldRecovery);
         staminaRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.staminaRecovery);
