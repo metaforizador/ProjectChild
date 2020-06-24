@@ -80,12 +80,12 @@ public class CharacterParent : MonoBehaviour {
     private GameObject bulletPoint;
 
     // Armor values
-    private float decreaseShieldRecoveryDelay;
-    private int increaseShield;
-    private float decreaseOpponentCriticalRate;
-    private float decreaseOpponentCriticalMultiplier;
-    private float reduceMovementSpeed;
-    private float reduceStaminaRecoveryRate;
+    private float armorDecreaseShieldRecoveryDelay;
+    private int armorIncreaseShield;
+    private float armorDecreaseOpponentCriticalRate;
+    private float armorDecreaseOpponentCriticalMultiplier;
+    private float armorReduceMovementSpeed;
+    private float armorReduceStaminaRecoveryRate;
 
     public virtual void Start() {
         hud = CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>();
@@ -108,12 +108,12 @@ public class CharacterParent : MonoBehaviour {
 
     private void RetrieveArmorValues() {
         if (armor != null) {
-            decreaseShieldRecoveryDelay = armor.decreaseShieldRecoveryDelay;
-            increaseShield = armor.increaseShield;
-            decreaseOpponentCriticalRate = armor.decreaseOpponentCriticalRate;
-            decreaseOpponentCriticalMultiplier = armor.decreaseOpponentCriticalMultiplier;
-            reduceMovementSpeed = armor.reduceMovementSpeed;
-            reduceStaminaRecoveryRate = armor.reduceStaminaRecoveryRate;
+            armorDecreaseShieldRecoveryDelay = armor.decreaseShieldRecoveryDelay / 100;
+            armorIncreaseShield = armor.increaseShield;
+            armorDecreaseOpponentCriticalRate = armor.decreaseOpponentCriticalRate;
+            armorDecreaseOpponentCriticalMultiplier = armor.decreaseOpponentCriticalMultiplier;
+            armorReduceMovementSpeed = armor.reduceMovementSpeed;
+            armorReduceStaminaRecoveryRate = armor.reduceStaminaRecoveryRate;
         }
     }
 
@@ -239,7 +239,7 @@ public class CharacterParent : MonoBehaviour {
         }
 
         // Add delay to shield recovery
-        delays[D_SHIELD] = RECOVERY_DELAY_TIME;
+        delays[D_SHIELD] = RECOVERY_DELAY_TIME - (RECOVERY_DELAY_TIME * armorDecreaseShieldRecoveryDelay);
 
         // Calculate resistance to given damage type
         switch (type) {
