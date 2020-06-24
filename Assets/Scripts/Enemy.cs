@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : CharacterParent {
 
     [SerializeField]
-    private EnemySO scriptableObject;
+    private EnemySO scriptableObject = null;
 
     private Player player;
 
