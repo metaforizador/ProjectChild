@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/demo.unity
-    guid: 657607917f7dfc747aa1cab01eae9cde
-  - enabled: 0
-    path: Assets/Scenes/Toni test scene.unity
-    guid: 53e624f96477d6b4f9d215293a726e96
+    path: Assets/Scenes/ToniTestScene.unity
+    guid: e0d9a615171bde042898d68824c459c3
   m_configObjects: {}
