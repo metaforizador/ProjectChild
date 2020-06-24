@@ -17,4 +17,6 @@ public class WeaponSO : ScriptableObject {
     public int ammoSize;
     [Header("Shoot bullet every {value} second")]
     public float rateOfFire;
+    [Header("In seconds, only affects enemies")]
+    public float reloadTime;
 }

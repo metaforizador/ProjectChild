@@ -74,6 +74,7 @@ public class CharacterParent : MonoBehaviour {
     private float weaponBulletSpeed;
     private float weaponBulletConsumption;
     private float weaponRateOfFire;
+    private float weaponReloadTime;
     // Weapon prefab stuff
     public GameObject weaponBullet;
     private GameObject bulletPoint;
@@ -102,6 +103,7 @@ public class CharacterParent : MonoBehaviour {
         weaponBulletSpeed = weapon.bulletSpeed;
         weaponBulletConsumption = 100 / weapon.ammoSize; // Gets percentage
         weaponRateOfFire = weapon.rateOfFire;
+        weaponReloadTime = weapon.reloadTime;
     }
 
     private void RetrieveArmorValues() {
@@ -160,7 +162,7 @@ public class CharacterParent : MonoBehaviour {
             }
 
             // Recover ammo
-            if (AMMO < MAX_VALUE && delays[D_AMMO] <= 0) {
+            if (AMMO < MAX_VALUE && delays[D_AMMO] <= 0 && characterType == CharacterType.Player) {
                 AMMO += ammoRecovery;
 
                 if (AMMO > MAX_VALUE)
@@ -190,10 +192,21 @@ public class CharacterParent : MonoBehaviour {
                 thisBullet.transform.rotation = bulletPoint.transform.rotation;
                 thisBullet.GetComponent<Rigidbody>().velocity = transform.forward.normalized * weaponBulletSpeed;
 
+                // Enemies reload weapons when they run out of ammo
+                if (characterType == CharacterType.Enemy && AMMO < weaponBulletConsumption)
+                    Invoke("reloadAmmo", weaponReloadTime);
+
                 yield return new WaitForSeconds(weaponRateOfFire / fireRate); // Shorten delay by fire rate
             }
             yield return 0;
         }
+    }
+
+    /// <summary>
+    /// Needed for enemy to invoke ammo reload.
+    /// </summary>
+    private void reloadAmmo() {
+        AMMO = 100;
     }
 
     private float CalculateBulletDamage() {
