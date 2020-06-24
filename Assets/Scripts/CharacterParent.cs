@@ -53,6 +53,11 @@ public class CharacterParent : MonoBehaviour {
 
     private const float MAX_VALUE = 100;
 
+    // Recovery delay values
+    private const float RECOVERY_DELAY_TIME = 1f;
+    private const int D_SHIELD = 0, D_STAMINA = 1, D_AMMO = 2;
+    private float[] delays = new float[] { 0, 0, 0 };
+
     protected CharacterType characterType;
 
     protected HUDCanvas hud;
@@ -102,6 +107,13 @@ public class CharacterParent : MonoBehaviour {
         StartCoroutine(Shooting());
     }
 
+    protected virtual void Update() {
+        for (int i = 0; i < delays.Length; i++) {
+            if (delays[i] > 0)
+                delays[i] -= Time.deltaTime;
+        }
+    }
+
     /// <summary>
     /// Restores recoverable value according to provided time delay.
     /// </summary>
@@ -109,7 +121,7 @@ public class CharacterParent : MonoBehaviour {
     IEnumerator RestoreRecoveries() {
         while (alive) {
             // Recover shield
-            if (SHIELD < MAX_VALUE) {
+            if (SHIELD < MAX_VALUE && delays[D_SHIELD] <= 0) {
                 SHIELD += shieldRecovery;
 
                 if (SHIELD > MAX_VALUE)
@@ -117,7 +129,7 @@ public class CharacterParent : MonoBehaviour {
             }
 
             // Recover stamina
-            if (STAMINA < MAX_VALUE) {
+            if (STAMINA < MAX_VALUE && delays[D_STAMINA] <= 0) {
                 STAMINA += staminaRecovery;
 
                 if (STAMINA > MAX_VALUE)
@@ -125,7 +137,7 @@ public class CharacterParent : MonoBehaviour {
             }
 
             // Recover ammo
-            if (AMMO < MAX_VALUE) {
+            if (AMMO < MAX_VALUE && delays[D_AMMO] <= 0) {
                 AMMO += ammoRecovery;
 
                 if (AMMO > MAX_VALUE)
@@ -139,11 +151,18 @@ public class CharacterParent : MonoBehaviour {
     IEnumerator Shooting() {
         while (alive) {
             if (shooting && (AMMO >= weaponBulletConsumption)) {
+                // Add delay to ammo recovery
+                // delays[D_AMMO] = RECOVERY_DELAY_TIME; REMOVE FOR NOW, SEEMED STUPID
+
+                // Decrease ammo by bullet consumption amount
                 AMMO -= weaponBulletConsumption;
+
+                // Create the bullet, calculate damage and initialize necessary values
                 GameObject thisBullet = Instantiate(weaponBullet);
                 float damage = CalculateBulletDamage();
                 thisBullet.GetComponent<bulletController>().Initialize(characterType, damage, weaponType);
 
+                // Set bullets position and speed
                 thisBullet.transform.position = bulletPoint.transform.position;
                 thisBullet.transform.rotation = bulletPoint.transform.rotation;
                 thisBullet.GetComponent<Rigidbody>().velocity = transform.forward.normalized * weaponBulletSpeed;
@@ -185,6 +204,9 @@ public class CharacterParent : MonoBehaviour {
             Debug.Log("Dodged");
             return;
         }
+
+        // Add delay to shield recovery
+        delays[D_SHIELD] = RECOVERY_DELAY_TIME;
 
         // Calculate resistance to given damage type
         switch (type) {

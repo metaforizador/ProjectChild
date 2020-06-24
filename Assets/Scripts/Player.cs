@@ -8,6 +8,9 @@ public class Player : CharacterParent {
 
     private Stat[] recoveryStats;
 
+    [SerializeField]
+    private ArmorSO armor;
+
     // Testing purposes
     public float testDamageKeyU = 20;
     public int testXpKeyX = 20;
@@ -55,7 +58,8 @@ public class Player : CharacterParent {
         }
     }
 
-    void Update() {
+    protected override void Update() {
+        base.Update();
         // Test taking damage
         if (Input.GetKeyDown(KeyCode.U)) {
             TakeDamage(DamageType.Piercing, testDamageKeyU);

@@ -61,8 +61,8 @@ public class Enemy : CharacterParent {
         hud.ShowEnemyStats(this);
     }
 
-    private void Update()
-    {
+    protected override void Update() {
+        base.Update();
         // Don't run update if enemy is not alive
         if (!alive)
             return;
@@ -86,12 +86,6 @@ public class Enemy : CharacterParent {
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turnSpeed * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDirection);
         }
-
-        //resets firing interval counter after shooting
-        //if (animator.GetBool("Shooting") == false)
-        //{
-        //    fireCounter = 0;
-        //}
     }
 
     protected override void Die() {
