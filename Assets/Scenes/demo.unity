@@ -264,7 +264,30 @@ Transform:
   m_Father: {fileID: 1694378051}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!4 &146836070 stripped
+=======
+--- !u!1 &370177725
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 370177726}
+  - component: {fileID: 370177729}
+  - component: {fileID: 370177728}
+  - component: {fileID: 370177727}
+  m_Layer: 0
+  m_Name: cm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &370177726
+>>>>>>> master
 Transform:
   m_CorrespondingSourceObject: {fileID: 4063860401967760988, guid: 22021ac26d02ced4ab226e993300c14b,
     type: 3}
@@ -337,6 +360,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 4063860401967760990, guid: 22021ac26d02ced4ab226e993300c14b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -414,6 +438,8 @@ PrefabInstance:
       propertyPath: energyRes
       value: 10
       objectReference: {fileID: 0}
+=======
+>>>>>>> master
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22021ac26d02ced4ab226e993300c14b, type: 3}
 --- !u!224 &190134456
@@ -7474,6 +7500,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 279910656910621372}
   m_LocalRotation: {x: -0.13485467, y: 0.84464395, z: -0.2756119, w: -0.4386672}
   m_LocalPosition: {x: 0.000000006556511, y: 0.007874378, z: -7.0780515e-10}
@@ -7485,6 +7512,18 @@ Transform:
   m_LocalEulerAnglesHint: {x: 35.72535, y: -124.79129, z: 0.98780006}
 --- !u!1 &2503714188763463426
 GameObject:
+=======
+  m_GameObject: {fileID: 963194225}
+  m_LocalRotation: {x: 0.13114707, y: -0.0048821312, z: 0.0006458635, w: 0.9913507}
+  m_LocalPosition: {x: 0, y: 68.56552, z: -129.97792}
+  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 26.458002, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+>>>>>>> master
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8814,9 +8853,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 6026448030719321142}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.0103587825, z: 0}
+=======
+  m_GameObject: {fileID: 1691366957}
+  m_LocalRotation: {x: 0.12998068, y: -0.0049825367, z: 0.000653183, w: 0.99150383}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+>>>>>>> master
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5810543412516121596}
@@ -8885,6 +8930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -8986,6 +9032,16 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!224 &3261058017285448427
 RectTransform:
+=======
+  shooting: 0
+  weapon: {fileID: 11400000, guid: 6098da7712aa93d40ba7bf515ac1939c, type: 2}
+  weaponBullet: {fileID: 2328461022139732333, guid: 655ccb662003eb146a6f3599e6815c59,
+    type: 3}
+  testDamageKeyU: 20
+  testXpKeyX: 20
+--- !u!143 &1694378050
+CharacterController:
+>>>>>>> master
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9193,6 +9249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -9208,6 +9265,19 @@ MonoBehaviour:
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
+=======
+  controller: {fileID: 1694378050}
+  cam: {fileID: 963194228}
+  animator: {fileID: 8296172668191077897}
+  playerScript: {fileID: 0}
+  masterCanvas: {fileID: 0}
+  speed: 75
+  gravity: -100
+  jumpHeight: 40
+  groundCheck: {fileID: 915861557}
+  groundDistance: 0.4
+  groundMask:
+>>>>>>> master
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}

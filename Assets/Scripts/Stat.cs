@@ -7,17 +7,19 @@ public class Stat {
     public int level { get; private set; }
 
     public const int STARTING_STAT = 0, MAX_BASE_STAT_VALUES = 15;
+    public const float RECOVERY_DELAY = 0.2f;
+    public const float CRITICAL_HIT_MULTIPLIER = 2; // Doubles the damage
 
     // Real min and max values for stats
     public const float RECOVERY_MIN_SPEED = 1, RECOVERY_MAX_SPEED = 4;
     public const float RESISTANCE_MIN_PERCENT = 0, RESISTANCE_MAX_PERCENT = 60;
-    public const float DAMAGE_MIN_PERCENT = 0, DAMAGE_MAX_PERCENT = 250;
+    public const float DAMAGE_MIN_BOOST = 1, DAMAGE_MAX_BOOST = 2.5f;
     public const float DODGE_MIN_PERCENT = 10, DODGE_MAX_PERCENT = 50;
     public const float CRITICAL_MIN_PERCENT = 10, CRITICAL_MAX_PERCENT = 75;
     public const float RARE_FIND_MIN_PERCENT = 10, RARE_FIND_MAX_PERCENT = 80;
-    public const float ATTACK_MIN_SPEED = 10, ATTACK_MAX_SPEED = 30;
-    public const float FIRE_RATE_MIN_SPEED = 10, FIRE_RATE_MAX_SPEED = 30;
-    public const float MOVEMENT_MIN_SPEED = 0, MOVEMENT_MAX_SPEED = 3;
+    public const float ATTACK_MIN_SPEED = 1, ATTACK_MAX_SPEED = 2.5f;
+    public const float FIRE_RATE_MIN_SPEED = 1, FIRE_RATE_MAX_SPEED = 2.5f;
+    public const float MOVEMENT_MIN_SPEED = 1, MOVEMENT_MAX_SPEED = 2f;
 
     // Name of the stat
     [System.NonSerialized]

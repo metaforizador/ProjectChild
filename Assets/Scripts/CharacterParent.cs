@@ -4,33 +4,87 @@ using UnityEngine;
 
 public class CharacterParent : MonoBehaviour {
 
+    public enum CharacterType { Player, Enemy };
+
     // Temporary stats
-    [SerializeField]
     private float hp, shield, stamina, ammo;
 
-    public float shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,
+    public float HP { get { return hp; }
+        private set {
+            hp = value;
+            if (characterType == CharacterType.Player)
+                hud.AdjustHUDBar(hud.hpBar, hp);
+        }
+    }
+
+    public float SHIELD {
+        get { return shield; }
+        private set {
+            shield = value;
+            if (characterType == CharacterType.Player)
+                hud.AdjustHUDBar(hud.shieldBar, shield);
+        }
+    }
+
+    public float STAMINA {
+        get { return stamina; }
+        private set {
+            stamina = value;
+            if (characterType == CharacterType.Player)
+                hud.AdjustHUDBar(hud.staminaBar, stamina);
+        }
+    }
+
+    public float AMMO {
+        get { return ammo; }
+        private set {
+            ammo = value;
+            if (characterType == CharacterType.Player)
+                hud.AdjustAmmoAmount(weapon.ammoSize, ammo);
+        }
+    }
+
+    protected float shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,
         rareItemFindRate, piercingDmg, kineticDmg, energyDmg, piercingRes, kineticRes, energyRes,
         attackSpd, movementSpd, fireRate;
 
-    [SerializeField]
-    private bool alive;
+    protected bool alive;
+    public bool shooting;
 
     private const float MAX_VALUE = 100;
 
-    private const float RECOVERY_DELAY = 0.2f;
-    private const float CRITICAL_HIT_MULTIPLIER = 2;    // Doubles the damage
+    protected CharacterType characterType;
 
-    // CHANGE LATER WHEN WEAPONS ARE IMPLEMENTED
-    private float weaponDamage = 50;
-    private DamageType weaponType = DamageType.Piercing;
+    protected HUDCanvas hud;
+
+    [SerializeField]
+    private WeaponSO weapon;
+
+    // Weapon values
+    private float weaponDamage;
+    private DamageType weaponType;
+    private float weaponBulletSpeed;
+    private float weaponBulletConsumption;
+    private float weaponRateOfFire;
+    // Weapon prefab stuff
+    public GameObject weaponBullet;
+    private GameObject bulletPoint;
 
     public virtual void Start() {
-        hp = MAX_VALUE;
-        shield = MAX_VALUE;
-        stamina = MAX_VALUE;
-        ammo = MAX_VALUE;
+        hud = CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>();
+        // Retrieve bullet point
+        bulletPoint = transform.Find("BulletPoint").gameObject;
 
+        RetrieveWeaponValues();
         ResetValues();
+    }
+
+    private void RetrieveWeaponValues() {
+        weaponDamage = weapon.damagePerBullet;
+        weaponType = weapon.weaponType;
+        weaponBulletSpeed = weapon.bulletSpeed;
+        weaponBulletConsumption = 100 / weapon.ammoSize; // Gets percentage
+        weaponRateOfFire = weapon.rateOfFire;
     }
 
     /// <summary>
@@ -39,12 +93,13 @@ public class CharacterParent : MonoBehaviour {
     private void ResetValues() {
         alive = true;
 
-        hp = MAX_VALUE;
-        shield = MAX_VALUE;
-        stamina = MAX_VALUE;
-        ammo = MAX_VALUE;
+        HP = MAX_VALUE;
+        SHIELD = MAX_VALUE;
+        STAMINA = MAX_VALUE;
+        AMMO = MAX_VALUE;
 
         StartCoroutine(RestoreRecoveries());
+        StartCoroutine(Shooting());
     }
 
     /// <summary>
@@ -54,60 +109,77 @@ public class CharacterParent : MonoBehaviour {
     IEnumerator RestoreRecoveries() {
         while (alive) {
             // Recover shield
-            if (shield < MAX_VALUE) {
-                shield += shieldRecovery;
+            if (SHIELD < MAX_VALUE) {
+                SHIELD += shieldRecovery;
 
-                if (shield > MAX_VALUE)
-                    shield = MAX_VALUE;
+                if (SHIELD > MAX_VALUE)
+                    SHIELD = MAX_VALUE;
             }
 
             // Recover stamina
-            if (stamina < MAX_VALUE) {
-                stamina += staminaRecovery;
+            if (STAMINA < MAX_VALUE) {
+                STAMINA += staminaRecovery;
 
-                if (stamina > MAX_VALUE)
-                    stamina = MAX_VALUE;
+                if (STAMINA > MAX_VALUE)
+                    STAMINA = MAX_VALUE;
             }
 
             // Recover ammo
-            if (ammo < MAX_VALUE) {
-                ammo += ammoRecovery;
+            if (AMMO < MAX_VALUE) {
+                AMMO += ammoRecovery;
 
-                if (ammo > MAX_VALUE)
-                    ammo = MAX_VALUE;
+                if (AMMO > MAX_VALUE)
+                    AMMO = MAX_VALUE;
             }
 
-            yield return new WaitForSeconds(RECOVERY_DELAY);
+            yield return new WaitForSeconds(Stat.RECOVERY_DELAY);
         }
     }
 
-    public void CalculateBulletDamage(out DamageType damageType, out float damage) {
+    IEnumerator Shooting() {
+        while (alive) {
+            if (shooting && (AMMO >= weaponBulletConsumption)) {
+                AMMO -= weaponBulletConsumption;
+                GameObject thisBullet = Instantiate(weaponBullet);
+                float damage = CalculateBulletDamage();
+                thisBullet.GetComponent<bulletController>().Initialize(characterType, damage, weaponType);
+
+                thisBullet.transform.position = bulletPoint.transform.position;
+                thisBullet.transform.rotation = bulletPoint.transform.rotation;
+                thisBullet.GetComponent<Rigidbody>().velocity = transform.forward.normalized * weaponBulletSpeed;
+
+                yield return new WaitForSeconds(weaponRateOfFire / fireRate); // Shorten delay by fire rate
+            }
+            yield return 0;
+        }
+    }
+
+    private float CalculateBulletDamage() {
         float damageToCause = weaponDamage;
 
         // Add percentage to damage based on damage stats
         switch (weaponType) {
             case DamageType.Piercing:
-                damageToCause += damageToCause * (piercingDmg / 100);
+                damageToCause *= piercingDmg;
                 break;
             case DamageType.Kinetic:
-                damageToCause += damageToCause * (kineticDmg / 100);
+                damageToCause *= kineticDmg;
                 break;
             case DamageType.Energy:
-                damageToCause += damageToCause * (energyDmg / 100);
+                damageToCause *= energyDmg;
                 break;
         }
 
         // Check if it was a critical hit
         if (Helper.CheckPercentage(criticalRate)) {
             Debug.Log("Critical hit");
-            damageToCause *= CRITICAL_HIT_MULTIPLIER;
+            damageToCause *= Stat.CRITICAL_HIT_MULTIPLIER;
         }
 
-        damage = damageToCause;
-        damageType = weaponType;
+        return damageToCause;
     }
 
-    public void TakeDamage(DamageType type, float amount) {
+    protected virtual void TakeDamage(DamageType type, float amount) {
         // Check if damage got dodged
         if (Helper.CheckPercentage(dodgeRate)) {
             Debug.Log("Dodged");
@@ -128,25 +200,25 @@ public class CharacterParent : MonoBehaviour {
         }
 
         float rest = 0; // Damage left after hitting the shield
-        if (shield > 0) {
-            shield -= amount;
+        if (SHIELD > 0) {
+            SHIELD -= amount;
 
-            if (shield < 0) {
-                rest = Mathf.Abs(shield);
-                shield = 0;
+            if (SHIELD < 0) {
+                rest = Mathf.Abs(SHIELD);
+                SHIELD = 0;
             }
         }
 
-        hp -= rest;
+        HP -= rest;
 
-        if (hp <= 0)
+        if (HP <= 0)
             Die();
     }
 
-    private void Die() {
+    protected virtual void Die() {
         alive = false;
-        hp = 0;
-        shield = 0;
+        HP = 0;
+        SHIELD = 0;
 
         Destroy(gameObject); // Destroy for now
     }

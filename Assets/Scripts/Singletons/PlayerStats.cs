@@ -14,13 +14,14 @@ public class PlayerStats : MonoBehaviour {
         if (_instance == null) {
             _instance = this;
             DontDestroyOnLoad(gameObject);
-            SetDefaultStats();
         } else {
             Destroy(gameObject);
         }
     }
 
     private const int XP_MULTIPLIER = 100;
+
+    private HUDCanvas hud;
 
     // Stats to save and load
     // Nurturing
@@ -49,9 +50,17 @@ public class PlayerStats : MonoBehaviour {
     public Stat fireRate { get; private set; }
 
     // Other stats
-    public int level { get; private set; }
-    public int xp { get; private set; }
+    private int LEVEL, XP;
+    // Update canvas UI element when level changes
+    public int level { get { return LEVEL; }private set { LEVEL = value; hud.AdjustPlayerLevel(LEVEL); } }
+    public int xp { get { return XP; } private set { XP = value; hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, XP); } }
     public int nextLevelUpXp { get; private set; }
+    public int lastLevelUpXp { get; private set; }
+
+    void Start() {
+        hud = CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>();
+        SetDefaultStats();
+    }
 
     private void SetDefaultStats() {
         shieldRecovery = new Stat("Shield recovery", Stat.STARTING_STAT, Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED);
@@ -62,9 +71,9 @@ public class PlayerStats : MonoBehaviour {
         criticalRate = new Stat("Critical rate", Stat.STARTING_STAT, Stat.CRITICAL_MIN_PERCENT, Stat.CRITICAL_MAX_PERCENT);
         rareItemFindRate = new Stat("Rare item find rate", Stat.STARTING_STAT, Stat.RARE_FIND_MIN_PERCENT, Stat.RARE_FIND_MAX_PERCENT);
 
-        piercingDmg = new Stat("Piercing damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT);
-        kineticDmg = new Stat("Kinetic damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT);
-        energyDmg = new Stat("Energy damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT);
+        piercingDmg = new Stat("Piercing damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST);
+        kineticDmg = new Stat("Kinetic damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST);
+        energyDmg = new Stat("Energy damage", Stat.STARTING_STAT, Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST);
 
         piercingRes = new Stat("Piercing resistance", Stat.STARTING_STAT, Stat.RESISTANCE_MIN_PERCENT, Stat.RESISTANCE_MAX_PERCENT);
         kineticRes = new Stat("Kinetic resistance", Stat.STARTING_STAT, Stat.RESISTANCE_MIN_PERCENT, Stat.RESISTANCE_MAX_PERCENT);
@@ -77,6 +86,7 @@ public class PlayerStats : MonoBehaviour {
         level = 1;
         xp = 0;
         nextLevelUpXp = XP_MULTIPLIER;
+        lastLevelUpXp = 0;
     }
 
     public void SavePlayerStats(Save save) {
@@ -103,6 +113,7 @@ public class PlayerStats : MonoBehaviour {
         save.level = level;
         save.xp = xp;
         save.nextLevelUpXp = nextLevelUpXp;
+        save.lastLevelUpXp = lastLevelUpXp;
     }
 
     public void LoadPlayerStats(Save save) {
@@ -130,6 +141,7 @@ public class PlayerStats : MonoBehaviour {
         level = save.level;
         xp = save.xp;
         nextLevelUpXp = save.nextLevelUpXp;
+        lastLevelUpXp = save.lastLevelUpXp;
 
         RefreshPlayerForStatChanges();
     }
@@ -203,6 +215,8 @@ public class PlayerStats : MonoBehaviour {
         // Check if you gain level or multiple levels
         while (xp >= nextLevelUpXp)
                 LevelUp();
+
+        hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, xp);
     }
 
     private void LevelUp() {
@@ -211,6 +225,10 @@ public class PlayerStats : MonoBehaviour {
         // Get next xp multiplier
         int xpToAdd = level * XP_MULTIPLIER;   // Level 5 = 500;
 
+        // Set last level up xp to current nextlevelupxp
+        lastLevelUpXp = nextLevelUpXp;
+
+        // Calculate next level up xp
         nextLevelUpXp += xpToAdd;
 
         // ADD LEVEL UP STUFF TO OPEN DIALOGUE LATER

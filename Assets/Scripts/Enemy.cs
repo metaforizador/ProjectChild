@@ -9,24 +9,18 @@ public class Enemy : CharacterParent {
 
     private Player player;
 
-    private float hp, shield, stamina, ammo;
-    private bool alive;
+    private enum State {Patrolling, Shooting, Dying};
+    private State curState = State.Patrolling;
 
-    private float shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,
-        piercingDmg, kineticDmg, energyDmg, piercingRes, kineticRes, energyRes,
-        attackSpd, movementSpd, fireRate;
+    public int level { get; private set; }
 
-    private float fireCounter;
-    public float firingSpeed;
-    public float bulletSpeed;
-    public GameObject bulletPoint;
-    public GameObject bullet;
     public float turnSpeed;
     private float turnSmoothVelocity;
     private float turnSmoothTime = 0.1f;
 
-    void Start() {
+    public override void Start() {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        characterType = CharacterType.Enemy;
 
         //Added for testing
         hp = 500;
@@ -39,9 +33,9 @@ public class Enemy : CharacterParent {
         dodgeRate = Stat.CalculateValue(Stat.DODGE_MIN_PERCENT, Stat.DODGE_MAX_PERCENT, scriptableObject.dodgeRate);
         criticalRate = Stat.CalculateValue(Stat.CRITICAL_MIN_PERCENT, Stat.CRITICAL_MAX_PERCENT, scriptableObject.criticalRate);
 
-        piercingDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT, scriptableObject.piercingDmg);
-        kineticDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT, scriptableObject.kineticDmg);
-        energyDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_PERCENT, Stat.DAMAGE_MAX_PERCENT, scriptableObject.energyDmg);
+        piercingDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST, scriptableObject.piercingDmg);
+        kineticDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST, scriptableObject.kineticDmg);
+        energyDmg = Stat.CalculateValue(Stat.DAMAGE_MIN_BOOST, Stat.DAMAGE_MAX_BOOST, scriptableObject.energyDmg);
 
         piercingRes = Stat.CalculateValue(Stat.RESISTANCE_MIN_PERCENT, Stat.RESISTANCE_MAX_PERCENT, scriptableObject.piercingRes);
         kineticRes = Stat.CalculateValue(Stat.RESISTANCE_MIN_PERCENT, Stat.RESISTANCE_MAX_PERCENT, scriptableObject.kineticRes);
@@ -51,67 +45,49 @@ public class Enemy : CharacterParent {
         movementSpd = Stat.CalculateValue(Stat.MOVEMENT_MIN_SPEED, Stat.MOVEMENT_MAX_SPEED, scriptableObject.movementSpd);
         fireRate = Stat.CalculateValue(Stat.FIRE_RATE_MIN_SPEED, Stat.FIRE_RATE_MAX_SPEED, scriptableObject.fireRate);
 
+        level = scriptableObject.level;
+
         base.Start();
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("PlayerBullet")) {
-            float damage;
-            DamageType type;
-            player.CalculateBulletDamage(out type, out damage);
-            TakeDamage(type, damage);
+        if (collision.gameObject.CompareTag("Bullet")) {
+            bulletController bullet = collision.gameObject.GetComponent<bulletController>();
+            if (bullet.shooter == CharacterType.Player) {
+                TakeDamage(bullet.damageType, bullet.damage);
+            }
         }
     }
 
-    public void TakeDamage(DamageType type, float amount) {
-        switch (type) {
-            case DamageType.Piercing:
-                amount -= amount * (piercingRes / 100);
-                break;
-            case DamageType.Kinetic:
-                amount -= amount * (kineticRes / 100);
-                break;
-            case DamageType.Energy:
-                amount -= amount * (energyRes / 100);
-                break;
-        }
-
-        hp -= amount;
-
-        if (hp <= 0) {
-            Die();
-        }
-    }
-
-    private void Die() {
-        hp = 0;
-        alive = false;
-        Destroy(gameObject); // Destroy for now
+    protected override void TakeDamage(DamageType type, float amount) {
+        base.TakeDamage(type, amount);
+        hud.ShowEnemyStats(this);
     }
 
     private void Update()
     {
+        // Don't run update if enemy is not alive
+        if (!alive)
+            return;
+
         //Shooting mechanics
 
-        //if shooting
-        if (true)
-        {
-            fireCounter -= Time.deltaTime;
+        // If player is close enough and enemy is able to see the player
+        if (true) {
+            curState = State.Shooting;
+            shooting = true;
+        } else {
+            curState = State.Patrolling;
+            shooting = false;
+        }
 
+        //if shooting
+        if (curState == State.Shooting)
+        {
             //enemy turns towards player while shooting
             Vector3 targetDirection = GameObject.Find("Player").transform.position - transform.position;
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turnSpeed * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDirection);
-        }
-
-        if (fireCounter < 0)
-        {
-            GameObject thisBullet = Instantiate(bullet);
-            thisBullet.transform.position = bulletPoint.transform.position;
-            thisBullet.transform.rotation = bulletPoint.transform.rotation;
-            thisBullet.GetComponent<Rigidbody>().velocity = transform.forward.normalized * bulletSpeed;
-
-            fireCounter = firingSpeed;
         }
 
         //resets firing interval counter after shooting
@@ -119,5 +95,10 @@ public class Enemy : CharacterParent {
         //{
         //    fireCounter = 0;
         //}
+    }
+
+    protected override void Die() {
+        PlayerStats.Instance.GainXP(scriptableObject.xp);
+        base.Die();
     }
 }

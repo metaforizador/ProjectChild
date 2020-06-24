@@ -55,12 +55,8 @@ public class GameMaster : MonoBehaviour {
     }
 
     // For testing purposes
-    public void ChangeScene() {
-        if (SceneManager.GetActiveScene().Equals(SceneManager.GetSceneByBuildIndex(0))) {
-            SceneManager.LoadScene(1);
-        } else {
-            SceneManager.LoadScene(0);
-        }
+    public void Restart() {
+        SceneManager.LoadScene(0);
     }
 
     public void QuitGame() {

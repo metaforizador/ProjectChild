@@ -1074,6 +1074,7 @@ GameObject:
   - component: {fileID: 3468940211607285196}
   - component: {fileID: 3468940211607285195}
   - component: {fileID: 3468940211607285197}
+  - component: {fileID: 6205135808043037145}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1113,14 +1114,11 @@ MonoBehaviour:
   controller: {fileID: 3468940211607285197}
   cam: {fileID: 0}
   animator: {fileID: 252596241244071244}
+  playerScript: {fileID: 0}
   masterCanvas: {fileID: 0}
   speed: 75
   gravity: -100
   jumpHeight: 30
-  firingSpeed: 0.2
-  bulletSpeed: 200
-  bullet: {fileID: 2328461022139732333, guid: 655ccb662003eb146a6f3599e6815c59, type: 3}
-  bulletPoint: {fileID: 3468940212256984388}
   groundCheck: {fileID: 3468940210761594298}
   groundDistance: 0.4
   groundMask:
@@ -1145,6 +1143,22 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.4, z: 0}
+--- !u!114 &6205135808043037145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3468940211607285168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb44c61e66e1ee4eadc604b68426669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shooting: 0
+  weaponBullet: {fileID: 0}
+  testDamageKeyU: 20
+  testXpKeyX: 20
 --- !u!1 &3468940211892332119
 GameObject:
   m_ObjectHideFlags: 0

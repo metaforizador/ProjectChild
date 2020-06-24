@@ -7,6 +7,7 @@ public class playerMovement : MonoBehaviour
     public CharacterController controller;
     public Camera cam;
     public Animator animator;
+    public Player playerScript;
 
     public GameObject crosshair;
 
@@ -17,12 +18,6 @@ public class playerMovement : MonoBehaviour
     public float speed = 6f;
     public float gravity = -9.81f;
     public float jumpHeight = 10f;
-    public float firingSpeed = 0.2f;
-    public float bulletSpeed = 10f;
-    public GameObject bullet;
-    public GameObject bulletPoint;
-
-    float fireCounter;
 
     private Vector3 xzMovement;
 
@@ -35,6 +30,10 @@ public class playerMovement : MonoBehaviour
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
+
+    void Start() {
+        playerScript = GetComponent<Player>();
+    }
 
     void Update()
     {
@@ -102,7 +101,7 @@ public class playerMovement : MonoBehaviour
                 animator.SetBool("Jumping", true);
             }
         }
-        
+
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime + xzMovement);
@@ -122,7 +121,7 @@ public class playerMovement : MonoBehaviour
 
         if (animator.GetBool("Shooting"))
         {
-            fireCounter -= Time.deltaTime;
+            playerScript.shooting = true;
 
             //player turns towards camera while shooting
             float targetAngle = Mathf.Atan2(0, 1) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
@@ -130,8 +129,10 @@ public class playerMovement : MonoBehaviour
             //set rotation to angle for smoothing effect
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            
+        }
+        else
+        {
+          playerScript.shooting = false;
         }
 
         //if raycast doesnt hit, get a point along the ray
