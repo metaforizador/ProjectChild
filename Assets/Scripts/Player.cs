@@ -19,6 +19,9 @@ public class Player : CharacterParent {
         RefreshStats();
 
         base.Start();
+
+        // Show player's hud
+        hud.gameObject.SetActive(true);
     }
 
     public void RefreshStats() {
@@ -62,5 +65,9 @@ public class Player : CharacterParent {
         if (Input.GetKeyDown(KeyCode.X)) {
             stats.GainXP(testXpKeyX);
         }
+    }
+
+    void OnDestroy() {
+        hud.gameObject.SetActive(false); // Hide player's hud on destroy
     }
 }
