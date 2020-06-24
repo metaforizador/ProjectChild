@@ -55,18 +55,18 @@ public class CharacterParent : MonoBehaviour {
 
     // Recovery delay values
     private const float RECOVERY_DELAY_TIME = 1f;
-    private const int D_SHIELD = 0, D_STAMINA = 1, D_AMMO = 2;
-    private float[] delays = new float[] { 0, 0, 0 };
+    private const int D_SHIELD = 0, D_STAMINA = 1;
+    private float[] delays = new float[] { 0, 0 };
 
     protected CharacterType characterType;
 
     protected HUDCanvas hud;
 
     [SerializeField]
-    private WeaponSO weapon;
+    private WeaponSO weapon = null;
 
     [SerializeField]
-    private ArmorSO armor;
+    private ArmorSO armor = null;
 
     // Weapon values
     private float weaponDamage;
@@ -162,7 +162,7 @@ public class CharacterParent : MonoBehaviour {
             }
 
             // Recover ammo
-            if (AMMO < MAX_VALUE && delays[D_AMMO] <= 0 && characterType == CharacterType.Player) {
+            if (AMMO < MAX_VALUE && characterType == CharacterType.Player) {
                 AMMO += ammoRecovery;
 
                 if (AMMO > MAX_VALUE)
@@ -176,9 +176,6 @@ public class CharacterParent : MonoBehaviour {
     IEnumerator Shooting() {
         while (alive) {
             if (shooting && (AMMO >= weaponBulletConsumption)) {
-                // Add delay to ammo recovery
-                // delays[D_AMMO] = RECOVERY_DELAY_TIME; REMOVE FOR NOW, SEEMED STUPID
-
                 // Decrease ammo by bullet consumption amount
                 AMMO -= weaponBulletConsumption;
 
