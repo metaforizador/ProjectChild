@@ -65,6 +65,9 @@ public class CharacterParent : MonoBehaviour {
     [SerializeField]
     private WeaponSO weapon;
 
+    [SerializeField]
+    private ArmorSO armor;
+
     // Weapon values
     private float weaponDamage;
     private DamageType weaponType;
@@ -75,12 +78,21 @@ public class CharacterParent : MonoBehaviour {
     public GameObject weaponBullet;
     private GameObject bulletPoint;
 
+    // Armor values
+    private float decreaseShieldRecoveryDelay;
+    private int increaseShield;
+    private float decreaseOpponentCriticalRate;
+    private float decreaseOpponentCriticalMultiplier;
+    private float reduceMovementSpeed;
+    private float reduceStaminaRecoveryRate;
+
     public virtual void Start() {
         hud = CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>();
         // Retrieve bullet point
         bulletPoint = transform.Find("BulletPoint").gameObject;
 
         RetrieveWeaponValues();
+        RetrieveArmorValues();
         ResetValues();
     }
 
@@ -90,6 +102,17 @@ public class CharacterParent : MonoBehaviour {
         weaponBulletSpeed = weapon.bulletSpeed;
         weaponBulletConsumption = 100 / weapon.ammoSize; // Gets percentage
         weaponRateOfFire = weapon.rateOfFire;
+    }
+
+    private void RetrieveArmorValues() {
+        if (armor != null) {
+            decreaseShieldRecoveryDelay = armor.decreaseShieldRecoveryDelay;
+            increaseShield = armor.increaseShield;
+            decreaseOpponentCriticalRate = armor.decreaseOpponentCriticalRate;
+            decreaseOpponentCriticalMultiplier = armor.decreaseOpponentCriticalMultiplier;
+            reduceMovementSpeed = armor.reduceMovementSpeed;
+            reduceStaminaRecoveryRate = armor.reduceStaminaRecoveryRate;
+        }
     }
 
     /// <summary>

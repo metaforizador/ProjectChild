@@ -11,14 +11,14 @@ public class ArmorSO : ScriptableObject {
     [Header("Decrease delay by %")]
     public float decreaseShieldRecoveryDelay;
 
-    [Header("Default armor capacity is 100")]
-    public int increaseArmor;
+    [Header("Default shield capacity is 100")]
+    public int increaseShield;
 
     [Header("Decrease rate by %")]
-    public float decreaseEnemyCriticalRate;
+    public float decreaseOpponentCriticalRate;
 
     [Header("Decrease multiplier by % (default is 200%)")]
-    public float decreaseEnemyCriticalMultiplier;
+    public float decreaseOpponentCriticalMultiplier;
 
     [Header("Decrease speed by % (because armor is heavy)")]
     public float reduceMovementSpeed;

@@ -8,9 +8,6 @@ public class Player : CharacterParent {
 
     private Stat[] recoveryStats;
 
-    [SerializeField]
-    private ArmorSO armor;
-
     // Testing purposes
     public float testDamageKeyU = 20;
     public int testXpKeyX = 20;
