@@ -15,8 +15,8 @@ MonoBehaviour:
   name: Copper
   armorPrefab: {fileID: 0}
   decreaseShieldRecoveryDelay: 0
-  increaseArmor: 0
-  decreaseEnemyCriticalRate: 0
-  decreaseEnemyCriticalMultiplier: 0
+  increaseShield: 0
+  decreaseOpponentCriticalRate: 0
+  decreaseOpponentCriticalMultiplier: 0
   reduceMovementSpeed: 0
   reduceStaminaRecoveryRate: 0

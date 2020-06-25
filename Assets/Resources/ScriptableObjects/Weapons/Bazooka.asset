@@ -19,3 +19,4 @@ MonoBehaviour:
   bulletSpeed: 400
   ammoSize: 10
   rateOfFire: 1
+  reloadTime: 5

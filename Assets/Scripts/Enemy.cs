@@ -51,13 +51,13 @@ public class Enemy : CharacterParent {
         if (collision.gameObject.CompareTag("Bullet")) {
             bulletController bullet = collision.gameObject.GetComponent<bulletController>();
             if (bullet.shooter == CharacterType.Player) {
-                TakeDamage(bullet.damageType, bullet.damage);
+                TakeDamage(bullet.damageType, bullet.damage, bullet.criticalRate);
             }
         }
     }
 
-    protected override void TakeDamage(DamageType type, float amount) {
-        base.TakeDamage(type, amount);
+    protected override void TakeDamage(DamageType type, float amount, float criticalRate) {
+        base.TakeDamage(type, amount, criticalRate);
         hud.ShowEnemyStats(this);
     }
 

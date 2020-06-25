@@ -50,7 +50,7 @@ public class Player : CharacterParent {
         if (collision.gameObject.CompareTag("Bullet")) {
             bulletController bullet = collision.gameObject.GetComponent<bulletController>();
             if (bullet.shooter == CharacterType.Enemy) {
-                TakeDamage(bullet.damageType, bullet.damage);
+                TakeDamage(bullet.damageType, bullet.damage, bullet.criticalRate);
             }
         }
     }
@@ -59,7 +59,7 @@ public class Player : CharacterParent {
         base.Update();
         // Test taking damage
         if (Input.GetKeyDown(KeyCode.U)) {
-            TakeDamage(DamageType.Piercing, testDamageKeyU);
+            TakeDamage(DamageType.Piercing, testDamageKeyU, 0);
         }
         
         // Test gaining xp

@@ -54,7 +54,7 @@ public class CharacterParent : MonoBehaviour {
     private const float MAX_VALUE = 100;
 
     // Recovery delay values
-    private const float RECOVERY_DELAY_TIME = 1f;
+    private const float RECOVERY_DELAY_TIME = 1.5f;
     private const int D_SHIELD = 0, D_STAMINA = 1;
     private float[] delays = new float[] { 0, 0 };
 
@@ -111,7 +111,7 @@ public class CharacterParent : MonoBehaviour {
             armorDecreaseShieldRecoveryDelay = armor.decreaseShieldRecoveryDelay / 100;
             armorIncreaseShield = armor.increaseShield;
             armorDecreaseOpponentCriticalRate = armor.decreaseOpponentCriticalRate;
-            armorDecreaseOpponentCriticalMultiplier = armor.decreaseOpponentCriticalMultiplier;
+            armorDecreaseOpponentCriticalMultiplier = armor.decreaseOpponentCriticalMultiplier / 100;
             armorReduceMovementSpeed = armor.reduceMovementSpeed;
             armorReduceStaminaRecoveryRate = armor.reduceStaminaRecoveryRate;
         }
@@ -182,7 +182,7 @@ public class CharacterParent : MonoBehaviour {
                 // Create the bullet, calculate damage and initialize necessary values
                 GameObject thisBullet = Instantiate(weaponBullet);
                 float damage = CalculateBulletDamage();
-                thisBullet.GetComponent<bulletController>().Initialize(characterType, damage, weaponType);
+                thisBullet.GetComponent<bulletController>().Initialize(characterType, damage, criticalRate, weaponType);
 
                 // Set bullets position and speed
                 thisBullet.transform.position = bulletPoint.transform.position;
@@ -222,20 +222,20 @@ public class CharacterParent : MonoBehaviour {
                 break;
         }
 
-        // Check if it was a critical hit
-        if (Helper.CheckPercentage(criticalRate)) {
-            Debug.Log("Critical hit");
-            damageToCause *= Stat.CRITICAL_HIT_MULTIPLIER;
-        }
-
         return damageToCause;
     }
 
-    protected virtual void TakeDamage(DamageType type, float amount) {
+    protected virtual void TakeDamage(DamageType type, float amount, float criticalRate) {
         // Check if damage got dodged
         if (Helper.CheckPercentage(dodgeRate)) {
             Debug.Log("Dodged");
             return;
+        }
+
+        // Check if it was a critical hit
+        if (Helper.CheckPercentage(criticalRate - armorDecreaseOpponentCriticalRate)) {
+            Debug.Log("Critical hit");
+            amount *= (Stat.CRITICAL_HIT_MULTIPLIER - armorDecreaseOpponentCriticalMultiplier);
         }
 
         // Add delay to shield recovery
@@ -254,17 +254,20 @@ public class CharacterParent : MonoBehaviour {
                 break;
         }
 
-        float rest = 0; // Damage left after hitting the shield
+        // If shield is left, take damage to shield
         if (SHIELD > 0) {
             SHIELD -= amount;
 
+            // If shield went under 0, add the left over damage to hp
             if (SHIELD < 0) {
-                rest = Mathf.Abs(SHIELD);
+                amount = Mathf.Abs(SHIELD);
                 SHIELD = 0;
+            } else {
+                amount = 0;
             }
         }
 
-        HP -= rest;
+        HP -= amount;
 
         if (HP <= 0)
             Die();

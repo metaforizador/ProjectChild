@@ -16,9 +16,11 @@ public class ArmorSO : ScriptableObject {
     public int increaseShield;
 
     [Header("Decrease opponent's critical rate by %")]
+    [Range(0f, Stat.CRITICAL_MAX_PERCENT)]
     public float decreaseOpponentCriticalRate;
 
-    [Header("Decrease opponent's critical multiplier by % (default is 200%)")]
+    [Header("Decrease opponent's critical multiplier by %")]
+    [Range(0f, 100f)]
     public float decreaseOpponentCriticalMultiplier;
 
     [Header("Decrease movement speed by % (because armor is heavy)")]
