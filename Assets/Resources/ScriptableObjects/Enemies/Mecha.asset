@@ -17,7 +17,6 @@ MonoBehaviour:
   xp: 10
   shieldRecovery: 0
   staminaRecovery: 0
-  ammoRecovery: 0
   dodgeRate: 0
   criticalRate: 1
   piercingDmg: 0
