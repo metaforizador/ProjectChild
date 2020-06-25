@@ -46,12 +46,11 @@ public class EnemySOEditor : Editor {
         EditorGUILayout.LabelField("Amount of xp player gains when killing this enemy", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(xp);
         EditorGUILayout.LabelField("Level is the amount of points the enemy should\nhave in stats" +
-            "(Example: Level 10 could have\n'Critical hit: 3', 'piercingDmg: 2' & 'Fire rate 5'", EditorStyles.boldLabel, GUILayout.Height(50));
+            "(Example: Level 10 could have\n'Critical hit: 3', 'piercingDmg: 2' & 'Fire rate 5')", EditorStyles.boldLabel, GUILayout.Height(50));
         EditorGUILayout.PropertyField(level);
-        EditorGUILayout.LabelField($"Recovery speed: {Stat.RECOVERY_MIN_SPEED}% - {Stat.RECOVERY_MAX_SPEED}% every {Stat.RECOVERY_DELAY} second", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField($"Recovery speed: {Stat.RECOVERY_MIN_SPEED} - {Stat.RECOVERY_MAX_SPEED} every {Stat.RECOVERY_DELAY} second", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(shieldRecovery);
         EditorGUILayout.PropertyField(staminaRecovery);
-        EditorGUILayout.PropertyField(ammoRecovery);
         EditorGUILayout.Space();
         EditorGUILayout.LabelField($"Dodge rate: {Stat.DODGE_MIN_PERCENT}% - {Stat.DODGE_MAX_PERCENT}%", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(dodgeRate);

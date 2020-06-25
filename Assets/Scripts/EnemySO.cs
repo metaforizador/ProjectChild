@@ -10,7 +10,7 @@ public class EnemySO : ScriptableObject {
     public int xp;
 
     [Range(Stat.STARTING_STAT, Stat.MAX_BASE_STAT_VALUES)]
-    public int shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,
+    public int shieldRecovery, staminaRecovery, dodgeRate, criticalRate,
         piercingDmg, kineticDmg, energyDmg, piercingRes, kineticRes, energyRes,
         attackSpd, movementSpd, fireRate;
 }
