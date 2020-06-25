@@ -110,6 +110,8 @@ public class CharacterParent : MonoBehaviour {
 
     protected void RetrieveArmorValues() {
         maxShield = MAX_VALUE;
+        movementSpeedMultiplier = movementSpd;
+
         if (armor != null) {
             armorDecreaseShieldRecoveryDelay = armor.decreaseShieldRecoveryDelay / 100;
             maxShield += armor.increaseShield;
