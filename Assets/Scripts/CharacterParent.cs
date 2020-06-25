@@ -22,7 +22,7 @@ public class CharacterParent : MonoBehaviour {
         private set {
             shield = value;
             if (characterType == CharacterType.Player)
-                hud.AdjustHUDBar(hud.shieldBar, shield);
+                hud.AdjustHUDBarShield(maxShield, SHIELD);
         }
     }
 
@@ -52,6 +52,7 @@ public class CharacterParent : MonoBehaviour {
     public bool shooting;
 
     private const float MAX_VALUE = 100;
+    public float maxShield { get; private set; }
 
     // Recovery delay values
     private const float RECOVERY_DELAY_TIME = 1.5f;
@@ -81,7 +82,6 @@ public class CharacterParent : MonoBehaviour {
 
     // Armor values
     private float armorDecreaseShieldRecoveryDelay;
-    private int armorIncreaseShield;
     private float armorDecreaseOpponentCriticalRate;
     private float armorDecreaseOpponentCriticalMultiplier;
     private float armorReduceMovementSpeed;
@@ -107,9 +107,10 @@ public class CharacterParent : MonoBehaviour {
     }
 
     private void RetrieveArmorValues() {
+        maxShield = MAX_VALUE;
         if (armor != null) {
             armorDecreaseShieldRecoveryDelay = armor.decreaseShieldRecoveryDelay / 100;
-            armorIncreaseShield = armor.increaseShield;
+            maxShield += armor.increaseShield;
             armorDecreaseOpponentCriticalRate = armor.decreaseOpponentCriticalRate;
             armorDecreaseOpponentCriticalMultiplier = armor.decreaseOpponentCriticalMultiplier / 100;
             armorReduceMovementSpeed = armor.reduceMovementSpeed;
@@ -124,7 +125,7 @@ public class CharacterParent : MonoBehaviour {
         alive = true;
 
         HP = MAX_VALUE;
-        SHIELD = MAX_VALUE;
+        SHIELD = maxShield;
         STAMINA = MAX_VALUE;
         AMMO = MAX_VALUE;
 
@@ -146,11 +147,11 @@ public class CharacterParent : MonoBehaviour {
     IEnumerator RestoreRecoveries() {
         while (alive) {
             // Recover shield
-            if (SHIELD < MAX_VALUE && delays[D_SHIELD] <= 0) {
+            if (SHIELD < maxShield && delays[D_SHIELD] <= 0) {
                 SHIELD += shieldRecovery;
 
-                if (SHIELD > MAX_VALUE)
-                    SHIELD = MAX_VALUE;
+                if (SHIELD > maxShield)
+                    SHIELD = maxShield;
             }
 
             // Recover stamina

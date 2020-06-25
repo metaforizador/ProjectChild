@@ -15,12 +15,12 @@ public class HUDCanvas : MonoBehaviour {
     public TextMeshProUGUI enemyLevel;
     private Enemy currentEnemy;
     private bool enemyAlive;
-    private float hideEnemyStatsTime = 2f;
+    private const float HIDE_ENEMY_STATS_TIME = 2f;
 
     public void Update() {
         // Hp and shield needs to be updated all the time in case they get recovered
         if (enemyAlive) {
-            enemyShieldBar.fillAmount = currentEnemy.SHIELD / 100;
+            enemyShieldBar.fillAmount = currentEnemy.SHIELD / currentEnemy.maxShield;
             enemyHpBar.fillAmount = currentEnemy.HP / 100;
 
             // If enemy health is 0, reset texts
@@ -34,6 +34,10 @@ public class HUDCanvas : MonoBehaviour {
 
     public void AdjustHUDBar(Image bar, float amount) {
         bar.fillAmount = amount / 100;
+    }
+
+    public void AdjustHUDBarShield(float maxShield, float curShield) {
+        shieldBar.fillAmount = curShield / maxShield;
     }
 
     public void AdjustHUDBarXP(float lastLevelXP, float nextLevelXP, float curXP) {
@@ -72,7 +76,7 @@ public class HUDCanvas : MonoBehaviour {
         CancelInvoke();
 
         // Hide stats after some time of the latest hit
-        Invoke("HideEnemyStats", hideEnemyStatsTime);
+        Invoke("HideEnemyStats", HIDE_ENEMY_STATS_TIME);
     }
 
     private void HideEnemyStats() {
