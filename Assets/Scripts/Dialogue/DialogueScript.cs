@@ -71,7 +71,7 @@ public class DialogueScript : MonoBehaviour {
             answerButtons.Add(button);
 
             // Add button to the list and set the scale to 1 (parent.transform changes it to 0,6)
-            button.transform.parent = answerListView.transform;
+            button.transform.SetParent(answerListView.transform);
             button.transform.localScale = Vector3.one;
 
             // Set text to answer button

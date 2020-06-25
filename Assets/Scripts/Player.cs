@@ -58,6 +58,14 @@ public class Player : CharacterParent {
         }
     }
 
+    void OnCollision(Collision collision) {
+        if (collision.gameObject.CompareTag("Chest")) {
+            if (Input.GetButtonDown("Use")) {
+                // Open chest
+            }
+        }
+    }
+
     protected override void Update() {
         base.Update();
         // Test taking damage
