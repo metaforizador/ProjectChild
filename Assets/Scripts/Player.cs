@@ -44,6 +44,9 @@ public class Player : CharacterParent {
         attackSpd = stats.attackSpd.currentValue;
         movementSpd = stats.movementSpd.currentValue;
         fireRate = stats.fireRate.currentValue;
+
+        // Some armor values are affected by stats
+        RetrieveArmorValues();
     }
 
     void OnCollisionEnter(Collision collision) {

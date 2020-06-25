@@ -54,6 +54,9 @@ public class CharacterParent : MonoBehaviour {
     private const float MAX_VALUE = 100;
     public float maxShield { get; private set; }
 
+    // Movement speed when taking armor values to account
+    public float movementSpeedMultiplier { get; private set; }
+
     // Recovery delay values
     private const float RECOVERY_DELAY_TIME = 1.5f;
     private const int D_SHIELD = 0, D_STAMINA = 1;
@@ -84,7 +87,6 @@ public class CharacterParent : MonoBehaviour {
     private float armorDecreaseShieldRecoveryDelay;
     private float armorDecreaseOpponentCriticalRate;
     private float armorDecreaseOpponentCriticalMultiplier;
-    private float armorReduceMovementSpeed;
     private float armorReduceStaminaRecoveryRate;
 
     public virtual void Start() {
@@ -106,14 +108,14 @@ public class CharacterParent : MonoBehaviour {
         weaponReloadTime = weapon.reloadTime;
     }
 
-    private void RetrieveArmorValues() {
+    protected void RetrieveArmorValues() {
         maxShield = MAX_VALUE;
         if (armor != null) {
             armorDecreaseShieldRecoveryDelay = armor.decreaseShieldRecoveryDelay / 100;
             maxShield += armor.increaseShield;
             armorDecreaseOpponentCriticalRate = armor.decreaseOpponentCriticalRate;
             armorDecreaseOpponentCriticalMultiplier = armor.decreaseOpponentCriticalMultiplier / 100;
-            armorReduceMovementSpeed = armor.reduceMovementSpeed;
+            movementSpeedMultiplier = movementSpd - ((armor.reduceMovementSpeed / 100) * movementSpd);
             armorReduceStaminaRecoveryRate = armor.reduceStaminaRecoveryRate;
         }
     }

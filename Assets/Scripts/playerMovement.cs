@@ -96,7 +96,7 @@ public class playerMovement : MonoBehaviour
             }
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            xzMovement = moveDir.normalized * speed * Time.deltaTime;
+            xzMovement = moveDir.normalized * (speed * playerScript.movementSpeedMultiplier)* Time.deltaTime;
         }
 
         if (isGrounded)
