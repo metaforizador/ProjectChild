@@ -9,7 +9,15 @@ public class ChestCanvas : MonoBehaviour {
     public GameObject buttonLayout;
     public Button itemPrefab;
 
+    private List<Button> createdButtons = new List<Button>();
+
     public void ShowChest(PickableSO[] items) {
+        // Close if already open
+        if (gameObject.activeSelf) {
+            CloseChest();
+            return;
+        }
+
         gameObject.SetActive(true);
 
         foreach (PickableSO item in items) {
@@ -20,10 +28,17 @@ public class ChestCanvas : MonoBehaviour {
 
             // Set name to the button
             button.GetComponentInChildren<TextMeshProUGUI>().text = item.name;
+            createdButtons.Add(button);
         }
     }
 
     public void CloseChest() {
         gameObject.SetActive(false);
+
+        // Remove buttons
+        foreach (Button btn in createdButtons) {
+            Destroy(btn.gameObject);
+        }
+        createdButtons.Clear();
     }
 }

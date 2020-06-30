@@ -12,6 +12,9 @@ public class Player : CharacterParent {
     public float testDamageKeyU = 20;
     public int testXpKeyX = 20;
 
+    // Checking trigger presses to avoid "input not always registering"
+    private Collider triggerCollider;
+
     public override void Start() {
         characterType = CharacterType.Player;
         stats = PlayerStats.Instance;
@@ -51,6 +54,14 @@ public class Player : CharacterParent {
 
     protected override void Update() {
         base.Update();
+
+        // Check trigger interact presses
+        if (triggerCollider != null && Input.GetButtonDown("Interact")) {
+            if (triggerCollider.CompareTag("Chest")) {
+                triggerCollider.GetComponent<Chest>().OpenChest();
+            }
+        }
+
         // Test taking damage
         if (Input.GetKeyDown(KeyCode.U)) {
             TakeDamage(DamageType.Piercing, testDamageKeyU, 0);
@@ -60,6 +71,8 @@ public class Player : CharacterParent {
         if (Input.GetKeyDown(KeyCode.X)) {
             stats.GainXP(testXpKeyX);
         }
+
+
     }
 
     void OnDestroy() {
@@ -78,20 +91,16 @@ public class Player : CharacterParent {
     }
 
     void OnTriggerEnter(Collider collider) {
+        triggerCollider = collider;
+
         if (collider.CompareTag("Chest")) {
             hud.ShowInteract(HUDCanvas.CHEST);
         }
     }
 
-    void OnTriggerStay(Collider collider) {
-        if (collider.CompareTag("Chest")) {
-            if (Input.GetButtonDown("Interact")) {
-                collider.GetComponent<Chest>().OpenChest();
-            }
-        }
-    }
-
     void OnTriggerExit(Collider collider) {
+        triggerCollider = null;
+
         if (collider.CompareTag("Chest")) {
             hud.HideInteract();
             CanvasMaster.Instance.chestCanvas.GetComponent<ChestCanvas>().CloseChest();

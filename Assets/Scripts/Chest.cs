@@ -4,30 +4,33 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour {
 
-    private enum Rarity { Common, Uncommon, Rare, Epic }
+    private enum Rarity { Damaged, Intact }
 
     private PickableSO[] items;
+    private int maxItems = 4;
 
     void Start() {
-        int itemAmount = 0;
+        // Randomize chest contents
+        int itemAmount = Random.Range(1, maxItems + 1); // + 1 because max is not inclusive
         Rarity rarity = (Rarity)Rarity.ToObject(typeof(Rarity), Random.Range(0, System.Enum.GetValues(typeof(Rarity)).Length));
+        string rarityPath = rarity.ToString();
 
-        switch (rarity) {
-            case Rarity.Common:
-                itemAmount = 1;
-                break;
-            case Rarity.Uncommon:
-                itemAmount = 2;
-                break;
-            case Rarity.Rare:
-                itemAmount = 3;
-                break;
-            case Rarity.Epic:
-                itemAmount = 4;
-                break;
+        // Load all pickable items from resources which have correct rarity
+        PickableSO[] pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/" + rarityPath + "/");
+
+        // Convert array to list
+        List<PickableSO> pickList = new List<PickableSO>(pickArray);
+
+        // Create new items array based on random size
+        items = new PickableSO[itemAmount];
+
+        // Add random items to the chest items array
+        for (int i = 0; i < itemAmount; i++) {
+            int randomIndex = Random.Range(0, pickList.Count);
+            PickableSO pickable = pickList[randomIndex];
+            items[i] = pickable;
+            pickList.Remove(pickable);
         }
-
-        items = new PickableSO[0];
     }
 
     public void OpenChest() {
