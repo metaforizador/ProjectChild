@@ -49,23 +49,6 @@ public class Player : CharacterParent {
         RetrieveArmorValues();
     }
 
-    void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("Bullet")) {
-            bulletController bullet = collision.gameObject.GetComponent<bulletController>();
-            if (bullet.shooter == CharacterType.Enemy) {
-                TakeDamage(bullet.damageType, bullet.damage, bullet.criticalRate);
-            }
-        }
-    }
-
-    void OnCollision(Collision collision) {
-        if (collision.gameObject.CompareTag("Chest")) {
-            if (Input.GetButtonDown("Use")) {
-                // Open chest
-            }
-        }
-    }
-
     protected override void Update() {
         base.Update();
         // Test taking damage
@@ -81,5 +64,37 @@ public class Player : CharacterParent {
 
     void OnDestroy() {
         hud.gameObject.SetActive(false); // Hide player's hud on destroy
+    }
+
+    /**************** Collisions ****************/
+
+    void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.CompareTag("Bullet")) {
+            bulletController bullet = collision.gameObject.GetComponent<bulletController>();
+            if (bullet.shooter == CharacterType.Enemy) {
+                TakeDamage(bullet.damageType, bullet.damage, bullet.criticalRate);
+            }
+        }
+    }
+
+    void OnTriggerEnter(Collider collider) {
+        if (collider.CompareTag("Chest")) {
+            hud.ShowInteract(HUDCanvas.CHEST);
+        }
+    }
+
+    void OnTriggerStay(Collider collider) {
+        if (collider.CompareTag("Chest")) {
+            if (Input.GetButtonDown("Interact")) {
+                // Open chest
+                Debug.Log("Trigger press");
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider collider) {
+        if (collider.CompareTag("Chest")) {
+            hud.HideInteract();
+        }
     }
 }

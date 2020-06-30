@@ -17,6 +17,19 @@ public class HUDCanvas : MonoBehaviour {
     private bool enemyAlive;
     private const float HIDE_ENEMY_STATS_TIME = 2f;
 
+    // Interact
+    public GameObject interactObject;
+    public TextMeshProUGUI interactText;
+    public LeanTweenType tweenType;
+    private float hideInteractYPos = -150f;
+    public const int CHEST = 0;
+    private string[] interacts = new string[] { "F - Open" };
+
+    void Awake() {
+        // Hide interact
+        interactObject.transform.LeanMoveLocalY(hideInteractYPos, 0f);
+    }
+
     public void Update() {
         // Hp and shield needs to be updated all the time in case they get recovered
         if (enemyAlive) {
@@ -81,5 +94,14 @@ public class HUDCanvas : MonoBehaviour {
 
     private void HideEnemyStats() {
         enemyObject.SetActive(false);
+    }
+
+    public void ShowInteract(int type) {
+        interactText.text = interacts[type];
+        LeanTween.moveLocalY(interactObject, 0, 0.5f).setEase(tweenType);
+    }
+
+    public void HideInteract() {
+        LeanTween.moveLocalY(interactObject, hideInteractYPos, 0.5f).setEase(tweenType);
     }
 }
