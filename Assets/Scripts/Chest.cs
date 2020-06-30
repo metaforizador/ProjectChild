@@ -6,8 +6,7 @@ public class Chest : MonoBehaviour {
 
     private enum Rarity { Common, Uncommon, Rare, Epic }
 
-    WeaponSO[] weapons;
-    ArmorSO[] armors;
+    private PickableSO[] items;
 
     void Start() {
         int itemAmount = 0;
@@ -27,5 +26,12 @@ public class Chest : MonoBehaviour {
                 itemAmount = 4;
                 break;
         }
+
+        items = new PickableSO[0];
+    }
+
+    public void OpenChest() {
+        ChestCanvas cc = CanvasMaster.Instance.chestCanvas.GetComponent<ChestCanvas>();
+        cc.ShowChest(items);
     }
 }

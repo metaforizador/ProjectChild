@@ -86,8 +86,7 @@ public class Player : CharacterParent {
     void OnTriggerStay(Collider collider) {
         if (collider.CompareTag("Chest")) {
             if (Input.GetButtonDown("Interact")) {
-                // Open chest
-                Debug.Log("Trigger press");
+                collider.GetComponent<Chest>().OpenChest();
             }
         }
     }
@@ -95,6 +94,7 @@ public class Player : CharacterParent {
     void OnTriggerExit(Collider collider) {
         if (collider.CompareTag("Chest")) {
             hud.HideInteract();
+            CanvasMaster.Instance.chestCanvas.GetComponent<ChestCanvas>().CloseChest();
         }
     }
 }
