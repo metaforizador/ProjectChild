@@ -189,8 +189,9 @@ public class CharacterParent : MonoBehaviour {
                 float damage = CalculateBulletDamage();
                 thisBullet.GetComponent<bulletController>().Initialize(characterType, damage, criticalRate, weaponType);
 
+                // Set bulletDirection towards crosshair point for the player / towards player for enemies
                 Vector3 bulletDirection = transform.forward;
-                // Set bulletDirection towards crosshair point for the player
+
                 if (characterType == CharacterType.Player)
                 {
                     Vector3 crosshairPoint = new Vector3(0, 0, 0);
@@ -208,6 +209,10 @@ public class CharacterParent : MonoBehaviour {
                         crosshairPoint = ray.GetPoint(1000);
                         bulletDirection = crosshairPoint - bulletPoint.transform.position;
                     }
+                }
+                else if (characterType == CharacterType.Enemy)
+                {
+                    bulletDirection = GameObject.Find("Player").transform.position - bulletPoint.transform.position;
                 }
 
                 // Set bullets position and speed
