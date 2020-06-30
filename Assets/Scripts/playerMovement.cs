@@ -41,7 +41,7 @@ public class playerMovement : MonoBehaviour
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         //checks if player is the air
-        isGrounded = Physics.CheckBox(groundCheck.position, new Vector3(5, groundDistance, 5), Quaternion.identity, groundMask);
+        isGrounded = Physics.CheckBox(groundCheck.position, new Vector3(3, groundDistance, 3), Quaternion.identity, groundMask);
 
         //sets animator attributes
         animator.SetFloat("Speed", GetComponent<CharacterController>().velocity.magnitude);
@@ -90,13 +90,13 @@ public class playerMovement : MonoBehaviour
 
         if (isGrounded)
         {
-            animator.SetBool("Jumping", false);
+            animator.SetBool("isGrounded", true);
 
             if (Input.GetButtonDown("Jump"))
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 animator.SetTrigger("Jump");
-                animator.SetBool("Jumping", true);
+                animator.SetBool("isGrounded", false);
             }
         }
 
