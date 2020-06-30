@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f622394048bc7341976b4bd1422a2a3, type: 3}
   m_Name: Magnum
   m_EditorClassIdentifier: 
-  name: 
+  name: Magnum
   weaponPrefab: {fileID: 0}
-  damagePerBullet: 0
+  damagePerBullet: 50
   weaponType: 0
-  bulletSpeed: 0
-  ammoSize: 0
-  rateOfFire: 0
-  reloadTime: 0
+  bulletSpeed: 500
+  ammoSize: 7
+  rateOfFire: 1
+  reloadTime: 5
