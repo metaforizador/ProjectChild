@@ -35,6 +35,10 @@ public class Chest : MonoBehaviour {
 
     public void OpenChest() {
         ChestCanvas cc = CanvasMaster.Instance.chestCanvas.GetComponent<ChestCanvas>();
-        cc.ShowChest(items);
+        cc.ShowChest(this, items);
+    }
+
+    public void ChangeItems(PickableSO[] items) {
+        this.items = items;
     }
 }

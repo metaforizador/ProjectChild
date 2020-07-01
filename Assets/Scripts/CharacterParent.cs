@@ -140,6 +140,22 @@ public class CharacterParent : MonoBehaviour {
         StartCoroutine(Shooting());
     }
 
+    public WeaponSO ChangeWeapon(WeaponSO weapon) {
+        WeaponSO oldWeapon = this.weapon;
+        this.weapon = weapon;
+        RetrieveWeaponValues();
+
+        return oldWeapon;
+    }
+
+    public ArmorSO ChangeArmor(ArmorSO armor) {
+        ArmorSO oldArmor = this.armor;
+        this.armor = armor;
+        RetrieveArmorValues();
+
+        return oldArmor;
+    }
+
     protected virtual void Update() {
         for (int i = 0; i < delays.Length; i++) {
             if (delays[i] > 0)
