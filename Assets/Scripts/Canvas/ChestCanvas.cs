@@ -100,6 +100,10 @@ public class ChestCanvas : MonoBehaviour {
         ShowChest(openedChest, items);
     }
 
+    public void Cancel() {
+        itemSelectedObject.SetActive(false);
+    }
+
     /// <summary>
     /// Closes the chest view.
     /// </summary>
