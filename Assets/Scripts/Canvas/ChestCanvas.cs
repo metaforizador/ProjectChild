@@ -19,6 +19,10 @@ public class ChestCanvas : MonoBehaviour {
     private PickableSO[] items;
     private int selectedItemIndex;
 
+    // Item stats
+    public GameObject weaponStatsPrefab, armorStatsPrefab;
+    public GameObject currentItemStats, selectedItemStats;
+
     void OnEnable() {
         itemSelectedObject.SetActive(false);
     }
@@ -67,10 +71,34 @@ public class ChestCanvas : MonoBehaviour {
         foundItemView.text = item.name;     // Change found item text
 
         // Set current item text
-        if (item is WeaponSO)
+        if (item is WeaponSO) {
             currentItemView.text = PlayerStats.Instance.player.GetWeapon().name;
-        else if (item is ArmorSO)
+            ShowWeaponStats();
+        } else if (item is ArmorSO) {
             currentItemView.text = PlayerStats.Instance.player.GetArmor().name;
+        }
+    }
+
+    private void ShowWeaponStats() {
+        // Setup current weapon stats
+        WeaponStatHolder holder = Helper.Instance.InflateLayout(weaponStatsPrefab, currentItemStats).
+            GetComponent<WeaponStatHolder>();
+        WeaponSO weapon = PlayerStats.Instance.player.GetWeapon();
+        SetupWeaponStats(holder, weapon);
+
+        // Setup found weapon stats
+        holder = Helper.Instance.InflateLayout(weaponStatsPrefab, selectedItemStats).
+            GetComponent<WeaponStatHolder>();
+        weapon = (WeaponSO) items[selectedItemIndex];
+        SetupWeaponStats(holder, weapon);
+    }
+
+    private void SetupWeaponStats(WeaponStatHolder holder, WeaponSO weapon) {
+        holder.type.text = weapon.weaponType.ToString();
+        holder.damage.text = weapon.damagePerBullet.ToString();
+        holder.bulletSpeed.text = weapon.bulletSpeed.ToString();
+        holder.ammoSize.text = weapon.ammoSize.ToString();
+        holder.rateOfFire.text = (60 / weapon.rateOfFire).ToString();   // Rounds per minute
     }
 
     /// <summary>
