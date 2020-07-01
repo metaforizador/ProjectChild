@@ -18,6 +18,7 @@ public class Player : CharacterParent {
     public override void Start() {
         characterType = CharacterType.Player;
         stats = PlayerStats.Instance;
+        stats.player = this;    // Add this player to singleton variable for better access
 
         RefreshStats();
 
@@ -76,7 +77,8 @@ public class Player : CharacterParent {
     }
 
     void OnDestroy() {
-        hud.gameObject.SetActive(false); // Hide player's hud on destroy
+        if (hud != null)
+            hud.gameObject.SetActive(false);    // Hide player's hud on destroy
     }
 
     /**************** Collisions ****************/

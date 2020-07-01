@@ -9,7 +9,16 @@ public class ChestCanvas : MonoBehaviour {
     public GameObject buttonLayout;
     public Button itemPrefab;
 
+    public TextMeshProUGUI currentItemView, foundItemView;
+
     private List<Button> createdButtons = new List<Button>();
+
+    public GameObject itemSelectedObject;
+    private PickableSO[] items;
+
+    void OnEnable() {
+        itemSelectedObject.SetActive(false);
+    }
 
     public void ShowChest(PickableSO[] items) {
         // Close if already open
@@ -17,6 +26,8 @@ public class ChestCanvas : MonoBehaviour {
             CloseChest();
             return;
         }
+
+        this.items = items;
 
         gameObject.SetActive(true);
 
@@ -29,6 +40,9 @@ public class ChestCanvas : MonoBehaviour {
             // Set name to the button
             button.GetComponentInChildren<TextMeshProUGUI>().text = item.name;
             createdButtons.Add(button);
+
+            // Set button click listener
+            button.onClick.AddListener(() => ItemSelected(item));
         }
     }
 
@@ -40,5 +54,16 @@ public class ChestCanvas : MonoBehaviour {
             Destroy(btn.gameObject);
         }
         createdButtons.Clear();
+    }
+
+    private void ItemSelected(PickableSO item) {
+        itemSelectedObject.SetActive(true);
+        foundItemView.text = item.name;
+
+        // Set current item text
+        if (item is WeaponSO)
+            currentItemView.text = PlayerStats.Instance.player.GetWeapon().name;
+        else if (item is ArmorSO)
+            currentItemView.text = PlayerStats.Instance.player.GetArmor().name;
     }
 }
