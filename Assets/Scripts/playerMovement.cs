@@ -99,6 +99,14 @@ public class playerMovement : MonoBehaviour
                 animator.SetBool("isGrounded", false);
             }
         }
+        else
+        {
+            if (animator.GetBool("isGrounded"))
+            {
+                animator.SetBool("isGrounded", false);
+                animator.SetTrigger("Jump");
+            }
+        }
 
         velocity.y += gravity * Time.deltaTime;
 
