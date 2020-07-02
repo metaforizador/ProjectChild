@@ -64,6 +64,13 @@ public class ChestCanvas : MonoBehaviour {
     /// </summary>
     /// <param name="index"></param>
     private void ItemSelected(int index) {
+        // Clear old stats if exists
+        foreach (Transform child in currentItemStats.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in selectedItemStats.transform)
+            Destroy(child.gameObject);
+
+        // Save index to local variable
         selectedItemIndex = index;
         PickableSO item = items[index];
 
