@@ -76,6 +76,7 @@ public class ChestCanvas : MonoBehaviour {
             ShowWeaponStats();
         } else if (item is ArmorSO) {
             currentItemView.text = PlayerStats.Instance.player.GetArmor().name;
+            ShowArmorStats();
         }
     }
 
@@ -99,6 +100,29 @@ public class ChestCanvas : MonoBehaviour {
         holder.bulletSpeed.text = weapon.bulletSpeed.ToString();
         holder.ammoSize.text = weapon.ammoSize.ToString();
         holder.rateOfFire.text = (60 / weapon.rateOfFire).ToString();   // Rounds per minute
+    }
+
+    private void ShowArmorStats() {
+        // Setup current weapon stats
+        ArmorStatHolder holder = Helper.Instance.InflateLayout(armorStatsPrefab, currentItemStats).
+            GetComponent<ArmorStatHolder>();
+        ArmorSO armor = PlayerStats.Instance.player.GetArmor();
+        SetupArmorStats(holder, armor);
+
+        // Setup found weapon stats
+        holder = Helper.Instance.InflateLayout(armorStatsPrefab, selectedItemStats).
+            GetComponent<ArmorStatHolder>();
+        armor = (ArmorSO)items[selectedItemIndex];
+        SetupArmorStats(holder, armor);
+    }
+
+    private void SetupArmorStats(ArmorStatHolder holder, ArmorSO armor) {
+        holder.decreaseShieldDelay.text = armor.decreaseShieldRecoveryDelay.ToString();
+        holder.increaseShield.text = armor.increaseShield.ToString();
+        holder.lowerOpponentsCritChance.text = armor.decreaseOpponentCriticalRate.ToString();
+        holder.lowerOpponentsCritMultiplier.text = armor.decreaseOpponentCriticalMultiplier.ToString();
+        holder.decreaseMovementSpeed.text = armor.reduceMovementSpeed.ToString();
+        holder.decreaseStaminaRecoveryRate.text = armor.reduceStaminaRecoveryRate.ToString();
     }
 
     /// <summary>
