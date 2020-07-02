@@ -20,7 +20,7 @@ public class ChestCanvas : MonoBehaviour {
     private int selectedItemIndex;
 
     // Item stats
-    public GameObject weaponStatsPrefab, armorStatsPrefab;
+    public GameObject weaponStatsPrefabLeft, weaponStatsPrefabRight, armorStatsPrefabLeft, armorStatsPrefabRight;
     public GameObject currentItemStats, selectedItemStats;
 
     void OnEnable() {
@@ -64,30 +64,38 @@ public class ChestCanvas : MonoBehaviour {
     /// </summary>
     /// <param name="index"></param>
     private void ItemSelected(int index) {
+        // Clear old stats if exists
+        foreach (Transform child in currentItemStats.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in selectedItemStats.transform)
+            Destroy(child.gameObject);
+
+        // Save index to local variable
         selectedItemIndex = index;
         PickableSO item = items[index];
 
         itemSelectedObject.SetActive(true); // Activate item select elements
         foundItemView.text = item.name;     // Change found item text
 
-        // Set current item text
+        // Set item texts and stats
         if (item is WeaponSO) {
             currentItemView.text = PlayerStats.Instance.player.GetWeapon().name;
             ShowWeaponStats();
         } else if (item is ArmorSO) {
             currentItemView.text = PlayerStats.Instance.player.GetArmor().name;
+            ShowArmorStats();
         }
     }
 
     private void ShowWeaponStats() {
         // Setup current weapon stats
-        WeaponStatHolder holder = Helper.Instance.InflateLayout(weaponStatsPrefab, currentItemStats).
+        WeaponStatHolder holder = Helper.Instance.CreateObjectChild(weaponStatsPrefabLeft, currentItemStats).
             GetComponent<WeaponStatHolder>();
         WeaponSO weapon = PlayerStats.Instance.player.GetWeapon();
         SetupWeaponStats(holder, weapon);
 
         // Setup found weapon stats
-        holder = Helper.Instance.InflateLayout(weaponStatsPrefab, selectedItemStats).
+        holder = Helper.Instance.CreateObjectChild(weaponStatsPrefabRight, selectedItemStats).
             GetComponent<WeaponStatHolder>();
         weapon = (WeaponSO) items[selectedItemIndex];
         SetupWeaponStats(holder, weapon);
@@ -99,6 +107,29 @@ public class ChestCanvas : MonoBehaviour {
         holder.bulletSpeed.text = weapon.bulletSpeed.ToString();
         holder.ammoSize.text = weapon.ammoSize.ToString();
         holder.rateOfFire.text = (60 / weapon.rateOfFire).ToString();   // Rounds per minute
+    }
+
+    private void ShowArmorStats() {
+        // Setup current armor stats
+        ArmorStatHolder holder = Helper.Instance.CreateObjectChild(armorStatsPrefabLeft, currentItemStats).
+            GetComponent<ArmorStatHolder>();
+        ArmorSO armor = PlayerStats.Instance.player.GetArmor();
+        SetupArmorStats(holder, armor);
+
+        // Setup found armor stats
+        holder = Helper.Instance.CreateObjectChild(armorStatsPrefabRight, selectedItemStats).
+            GetComponent<ArmorStatHolder>();
+        armor = (ArmorSO)items[selectedItemIndex];
+        SetupArmorStats(holder, armor);
+    }
+
+    private void SetupArmorStats(ArmorStatHolder holder, ArmorSO armor) {
+        holder.decreaseShieldDelay.text = armor.decreaseShieldRecoveryDelay.ToString();
+        holder.increaseShield.text = armor.increaseShield.ToString();
+        holder.lowerOpponentsCritChance.text = armor.decreaseOpponentCriticalRate.ToString();
+        holder.lowerOpponentsCritMultiplier.text = armor.decreaseOpponentCriticalMultiplier.ToString();
+        holder.decreaseMovementSpeed.text = armor.reduceMovementSpeed.ToString();
+        holder.decreaseStaminaRecoveryRate.text = armor.reduceStaminaRecoveryRate.ToString();
     }
 
     /// <summary>
