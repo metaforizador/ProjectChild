@@ -70,7 +70,7 @@ public class ChestCanvas : MonoBehaviour {
         itemSelectedObject.SetActive(true); // Activate item select elements
         foundItemView.text = item.name;     // Change found item text
 
-        // Set current item text
+        // Set item texts and stats
         if (item is WeaponSO) {
             currentItemView.text = PlayerStats.Instance.player.GetWeapon().name;
             ShowWeaponStats();
@@ -82,13 +82,13 @@ public class ChestCanvas : MonoBehaviour {
 
     private void ShowWeaponStats() {
         // Setup current weapon stats
-        WeaponStatHolder holder = Helper.Instance.InflateLayout(weaponStatsPrefab, currentItemStats).
+        WeaponStatHolder holder = Helper.Instance.CreateObjectChild(weaponStatsPrefab, currentItemStats).
             GetComponent<WeaponStatHolder>();
         WeaponSO weapon = PlayerStats.Instance.player.GetWeapon();
         SetupWeaponStats(holder, weapon);
 
         // Setup found weapon stats
-        holder = Helper.Instance.InflateLayout(weaponStatsPrefab, selectedItemStats).
+        holder = Helper.Instance.CreateObjectChild(weaponStatsPrefab, selectedItemStats).
             GetComponent<WeaponStatHolder>();
         weapon = (WeaponSO) items[selectedItemIndex];
         SetupWeaponStats(holder, weapon);
@@ -103,14 +103,14 @@ public class ChestCanvas : MonoBehaviour {
     }
 
     private void ShowArmorStats() {
-        // Setup current weapon stats
-        ArmorStatHolder holder = Helper.Instance.InflateLayout(armorStatsPrefab, currentItemStats).
+        // Setup current armor stats
+        ArmorStatHolder holder = Helper.Instance.CreateObjectChild(armorStatsPrefab, currentItemStats).
             GetComponent<ArmorStatHolder>();
         ArmorSO armor = PlayerStats.Instance.player.GetArmor();
         SetupArmorStats(holder, armor);
 
-        // Setup found weapon stats
-        holder = Helper.Instance.InflateLayout(armorStatsPrefab, selectedItemStats).
+        // Setup found armor stats
+        holder = Helper.Instance.CreateObjectChild(armorStatsPrefab, selectedItemStats).
             GetComponent<ArmorStatHolder>();
         armor = (ArmorSO)items[selectedItemIndex];
         SetupArmorStats(holder, armor);

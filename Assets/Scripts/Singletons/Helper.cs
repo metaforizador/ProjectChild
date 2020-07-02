@@ -70,12 +70,12 @@ public class Helper : MonoBehaviour
     }
 
     /// <summary>
-    /// Adds layout inside parent object.
+    /// Creates an object and makes it a child of the parent.
     /// </summary>
     /// <param name="prefab">prefab to add</param>
     /// <param name="parent">parent to get transform from</param>
-    /// <returns>inflated layout</returns>
-    public GameObject InflateLayout(GameObject prefab, GameObject parent) {
+    /// <returns>parented child</returns>
+    public GameObject CreateObjectChild(GameObject prefab, GameObject parent) {
         GameObject layout = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
         // Set parent and fix scale
         layout.transform.SetParent(parent.transform);
