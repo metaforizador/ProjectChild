@@ -84,4 +84,18 @@ public class Helper : MonoBehaviour
 
         return layout;
     }
+
+    /// <summary>
+    /// Randomizes the order of an array.
+    /// </summary>
+    /// <typeparam name="T">typeof object</typeparam>
+    /// <param name="array">array to randomize</param>
+    public void RandomizeArrayOrder<T>(T[] array) {
+        for (int i = 0; i < array.Length - 1; i++) {
+            int rnd = Random.Range(i, array.Length);
+            T tempGO = array[rnd];
+            array[rnd] = array[i];
+            array[i] = tempGO;
+        }
+    }
 }
