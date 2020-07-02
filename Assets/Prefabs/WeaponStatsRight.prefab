@@ -1946,7 +1946,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: {fileID: 1831655677898669323}
   damage: {fileID: 3551633820559886839}
-  bulletSpeed: {fileID: 3551633820559886839}
+  bulletSpeed: {fileID: 104167858672669329}
   ammoSize: {fileID: 8777961485025439900}
   rateOfFire: {fileID: 4616321694235070798}
 --- !u!1 &8287023627455954012

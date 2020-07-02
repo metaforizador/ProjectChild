@@ -9,10 +9,23 @@ public class Chest : MonoBehaviour {
     private PickableSO[] items;
     private int maxItems = 4;
 
+    private const int INTACT_VALUE = 50;
+
     void Start() {
         // Randomize chest contents
         int itemAmount = Random.Range(1, maxItems + 1); // + 1 because max is not inclusive
-        Rarity rarity = (Rarity)Rarity.ToObject(typeof(Rarity), Random.Range(0, System.Enum.GetValues(typeof(Rarity)).Length));
+
+        // Randomize rarity
+        Rarity rarity;
+        float number = Random.Range(1, 101);
+        number += PlayerStats.Instance.rareItemFindRate.currentValue;
+
+        if (number >= INTACT_VALUE) {
+            rarity = Rarity.Intact;
+        } else {
+            rarity = Rarity.Damaged;
+        }
+
         string rarityPath = rarity.ToString();
 
         // Load all pickable items from resources which have correct rarity

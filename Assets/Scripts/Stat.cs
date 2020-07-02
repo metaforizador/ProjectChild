@@ -16,7 +16,7 @@ public class Stat {
     public const float DAMAGE_MIN_BOOST = 1, DAMAGE_MAX_BOOST = 2.5f;
     public const float DODGE_MIN_PERCENT = 10, DODGE_MAX_PERCENT = 50;
     public const float CRITICAL_MIN_PERCENT = 10, CRITICAL_MAX_PERCENT = 75;
-    public const float RARE_FIND_MIN_PERCENT = 10, RARE_FIND_MAX_PERCENT = 80;
+    public const float RARE_FIND_MIN_PERCENT = 0, RARE_FIND_MAX_PERCENT = 80;
     public const float ATTACK_MIN_SPEED = 1, ATTACK_MAX_SPEED = 2.5f;
     public const float FIRE_RATE_MIN_SPEED = 1, FIRE_RATE_MAX_SPEED = 2.5f;
     public const float MOVEMENT_MIN_SPEED = 1, MOVEMENT_MAX_SPEED = 2f;
