@@ -20,7 +20,7 @@ public class ChestCanvas : MonoBehaviour {
     private int selectedItemIndex;
 
     // Item stats
-    public GameObject weaponStatsPrefab, armorStatsPrefab;
+    public GameObject weaponStatsPrefab, armorStatsPrefabLeft, armorStatsPrefabRight;
     public GameObject currentItemStats, selectedItemStats;
 
     void OnEnable() {
@@ -104,13 +104,13 @@ public class ChestCanvas : MonoBehaviour {
 
     private void ShowArmorStats() {
         // Setup current armor stats
-        ArmorStatHolder holder = Helper.Instance.CreateObjectChild(armorStatsPrefab, currentItemStats).
+        ArmorStatHolder holder = Helper.Instance.CreateObjectChild(armorStatsPrefabLeft, currentItemStats).
             GetComponent<ArmorStatHolder>();
         ArmorSO armor = PlayerStats.Instance.player.GetArmor();
         SetupArmorStats(holder, armor);
 
         // Setup found armor stats
-        holder = Helper.Instance.CreateObjectChild(armorStatsPrefab, selectedItemStats).
+        holder = Helper.Instance.CreateObjectChild(armorStatsPrefabRight, selectedItemStats).
             GetComponent<ArmorStatHolder>();
         armor = (ArmorSO)items[selectedItemIndex];
         SetupArmorStats(holder, armor);
