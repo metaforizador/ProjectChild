@@ -527,7 +527,9 @@ MonoBehaviour:
   currentItemView: {fileID: 2165718275996977634}
   foundItemView: {fileID: 1958599200417030766}
   itemSelectedObject: {fileID: 878937161}
-  weaponStatsPrefab: {fileID: 8398143273471933420, guid: 30b22457de1435d49a2118961b984bbb,
+  weaponStatsPrefabLeft: {fileID: 7818729412227567886, guid: fdc22bde09fe11b4e8ea36420356a64d,
+    type: 3}
+  weaponStatsPrefabRight: {fileID: 7818729412227567886, guid: ea736aa6685c86840ac971641320a647,
     type: 3}
   armorStatsPrefabLeft: {fileID: 7818729412227567886, guid: f505a0c3c03447543b39cac7c9a6b0e1,
     type: 3}
