@@ -7,7 +7,8 @@ using TMPro;
 public class HUDCanvas : MonoBehaviour {
     // Player
     public Image hpBar, shieldBar, staminaBar, xpBar;
-    public TextMeshProUGUI ammoText, playerLevel;
+    public GameObject levelUpButton;
+    public TextMeshProUGUI ammoText, playerLevel, levelUpPoint;
 
     // Enemy
     public GameObject enemyObject;
@@ -66,6 +67,17 @@ public class HUDCanvas : MonoBehaviour {
 
     public void AdjustPlayerLevel(int level) {
         playerLevel.text = level.ToString();
+    }
+
+    public void CheckRedeemableLevelPoints() {
+        int points = PlayerStats.Instance.redeemableLevelPoints;
+
+        if (points > 0 ) {
+            levelUpButton.SetActive(true);
+            levelUpPoint.text = points.ToString();
+        } else {
+            levelUpButton.SetActive(false);
+        }
     }
 
     /// <summary>
