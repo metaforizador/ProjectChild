@@ -66,11 +66,14 @@ public class CharacterParent : MonoBehaviour {
 
     protected HUDCanvas hud;
 
+    // Weapon and armor
     [SerializeField]
     private WeaponSO weapon = null;
-
     [SerializeField]
     private ArmorSO armor = null;
+
+    public WeaponSO GetWeapon() { return weapon; }
+    public ArmorSO GetArmor() { return armor; }
 
     // Weapon values
     private float weaponDamage;
@@ -135,6 +138,22 @@ public class CharacterParent : MonoBehaviour {
 
         StartCoroutine(RestoreRecoveries());
         StartCoroutine(Shooting());
+    }
+
+    public WeaponSO ChangeWeapon(WeaponSO weapon) {
+        WeaponSO oldWeapon = this.weapon;
+        this.weapon = weapon;
+        RetrieveWeaponValues();
+
+        return oldWeapon;
+    }
+
+    public ArmorSO ChangeArmor(ArmorSO armor) {
+        ArmorSO oldArmor = this.armor;
+        this.armor = armor;
+        RetrieveArmorValues();
+
+        return oldArmor;
     }
 
     protected virtual void Update() {

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Armor", menuName = "Armor")]
-public class ArmorSO : ScriptableObject {
+public class ArmorSO : PickableSO {
 
-    public new string name;
     public GameObject armorPrefab;
 
     [Header("Decrease shield recovery delay by %")]

@@ -23,6 +23,8 @@ public class PlayerStats : MonoBehaviour {
 
     private HUDCanvas hud;
 
+    public Player player;
+
     // Stats to save and load
     // Nurturing
     public Stat shieldRecovery { get; private set; }

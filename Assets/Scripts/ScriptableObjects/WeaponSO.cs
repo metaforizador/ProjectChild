@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
-public class WeaponSO : ScriptableObject {
+public class WeaponSO : PickableSO {
 
-    public new string name;
     public GameObject weaponPrefab;
 
     [Header("(Note: max health and armor is 100, total is 200)")]

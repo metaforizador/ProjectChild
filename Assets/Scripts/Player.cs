@@ -12,9 +12,13 @@ public class Player : CharacterParent {
     public float testDamageKeyU = 20;
     public int testXpKeyX = 20;
 
+    // Checking trigger presses to avoid "input not always registering"
+    private Collider triggerCollider;
+
     public override void Start() {
         characterType = CharacterType.Player;
         stats = PlayerStats.Instance;
+        stats.player = this;    // Add this player to singleton variable for better access
 
         RefreshStats();
 
@@ -49,25 +53,16 @@ public class Player : CharacterParent {
         RetrieveArmorValues();
     }
 
-    void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("Bullet")) {
-            bulletController bullet = collision.gameObject.GetComponent<bulletController>();
-            if (bullet.shooter == CharacterType.Enemy) {
-                TakeDamage(bullet.damageType, bullet.damage, bullet.criticalRate);
-            }
-        }
-    }
-
-    void OnCollision(Collision collision) {
-        if (collision.gameObject.CompareTag("Chest")) {
-            if (Input.GetButtonDown("Use")) {
-                // Open chest
-            }
-        }
-    }
-
     protected override void Update() {
         base.Update();
+
+        // Check trigger interact presses
+        if (triggerCollider != null && Input.GetButtonDown("Interact")) {
+            if (triggerCollider.CompareTag("Chest")) {
+                triggerCollider.GetComponent<Chest>().OpenChest();
+            }
+        }
+
         // Test taking damage
         if (Input.GetKeyDown(KeyCode.U)) {
             TakeDamage(DamageType.Piercing, testDamageKeyU, 0);
@@ -77,9 +72,40 @@ public class Player : CharacterParent {
         if (Input.GetKeyDown(KeyCode.X)) {
             stats.GainXP(testXpKeyX);
         }
+
+
     }
 
     void OnDestroy() {
-        hud.gameObject.SetActive(false); // Hide player's hud on destroy
+        if (hud != null)
+            hud.gameObject.SetActive(false);    // Hide player's hud on destroy
+    }
+
+    /**************** Collisions ****************/
+
+    void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.CompareTag("Bullet")) {
+            bulletController bullet = collision.gameObject.GetComponent<bulletController>();
+            if (bullet.shooter == CharacterType.Enemy) {
+                TakeDamage(bullet.damageType, bullet.damage, bullet.criticalRate);
+            }
+        }
+    }
+
+    void OnTriggerEnter(Collider collider) {
+        triggerCollider = collider;
+
+        if (collider.CompareTag("Chest")) {
+            hud.ShowInteract(HUDCanvas.CHEST);
+        }
+    }
+
+    void OnTriggerExit(Collider collider) {
+        triggerCollider = null;
+
+        if (collider.CompareTag("Chest")) {
+            hud.HideInteract();
+            CanvasMaster.Instance.chestCanvas.GetComponent<ChestCanvas>().CloseChest();
+        }
     }
 }
