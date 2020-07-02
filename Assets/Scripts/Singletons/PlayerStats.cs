@@ -210,6 +210,10 @@ public class PlayerStats : MonoBehaviour {
             }
         }
 
+        // Decrease level up points by 1 and check if points left
+        redeemableLevelPoints --;
+        hud.CheckRedeemableLevelPoints();
+
         RefreshPlayerForStatChanges();
     }
 
