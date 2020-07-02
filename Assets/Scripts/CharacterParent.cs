@@ -208,10 +208,36 @@ public class CharacterParent : MonoBehaviour {
                 float damage = CalculateBulletDamage();
                 thisBullet.GetComponent<bulletController>().Initialize(characterType, damage, criticalRate, weaponType);
 
+                // Set bulletDirection towards crosshair point for the player / towards player for enemies
+                Vector3 bulletDirection = transform.forward;
+
+                if (characterType == CharacterType.Player)
+                {
+                    Vector3 crosshairPoint = new Vector3(0, 0, 0);
+
+                    RaycastHit hit;
+                    Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>().ScreenPointToRay(GameObject.Find("Crosshair").transform.position);
+
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~9))
+                    {
+                        crosshairPoint = hit.point;
+                        bulletDirection = crosshairPoint - bulletPoint.transform.position;
+                    }
+                    else
+                    {
+                        crosshairPoint = ray.GetPoint(1000);
+                        bulletDirection = crosshairPoint - bulletPoint.transform.position;
+                    }
+                }
+                else if (characterType == CharacterType.Enemy)
+                {
+                    bulletDirection = GameObject.Find("Player").transform.position - bulletPoint.transform.position;
+                }
+
                 // Set bullets position and speed
                 thisBullet.transform.position = bulletPoint.transform.position;
-                thisBullet.transform.rotation = bulletPoint.transform.rotation;
-                thisBullet.GetComponent<Rigidbody>().velocity = transform.forward.normalized * weaponBulletSpeed;
+                thisBullet.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, bulletDirection, 100, 0.0f));
+                thisBullet.GetComponent<Rigidbody>().velocity = bulletDirection.normalized * weaponBulletSpeed;
 
                 // Enemies reload weapons when they run out of ammo
                 if (characterType == CharacterType.Enemy && AMMO < weaponBulletConsumption)

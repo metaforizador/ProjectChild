@@ -9,6 +9,8 @@ public class Enemy : CharacterParent {
 
     private Player player;
 
+    public Animator animator;
+
     private enum State {Patrolling, Shooting, Dying};
     private State curState = State.Patrolling;
 
@@ -21,6 +23,8 @@ public class Enemy : CharacterParent {
     public override void Start() {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         characterType = CharacterType.Enemy;
+
+        animator = GetComponentInChildren<Animator>();
 
         // Calculate stats from scriptableObject values
         shieldRecovery = Stat.CalculateValue(Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED, scriptableObject.shieldRecovery);
@@ -80,10 +84,16 @@ public class Enemy : CharacterParent {
         //if shooting
         if (curState == State.Shooting)
         {
+            animator.SetBool("Shooting", true);
+
             //enemy turns towards player while shooting
             Vector3 targetDirection = GameObject.Find("Player").transform.position - transform.position;
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turnSpeed * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDirection);
+        }
+        else
+        {
+            animator.SetBool("Shooting", false);
         }
     }
 
