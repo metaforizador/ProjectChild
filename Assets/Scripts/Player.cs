@@ -20,6 +20,10 @@ public class Player : CharacterParent {
         stats = PlayerStats.Instance;
         stats.player = this;    // Add this player to singleton variable for better access
 
+        // Get weapon and stats from the singleton stats
+        ChangeWeapon(stats.weapon);
+        ChangeArmor(stats.armor);
+
         RefreshStats();
 
         base.Start();
@@ -51,6 +55,16 @@ public class Player : CharacterParent {
 
         // Some armor values are affected by stats
         RetrieveArmorValues();
+    }
+
+    public override WeaponSO ChangeWeapon(WeaponSO weapon) {
+        stats.weapon = weapon;  // Add weapon to singleton stats
+        return base.ChangeWeapon(weapon);
+    }
+
+    public override ArmorSO ChangeArmor(ArmorSO armor) {
+        stats.armor = armor;    // Add armor to singleton stats
+        return base.ChangeArmor(armor);
     }
 
     protected override void Update() {

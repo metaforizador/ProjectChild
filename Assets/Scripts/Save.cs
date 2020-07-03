@@ -18,9 +18,16 @@ public class Save {
     // Other stats
     public int level, xp, nextLevelUpXp, lastLevelUpXp, redeemableLevelPoints;
 
+    // Equipped weapon and armor
+    public WeaponSO weapon;
+    public ArmorSO armor;
+
     //////// Questions and answers ////////
     // Mood = mood for question, List<string> = questions
     public Dictionary<Mood, List<string>> askedQuestions;
     // WordsType = type of reply, List<string> = replies
     public Dictionary<WordsType, List<string>> givenReplies;
+
+    //////// Inventory ////////
+    public List<PickableSO> inventoryItems;
 }

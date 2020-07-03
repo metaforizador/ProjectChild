@@ -51,6 +51,10 @@ public class PlayerStats : MonoBehaviour {
     public Stat movementSpd { get; private set; }
     public Stat fireRate { get; private set; }
 
+    // Equipped weapon and armor
+    public WeaponSO weapon;
+    public ArmorSO armor;
+
     // Other stats
     private int LEVEL, XP, REDEEMABLE_LEVEL_POINTS;
     // Update canvas UI element when level changes
@@ -120,6 +124,9 @@ public class PlayerStats : MonoBehaviour {
         save.movementSpd = movementSpd;
         save.fireRate = fireRate;
 
+        save.weapon = weapon;
+        save.armor = armor;
+
         save.level = level;
         save.xp = xp;
         save.nextLevelUpXp = nextLevelUpXp;
@@ -148,6 +155,9 @@ public class PlayerStats : MonoBehaviour {
         attackSpd.LoadStat(save.attackSpd);
         movementSpd.LoadStat(save.movementSpd);
         fireRate.LoadStat(save.fireRate);
+
+        weapon = save.weapon;
+        armor = save.armor;
 
         level = save.level;
         xp = save.xp;

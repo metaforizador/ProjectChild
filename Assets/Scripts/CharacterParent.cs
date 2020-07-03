@@ -140,7 +140,7 @@ public class CharacterParent : MonoBehaviour {
         StartCoroutine(Shooting());
     }
 
-    public WeaponSO ChangeWeapon(WeaponSO weapon) {
+    public virtual WeaponSO ChangeWeapon(WeaponSO weapon) {
         WeaponSO oldWeapon = this.weapon;
         this.weapon = weapon;
         RetrieveWeaponValues();
@@ -148,7 +148,7 @@ public class CharacterParent : MonoBehaviour {
         return oldWeapon;
     }
 
-    public ArmorSO ChangeArmor(ArmorSO armor) {
+    public virtual ArmorSO ChangeArmor(ArmorSO armor) {
         ArmorSO oldArmor = this.armor;
         this.armor = armor;
         RetrieveArmorValues();
