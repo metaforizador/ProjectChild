@@ -23,6 +23,9 @@ public class DialogueScript : MonoBehaviour {
     [SerializeField]
     private float answersYStartPosition;
 
+    [SerializeField]
+    private Scrollbar scrollBar;
+
     public LeanTweenType tweenType;
 
     private XMLDialogueParser dialogues;
@@ -81,6 +84,9 @@ public class DialogueScript : MonoBehaviour {
             // Set on click listener to the button
             button.onClick.AddListener(() => AnswerClicked(type));
         }
+
+        // Reset scrollbar on top
+        //scrollBar.value = 1f;
 
         // Delay a tiny bit to work around the initial fps hiccup (HOPEFULLY TEMPORARY SOLUTION)
         LeanTween.scale(questionObject, new Vector3(1, 1, 1), 0.5f).

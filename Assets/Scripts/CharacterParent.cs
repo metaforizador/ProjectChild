@@ -72,8 +72,8 @@ public class CharacterParent : MonoBehaviour {
     [SerializeField]
     private ArmorSO armor = null;
 
-    public WeaponSO GetWeapon() { return weapon; }
-    public ArmorSO GetArmor() { return armor; }
+    public WeaponSO GetWeapon() => weapon;
+    public ArmorSO GetArmor() => armor;
 
     // Weapon values
     private float weaponDamage;
