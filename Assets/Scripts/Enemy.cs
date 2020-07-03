@@ -44,6 +44,12 @@ public class Enemy : CharacterParent {
         level = scriptableObject.level;
 
         base.Start();
+
+        // If weapon or armor is not assigned and EnemySO values are not null
+        if (GetWeapon() == null && scriptableObject.startingWeapon != null)
+            ChangeWeapon(scriptableObject.startingWeapon);
+        if (GetArmor() == null && scriptableObject.startingArmor != null)
+            ChangeArmor(scriptableObject.startingArmor);
     }
 
     void OnCollisionEnter(Collision collision) {
