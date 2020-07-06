@@ -8,10 +8,11 @@ public class InventoryCanvas : MonoBehaviour {
     private GameObject[] categoryObjects;
     private float objCategoryStartX = -90;
 
-    private enum MenuState { Closed, Categories, Weapon, Armor, Consumables, Miscellaneous }
-    private MenuState curState = MenuState.Closed;
+    private bool menuOpen = false;
 
-    public GameObject weaponStatsObject;
+    private const int NONE = 0, WEAPON = 1, ARMOR = 2, CONSUMABLES = 3, MISC = 4;
+
+    public GameObject weaponStatsObject, armorStatsObject;
 
     public LeanTweenType tweenType;
     private float tweenTime = 0.5f;
@@ -19,12 +20,18 @@ public class InventoryCanvas : MonoBehaviour {
     void Awake() {
         categoryObjects = new GameObject[] { weaponObj, armorObj, consumablesObj, miscObj };
 
-        ResetElementPositions();
+        // Hide categories
+        foreach (GameObject obj in categoryObjects) {
+            obj.transform.LeanMoveLocalX(objCategoryStartX, 0f);
+            obj.transform.localScale = Vector3.zero;
+        }
+
+        ShowRequiredElements(NONE);
     }
 
     public void ToggleMenu() {
         foreach (GameObject obj in categoryObjects) {
-            if (curState == MenuState.Closed) {
+            if (!menuOpen) {
                 // Open menu
                 LeanTween.scale(obj, Vector3.one, tweenTime).
                 setEase(tweenType);
@@ -34,39 +41,31 @@ public class InventoryCanvas : MonoBehaviour {
                 LeanTween.scale(obj, Vector3.zero, tweenTime).
                 setEase(tweenType);
                 LeanTween.moveLocalX(obj, objCategoryStartX, tweenTime).setEase(tweenType).
-                    setOnComplete(ResetElementPositions);
+                    setOnComplete(() => ShowRequiredElements(NONE));
             }
         }
 
         // Toggle menu state
-        if (curState == MenuState.Closed)
-            curState = MenuState.Categories;
-        else
-            curState = MenuState.Closed;
+        menuOpen = !menuOpen;
     }
 
-    public void ToggleShowWeapon() {
+    public void ShowWeapon() {
+        ShowRequiredElements(WEAPON);
         WeaponStatHolder holder = weaponStatsObject.GetComponent<WeaponStatHolder>();
         WeaponSO weapon = Inventory.Instance.equippedWeapon;
         Helper.Instance.SetupWeaponStats(holder, weapon);
-
-        if (curState != MenuState.Weapon) {
-            curState = MenuState.Weapon;
-            weaponStatsObject.SetActive(true);
-        } else {
-            curState = MenuState.Categories;
-            weaponStatsObject.SetActive(false);
-        }
     }
 
-    private void ResetElementPositions() {
-        // Hide categories
-        foreach (GameObject obj in categoryObjects) {
-            obj.transform.LeanMoveLocalX(objCategoryStartX, 0f);
-            obj.transform.localScale = Vector3.zero;
-        }
+    public void ShowArmor() {
+        ShowRequiredElements(ARMOR);
+        ArmorStatHolder holder = armorStatsObject.GetComponent<ArmorStatHolder>();
+        ArmorSO armor = Inventory.Instance.equippedArmor;
+        Helper.Instance.SetupArmorStats(holder, armor);
+    }
 
-        // Hide row 2 stuff
-        weaponStatsObject.SetActive(false);
+    private void ShowRequiredElements(int element) {
+        // Hide row 2 elements
+        weaponStatsObject.SetActive(element == WEAPON);
+        armorStatsObject.SetActive(element == ARMOR);
     }
 }
