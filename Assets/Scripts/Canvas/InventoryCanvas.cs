@@ -19,16 +19,7 @@ public class InventoryCanvas : MonoBehaviour {
     void Awake() {
         categoryObjects = new GameObject[] { weaponObj, armorObj, consumablesObj, miscObj };
 
-        // Hide categories
-        foreach (GameObject obj in categoryObjects) {
-            obj.transform.LeanMoveLocalX(objCategoryStartX, 0f);
-            obj.transform.localScale = Vector3.zero;
-        }
-
-        // Hide row 2 stuff
-        weaponStatsObject.SetActive(false);
-        weaponStatsObject.transform.LeanMoveLocalX(objCategoryStartX, 0f);
-        //weaponStatsObject.transform.localScale = Vector3.zero;
+        ResetElementPositions();
     }
 
     public void ToggleMenu() {
@@ -42,7 +33,8 @@ public class InventoryCanvas : MonoBehaviour {
                 // Close menu
                 LeanTween.scale(obj, Vector3.zero, tweenTime).
                 setEase(tweenType);
-                LeanTween.moveLocalX(obj, objCategoryStartX, tweenTime).setEase(tweenType);
+                LeanTween.moveLocalX(obj, objCategoryStartX, tweenTime).setEase(tweenType).
+                    setOnComplete(ResetElementPositions);
             }
         }
 
@@ -61,15 +53,20 @@ public class InventoryCanvas : MonoBehaviour {
         if (curState != MenuState.Weapon) {
             curState = MenuState.Weapon;
             weaponStatsObject.SetActive(true);
-            //LeanTween.scale(weaponStatsObject, Vector3.one, tweenTime).
-                    //setEase(tweenType);
-            LeanTween.moveLocalX(weaponStatsObject, 0, tweenTime).setEase(tweenType);
         } else {
             curState = MenuState.Categories;
-            //LeanTween.scale(weaponStatsObject, Vector3.zero, tweenTime).
-                    //setEase(tweenType);
-            LeanTween.moveLocalX(weaponStatsObject, objCategoryStartX, tweenTime).setEase(tweenType).
-                setOnComplete(() => weaponStatsObject.SetActive(false)); // Disable object on complete
+            weaponStatsObject.SetActive(false);
         }
+    }
+
+    private void ResetElementPositions() {
+        // Hide categories
+        foreach (GameObject obj in categoryObjects) {
+            obj.transform.LeanMoveLocalX(objCategoryStartX, 0f);
+            obj.transform.localScale = Vector3.zero;
+        }
+
+        // Hide row 2 stuff
+        weaponStatsObject.SetActive(false);
     }
 }
