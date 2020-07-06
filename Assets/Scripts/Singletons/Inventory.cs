@@ -17,13 +17,21 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    // Equipped weapon and armor
+    public WeaponSO equippedWeapon;
+    public ArmorSO equippedArmor;
+
     private List<PickableSO> pickableItems;
 
     public void LoadInventory(Save save) {
+        save.equippedWeapon = equippedWeapon;
+        save.equippedArmor = equippedArmor;
         save.inventoryItems = pickableItems;
     }
 
     public void SaveInventory(Save save) {
+        equippedWeapon = save.equippedWeapon;
+        equippedArmor = save.equippedArmor;
         pickableItems = save.inventoryItems;
     }
 }

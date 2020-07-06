@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : CharacterParent {
 
+    private Inventory inventory;
     private PlayerStats stats;
 
     private Stat[] recoveryStats;
@@ -18,11 +19,12 @@ public class Player : CharacterParent {
     public override void Start() {
         characterType = CharacterType.Player;
         stats = PlayerStats.Instance;
+        inventory = Inventory.Instance;
         stats.player = this;    // Add this player to singleton variable for better access
 
         // Get weapon and stats from the singleton stats
-        ChangeWeapon(stats.weapon);
-        ChangeArmor(stats.armor);
+        ChangeWeapon(inventory.equippedWeapon);
+        ChangeArmor(inventory.equippedArmor);
 
         RefreshStats();
 
@@ -58,12 +60,12 @@ public class Player : CharacterParent {
     }
 
     public override WeaponSO ChangeWeapon(WeaponSO weapon) {
-        stats.weapon = weapon;  // Add weapon to singleton stats
+        inventory.equippedWeapon = weapon;  // Add weapon to singleton inventory
         return base.ChangeWeapon(weapon);
     }
 
     public override ArmorSO ChangeArmor(ArmorSO armor) {
-        stats.armor = armor;    // Add armor to singleton stats
+        inventory.equippedArmor = armor;    // Add armor to singleton inventory
         return base.ChangeArmor(armor);
     }
 
