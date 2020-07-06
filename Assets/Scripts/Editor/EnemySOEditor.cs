@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemySOEditor : Editor {
 
     public SerializedProperty
-        nameProp, level, xp,
+        nameProp, level, xp, startingWeapon, startingArmor,
         // Stats
         shieldRecovery, staminaRecovery, ammoRecovery, dodgeRate, criticalRate,
         piercingDmg, kineticDmg, energyDmg, piercingRes, kineticRes, energyRes,
@@ -18,6 +18,8 @@ public class EnemySOEditor : Editor {
         nameProp = serializedObject.FindProperty("name");
         level = serializedObject.FindProperty("level");
         xp = serializedObject.FindProperty("xp");
+        startingWeapon = serializedObject.FindProperty("startingWeapon");
+        startingArmor = serializedObject.FindProperty("startingArmor");
         // Stats
         shieldRecovery = serializedObject.FindProperty("shieldRecovery");
         staminaRecovery = serializedObject.FindProperty("staminaRecovery");
@@ -48,6 +50,9 @@ public class EnemySOEditor : Editor {
         EditorGUILayout.LabelField("Level is the amount of points the enemy should\nhave in stats" +
             "(Example: Level 10 could have\n'Critical hit: 3', 'piercingDmg: 2' & 'Fire rate 5')", EditorStyles.boldLabel, GUILayout.Height(50));
         EditorGUILayout.PropertyField(level);
+        EditorGUILayout.LabelField("Starting weapon and armor for the enemy if\nprefab values are null", EditorStyles.boldLabel, GUILayout.Height(30));
+        EditorGUILayout.PropertyField(startingWeapon);
+        EditorGUILayout.PropertyField(startingArmor);
         EditorGUILayout.LabelField($"Recovery speed: {Stat.RECOVERY_MIN_SPEED} - {Stat.RECOVERY_MAX_SPEED} every {Stat.RECOVERY_DELAY} second", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(shieldRecovery);
         EditorGUILayout.PropertyField(staminaRecovery);

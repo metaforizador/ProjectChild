@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2812991023813256964}
   - component: {fileID: 2310136183757725031}
   - component: {fileID: 5509095400073917003}
+  - component: {fileID: 1794651435}
   m_Layer: 0
   m_Name: SingletonHolder
   m_TagString: Untagged
@@ -57,20 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da413f286e4e73f48b82c106103c4a1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 0
-  maxShield: 0
-  level: 0
-  xp: 0
-  shieldRegen: 0
-  armor: 0
-  resistance: 0
-  attackSpd: 0
-  fireRate: 0
-  dodge: 0
-  critical: 0
-  movementSpd: 0
-  hp: 0
-  shield: 0
+  player: {fileID: 0}
 --- !u!114 &5509095400073917003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,3 +71,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bfddb0a95a53f44f8f29ee4c55f785c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1794651435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5615188650862811132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b5f6ff97c84f25419af1b5193e57dfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equippedWeapon: {fileID: 11400000, guid: 3c48d271c85846046ad9667268d4bfee, type: 2}
+  equippedArmor: {fileID: 11400000, guid: cc9fbe3a6590ab845816c4240dac5ffd, type: 2}

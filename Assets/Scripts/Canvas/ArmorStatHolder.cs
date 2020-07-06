@@ -2,6 +2,6 @@
 using TMPro;
 
 public class ArmorStatHolder : MonoBehaviour {
-    public TextMeshProUGUI decreaseShieldDelay, increaseShield, lowerOpponentsCritChance,
+    public TextMeshProUGUI name, decreaseShieldDelay, increaseShield, lowerOpponentsCritChance,
         lowerOpponentsCritMultiplier, decreaseMovementSpeed, decreaseStaminaRecoveryRate;
 }
