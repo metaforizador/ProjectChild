@@ -98,4 +98,35 @@ public class Helper : MonoBehaviour
             array[i] = tempGO;
         }
     }
+
+    /// <summary>
+    /// Shows weapon stats in UI.
+    /// </summary>
+    /// <param name="holder">Object which holds the references to UI elements</param>
+    /// <param name="weapon">weapon to get the stats from</param>
+    public void SetupWeaponStats(WeaponStatHolder holder, WeaponSO weapon) {
+        if (holder.name != null)
+            holder.name.text = weapon.name;
+        holder.type.text = weapon.weaponType.ToString();
+        holder.damage.text = weapon.damagePerBullet.ToString();
+        holder.bulletSpeed.text = weapon.bulletSpeed.ToString();
+        holder.ammoSize.text = weapon.ammoSize.ToString();
+        holder.rateOfFire.text = (60 / weapon.rateOfFire).ToString();   // Rounds per minute
+    }
+
+    /// <summary>
+    /// Shows armor stats in UI.
+    /// </summary>
+    /// <param name="holder">Object which holds the references to UI elements</param>
+    /// <param name="armor">armor to get the stats from</param>
+    public void SetupArmorStats(ArmorStatHolder holder, ArmorSO armor) {
+        if (holder.name != null)
+            holder.name.text = armor.name;
+        holder.decreaseShieldDelay.text = armor.decreaseShieldRecoveryDelay.ToString();
+        holder.increaseShield.text = armor.increaseShield.ToString();
+        holder.lowerOpponentsCritChance.text = armor.decreaseOpponentCriticalRate.ToString();
+        holder.lowerOpponentsCritMultiplier.text = armor.decreaseOpponentCriticalMultiplier.ToString();
+        holder.decreaseMovementSpeed.text = armor.reduceMovementSpeed.ToString();
+        holder.decreaseStaminaRecoveryRate.text = armor.reduceStaminaRecoveryRate.ToString();
+    }
 }

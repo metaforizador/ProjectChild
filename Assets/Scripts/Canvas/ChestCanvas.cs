@@ -92,21 +92,13 @@ public class ChestCanvas : MonoBehaviour {
         WeaponStatHolder holder = Helper.Instance.CreateObjectChild(weaponStatsPrefabLeft, currentItemStats).
             GetComponent<WeaponStatHolder>();
         WeaponSO weapon = PlayerStats.Instance.player.GetWeapon();
-        SetupWeaponStats(holder, weapon);
+        Helper.Instance.SetupWeaponStats(holder, weapon);
 
         // Setup found weapon stats
         holder = Helper.Instance.CreateObjectChild(weaponStatsPrefabRight, selectedItemStats).
             GetComponent<WeaponStatHolder>();
         weapon = (WeaponSO) items[selectedItemIndex];
-        SetupWeaponStats(holder, weapon);
-    }
-
-    private void SetupWeaponStats(WeaponStatHolder holder, WeaponSO weapon) {
-        holder.type.text = weapon.weaponType.ToString();
-        holder.damage.text = weapon.damagePerBullet.ToString();
-        holder.bulletSpeed.text = weapon.bulletSpeed.ToString();
-        holder.ammoSize.text = weapon.ammoSize.ToString();
-        holder.rateOfFire.text = (60 / weapon.rateOfFire).ToString();   // Rounds per minute
+        Helper.Instance.SetupWeaponStats(holder, weapon);
     }
 
     private void ShowArmorStats() {
@@ -114,22 +106,13 @@ public class ChestCanvas : MonoBehaviour {
         ArmorStatHolder holder = Helper.Instance.CreateObjectChild(armorStatsPrefabLeft, currentItemStats).
             GetComponent<ArmorStatHolder>();
         ArmorSO armor = PlayerStats.Instance.player.GetArmor();
-        SetupArmorStats(holder, armor);
+        Helper.Instance.SetupArmorStats(holder, armor);
 
         // Setup found armor stats
         holder = Helper.Instance.CreateObjectChild(armorStatsPrefabRight, selectedItemStats).
             GetComponent<ArmorStatHolder>();
         armor = (ArmorSO)items[selectedItemIndex];
-        SetupArmorStats(holder, armor);
-    }
-
-    private void SetupArmorStats(ArmorStatHolder holder, ArmorSO armor) {
-        holder.decreaseShieldDelay.text = armor.decreaseShieldRecoveryDelay.ToString();
-        holder.increaseShield.text = armor.increaseShield.ToString();
-        holder.lowerOpponentsCritChance.text = armor.decreaseOpponentCriticalRate.ToString();
-        holder.lowerOpponentsCritMultiplier.text = armor.decreaseOpponentCriticalMultiplier.ToString();
-        holder.decreaseMovementSpeed.text = armor.reduceMovementSpeed.ToString();
-        holder.decreaseStaminaRecoveryRate.text = armor.reduceStaminaRecoveryRate.ToString();
+        Helper.Instance.SetupArmorStats(holder, armor);
     }
 
     /// <summary>
