@@ -17,6 +17,7 @@ public class Player : CharacterParent {
     private Collider triggerCollider;
 
     public override void Start() {
+        GameMaster.Instance.ShowCursor(false);
         characterType = CharacterType.Player;
         stats = PlayerStats.Instance;
         inventory = Inventory.Instance;
@@ -112,7 +113,7 @@ public class Player : CharacterParent {
         triggerCollider = collider;
 
         if (collider.CompareTag("Chest")) {
-            hud.ShowInteract(HUDCanvas.CHEST);
+            hud.ShowInteract(HUDCanvas.CHEST_OPEN);
         }
     }
 

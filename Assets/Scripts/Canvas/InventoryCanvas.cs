@@ -53,6 +53,9 @@ public class InventoryCanvas : MonoBehaviour {
         // Toggle menu state
         menuOpen = !menuOpen;
 
+        // Show / hide cursor
+        GameMaster.Instance.ShowCursor(menuOpen);
+
         if (menuOpen) {
             // Play sound when opening the menu
             sounds.PlaySound(sounds.BUTTON_SELECT);

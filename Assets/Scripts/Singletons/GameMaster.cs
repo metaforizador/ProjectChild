@@ -20,6 +20,18 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    // Handle cursor
+    public bool cursorVisible { get; private set; }
+    public void ShowCursor(bool show) {
+        cursorVisible = show;
+        Cursor.visible = cursorVisible;
+
+        if (cursorVisible)
+            Cursor.lockState = CursorLockMode.Confined;
+        else
+            Cursor.lockState = CursorLockMode.Locked;
+    }
+
     private Save CreateSaveGameObject() {
         Save save = new Save();
         PlayerStats.Instance.SavePlayerStats(save);

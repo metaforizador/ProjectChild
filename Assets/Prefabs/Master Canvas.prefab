@@ -17016,6 +17016,7 @@ MonoBehaviour:
   testCanvas: {fileID: 5520579357849947426}
   HUDCanvas: {fileID: 1605582751}
   chestCanvas: {fileID: 513601702}
+  inventoryCanvas: {fileID: 2645314726361284744}
   canvasSounds: {fileID: 3203145661252116629}
 --- !u!1 &5520579357710334658
 GameObject:
