@@ -17,6 +17,7 @@ public class CanvasMaster : MonoBehaviour {
     }
 
     public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas, HUDCanvas, chestCanvas;
+    public CanvasSounds canvasSounds;
 
     // Store questions and replies so they can be looped through
     public Dictionary<Mood, List<string>> askedQuestions { get; private set; }

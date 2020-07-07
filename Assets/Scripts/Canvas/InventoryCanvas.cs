@@ -17,10 +17,13 @@ public class InventoryCanvas : MonoBehaviour {
 
     public GameObject weaponStatsObject, armorStatsObject;
 
+    private CanvasSounds sounds;
+
     public LeanTweenType tweenType;
     private float tweenTime = 0.35f;
 
     void Awake() {
+        sounds = CanvasMaster.Instance.canvasSounds;
         categoryObjects = new GameObject[] { weaponObj, armorObj, consumablesObj, miscObj };
 
         // Hide categories
@@ -41,7 +44,6 @@ public class InventoryCanvas : MonoBehaviour {
                 LeanTween.moveLocalX(obj, 0, tweenTime).setEase(tweenType);
             } else {
                 // Close menu
-                ShowRequiredElements(NONE);
                 LeanTween.scale(obj, Vector3.zero, tweenTime).
                 setEase(tweenType);
                 LeanTween.moveLocalX(obj, objCategoryStartX, tweenTime).setEase(tweenType);
@@ -50,6 +52,15 @@ public class InventoryCanvas : MonoBehaviour {
 
         // Toggle menu state
         menuOpen = !menuOpen;
+
+        if (menuOpen) {
+            // Play sound when opening the menu
+            sounds.PlaySound(sounds.BUTTON_SELECT);
+        } else {
+            // Play sound when closing the menu and hide opened categories
+            sounds.PlaySound(sounds.BUTTON_BACK);
+            ShowRequiredElements(NONE);
+        }
     }
 
     public void ToggleWeapon() {
@@ -80,14 +91,22 @@ public class InventoryCanvas : MonoBehaviour {
     }
 
     private void ShowRequiredElements(int element) {
-        // If element is none or the one currently open, hide open category
-        if (element == NONE || currentlyOpen == element) {
+        // If category was open and player clicked the same category, close it
+        if (element == currentlyOpen && element != NONE) {
+            sounds.PlaySound(sounds.BUTTON_BACK);
+            element = NONE;
+        }
+        
+        // If element is none, reset menu and categories scale
+        if (element == NONE) {
             ScaleMenuAndCategories(false);
-            currentlyOpen = NONE;
         } else {
-            currentlyOpen = element;
+            // Else category is opened, so play sound
+            sounds.PlaySound(sounds.BUTTON_SELECT);
             ScaleMenuAndCategories(true);
         }
+
+        currentlyOpen = element;
 
         // Set objects active based on if they should be currently open
         weaponStatsObject.SetActive(currentlyOpen == WEAPON);
