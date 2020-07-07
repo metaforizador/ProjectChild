@@ -76,13 +76,13 @@ public class Helper : MonoBehaviour
     /// <param name="parent">parent to get transform from</param>
     /// <returns>parented child</returns>
     public GameObject CreateObjectChild(GameObject prefab, GameObject parent) {
-        GameObject layout = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject obj = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
         // Set parent and fix scale
-        layout.transform.SetParent(parent.transform);
-        layout.transform.localPosition = Vector3.zero;
-        layout.transform.localScale = Vector3.one;
+        obj.transform.SetParent(parent.transform);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localScale = Vector3.one;
 
-        return layout;
+        return obj;
     }
 
     /// <summary>
