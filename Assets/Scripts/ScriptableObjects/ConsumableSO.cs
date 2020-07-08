@@ -21,7 +21,7 @@ public class ConsumableSO : PickableSO {
     [Range(1, 60)]
     public int boostTimeInSeconds = 1;
 
-    // Comsat Link
+    // Comsat Link & Rig
     [Range(0f, 100f)]
     public float chanceToBeSuccessful;
 }

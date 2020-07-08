@@ -73,6 +73,12 @@ public class ConsumableSOEditor : Editor {
                     "of the game with all his money and stats (items are lost, though).", MessageType.Info);
                 EditorGUILayout.PropertyField(chanceToBeSuccessful);
                 break;
+
+            case ConsumableType.Rig:
+                EditorGUILayout.HelpBox("As a consumable, it repairs some HP. On stations, it can also be used to upgrade " +
+                    "weapons and armor.", MessageType.Info);
+                EditorGUILayout.PropertyField(chanceToBeSuccessful);
+                break;
         }
 
         serializedObject.ApplyModifiedProperties();
