@@ -18,7 +18,10 @@ public class ConsumableSOEditor : Editor {
         chanceToBeSuccessful,
 
         // Scrap
-        chanceToTurnIntoToy, creditValue, craftValue;
+        chanceToTurnIntoToy, creditValue, craftValue,
+
+        // Toy
+        expToGain;
 
     void OnEnable() {
         // Setup the SerializedProperties
@@ -42,6 +45,9 @@ public class ConsumableSOEditor : Editor {
         chanceToTurnIntoToy = serializedObject.FindProperty("chanceToTurnIntoToy");
         creditValue = serializedObject.FindProperty("creditValue");
         craftValue = serializedObject.FindProperty("craftValue");
+
+        // Toy
+        expToGain = serializedObject.FindProperty("expToGain");
     }
 
     public override void OnInspectorGUI() {
@@ -101,6 +107,12 @@ public class ConsumableSOEditor : Editor {
                 EditorGUILayout.PropertyField(creditValue);
                 EditorGUILayout.LabelField("Craft values are not yet decided", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(craftValue);
+                break;
+
+            case ConsumableType.Toy:
+                EditorGUILayout.HelpBox("As a consumable, it gives exp to the player.", MessageType.Info);
+                EditorGUILayout.LabelField("Gives percentage amount of exp needed for next level", EditorStyles.boldLabel);
+                EditorGUILayout.PropertyField(expToGain);
                 break;
         }
 

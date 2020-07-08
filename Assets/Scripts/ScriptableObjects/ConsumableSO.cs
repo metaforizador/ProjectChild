@@ -31,4 +31,8 @@ public class ConsumableSO : PickableSO {
     public int creditValue;
     [Range(1, 4)]
     public int craftValue = 1;
+
+    // Toy
+    [Range(0f, 100f)]
+    public float expToGain;
 }
