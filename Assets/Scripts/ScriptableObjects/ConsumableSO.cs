@@ -20,4 +20,8 @@ public class ConsumableSO : PickableSO {
     public float boostStaminaRecoverySpeed = 1.1f, boostAmmoRecoverySpeed = 1.1f;
     [Range(1, 60)]
     public int boostTimeInSeconds = 1;
+
+    // Comsat Link
+    [Range(0f, 100f)]
+    public float chanceToBeSuccessful;
 }
