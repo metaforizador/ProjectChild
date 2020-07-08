@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad44ce9fe6f571641863c3793400d699, type: 3}
-  m_Name: Platinum
+  m_Name: Copper (damaged)
   m_EditorClassIdentifier: 
-  name: Platinum
+  name: Copper
+  condition: 0
   armorPrefab: {fileID: 0}
   decreaseShieldRecoveryDelay: 0
-  increaseShield: 200
+  increaseShield: 5
   decreaseOpponentCriticalRate: 0
   decreaseOpponentCriticalMultiplier: 0
   reduceMovementSpeed: 0

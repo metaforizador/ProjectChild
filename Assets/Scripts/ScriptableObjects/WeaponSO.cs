@@ -7,7 +7,7 @@ public class WeaponSO : PickableSO {
 
     public GameObject weaponPrefab;
 
-    [Header("(Note: max health and armor is 100, total is 200)")]
+    [Header("(Note: starting health and armor is 100, total is 200)")]
     public float damagePerBullet;
     public DamageType weaponType;
     [Header("Meters in second")]

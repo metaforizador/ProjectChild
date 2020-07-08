@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f622394048bc7341976b4bd1422a2a3, type: 3}
-  m_Name: Magnum
+  m_Name: Uzi (intact)
   m_EditorClassIdentifier: 
-  name: Magnum
+  name: Uzi
+  condition: 1
   weaponPrefab: {fileID: 0}
-  damagePerBullet: 50
+  damagePerBullet: 13
   weaponType: 0
-  bulletSpeed: 500
-  ammoSize: 7
-  rateOfFire: 1
-  reloadTime: 5
+  bulletSpeed: 200
+  ammoSize: 30
+  rateOfFire: 0.3
+  reloadTime: 2
