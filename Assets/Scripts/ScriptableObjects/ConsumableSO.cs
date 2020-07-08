@@ -24,4 +24,11 @@ public class ConsumableSO : PickableSO {
     // Comsat Link & Rig
     [Range(0f, 100f)]
     public float chanceToBeSuccessful;
+
+    // Scrap
+    [Range(0f, 100f)]
+    public float chanceToTurnIntoToy;
+    public int creditValue;
+    [Range(1, 4)]
+    public int craftValue = 1;
 }
