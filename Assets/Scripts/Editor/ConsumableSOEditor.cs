@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ConsumablesSOEditor)), CanEditMultipleObjects]
-public class ConsumablesSOEditor : Editor {
+[CustomEditor(typeof(ConsumableSO)), CanEditMultipleObjects]
+public class ConsumableSOEditor : Editor {
 
     public SerializedProperty
         nameProp, condition, consumableType,
         // Scanner
+        identificationChance,
 
         // Battery
         shieldRecoveryPercentage, boostStaminaRecoverySpeed, boostAmmoRecoverySpeed, boostTimeInSeconds;
@@ -18,6 +19,10 @@ public class ConsumablesSOEditor : Editor {
         nameProp = serializedObject.FindProperty("name");
         condition = serializedObject.FindProperty("condition");
         consumableType = serializedObject.FindProperty("consumableType");
+
+        // Scanner
+        identificationChance = serializedObject.FindProperty("identificationChance");
+
         // Battery
         shieldRecoveryPercentage = serializedObject.FindProperty("shieldRecoveryPercentage");
         boostStaminaRecoverySpeed = serializedObject.FindProperty("boostStaminaRecoverySpeed");
@@ -35,10 +40,15 @@ public class ConsumablesSOEditor : Editor {
         ConsumableType type = (ConsumableType)consumableType.enumValueIndex;
 
         switch (type) {
+            case ConsumableType.Scanner:
+                EditorGUILayout.LabelField("Percentage chance to be successful", EditorStyles.boldLabel);
+                EditorGUILayout.PropertyField(identificationChance);
+                break;
+
             case ConsumableType.Battery:
-                EditorGUILayout.LabelField("Shield recovery percentage", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Percentage amount to recover", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(shieldRecoveryPercentage);
-                EditorGUILayout.LabelField("Boost by multiplying by this value", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Boost speed by multiplying with this value", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(boostStaminaRecoverySpeed);
                 EditorGUILayout.PropertyField(boostAmmoRecoverySpeed);
                 EditorGUILayout.LabelField("How long boost lasts", EditorStyles.boldLabel);

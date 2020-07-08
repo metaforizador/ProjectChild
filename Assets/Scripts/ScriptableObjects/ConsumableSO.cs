@@ -9,6 +9,10 @@ public class ConsumableSO : PickableSO {
 
     public ConsumableType consumableType;
 
+    // Scanner
+    [Range(0f, 100f)]
+    public float identificationChance;
+
     // Battery
     [Range(0f, 100f)]
     public float shieldRecoveryPercentage;
