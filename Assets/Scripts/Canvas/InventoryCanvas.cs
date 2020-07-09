@@ -85,7 +85,7 @@ public class InventoryCanvas : MonoBehaviour {
     }
 
     public void ToggleConsumables() {
-        // Destroy all previous buttons
+        // Destroy all previous consumable item buttons
         foreach (Transform child in consumableContent.transform) {
             Destroy(child.gameObject);
         }
