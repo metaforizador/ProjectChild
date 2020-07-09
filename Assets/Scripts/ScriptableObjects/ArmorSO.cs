@@ -11,7 +11,7 @@ public class ArmorSO : PickableSO {
     [Range(0f, 100f)]
     public float decreaseShieldRecoveryDelay;
 
-    [Header("Default shield capacity is 100")]
+    [Header("Starting shield capacity is 100")]
     public int increaseShield;
 
     [Header("Decrease opponent's critical rate by %")]

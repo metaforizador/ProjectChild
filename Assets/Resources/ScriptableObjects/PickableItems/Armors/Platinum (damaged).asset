@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad44ce9fe6f571641863c3793400d699, type: 3}
-  m_Name: Platinum
+  m_Name: Platinum (damaged)
   m_EditorClassIdentifier: 
   name: Platinum
+  condition: 0
   armorPrefab: {fileID: 0}
   decreaseShieldRecoveryDelay: 15.9
   increaseShield: 50

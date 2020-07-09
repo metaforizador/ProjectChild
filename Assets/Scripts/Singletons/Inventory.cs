@@ -21,7 +21,13 @@ public class Inventory : MonoBehaviour {
     public WeaponSO equippedWeapon;
     public ArmorSO equippedArmor;
 
-    private List<PickableSO> pickableItems;
+    private List<PickableSO> pickableItems = new List<PickableSO>();
+
+    void Start() {
+        // Add test items
+        PickableSO[] pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/Consumables/");
+        pickableItems = new List<PickableSO>(pickArray);
+    }
 
     public void LoadInventory(Save save) {
         save.equippedWeapon = equippedWeapon;
@@ -33,5 +39,16 @@ public class Inventory : MonoBehaviour {
         equippedWeapon = save.equippedWeapon;
         equippedArmor = save.equippedArmor;
         pickableItems = save.inventoryItems;
+    }
+
+    public List<ConsumableSO> GetConsumables() {
+        List<ConsumableSO> consumables = new List<ConsumableSO>();
+
+        foreach (PickableSO item in pickableItems) {
+            if (item is PickableSO)
+                consumables.Add((ConsumableSO) item);
+        }
+
+        return consumables;
     }
 }

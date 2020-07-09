@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour {
 
-    private enum Rarity { Damaged, Intact }
-
     private PickableSO[] items;
     private int maxItems = 4;
 
@@ -16,23 +14,26 @@ public class Chest : MonoBehaviour {
         int itemAmount = Random.Range(1, maxItems + 1); // + 1 because max is not inclusive
 
         // Randomize rarity
-        Rarity rarity;
+        Condition condition;
         float number = Random.Range(1, 101);
         number += PlayerStats.Instance.rareItemFindRate.currentValue;
 
         if (number >= INTACT_VALUE) {
-            rarity = Rarity.Intact;
+            condition = Condition.Intact;
         } else {
-            rarity = Rarity.Damaged;
+            condition = Condition.Damaged;
         }
 
-        string rarityPath = rarity.ToString();
-
         // Load all pickable items from resources which have correct rarity
-        PickableSO[] pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/" + rarityPath + "/");
+        PickableSO[] pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/");
 
-        // Convert array to list
-        List<PickableSO> pickList = new List<PickableSO>(pickArray);
+        // Create list and add all items with correct condition to it
+        List<PickableSO> pickList = new List<PickableSO>();
+
+        foreach (PickableSO item in pickArray) {
+            if (item.condition.Equals(condition))
+                pickList.Add(item);
+        }
 
         // Create new items array based on random size
         items = new PickableSO[itemAmount];

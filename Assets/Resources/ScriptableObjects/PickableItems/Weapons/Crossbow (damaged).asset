@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f622394048bc7341976b4bd1422a2a3, type: 3}
-  m_Name: Crossbow
+  m_Name: Crossbow (damaged)
   m_EditorClassIdentifier: 
   name: Crossbow
+  condition: 0
   weaponPrefab: {fileID: 0}
   damagePerBullet: 200
   weaponType: 0
