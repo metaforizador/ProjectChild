@@ -61,6 +61,7 @@ public class DialogueScript : MonoBehaviour {
         Question q = XMLDialogueParser.GetRandomQuestion(dialogues, curMood);  // Load random question from xml
         question = q.questionText;
         answers = q.answers;
+        Helper.Instance.RandomizeArrayOrder(answers); // Randomize answers order
 
         // Loop through all the answers
         for (int i = 0; i < answers.Length; i++) {

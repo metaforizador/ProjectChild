@@ -16,11 +16,16 @@ public class Save {
     // Nihilistic
     public Stat attackSpd, movementSpd, fireRate;
     // Other stats
-    public int level, xp, nextLevelUpXp, lastLevelUpXp;
+    public int level, xp, nextLevelUpXp, lastLevelUpXp, redeemableLevelPoints;
 
     //////// Questions and answers ////////
     // Mood = mood for question, List<string> = questions
     public Dictionary<Mood, List<string>> askedQuestions;
     // WordsType = type of reply, List<string> = replies
     public Dictionary<WordsType, List<string>> givenReplies;
+
+    //////// Inventory ////////
+    public WeaponSO equippedWeapon;
+    public ArmorSO equippedArmor;
+    public List<PickableSO> inventoryItems;
 }

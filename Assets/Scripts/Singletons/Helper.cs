@@ -76,12 +76,57 @@ public class Helper : MonoBehaviour
     /// <param name="parent">parent to get transform from</param>
     /// <returns>parented child</returns>
     public GameObject CreateObjectChild(GameObject prefab, GameObject parent) {
-        GameObject layout = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject obj = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
         // Set parent and fix scale
-        layout.transform.SetParent(parent.transform);
-        layout.transform.localPosition = Vector3.zero;
-        layout.transform.localScale = Vector3.one;
+        obj.transform.SetParent(parent.transform);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localScale = Vector3.one;
 
-        return layout;
+        return obj;
+    }
+
+    /// <summary>
+    /// Randomizes the order of an array.
+    /// </summary>
+    /// <typeparam name="T">typeof object</typeparam>
+    /// <param name="array">array to randomize</param>
+    public void RandomizeArrayOrder<T>(T[] array) {
+        for (int i = 0; i < array.Length - 1; i++) {
+            int rnd = Random.Range(i, array.Length);
+            T tempGO = array[rnd];
+            array[rnd] = array[i];
+            array[i] = tempGO;
+        }
+    }
+
+    /// <summary>
+    /// Shows weapon stats in UI.
+    /// </summary>
+    /// <param name="holder">Object which holds the references to UI elements</param>
+    /// <param name="weapon">weapon to get the stats from</param>
+    public void SetupWeaponStats(WeaponStatHolder holder, WeaponSO weapon) {
+        if (holder.name != null)
+            holder.name.text = weapon.name;
+        holder.type.text = weapon.weaponType.ToString();
+        holder.damage.text = weapon.damagePerBullet.ToString();
+        holder.bulletSpeed.text = weapon.bulletSpeed.ToString();
+        holder.ammoSize.text = weapon.ammoSize.ToString();
+        holder.rateOfFire.text = (60 / weapon.rateOfFire).ToString();   // Rounds per minute
+    }
+
+    /// <summary>
+    /// Shows armor stats in UI.
+    /// </summary>
+    /// <param name="holder">Object which holds the references to UI elements</param>
+    /// <param name="armor">armor to get the stats from</param>
+    public void SetupArmorStats(ArmorStatHolder holder, ArmorSO armor) {
+        if (holder.name != null)
+            holder.name.text = armor.name;
+        holder.decreaseShieldDelay.text = armor.decreaseShieldRecoveryDelay.ToString();
+        holder.increaseShield.text = armor.increaseShield.ToString();
+        holder.lowerOpponentsCritChance.text = armor.decreaseOpponentCriticalRate.ToString();
+        holder.lowerOpponentsCritMultiplier.text = armor.decreaseOpponentCriticalMultiplier.ToString();
+        holder.decreaseMovementSpeed.text = armor.reduceMovementSpeed.ToString();
+        holder.decreaseStaminaRecoveryRate.text = armor.reduceStaminaRecoveryRate.ToString();
     }
 }

@@ -16,7 +16,8 @@ public class CanvasMaster : MonoBehaviour {
         }
     }
 
-    public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas, HUDCanvas, chestCanvas;
+    public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas, HUDCanvas, chestCanvas, inventoryCanvas;
+    public CanvasSounds canvasSounds;
 
     // Store questions and replies so they can be looped through
     public Dictionary<Mood, List<string>> askedQuestions { get; private set; }
@@ -36,6 +37,13 @@ public class CanvasMaster : MonoBehaviour {
         // Open Debug menu
         if (Input.GetKeyDown(KeyCode.Escape)) {
             testCanvas.SetActive(!testCanvas.activeSelf);
+            // Show cursor if testcanvas is visible
+            GameMaster.Instance.ShowCursor(testCanvas.activeSelf);
+        }
+
+        // Toggle menu
+        if (Input.GetButtonDown("Menu")) {
+            inventoryCanvas.GetComponent<InventoryCanvas>().ToggleMenu();
         }
     }
 

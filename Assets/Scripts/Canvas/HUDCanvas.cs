@@ -7,7 +7,8 @@ using TMPro;
 public class HUDCanvas : MonoBehaviour {
     // Player
     public Image hpBar, shieldBar, staminaBar, xpBar;
-    public TextMeshProUGUI ammoText, playerLevel;
+    public GameObject levelUpButton;
+    public TextMeshProUGUI ammoText, playerLevel, levelUpPoint;
 
     // Enemy
     public GameObject enemyObject;
@@ -22,8 +23,8 @@ public class HUDCanvas : MonoBehaviour {
     public TextMeshProUGUI interactText;
     public LeanTweenType tweenType;
     private float hideInteractYPos = -150f;
-    public const int CHEST = 0;
-    private string[] interacts = new string[] { "F - Open" };
+    public const int CHEST_OPEN = 0, CHEST_CLOSE = 1;
+    private string[] interacts = new string[] { "F - Open", "F - Close" };
 
     void Awake() {
         // Hide interact
@@ -68,6 +69,17 @@ public class HUDCanvas : MonoBehaviour {
         playerLevel.text = level.ToString();
     }
 
+    public void CheckRedeemableLevelPoints() {
+        int points = PlayerStats.Instance.redeemableLevelPoints;
+
+        if (points > 0 ) {
+            levelUpButton.SetActive(true);
+            levelUpPoint.text = points.ToString();
+        } else {
+            levelUpButton.SetActive(false);
+        }
+    }
+
     /// <summary>
     /// Shows enemy stats in hud.
     /// 
@@ -96,8 +108,12 @@ public class HUDCanvas : MonoBehaviour {
         enemyObject.SetActive(false);
     }
 
-    public void ShowInteract(int type) {
+    public void InteractText(int type) {
         interactText.text = interacts[type];
+    }
+
+    public void ShowInteract(int type) {
+        InteractText(type);
         LeanTween.moveLocalY(interactObject, 0, 0.5f).setEase(tweenType);
     }
 

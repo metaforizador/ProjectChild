@@ -52,10 +52,17 @@ public class PlayerStats : MonoBehaviour {
     public Stat fireRate { get; private set; }
 
     // Other stats
-    private int LEVEL, XP;
+    private int LEVEL, XP, REDEEMABLE_LEVEL_POINTS;
     // Update canvas UI element when level changes
-    public int level { get { return LEVEL; }private set { LEVEL = value; hud.AdjustPlayerLevel(LEVEL); } }
-    public int xp { get { return XP; } private set { XP = value; hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, XP); } }
+    public int level { get { return LEVEL; }
+        private set { LEVEL = value; hud.AdjustPlayerLevel(LEVEL); } }
+    // Update canvas UI element when xp changes
+    public int xp { get { return XP; }
+        private set { XP = value; hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, XP); } }
+    // Show canvas UI element when level points are gained
+    public int redeemableLevelPoints { get { return REDEEMABLE_LEVEL_POINTS; }
+        private set { REDEEMABLE_LEVEL_POINTS = value; hud.CheckRedeemableLevelPoints(); } }
+
     public int nextLevelUpXp { get; private set; }
     public int lastLevelUpXp { get; private set; }
 
@@ -89,6 +96,7 @@ public class PlayerStats : MonoBehaviour {
         xp = 0;
         nextLevelUpXp = XP_MULTIPLIER;
         lastLevelUpXp = 0;
+        redeemableLevelPoints = 0;
     }
 
     public void SavePlayerStats(Save save) {
@@ -116,6 +124,7 @@ public class PlayerStats : MonoBehaviour {
         save.xp = xp;
         save.nextLevelUpXp = nextLevelUpXp;
         save.lastLevelUpXp = lastLevelUpXp;
+        save.redeemableLevelPoints = redeemableLevelPoints;
     }
 
     public void LoadPlayerStats(Save save) {
@@ -144,6 +153,7 @@ public class PlayerStats : MonoBehaviour {
         xp = save.xp;
         nextLevelUpXp = save.nextLevelUpXp;
         lastLevelUpXp = save.lastLevelUpXp;
+        redeemableLevelPoints = save.redeemableLevelPoints;
 
         RefreshPlayerForStatChanges();
     }
@@ -200,6 +210,10 @@ public class PlayerStats : MonoBehaviour {
             }
         }
 
+        // Decrease level up points by 1 and check if points left
+        redeemableLevelPoints --;
+        hud.CheckRedeemableLevelPoints();
+
         RefreshPlayerForStatChanges();
     }
 
@@ -223,6 +237,7 @@ public class PlayerStats : MonoBehaviour {
 
     private void LevelUp() {
         level ++; // Increase level
+        redeemableLevelPoints ++; // Increase level points
 
         // Get next xp multiplier
         int xpToAdd = level * XP_MULTIPLIER;   // Level 5 = 500;
