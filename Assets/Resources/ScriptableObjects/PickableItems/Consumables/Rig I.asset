@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12bdc419337b6424c823d17486ae8959, type: 3}
-  m_Name: Scrap (damaged)
+  m_Name: Rig I
   m_EditorClassIdentifier: 
-  name: Scrap
+  name: Rig I
   condition: 0
-  consumableType: 4
+  consumableType: 3
+  quantity: 1
   identificationChance: 0
   shieldRecoveryPercentage: 0
   boostStaminaRecoverySpeed: 1.1
   boostAmmoRecoverySpeed: 1.1
   boostTimeInSeconds: 1
-  chanceToBeSuccessful: 0
-  chanceToTurnIntoToy: 20
-  creditValue: 2
-  craftValue: 2
+  chanceToBeSuccessful: 20
+  chanceToTurnIntoToy: 0
+  creditValue: 0
+  craftValue: 1
+  expToGain: 0
