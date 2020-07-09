@@ -15,7 +15,8 @@ public class InventoryCanvas : MonoBehaviour {
 
     private const int NONE = 0, WEAPON = 1, ARMOR = 2, CONSUMABLES = 3, MISC = 4;
 
-    public GameObject weaponStatsObject, armorStatsObject;
+    public GameObject weaponStatsObject, armorStatsObject, consumablesObject;
+    public GameObject consumableItemPrefab, consumableContent;
 
     private CanvasSounds sounds;
 
@@ -82,6 +83,18 @@ public class InventoryCanvas : MonoBehaviour {
         Helper.Instance.SetupArmorStats(holder, armor);
     }
 
+    public void ToggleConsumables() {
+        foreach (Transform child in consumableContent.transform) {
+            Destroy(child.gameObject);
+        }
+
+        for (int i = 0; i < 20; i++) {
+            Helper.Instance.CreateObjectChild(consumableItemPrefab, consumableContent);
+        }
+
+        ShowRequiredElements(CONSUMABLES);
+    }
+
     /// <summary>
     /// Scales menu and categories smaller or to default size.
     /// </summary>
@@ -114,5 +127,6 @@ public class InventoryCanvas : MonoBehaviour {
         // Set objects active based on if they should be currently open
         weaponStatsObject.SetActive(currentlyOpen == WEAPON);
         armorStatsObject.SetActive(currentlyOpen == ARMOR);
+        consumablesObject.SetActive(currentlyOpen == CONSUMABLES);
     }
 }
