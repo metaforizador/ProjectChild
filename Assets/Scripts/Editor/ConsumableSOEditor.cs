@@ -7,7 +7,7 @@ using UnityEngine;
 public class ConsumableSOEditor : Editor {
 
     public SerializedProperty
-        nameProp, condition, consumableType,
+        nameProp, condition, consumableType, quantity,
         // Scanner
         identificationChance,
 
@@ -28,6 +28,7 @@ public class ConsumableSOEditor : Editor {
         nameProp = serializedObject.FindProperty("name");
         condition = serializedObject.FindProperty("condition");
         consumableType = serializedObject.FindProperty("consumableType");
+        quantity = serializedObject.FindProperty("quantity");
 
         // Scanner
         identificationChance = serializedObject.FindProperty("identificationChance");
@@ -54,6 +55,8 @@ public class ConsumableSOEditor : Editor {
         serializedObject.Update();
 
         EditorGUILayout.PropertyField(nameProp);
+        EditorGUILayout.LabelField("Quantity will be automatically generated", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(quantity);
         EditorGUILayout.PropertyField(condition);
         EditorGUILayout.PropertyField(consumableType);
 

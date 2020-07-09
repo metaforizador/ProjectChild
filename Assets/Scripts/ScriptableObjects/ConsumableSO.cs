@@ -8,6 +8,7 @@ public enum ConsumableType { Scanner, Battery, ComsatLink, Rig, Scrap, Toy }
 public class ConsumableSO : PickableSO {
 
     public ConsumableType consumableType;
+    public int quantity = 1;
 
     // Scanner
     [Range(0f, 100f)]

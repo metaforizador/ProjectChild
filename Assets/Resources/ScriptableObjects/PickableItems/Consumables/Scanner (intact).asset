@@ -15,9 +15,14 @@ MonoBehaviour:
   name: Scanner
   condition: 1
   consumableType: 0
+  quantity: 1
   identificationChance: 100
   shieldRecoveryPercentage: 0
   boostStaminaRecoverySpeed: 1.1
   boostAmmoRecoverySpeed: 1.1
   boostTimeInSeconds: 1
   chanceToBeSuccessful: 0
+  chanceToTurnIntoToy: 0
+  creditValue: 0
+  craftValue: 1
+  expToGain: 0
