@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class InventoryCanvas : MonoBehaviour {
 
@@ -84,12 +85,18 @@ public class InventoryCanvas : MonoBehaviour {
     }
 
     public void ToggleConsumables() {
+        // Destroy all previous buttons
         foreach (Transform child in consumableContent.transform) {
             Destroy(child.gameObject);
         }
 
-        for (int i = 0; i < 20; i++) {
-            Helper.Instance.CreateObjectChild(consumableItemPrefab, consumableContent);
+        // Get consumables from inventory
+        List<ConsumableSO> consumables = Inventory.Instance.GetConsumables();
+        foreach (ConsumableSO con in consumables) {
+            // Create button for each consumable
+            GameObject btn = Helper.Instance.CreateObjectChild(consumableItemPrefab, consumableContent);
+            // Add name to the consumable
+            btn.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = con.name;
         }
 
         ShowRequiredElements(CONSUMABLES);

@@ -7148,7 +7148,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -25481,16 +25481,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1646769840381753019}
     m_Modifications:
-    - target: {fileID: 1465154690437069546, guid: b4c68e3de67a83f4fbcffbc248932eec,
-        type: 3}
-      propertyPath: m_firstOverflowCharacterIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1465154690437069546, guid: b4c68e3de67a83f4fbcffbc248932eec,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1640182581989304452, guid: b4c68e3de67a83f4fbcffbc248932eec,
         type: 3}
       propertyPath: m_Name
