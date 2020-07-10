@@ -49,7 +49,7 @@ public class ConsumableSO : PickableSO {
     public int craftValue = 1;
 
     // Toy
-    public const string DESCRIPTION_TOY = "As a consumable, it gives exp to the player.";
+    public const string DESCRIPTION_TOY = "As a consumable, it gives percentage amount of exp needed for the next level.";
     [Range(0f, 100f)]
     public float expToGain;
 }

@@ -271,7 +271,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 32.914837, y: 3.1347406, z: 11.494079, w: 13.061448}
+  m_margin: {x: 27.025862, y: 3.1347406, z: 10.108439, w: 13.061448}
   m_textInfo:
     textComponent: {fileID: 1465154690437069546}
     characterCount: 3
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 11.583008, y: 13.077578, z: 160.29385, w: 14.945826}
+  m_margin: {x: 26.132227, y: 13.077578, z: 149.55518, w: 14.945826}
   m_textInfo:
     textComponent: {fileID: 2501033033455844162}
     characterCount: 1

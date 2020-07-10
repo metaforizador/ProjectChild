@@ -17,12 +17,13 @@ public class InventoryCanvas : MonoBehaviour {
 
     private const int NONE = 0, WEAPON = 1, ARMOR = 2, CONSUMABLES = 3, MISC = 4;
 
+    // Categories
     public GameObject weaponStatsObject, armorStatsObject, consumablesObject;
-    public GameObject consumableItemPrefab, consumableContent;
 
     // ConsumableItems
+    public GameObject consumableItemPrefab, consumableContent;
     public TextMeshProUGUI selectedItemName, selectedItemDescription;
-    public GameObject itemStatsDisplay, scannerStats, batteryStats;
+    public GameObject itemStatsDisplay, scannerStats, batteryStats, comsatLinkStats, rigStats, scrapStats, toyStats;
 
     private CanvasSounds sounds;
 
@@ -129,12 +130,38 @@ public class InventoryCanvas : MonoBehaviour {
                 holder = batteryStats.GetComponent<ConsumableStatHolder>();
                 holder.shieldRecoveryPercentage.text = con.shieldRecoveryPercentage.ToString() + "%";
                 break;
+            case ConsumableType.ComsatLink:
+                selectedItemDescription.text = ConsumableSO.DESCRIPTION_COMSAT_LINK;
+                holder = comsatLinkStats.GetComponent<ConsumableStatHolder>();
+                holder.chanceToBeSuccessful.text = con.chanceToBeSuccessful.ToString() + "%";
+                break;
+            case ConsumableType.Rig:
+                selectedItemDescription.text = ConsumableSO.DESCRIPTION_RIG;
+                holder = rigStats.GetComponent<ConsumableStatHolder>();
+                holder.chanceToBeSuccessful.text = con.chanceToBeSuccessful.ToString() + "%";
+                break;
+            case ConsumableType.Scrap:
+                selectedItemDescription.text = ConsumableSO.DESCRIPTION_SCRAP;
+                holder = scrapStats.GetComponent<ConsumableStatHolder>();
+                holder.creditValue.text = con.creditValue.ToString();
+                holder.craftValue.text = con.craftValue.ToString();
+                holder.chanceToTurnIntoToy.text = con.chanceToTurnIntoToy.ToString() + "%";
+                break;
+            case ConsumableType.Toy:
+                selectedItemDescription.text = ConsumableSO.DESCRIPTION_TOY;
+                holder = toyStats.GetComponent<ConsumableStatHolder>();
+                holder.expToGain.text = con.expToGain.ToString() + "%";
+                break;
         }
     }
 
     private void ShowCorrectItemStats(ConsumableType type) {
         scannerStats.SetActive(type.Equals(ConsumableType.Scanner));
         batteryStats.SetActive(type.Equals(ConsumableType.Battery));
+        comsatLinkStats.SetActive(type.Equals(ConsumableType.ComsatLink));
+        rigStats.SetActive(type.Equals(ConsumableType.Rig));
+        scrapStats.SetActive(type.Equals(ConsumableType.Scrap));
+        toyStats.SetActive(type.Equals(ConsumableType.Toy));
     }
 
     /// <summary>
