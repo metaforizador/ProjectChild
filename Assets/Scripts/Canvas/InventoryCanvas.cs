@@ -40,9 +40,12 @@ public class InventoryCanvas : MonoBehaviour {
             obj.transform.localScale = Vector3.zero;
         }
 
-        ShowRequiredElements(NONE);
+        ShowRequiredCategory(NONE);
     }
 
+    /// <summary>
+    /// Shows and hides all of the categories.
+    /// </summary>
     public void ToggleMenu() {
         foreach (GameObject obj in categoryObjects) {
             if (!menuOpen) {
@@ -70,26 +73,35 @@ public class InventoryCanvas : MonoBehaviour {
         } else {
             // Play sound when closing the menu and hide opened categories
             sounds.PlaySound(sounds.BUTTON_BACK);
-            ShowRequiredElements(NONE);
+            ShowRequiredCategory(NONE);
         }
     }
 
+    /// <summary>
+    /// Shows and hides weapon stats information.
+    /// </summary>
     public void ToggleWeapon() {
-        ShowRequiredElements(WEAPON);
+        ShowRequiredCategory(WEAPON);
         
         WeaponStatHolder holder = weaponStatsObject.GetComponent<WeaponStatHolder>();
         WeaponSO weapon = Inventory.Instance.equippedWeapon;
         Helper.Instance.SetupWeaponStats(holder, weapon);
     }
 
+    /// <summary>
+    /// Shows and hides armor stats information.
+    /// </summary>
     public void ToggleArmor() {
-        ShowRequiredElements(ARMOR);
+        ShowRequiredCategory(ARMOR);
 
         ArmorStatHolder holder = armorStatsObject.GetComponent<ArmorStatHolder>();
         ArmorSO armor = Inventory.Instance.equippedArmor;
         Helper.Instance.SetupArmorStats(holder, armor);
     }
 
+    /// <summary>
+    /// Shows and hides consumables in inventory.
+    /// </summary>
     public void ToggleConsumables() {
         // Destroy all previous consumable item buttons
         foreach (Transform child in consumableContent.transform) {
@@ -103,14 +115,20 @@ public class InventoryCanvas : MonoBehaviour {
             GameObject btn = Helper.Instance.CreateObjectChild(consumableItemPrefab, consumableContent);
             // Add name to the consumable
             btn.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = con.name;
+            // Show item information when clicked
             btn.GetComponent<Button>().onClick.AddListener(() => ShowItemInfo(con));
         }
 
-        ShowRequiredElements(CONSUMABLES);
+        ShowRequiredCategory(CONSUMABLES);
         itemStatsDisplay.SetActive(false); // Disable item stats display since item is not yet chosen
     }
 
+    /// <summary>
+    /// Shows item's information.
+    /// </summary>
+    /// <param name="con">item to get the information from</param>
     private void ShowItemInfo(ConsumableSO con) {
+        sounds.PlaySound(sounds.BUTTON_SELECT);
         ConsumableStatHolder holder;
         ConsumableType type = con.consumableType;
         // Activate correct objects
@@ -119,6 +137,7 @@ public class InventoryCanvas : MonoBehaviour {
         // Set name
         selectedItemName.text = con.name;
 
+        // Set description text and other stat texts based on consumable type
         switch (type) {
             case ConsumableType.Scanner:
                 selectedItemDescription.text = ConsumableSO.DESCRIPTION_SCANNER;
@@ -155,6 +174,10 @@ public class InventoryCanvas : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Shows and hides item stats which should be shown and hidden.
+    /// </summary>
+    /// <param name="type">type of stats to show</param>
     private void ShowCorrectItemStats(ConsumableType type) {
         scannerStats.SetActive(type.Equals(ConsumableType.Scanner));
         batteryStats.SetActive(type.Equals(ConsumableType.Battery));
@@ -175,15 +198,19 @@ public class InventoryCanvas : MonoBehaviour {
             LeanTween.scale(menuAndCategories, Vector3.one, tweenTime).setEase(tweenType);
     }
 
-    private void ShowRequiredElements(int element) {
+    /// <summary>
+    /// Shows and hides correct categories.
+    /// </summary>
+    /// <param name="category">category which should be open</param>
+    private void ShowRequiredCategory(int category) {
         // If category was open and player clicked the same category, close it
-        if (element == currentlyOpen && element != NONE) {
+        if (category == currentlyOpen && category != NONE) {
             sounds.PlaySound(sounds.BUTTON_BACK);
-            element = NONE;
+            category = NONE;
         }
         
         // If element is none, reset menu and categories scale
-        if (element == NONE) {
+        if (category == NONE) {
             ScaleMenuAndCategories(false);
         } else {
             // Else category is opened, so play sound
@@ -191,7 +218,7 @@ public class InventoryCanvas : MonoBehaviour {
             ScaleMenuAndCategories(true);
         }
 
-        currentlyOpen = element;
+        currentlyOpen = category;
 
         // Set objects active based on if they should be currently open
         weaponStatsObject.SetActive(currentlyOpen == WEAPON);
