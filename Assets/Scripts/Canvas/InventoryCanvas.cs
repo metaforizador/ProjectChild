@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class InventoryCanvas : MonoBehaviour {
@@ -18,6 +19,10 @@ public class InventoryCanvas : MonoBehaviour {
 
     public GameObject weaponStatsObject, armorStatsObject, consumablesObject;
     public GameObject consumableItemPrefab, consumableContent;
+
+    // ConsumableItems
+    public TextMeshProUGUI selectedItemName, selectedItemDescription;
+    public GameObject itemStatsDisplay, scannerStats, batteryStats;
 
     private CanvasSounds sounds;
 
@@ -97,9 +102,39 @@ public class InventoryCanvas : MonoBehaviour {
             GameObject btn = Helper.Instance.CreateObjectChild(consumableItemPrefab, consumableContent);
             // Add name to the consumable
             btn.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = con.name;
+            btn.GetComponent<Button>().onClick.AddListener(() => ShowItemInfo(con));
         }
 
         ShowRequiredElements(CONSUMABLES);
+        itemStatsDisplay.SetActive(false); // Disable item stats display since item is not yet chosen
+    }
+
+    private void ShowItemInfo(ConsumableSO con) {
+        ConsumableStatHolder holder;
+        ConsumableType type = con.consumableType;
+        // Activate correct objects
+        itemStatsDisplay.SetActive(true);
+        ShowCorrectItemStats(type);
+        // Set name
+        selectedItemName.text = con.name;
+
+        switch (type) {
+            case ConsumableType.Scanner:
+                selectedItemDescription.text = ConsumableSO.DESCRIPTION_SCANNER;
+                holder = scannerStats.GetComponent<ConsumableStatHolder>();
+                holder.identificationChance.text = con.identificationChance.ToString() + "%";
+                break;
+            case ConsumableType.Battery:
+                selectedItemDescription.text = ConsumableSO.DESCRIPTION_BATTERY;
+                holder = batteryStats.GetComponent<ConsumableStatHolder>();
+                holder.shieldRecoveryPercentage.text = con.shieldRecoveryPercentage.ToString() + "%";
+                break;
+        }
+    }
+
+    private void ShowCorrectItemStats(ConsumableType type) {
+        scannerStats.SetActive(type.Equals(ConsumableType.Scanner));
+        batteryStats.SetActive(type.Equals(ConsumableType.Battery));
     }
 
     /// <summary>
