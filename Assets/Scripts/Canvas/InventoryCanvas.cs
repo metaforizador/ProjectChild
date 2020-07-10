@@ -50,13 +50,11 @@ public class InventoryCanvas : MonoBehaviour {
         foreach (GameObject obj in categoryObjects) {
             if (!menuOpen) {
                 // Open menu
-                LeanTween.scale(obj, Vector3.one, tweenTime).
-                setEase(tweenType);
+                LeanTween.scale(obj, Vector3.one, tweenTime).setEase(tweenType);
                 LeanTween.moveLocalX(obj, 0, tweenTime).setEase(tweenType);
             } else {
                 // Close menu
-                LeanTween.scale(obj, Vector3.zero, tweenTime).
-                setEase(tweenType);
+                LeanTween.scale(obj, Vector3.zero, tweenTime).setEase(tweenType);
                 LeanTween.moveLocalX(obj, objCategoryStartX, tweenTime).setEase(tweenType);
             }
         }
