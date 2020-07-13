@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
 public class WeaponSO : PickableSO {
 
-    public GameObject weaponPrefab;
-
     [Header("(Note: starting health and armor is 100, total is 200)")]
     public float damagePerBullet;
     public DamageType weaponType;

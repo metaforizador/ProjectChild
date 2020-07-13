@@ -28,4 +28,7 @@ public class Save {
     public WeaponSO equippedWeapon;
     public ArmorSO equippedArmor;
     public List<PickableSO> inventoryItems;
+
+    //////// Hotbar ////////
+    public ConsumableSO[] hotbarItems;
 }

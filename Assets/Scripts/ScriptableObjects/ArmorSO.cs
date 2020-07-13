@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Armor", menuName = "Armor")]
 public class ArmorSO : PickableSO {
 
-    public GameObject armorPrefab;
-
     [Header("Decrease shield recovery delay by %")]
     [Range(0f, 100f)]
     public float decreaseShieldRecoveryDelay;

@@ -24,6 +24,8 @@ public class InventoryCanvas : MonoBehaviour {
     public GameObject consumableItemPrefab, consumableContent;
     public TextMeshProUGUI selectedItemName, selectedItemDescription;
     public GameObject itemStatsDisplay, scannerStats, batteryStats, comsatLinkStats, rigStats, scrapStats, toyStats;
+    private ConsumableSO selectedItem;
+    private HotbarCanvas hotbar;
 
     private CanvasSounds sounds;
 
@@ -32,6 +34,7 @@ public class InventoryCanvas : MonoBehaviour {
 
     void Awake() {
         sounds = CanvasMaster.Instance.canvasSounds;
+        hotbar = CanvasMaster.Instance.hotbarCanvas.GetComponent<HotbarCanvas>();
         categoryObjects = new GameObject[] { weaponObj, armorObj, consumablesObj, miscObj };
 
         // Hide categories
@@ -132,6 +135,8 @@ public class InventoryCanvas : MonoBehaviour {
         // Activate correct objects
         itemStatsDisplay.SetActive(true);
         ShowCorrectItemStats(type);
+        // Set selected item for equip and use buttons
+        selectedItem = con;
         // Set name
         selectedItemName.text = con.name;
 
@@ -183,6 +188,14 @@ public class InventoryCanvas : MonoBehaviour {
         rigStats.SetActive(type.Equals(ConsumableType.Rig));
         scrapStats.SetActive(type.Equals(ConsumableType.Scrap));
         toyStats.SetActive(type.Equals(ConsumableType.Toy));
+    }
+
+    public void EquipItem() {
+        //hotbar.SetIncomingItem(selectedItem);
+    }
+
+    public void UseItem() {
+
     }
 
     /// <summary>

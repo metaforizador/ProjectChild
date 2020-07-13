@@ -16,7 +16,7 @@ public class CanvasMaster : MonoBehaviour {
         }
     }
 
-    public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas, HUDCanvas, chestCanvas, inventoryCanvas;
+    public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas, HUDCanvas, chestCanvas, hotbarCanvas, inventoryCanvas;
     public CanvasSounds canvasSounds;
 
     // Store questions and replies so they can be looped through
@@ -50,11 +50,13 @@ public class CanvasMaster : MonoBehaviour {
     public void SaveCanvasValues(Save save) {
         save.askedQuestions = askedQuestions;
         save.givenReplies = givenReplies;
+        hotbarCanvas.GetComponent<HotbarCanvas>().SaveHotbar(save);
     }
 
     public void LoadCanvasValues(Save save) {
         askedQuestions = save.askedQuestions;
         givenReplies = save.givenReplies;
+        hotbarCanvas.GetComponent<HotbarCanvas>().LoadHotbar(save);
     }
 
     public void OpenDialogue() {

@@ -113,6 +113,7 @@ public class HUDCanvas : MonoBehaviour {
     }
 
     public void ShowInteract(int type) {
+        interactObject.SetActive(true);
         InteractText(type);
         LeanTween.moveLocalY(interactObject, 0, 0.5f).setEase(tweenType);
     }
