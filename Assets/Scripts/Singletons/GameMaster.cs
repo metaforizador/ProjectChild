@@ -74,6 +74,7 @@ public class GameMaster : MonoBehaviour {
     // For testing purposes
     public void Restart() {
         SceneManager.LoadScene(0);
+        CanvasMaster.Instance.ShowGameOverCanvas(false);
     }
 
     public void QuitGame() {

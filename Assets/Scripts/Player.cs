@@ -73,20 +73,22 @@ public class Player : CharacterParent {
     protected override void Update() {
         base.Update();
 
+        bool inputEnabled = !GameMaster.Instance.cursorVisible;
+
         // Check trigger interact presses
-        if (triggerCollider != null && Input.GetButtonDown("Interact")) {
+        if (triggerCollider != null && Input.GetButtonDown("Interact") && inputEnabled) {
             if (triggerCollider.CompareTag("Chest")) {
                 triggerCollider.GetComponent<Chest>().OpenChest();
             }
         }
 
         // Test taking damage
-        if (Input.GetKeyDown(KeyCode.U)) {
+        if (Input.GetKeyDown(KeyCode.U) && inputEnabled) {
             TakeDamage(DamageType.Piercing, testDamageKeyU, 0);
         }
         
         // Test gaining xp
-        if (Input.GetKeyDown(KeyCode.X)) {
+        if (Input.GetKeyDown(KeyCode.X) && inputEnabled) {
             stats.GainXP(testXpKeyX);
         }
 
@@ -94,8 +96,10 @@ public class Player : CharacterParent {
     }
 
     void OnDestroy() {
-        if (hud != null)
-            hud.gameObject.SetActive(false);    // Hide player's hud on destroy
+        if (hud != null) {
+            hud.gameObject.SetActive(false);                // Hide player's hud on destroy
+            CanvasMaster.Instance.ShowGameOverCanvas(true); // Show game over canvas
+        }
     }
 
     /**************** Collisions ****************/

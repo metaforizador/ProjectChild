@@ -15,7 +15,12 @@ public class InventoryCanvas : MonoBehaviour {
     private UIAnimator animator;
 
     // DELETE LATER
-    public GameObject testButton;
+    public GameObject openDebugMenuButton;
+    public GameObject debugMenu;
+
+    public void ToggleDebugMenu() {
+        debugMenu.SetActive(!debugMenu.activeSelf);
+    }
 
     private bool menuOpen = false;
     private int currentlyOpen;
@@ -44,8 +49,11 @@ public class InventoryCanvas : MonoBehaviour {
         hotbar = cv.hotbarCanvas.GetComponent<HotbarCanvas>();
         categoryObjects = new GameObject[] { weaponObj, armorObj, consumablesObj, miscObj };
 
+        // Hide debug menu stuff
+        debugMenu.SetActive(false);
+        openDebugMenuButton.SetActive(false);
+
         // Hide categories
-        testButton.SetActive(false);
         categoriesParent.SetActive(false);
         foreach (GameObject obj in categoryObjects) {
             obj.transform.LeanMoveLocalX(objCategoryStartX, 0f);
@@ -62,7 +70,7 @@ public class InventoryCanvas : MonoBehaviour {
         foreach (GameObject obj in categoryObjects) {
             if (!menuOpen) {
                 // Open menu
-                testButton.SetActive(true);
+                openDebugMenuButton.SetActive(true);
                 categoriesParent.SetActive(true);
                 CanvasMaster.Instance.ShowCanvasBackround(true);
                 animator.MoveX(obj, 0, tweenTime, tweenType);
@@ -74,7 +82,8 @@ public class InventoryCanvas : MonoBehaviour {
                     setOnComplete(() => {
                         categoriesParent.SetActive(false);
                         CanvasMaster.Instance.ShowCanvasBackround(false);
-                        testButton.SetActive(false);
+                        openDebugMenuButton.SetActive(false);
+                        debugMenu.SetActive(false);
                     });
             }
         }

@@ -18,7 +18,9 @@ public class CanvasMaster : MonoBehaviour {
     }
 
     public GameObject canvasBackground, crosshair;
-    public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas, HUDCanvas, chestCanvas, hotbarCanvas, inventoryCanvas;
+    public GameObject dialogueCanvas, statGainCanvas, statsCanvas,
+        HUDCanvas, chestCanvas, hotbarCanvas, inventoryCanvas,
+        gameOverCanvas;
     public CanvasSounds canvasSounds;
     public UIAnimator uiAnimator;
 
@@ -38,13 +40,6 @@ public class CanvasMaster : MonoBehaviour {
     }
 
     void Update() {
-        // Open Debug menu
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            testCanvas.SetActive(!testCanvas.activeSelf);
-            // Show cursor if testcanvas is visible
-            GameMaster.Instance.ShowCursor(testCanvas.activeSelf);
-        }
-
         // Toggle menu
         if (Input.GetButtonDown("Menu")) {
             inventoryCanvas.GetComponent<InventoryCanvas>().ToggleMenu();
@@ -89,5 +84,10 @@ public class CanvasMaster : MonoBehaviour {
 
     public void ShowStats() {
         statsCanvas.SetActive(!statsCanvas.activeSelf);
+    }
+
+    public void ShowGameOverCanvas(bool show) {
+        gameOverCanvas.SetActive(show);
+        GameMaster.Instance.ShowCursor(show);
     }
 }

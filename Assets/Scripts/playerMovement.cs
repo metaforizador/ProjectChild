@@ -35,6 +35,8 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
+        bool inputEnabled = !GameMaster.Instance.cursorVisible;
+        
         //player control variables
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -48,7 +50,7 @@ public class playerMovement : MonoBehaviour
 
         animator.SetFloat("DirectionX", direction.x);
 
-        if (Input.GetButton("Fire1") && !GameMaster.Instance.cursorVisible){
+        if (Input.GetButton("Fire1") && inputEnabled){
 
             animator.SetBool("Shooting", true);
 
@@ -92,7 +94,7 @@ public class playerMovement : MonoBehaviour
         {
             animator.SetBool("isGrounded", true);
 
-            if (Input.GetButtonDown("Jump") && !GameMaster.Instance.cursorVisible)
+            if (Input.GetButtonDown("Jump") && inputEnabled)
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 animator.SetTrigger("Jump");
