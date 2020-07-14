@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasMaster : MonoBehaviour {
     // Make class static and destroy if script already exists
@@ -16,6 +17,7 @@ public class CanvasMaster : MonoBehaviour {
         }
     }
 
+    public GameObject canvasBackground; 
     public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas, HUDCanvas, chestCanvas, hotbarCanvas, inventoryCanvas;
     public CanvasSounds canvasSounds;
 
@@ -27,6 +29,7 @@ public class CanvasMaster : MonoBehaviour {
         // Enable canvases when game starts to fix fps hiccups when opening them
         dialogueCanvas.GetComponent<DialogueScript>().Initialize();
         statGainCanvas.GetComponent<StatGainCanvas>().Initialize();
+        canvasBackground.SetActive(false);
 
         // Initialize saved questions and replies
         askedQuestions = new Dictionary<Mood, List<string>>();
@@ -45,6 +48,12 @@ public class CanvasMaster : MonoBehaviour {
         if (Input.GetButtonDown("Menu")) {
             inventoryCanvas.GetComponent<InventoryCanvas>().ToggleMenu();
         }
+    }
+
+    public void ShowCanvasBackround(bool show) {
+        canvasBackground.SetActive(show);
+        // Show / hide cursor
+        GameMaster.Instance.ShowCursor(show);
     }
 
     public void SaveCanvasValues(Save save) {

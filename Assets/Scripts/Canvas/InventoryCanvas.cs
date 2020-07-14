@@ -53,20 +53,19 @@ public class InventoryCanvas : MonoBehaviour {
         foreach (GameObject obj in categoryObjects) {
             if (!menuOpen) {
                 // Open menu
+                CanvasMaster.Instance.ShowCanvasBackround(true);
                 LeanTween.scale(obj, Vector3.one, tweenTime).setEase(tweenType);
                 LeanTween.moveLocalX(obj, 0, tweenTime).setEase(tweenType);
             } else {
                 // Close menu
                 LeanTween.scale(obj, Vector3.zero, tweenTime).setEase(tweenType);
-                LeanTween.moveLocalX(obj, objCategoryStartX, tweenTime).setEase(tweenType);
+                LeanTween.moveLocalX(obj, objCategoryStartX, tweenTime).setEase(tweenType).
+                    setOnComplete(() => CanvasMaster.Instance.ShowCanvasBackround(false));
             }
         }
 
         // Toggle menu state
         menuOpen = !menuOpen;
-
-        // Show / hide cursor
-        GameMaster.Instance.ShowCursor(menuOpen);
 
         if (menuOpen) {
             // Play sound when opening the menu

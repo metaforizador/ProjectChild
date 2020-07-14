@@ -53,6 +53,7 @@ public class DialogueScript : MonoBehaviour {
     }
 
     void OnEnable() {
+        CanvasMaster.Instance.ShowCanvasBackround(true);
         // Randomize mood for testing purposes
         curMood = (Mood)Mood.ToObject(typeof(Mood), Random.Range(0, 4));
 
@@ -138,5 +139,8 @@ public class DialogueScript : MonoBehaviour {
 
         // Disable
         gameObject.SetActive(false);
+
+        // Hide background image
+        CanvasMaster.Instance.ShowCanvasBackround(false);
     }
 }
