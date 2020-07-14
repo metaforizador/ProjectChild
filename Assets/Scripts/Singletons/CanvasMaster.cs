@@ -17,7 +17,7 @@ public class CanvasMaster : MonoBehaviour {
         }
     }
 
-    public GameObject canvasBackground;
+    public GameObject canvasBackground, crosshair;
     public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas, HUDCanvas, chestCanvas, hotbarCanvas, inventoryCanvas;
     public CanvasSounds canvasSounds;
     public UIAnimator uiAnimator;
@@ -53,6 +53,8 @@ public class CanvasMaster : MonoBehaviour {
 
     public void ShowCanvasBackround(bool show) {
         canvasBackground.SetActive(show);
+        // Toggle crosshair visibility
+        crosshair.SetActive(!show);
         // Show / hide cursor
         GameMaster.Instance.ShowCursor(show);
 

@@ -18931,6 +18931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasBackground: {fileID: 3387918349301346990}
+  crosshair: {fileID: 5679500053164640467}
   dialogueCanvas: {fileID: 5520579358866669639}
   statGainCanvas: {fileID: 1230643687}
   statsCanvas: {fileID: 7860601287461588995}
