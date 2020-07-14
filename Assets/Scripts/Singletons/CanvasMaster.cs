@@ -20,6 +20,7 @@ public class CanvasMaster : MonoBehaviour {
     public GameObject canvasBackground;
     public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas, HUDCanvas, chestCanvas, hotbarCanvas, inventoryCanvas;
     public CanvasSounds canvasSounds;
+    public UIAnimator uiAnimator;
 
     // Store questions and replies so they can be looped through
     public Dictionary<Mood, List<string>> askedQuestions { get; private set; }
@@ -54,6 +55,9 @@ public class CanvasMaster : MonoBehaviour {
         canvasBackground.SetActive(show);
         // Show / hide cursor
         GameMaster.Instance.ShowCursor(show);
+
+        // Pause / Unpause time
+        Time.timeScale = show ? 0 : 1;
     }
 
     public void ShowHUDCanvas(bool show) {

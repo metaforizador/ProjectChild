@@ -12,6 +12,8 @@ public class InventoryCanvas : MonoBehaviour {
     private float objCategoryStartX = -90;
     private Vector3 scaledMenuAndCategories = new Vector3(0.7f, 0.7f, 0.7f);
 
+    private UIAnimator animator;
+
     private bool menuOpen = false;
     private int currentlyOpen;
 
@@ -33,8 +35,10 @@ public class InventoryCanvas : MonoBehaviour {
     private float tweenTime = 0.35f;
 
     void Awake() {
-        sounds = CanvasMaster.Instance.canvasSounds;
-        hotbar = CanvasMaster.Instance.hotbarCanvas.GetComponent<HotbarCanvas>();
+        CanvasMaster cv = CanvasMaster.Instance;
+        animator = cv.uiAnimator;
+        sounds = cv.canvasSounds;
+        hotbar = cv.hotbarCanvas.GetComponent<HotbarCanvas>();
         categoryObjects = new GameObject[] { weaponObj, armorObj, consumablesObj, miscObj };
 
         // Hide categories
@@ -54,12 +58,12 @@ public class InventoryCanvas : MonoBehaviour {
             if (!menuOpen) {
                 // Open menu
                 CanvasMaster.Instance.ShowCanvasBackround(true);
-                LeanTween.scale(obj, Vector3.one, tweenTime).setEase(tweenType);
-                LeanTween.moveLocalX(obj, 0, tweenTime).setEase(tweenType);
+                animator.MoveX(obj, 0, tweenTime, tweenType);
+                animator.Scale(obj, Vector3.one, tweenTime, tweenType);
             } else {
                 // Close menu
-                LeanTween.scale(obj, Vector3.zero, tweenTime).setEase(tweenType);
-                LeanTween.moveLocalX(obj, objCategoryStartX, tweenTime).setEase(tweenType).
+                animator.Scale(obj, Vector3.zero, tweenTime, tweenType);
+                animator.MoveX(obj, objCategoryStartX, tweenTime, tweenType).
                     setOnComplete(() => CanvasMaster.Instance.ShowCanvasBackround(false));
             }
         }
@@ -203,9 +207,9 @@ public class InventoryCanvas : MonoBehaviour {
     /// <param name="smaller">whether to scale smaller or not</param>
     private void ScaleMenuAndCategories(bool smaller) {
         if (smaller)
-            LeanTween.scale(menuAndCategories, scaledMenuAndCategories, tweenTime).setEase(tweenType);
+            animator.Scale(menuAndCategories, scaledMenuAndCategories, tweenTime, tweenType);
         else
-            LeanTween.scale(menuAndCategories, Vector3.one, tweenTime).setEase(tweenType);
+            animator.Scale(menuAndCategories, Vector3.one, tweenTime, tweenType);
     }
 
     /// <summary>

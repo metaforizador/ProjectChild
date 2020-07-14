@@ -16,6 +16,7 @@ public class StatGainCanvas : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI textView;
 
+    private UIAnimator animator;
     public LeanTweenType tweenType;
 
     private float timeToShow = 3;
@@ -29,6 +30,10 @@ public class StatGainCanvas : MonoBehaviour {
         return $"All stats for '{type.ToString()}' answers are maxed out!";
     }
 
+    void Awake() {
+        animator = CanvasMaster.Instance.uiAnimator;
+    }
+
     public void Initialize() {
         // Hide panel
         statObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, hideYPosition);
@@ -36,14 +41,12 @@ public class StatGainCanvas : MonoBehaviour {
 
     public void ShowStatGain(string statGainText) {
         textView.text = statGainText;
-        LeanTween.moveLocalY(statObject, 0, transitionSpd).
-            setEase(tweenType).
-            setOnComplete(() => Invoke("HideStatGain", timeToShow));
+        animator.MoveY(statObject, 0, transitionSpd, tweenType).
+            setOnComplete(() => Helper.Instance.InvokeRealTime(() => HideStatGain(), timeToShow));
     }
 
     private void HideStatGain() {
-        LeanTween.moveLocalY(statObject, hideYPosition, transitionSpd).
-            setEase(tweenType).
+        animator.MoveY(statObject, hideYPosition, transitionSpd, tweenType).
             setOnComplete(() => gameObject.SetActive(false));
     }
 }

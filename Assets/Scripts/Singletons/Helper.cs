@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class Helper : MonoBehaviour
 {
@@ -47,7 +48,7 @@ public class Helper : MonoBehaviour
             if (curLetter.Equals(',') || curLetter.Equals('.') || curLetter.Equals('?') || curLetter.Equals('!'))
                 speedToWrite = this.writeSpeedLittlePause;
 
-            yield return new WaitForSeconds(speedToWrite);
+            yield return new WaitForSecondsRealtime(speedToWrite);
         }
 
         // Call listener method when writing is complete
@@ -128,5 +129,20 @@ public class Helper : MonoBehaviour
         holder.lowerOpponentsCritMultiplier.text = armor.decreaseOpponentCriticalMultiplier.ToString();
         holder.decreaseMovementSpeed.text = armor.reduceMovementSpeed.ToString();
         holder.decreaseStaminaRecoveryRate.text = armor.reduceStaminaRecoveryRate.ToString();
+    }
+
+    /// <summary>
+    /// Invokes an action while ignoring timescale.
+    /// </summary>
+    /// <param name="action">action to do after time</param>
+    /// <param name="seconds">time to wait</param>
+    public void InvokeRealTime(UnityAction action, float seconds) {
+        StartCoroutine(InvokeRealtimeCoroutine(action, seconds));
+    }
+
+    private IEnumerator InvokeRealtimeCoroutine(UnityAction action, float seconds) {
+        yield return new WaitForSecondsRealtime(seconds);
+        if (action != null)
+            action();
     }
 }
