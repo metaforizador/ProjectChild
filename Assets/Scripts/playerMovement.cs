@@ -48,7 +48,7 @@ public class playerMovement : MonoBehaviour
 
         animator.SetFloat("DirectionX", direction.x);
 
-        if (Input.GetButton("Fire1")){
+        if (Input.GetButton("Fire1") && !GameMaster.Instance.cursorVisible){
 
             animator.SetBool("Shooting", true);
 
@@ -92,7 +92,7 @@ public class playerMovement : MonoBehaviour
         {
             animator.SetBool("isGrounded", true);
 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump") && !GameMaster.Instance.cursorVisible)
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 animator.SetTrigger("Jump");
@@ -112,16 +112,6 @@ public class playerMovement : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime + xzMovement);
         xzMovement = new Vector3(0, 0, 0);
-
-        //toggle button for dialogue system (demo only)
-        if (Input.GetButtonDown("test"))
-        {
-            menu = !menu;
-
-            Debug.Log(menu);
-
-            masterCanvas.SetActive(menu);
-        }
 
         //Shooting mechanics
 

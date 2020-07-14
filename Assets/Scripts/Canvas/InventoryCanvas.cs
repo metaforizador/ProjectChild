@@ -6,13 +6,16 @@ using TMPro;
 
 public class InventoryCanvas : MonoBehaviour {
 
-    public GameObject menuAndCategories;
+    public GameObject menuAndCategories, categoriesParent;
     public GameObject weaponObj, armorObj, consumablesObj, miscObj;
     private GameObject[] categoryObjects;
     private float objCategoryStartX = -90;
     private Vector3 scaledMenuAndCategories = new Vector3(0.7f, 0.7f, 0.7f);
 
     private UIAnimator animator;
+
+    // DELETE LATER
+    public GameObject testButton;
 
     private bool menuOpen = false;
     private int currentlyOpen;
@@ -42,6 +45,8 @@ public class InventoryCanvas : MonoBehaviour {
         categoryObjects = new GameObject[] { weaponObj, armorObj, consumablesObj, miscObj };
 
         // Hide categories
+        testButton.SetActive(false);
+        categoriesParent.SetActive(false);
         foreach (GameObject obj in categoryObjects) {
             obj.transform.LeanMoveLocalX(objCategoryStartX, 0f);
             obj.transform.localScale = Vector3.zero;
@@ -57,6 +62,8 @@ public class InventoryCanvas : MonoBehaviour {
         foreach (GameObject obj in categoryObjects) {
             if (!menuOpen) {
                 // Open menu
+                testButton.SetActive(true);
+                categoriesParent.SetActive(true);
                 CanvasMaster.Instance.ShowCanvasBackround(true);
                 animator.MoveX(obj, 0, tweenTime, tweenType);
                 animator.Scale(obj, Vector3.one, tweenTime, tweenType);
@@ -64,7 +71,11 @@ public class InventoryCanvas : MonoBehaviour {
                 // Close menu
                 animator.Scale(obj, Vector3.zero, tweenTime, tweenType);
                 animator.MoveX(obj, objCategoryStartX, tweenTime, tweenType).
-                    setOnComplete(() => CanvasMaster.Instance.ShowCanvasBackround(false));
+                    setOnComplete(() => {
+                        categoriesParent.SetActive(false);
+                        CanvasMaster.Instance.ShowCanvasBackround(false);
+                        testButton.SetActive(false);
+                    });
             }
         }
 
