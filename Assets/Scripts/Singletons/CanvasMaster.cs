@@ -17,7 +17,7 @@ public class CanvasMaster : MonoBehaviour {
         }
     }
 
-    public GameObject canvasBackground; 
+    public GameObject canvasBackground;
     public GameObject dialogueCanvas, statGainCanvas, statsCanvas, testCanvas, HUDCanvas, chestCanvas, hotbarCanvas, inventoryCanvas;
     public CanvasSounds canvasSounds;
 
@@ -54,6 +54,10 @@ public class CanvasMaster : MonoBehaviour {
         canvasBackground.SetActive(show);
         // Show / hide cursor
         GameMaster.Instance.ShowCursor(show);
+    }
+
+    public void ShowHUDCanvas(bool show) {
+        HUDCanvas.SetActive(show);
     }
 
     public void SaveCanvasValues(Save save) {
