@@ -43,10 +43,14 @@ public class HotbarCanvas : MonoBehaviour {
         ConsumableSO clickedItem = hotbarItems[index];
 
         if (gm.gameState.Equals(GameState.Hotbar)) {
+            // Swap hotbar button item
             SwapHotbarItem(index);
         } else if (gm.gameState.Equals(GameState.Menu)) {
-            // Maybe show item info later?
+            // Show item info in InventoryCanvas
+            if (clickedItem != null)
+                CanvasMaster.Instance.inventoryCanvas.GetComponent<InventoryCanvas>().ShowHotbarItemInfo(clickedItem);
         } else if (gm.gameState.Equals(GameState.Movement)) {
+            // Use item
             if (clickedItem != null)
                 Inventory.Instance.UseConsumable(clickedItem);
         }

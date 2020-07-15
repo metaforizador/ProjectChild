@@ -217,6 +217,14 @@ public class InventoryCanvas : MonoBehaviour {
         toyStats.SetActive(type.Equals(ConsumableType.Toy));
     }
 
+    public void ShowHotbarItemInfo(ConsumableSO consumable) {
+        if (currentlyOpen != CONSUMABLES) {
+            ToggleConsumables();
+        }
+
+        ShowItemInfo(consumable);
+    }
+
     public void EquipItem() {
         hotbar.SetIncomingItem(selectedItem);
     }
