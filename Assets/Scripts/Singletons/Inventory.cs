@@ -78,13 +78,14 @@ public class Inventory : MonoBehaviour {
 
     public void UseConsumable(ConsumableSO consumable) {
         consumable.quantity--;
-        CanvasMaster cm = CanvasMaster.Instance;
-        cm.hotbarCanvas.GetComponent<HotbarCanvas>().RefreshHotbarImages();
-        cm.inventoryCanvas.GetComponent<InventoryCanvas>().RefreshConsumables();
-
         // If all consumables are used, remove item from inventory
         if (consumable.quantity <= 0) {
             pickableItems.Remove(consumable);
         }
+
+        // Refresh hotbar and inventorycanvas items
+        CanvasMaster cm = CanvasMaster.Instance;
+        cm.hotbarCanvas.GetComponent<HotbarCanvas>().RefreshHotbarImages();
+        cm.inventoryCanvas.GetComponent<InventoryCanvas>().RefreshConsumables();
     }
 }

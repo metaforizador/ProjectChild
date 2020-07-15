@@ -241,7 +241,13 @@ public class InventoryCanvas : MonoBehaviour {
     public void RefreshConsumables() {
         // Refresh only if menu is open
         if (GameMaster.Instance.gameState.Equals(GameState.Menu)) {
-
+            ShowRequiredCategory(NONE);
+            ToggleConsumables();
+            Debug.Log(selectedItem.quantity);
+            if (selectedItem.quantity > 0)
+                ShowItemInfo(selectedItem);
+            else
+                selectedItem = null;
         }
     }
 
