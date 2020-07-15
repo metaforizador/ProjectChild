@@ -141,8 +141,9 @@ public class InventoryCanvas : MonoBehaviour {
         foreach (ConsumableSO con in consumables) {
             // Create button for each consumable
             GameObject btn = Helper.Instance.CreateObjectChild(consumableItemPrefab, consumableContent);
-            // Add name to the consumable
+            // Add name and quantity to the consumable
             btn.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = con.name;
+            btn.transform.Find("Quantity").GetComponent<TextMeshProUGUI>().text = con.quantity.ToString();
             // Show item information when clicked
             btn.GetComponent<Button>().onClick.AddListener(() => ShowItemInfo(con));
         }
