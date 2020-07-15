@@ -8,7 +8,7 @@ public enum ConsumableType { Scanner, Battery, ComsatLink, Rig, Scrap, Toy }
 public class ConsumableSO : PickableSO {
 
     public ConsumableType consumableType;
-    public int quantity = 1;
+    public int quantity;
 
     // Scanner
     public const string DESCRIPTION_SCANNER = "As a consumable, Scanner can identify items.It can also be used " +

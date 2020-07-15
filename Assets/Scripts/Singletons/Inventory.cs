@@ -26,7 +26,14 @@ public class Inventory : MonoBehaviour {
     void Start() {
         // Add test items
         PickableSO[] pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/Consumables/");
-        pickableItems = new List<PickableSO>(pickArray);
+
+        foreach (PickableSO item in pickArray) {
+            if (item is ConsumableSO)
+                AddConsumable((ConsumableSO)item);
+            else {
+                pickableItems.Add(item);
+            }
+        }
     }
 
     public void LoadInventory(Save save) {
@@ -41,11 +48,28 @@ public class Inventory : MonoBehaviour {
         pickableItems = save.inventoryItems;
     }
 
+    public void AddConsumable(ConsumableSO consumable) {
+        // If the consumable is already in inventory, add +1 to quantity and return
+        foreach (PickableSO item in pickableItems) {
+            // Contains can't be used since consumable and item in inventory have different pointers
+            // So use name (since it's unique) to check for items
+            if (item.name.Equals(consumable.name)) {
+                ConsumableSO con = (ConsumableSO)item;
+                con.quantity++;
+                return;
+            }
+        }
+
+        // Else add new item
+        consumable.quantity = 1;
+        pickableItems.Add(consumable);
+    }
+
     public List<ConsumableSO> GetConsumables() {
         List<ConsumableSO> consumables = new List<ConsumableSO>();
 
         foreach (PickableSO item in pickableItems) {
-            if (item is PickableSO)
+            if (item is ConsumableSO)
                 consumables.Add((ConsumableSO) item);
         }
 
