@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Battery I
   m_EditorClassIdentifier: 
   name: Battery I
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   condition: 0
   consumableType: 1
-  quantity: 1
+  quantity: 0
   identificationChance: 0
   shieldRecoveryPercentage: 20
   boostStaminaRecoverySpeed: 1.5

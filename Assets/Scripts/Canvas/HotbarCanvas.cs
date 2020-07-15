@@ -9,6 +9,8 @@ public class HotbarCanvas : MonoBehaviour {
     public Sprite defaultImage;
     public Color defaultColor;
 
+    public int hotbarButtonAmount { get; private set; }
+
     private GameObject[] hotbarButtons;
     private ConsumableSO[] hotbarItems;
 
@@ -20,11 +22,11 @@ public class HotbarCanvas : MonoBehaviour {
     }
 
     void Start() {
-        int buttonAmount = buttonLayout.transform.childCount;
-        hotbarButtons = new GameObject[buttonAmount];
-        hotbarItems = new ConsumableSO[buttonAmount];
+        hotbarButtonAmount = buttonLayout.transform.childCount;
+        hotbarButtons = new GameObject[hotbarButtonAmount];
+        hotbarItems = new ConsumableSO[hotbarButtonAmount];
 
-        for (int i = 0; i < buttonAmount; i++) {
+        for (int i = 0; i < hotbarButtonAmount; i++) {
             GameObject btn = buttonLayout.transform.GetChild(i).gameObject;
             hotbarButtons[i] = btn;
 
@@ -36,28 +38,42 @@ public class HotbarCanvas : MonoBehaviour {
         RefreshHotbarImages();
     }
 
-    private void HotbarButtonClicked(int index) {
-        if (incomingItem != null) {
+    public void HotbarButtonClicked(int index) {
+        GameMaster gm = GameMaster.Instance;
+        ConsumableSO clickedItem = hotbarItems[index];
+
+        if (gm.gameState.Equals(GameState.Hotbar)) {
             SwapHotbarItem(index);
-        } else {
+        } else if (gm.gameState.Equals(GameState.Menu)) {
             // Maybe show item info later?
+        } else if (gm.gameState.Equals(GameState.Movement)) {
+            if (clickedItem != null)
+                Inventory.Instance.UseConsumable(clickedItem);
         }
     }
 
     private void SwapHotbarItem(int index) {
         hotbarItems[index] = incomingItem;
         RefreshHotbarImages();
+        DisableIncomingItem();
     }
 
-    private void RefreshHotbarImages() {
+    public void RefreshHotbarImages() {
         for (int i = 0; i < hotbarItems.Length; i++) {
             Image img = hotbarButtons[i].GetComponent<Image>();
             ConsumableSO consumable = hotbarItems[i];
 
             if (consumable != null) {
-                img.sprite = consumable.sprite;
-                img.color = Color.white;
-            } else {
+                // If all selected consumables are used, set value to null
+                if (consumable.quantity <= 0) {
+                    consumable = null;
+                } else {
+                    img.sprite = consumable.sprite;
+                    img.color = Color.white;
+                }
+            }
+            
+            if (consumable == null) {
                 img.sprite = defaultImage;
                 img.color = defaultColor;
             }
@@ -69,11 +85,13 @@ public class HotbarCanvas : MonoBehaviour {
     }
 
     public void SetIncomingItem(ConsumableSO consumable) {
+        GameMaster.Instance.SetState(GameState.Hotbar);
         changingItemsPanel.SetActive(true);
         incomingItem = consumable;
     }
 
     public void DisableIncomingItem() {
+        GameMaster.Instance.SetState(GameState.Menu);
         changingItemsPanel.SetActive(false);
         incomingItem = null;
     }

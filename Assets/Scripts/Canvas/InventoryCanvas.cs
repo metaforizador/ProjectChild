@@ -218,11 +218,23 @@ public class InventoryCanvas : MonoBehaviour {
     }
 
     public void EquipItem() {
-        //hotbar.SetIncomingItem(selectedItem);
+        hotbar.SetIncomingItem(selectedItem);
     }
 
     public void UseItem() {
+        Inventory.Instance.UseConsumable(selectedItem);
+    }
 
+    /// <summary>
+    /// Refresh consumables when they are used.
+    /// 
+    /// This method is called from Inventory singleton.
+    /// </summary>
+    public void RefreshConsumables() {
+        // Refresh only if menu is open
+        if (GameMaster.Instance.gameState.Equals(GameState.Menu)) {
+
+        }
     }
 
     /// <summary>

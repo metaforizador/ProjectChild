@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Player : CharacterParent {
 
+    // References to classes
+    private GameMaster gm;
+    private CanvasMaster cm;
+    private HotbarCanvas hotbar;
+
     private Inventory inventory;
     private PlayerStats stats;
 
@@ -17,6 +22,11 @@ public class Player : CharacterParent {
     private Collider triggerCollider;
 
     public override void Start() {
+        // Retrieve references
+        gm = GameMaster.Instance;
+        cm = CanvasMaster.Instance;
+        hotbar = cm.hotbarCanvas.GetComponent<HotbarCanvas>();
+
         GameMaster.Instance.SetState(GameState.Movement);
         characterType = CharacterType.Player;
         stats = PlayerStats.Instance;
@@ -73,7 +83,7 @@ public class Player : CharacterParent {
     protected override void Update() {
         base.Update();
 
-        bool inputEnabled = GameMaster.Instance.gameState.Equals(GameState.Movement);
+        bool inputEnabled = gm.gameState.Equals(GameState.Movement);
 
         // Check trigger interact presses
         if (triggerCollider != null && Input.GetButtonDown("Interact") && inputEnabled) {
@@ -92,14 +102,23 @@ public class Player : CharacterParent {
             stats.GainXP(testXpKeyX);
         }
 
+        // Check hotbar presses
+        bool hotbarInputEnabled = gm.gameState.Equals(GameState.Movement) ||
+            gm.gameState.Equals(GameState.Menu) || gm.gameState.Equals(GameState.Hotbar);
 
+        if (hotbarInputEnabled) {
+            int hotbarButtonAmount = hotbar.hotbarButtonAmount;
+            for (int i = 1; i <= hotbarButtonAmount; ++i) {
+                if (Input.GetKeyDown("" + i)) {
+                    hotbar.HotbarButtonClicked(i - 1); // index is 1 lower than button number
+                }
+            }
+        }
     }
 
-    void OnDestroy() {
-        if (hud != null) {
-            hud.gameObject.SetActive(false);                // Hide player's hud on destroy
-            CanvasMaster.Instance.ShowGameOverCanvas(true); // Show game over canvas
-        }
+    protected override void Die() {
+        base.Die();
+        cm.ShowGameOverCanvas(true);
     }
 
     /**************** Collisions ****************/
@@ -126,7 +145,7 @@ public class Player : CharacterParent {
 
         if (collider.CompareTag("Chest")) {
             hud.HideInteract();
-            CanvasMaster.Instance.chestCanvas.GetComponent<ChestCanvas>().CloseChest();
+            cm.chestCanvas.GetComponent<ChestCanvas>().CloseChest();
         }
     }
 }

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Scanner II
   m_EditorClassIdentifier: 
   name: Scanner II
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   condition: 1
   consumableType: 0
-  quantity: 1
+  quantity: 0
   identificationChance: 100
   shieldRecoveryPercentage: 0
   boostStaminaRecoverySpeed: 1.1
