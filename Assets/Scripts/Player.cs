@@ -17,7 +17,7 @@ public class Player : CharacterParent {
     private Collider triggerCollider;
 
     public override void Start() {
-        GameMaster.Instance.ShowCursor(false);
+        GameMaster.Instance.SetState(GameState.Movement);
         characterType = CharacterType.Player;
         stats = PlayerStats.Instance;
         inventory = Inventory.Instance;
@@ -73,7 +73,7 @@ public class Player : CharacterParent {
     protected override void Update() {
         base.Update();
 
-        bool inputEnabled = !GameMaster.Instance.cursorVisible;
+        bool inputEnabled = GameMaster.Instance.gameState.Equals(GameState.Movement);
 
         // Check trigger interact presses
         if (triggerCollider != null && Input.GetButtonDown("Interact") && inputEnabled) {

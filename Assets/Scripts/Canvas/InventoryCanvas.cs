@@ -67,37 +67,41 @@ public class InventoryCanvas : MonoBehaviour {
     /// Shows and hides all of the categories.
     /// </summary>
     public void ToggleMenu() {
+        // Loop through all categories and animate them
         foreach (GameObject obj in categoryObjects) {
             if (!menuOpen) {
                 // Open menu
-                openDebugMenuButton.SetActive(true);
-                categoriesParent.SetActive(true);
-                CanvasMaster.Instance.ShowCanvasBackround(true);
                 animator.MoveX(obj, 0, tweenTime, tweenType);
                 animator.Scale(obj, Vector3.one, tweenTime, tweenType);
             } else {
                 // Close menu
                 animator.Scale(obj, Vector3.zero, tweenTime, tweenType);
-                animator.MoveX(obj, objCategoryStartX, tweenTime, tweenType).
-                    setOnComplete(() => {
-                        categoriesParent.SetActive(false);
-                        CanvasMaster.Instance.ShowCanvasBackround(false);
-                        openDebugMenuButton.SetActive(false);
-                        debugMenu.SetActive(false);
-                    });
+                animator.MoveX(obj, objCategoryStartX, tweenTime, tweenType);
             }
         }
 
         // Toggle menu state
         menuOpen = !menuOpen;
 
+        GameMaster gm = GameMaster.Instance;
+
         if (menuOpen) {
             // Play sound when opening the menu
             sounds.PlaySound(sounds.BUTTON_SELECT);
+            openDebugMenuButton.SetActive(true);
+            categoriesParent.SetActive(true);
+            gm.SetState(GameState.Menu);
         } else {
             // Play sound when closing the menu and hide opened categories
             sounds.PlaySound(sounds.BUTTON_BACK);
             ShowRequiredCategory(NONE);
+            // Change state and hide debug stuff
+            Helper.Instance.InvokeRealTime(() => {
+                categoriesParent.SetActive(false);
+                gm.SetState(GameState.Movement);
+                openDebugMenuButton.SetActive(false);
+                debugMenu.SetActive(false);
+            }, tweenTime);
         }
     }
 

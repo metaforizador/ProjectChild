@@ -34,10 +34,8 @@ public class ChestCanvas : MonoBehaviour {
             return;
         }
 
-        // Show background image and hide HUD
-        CanvasMaster cv = CanvasMaster.Instance;
-        cv.ShowCanvasBackround(true);
-        cv.ShowHUDCanvas(false);
+        // Change game state
+        GameMaster.Instance.SetState(GameState.Chest);
 
         this.openedChest = chest;
         this.items = items;
@@ -155,10 +153,8 @@ public class ChestCanvas : MonoBehaviour {
     /// Closes the chest view.
     /// </summary>
     public void CloseChest() {
-        // Hide background image and show hud
-        CanvasMaster cv = CanvasMaster.Instance;
-        cv.ShowCanvasBackround(false);
-        cv.ShowHUDCanvas(true);
+        // Change game state
+        GameMaster.Instance.SetState(GameState.Movement);
 
         gameObject.SetActive(false);
 

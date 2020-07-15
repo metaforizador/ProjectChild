@@ -35,7 +35,7 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
-        bool inputEnabled = !GameMaster.Instance.cursorVisible;
+        bool inputEnabled = GameMaster.Instance.gameState.Equals(GameState.Movement);
         
         //player control variables
         float horizontal = Input.GetAxisRaw("Horizontal");

@@ -17,6 +17,8 @@ public class CanvasMaster : MonoBehaviour {
         }
     }
 
+    private GameMaster gm;
+
     public GameObject canvasBackground, crosshair;
     public GameObject dialogueCanvas, statGainCanvas, statsCanvas,
         HUDCanvas, chestCanvas, hotbarCanvas, inventoryCanvas,
@@ -29,6 +31,9 @@ public class CanvasMaster : MonoBehaviour {
     public Dictionary<WordsType, List<string>> givenReplies { get; private set; }
 
     void Start() {
+        // Retrieve GameMaster instance
+        gm = GameMaster.Instance;
+        
         // Enable canvases when game starts to fix fps hiccups when opening them
         dialogueCanvas.GetComponent<DialogueScript>().Initialize();
         statGainCanvas.GetComponent<StatGainCanvas>().Initialize();
@@ -40,25 +45,24 @@ public class CanvasMaster : MonoBehaviour {
     }
 
     void Update() {
+        bool inputEnabled = gm.gameState.Equals(GameState.Movement) || gm.gameState.Equals(GameState.Menu);
+
         // Toggle menu
-        if (Input.GetButtonDown("Menu")) {
+        if (Input.GetButtonDown("Menu") && inputEnabled) {
             inventoryCanvas.GetComponent<InventoryCanvas>().ToggleMenu();
         }
     }
 
     public void ShowCanvasBackround(bool show) {
         canvasBackground.SetActive(show);
-        // Toggle crosshair visibility
-        crosshair.SetActive(!show);
-        // Show / hide cursor
-        GameMaster.Instance.ShowCursor(show);
-
-        // Pause / Unpause time
-        Time.timeScale = show ? 0 : 1;
     }
 
     public void ShowHUDCanvas(bool show) {
         HUDCanvas.SetActive(show);
+    }
+
+    public void ShowCrosshair(bool show) {
+        crosshair.SetActive(show);
     }
 
     public void SaveCanvasValues(Save save) {
@@ -88,6 +92,6 @@ public class CanvasMaster : MonoBehaviour {
 
     public void ShowGameOverCanvas(bool show) {
         gameOverCanvas.SetActive(show);
-        GameMaster.Instance.ShowCursor(show);
+        GameMaster.Instance.SetState(GameState.Dead);
     }
 }

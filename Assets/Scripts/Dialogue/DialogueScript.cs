@@ -59,8 +59,8 @@ public class DialogueScript : MonoBehaviour {
     }
 
     void OnEnable() {
-        // Hide HUD canvas when talking
-        CanvasMaster.Instance.ShowHUDCanvas(false);
+        // Change game state
+        GameMaster.Instance.SetState(GameState.Dialogue);
         // Randomize mood for testing purposes
         curMood = (Mood)Mood.ToObject(typeof(Mood), Random.Range(0, 4));
 
@@ -144,7 +144,7 @@ public class DialogueScript : MonoBehaviour {
         // Disable
         gameObject.SetActive(false);
 
-        // Show HUD canvas after talking
-        CanvasMaster.Instance.ShowHUDCanvas(true);
+        // Set game state
+        GameMaster.Instance.SetState(GameState.Menu);
     }
 }
