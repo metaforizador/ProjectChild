@@ -13,7 +13,7 @@ public class playerMovement : MonoBehaviour
     public GameObject masterCanvas;
     private bool menu = false;
 
-    public float speed = 6f;
+    public float speed = Stat.BASE_MOVEMENT_SPEED;
     public float gravity = -9.81f;
     public float jumpHeight = 10f;
 
