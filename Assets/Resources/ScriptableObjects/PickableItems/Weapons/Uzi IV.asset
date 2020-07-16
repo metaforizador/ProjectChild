@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f622394048bc7341976b4bd1422a2a3, type: 3}
-  m_Name: Bazooka (intact)
+  m_Name: Uzi IV
   m_EditorClassIdentifier: 
-  name: Bazooka
   sprite: {fileID: 0}
-  condition: 1
-  shootingSound: {fileID: 8300000, guid: 1ba36b1063790954f81c19be31e4b446, type: 3}
-  reloadingSound: {fileID: 8300000, guid: 1ca9d8b1cf7d66541a8946a59bded37b, type: 3}
-  damagePerBullet: 75
-  weaponType: 1
-  bulletSpeed: 400
-  ammoSize: 10
-  rateOfFire: 1
-  reloadTime: 5
+  condition: 3
+  shootingSound: {fileID: 8300000, guid: b630f5a6a16f8df46804a83aa24fdca5, type: 3}
+  reloadingSound: {fileID: 8300000, guid: bda18b00d025a6c4b81672f356e179e9, type: 3}
+  damagePerBullet: 17
+  weaponType: 0
+  bulletSpeed: 270
+  ammoSize: 35
+  rateOfFire: 0.25
+  reloadTime: 2

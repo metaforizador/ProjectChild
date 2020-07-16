@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f622394048bc7341976b4bd1422a2a3, type: 3}
-  m_Name: Uzi (intact)
+  m_Name: Crossbow II 1
   m_EditorClassIdentifier: 
-  name: Uzi
   sprite: {fileID: 0}
   condition: 1
-  shootingSound: {fileID: 8300000, guid: b630f5a6a16f8df46804a83aa24fdca5, type: 3}
-  reloadingSound: {fileID: 8300000, guid: bda18b00d025a6c4b81672f356e179e9, type: 3}
-  damagePerBullet: 13
+  shootingSound: {fileID: 8300000, guid: ca44620350415ba42ad5c1c0e0e57368, type: 3}
+  reloadingSound: {fileID: 8300000, guid: d35143dfc27dcb947ba183ecbec16278, type: 3}
+  damagePerBullet: 200
   weaponType: 0
-  bulletSpeed: 200
-  ammoSize: 30
-  rateOfFire: 0.3
-  reloadTime: 3
+  bulletSpeed: 150
+  ammoSize: 10
+  rateOfFire: 2
+  reloadTime: 2

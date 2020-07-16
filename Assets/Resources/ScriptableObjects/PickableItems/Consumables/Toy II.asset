@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12bdc419337b6424c823d17486ae8959, type: 3}
   m_Name: Toy II
   m_EditorClassIdentifier: 
-  name: Toy II
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   condition: 1
   consumableType: 5
@@ -26,4 +25,4 @@ MonoBehaviour:
   chanceToTurnIntoToy: 0
   creditValue: 0
   craftValue: 1
-  expToGain: 100
+  expToGain: 40
