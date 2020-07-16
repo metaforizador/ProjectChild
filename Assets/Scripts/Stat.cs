@@ -9,6 +9,7 @@ public class Stat {
     public const int STARTING_STAT = 0, MAX_BASE_STAT_VALUES = 15;
     public const float RECOVERY_DELAY = 0.2f;
     public const float CRITICAL_HIT_MULTIPLIER = 2; // Doubles the damage
+    public const float BASE_MOVEMENT_SPEED = 6f;
 
     // Real min and max values for stats
     public const float RECOVERY_MIN_SPEED = 1, RECOVERY_MAX_SPEED = 4;

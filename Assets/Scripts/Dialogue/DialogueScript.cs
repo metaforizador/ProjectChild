@@ -33,8 +33,9 @@ public class DialogueScript : MonoBehaviour {
     private string reply;
     private List<Button> answerButtons = new List<Button>();
 
+    // WordsType sounds
+    private CanvasSounds sounds;
     private Dictionary<WordsType, AudioClip> audios = new Dictionary<WordsType, AudioClip>();
-    private AudioSource audioSource;
 
     void Awake() {
         animator = CanvasMaster.Instance.uiAnimator;
@@ -49,7 +50,7 @@ public class DialogueScript : MonoBehaviour {
         answersObject.transform.LeanMoveLocalY(answersYStartPosition, 0f);
 
         // Load sounds for answers
-        audioSource = GetComponent<AudioSource>();
+        sounds = CanvasMaster.Instance.canvasSounds;
         string path = "SoundEffects/Dialogue/";
         audios.Add(WordsType.Stoic, (AudioClip)Resources.Load(path + "StoicWords"));
         audios.Add(WordsType.Nurturing, (AudioClip)Resources.Load(path + "NurturingWords"));
@@ -120,7 +121,7 @@ public class DialogueScript : MonoBehaviour {
         PlayerStats.Instance.RandomizeGainedStat(type);
 
         // Play sound effect
-        audioSource.PlayOneShot(audios[type]);
+        sounds.PlaySound(audios[type]);
     }
 
     /// <summary>

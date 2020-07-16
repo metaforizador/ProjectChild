@@ -179,6 +179,9 @@ public class InventoryCanvas : MonoBehaviour {
                 selectedItemDescription.text = ConsumableSO.DESCRIPTION_BATTERY;
                 holder = batteryStats.GetComponent<ConsumableStatHolder>();
                 holder.shieldRecoveryPercentage.text = con.shieldRecoveryPercentage.ToString() + "%";
+                holder.boostStaminaRecoverySpeed.text = (con.boostStaminaRecoverySpeed * 100).ToString() + "%";
+                holder.boostAmmoRecoverySpeed.text = (con.boostAmmoRecoverySpeed * 100).ToString() + "%";
+                holder.boostTimeInSeconds.text = con.boostTimeInSeconds.ToString();
                 break;
             case ConsumableType.ComsatLink:
                 selectedItemDescription.text = ConsumableSO.DESCRIPTION_COMSAT_LINK;
