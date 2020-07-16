@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -24,6 +25,20 @@ public class Helper : MonoBehaviour
     private float writeSpeed = 0.05f;
     private float writeSpeedLittlePause = 0.3f;
 
+    private CanvasSounds sounds;
+    public AudioClip a, e, i, o, u, y;
+    private Dictionary<char, AudioClip> vowels = new Dictionary<char, AudioClip>();
+
+    void Start() {
+        sounds = CanvasMaster.Instance.canvasSounds;
+        vowels.Add('a', a);
+        vowels.Add('e', e);
+        vowels.Add('i', i);
+        vowels.Add('o', o);
+        vowels.Add('u', u);
+        vowels.Add('y', y);
+    }
+
     /// <summary>
     /// Writes out text 1 letter at a time.
     /// </summary>
@@ -47,6 +62,13 @@ public class Helper : MonoBehaviour
             // If letter is something which requires little "pause", wait a little bit longer
             if (curLetter.Equals(',') || curLetter.Equals('.') || curLetter.Equals('?') || curLetter.Equals('!'))
                 speedToWrite = this.writeSpeedLittlePause;
+
+            // Check if the curLetter is a vowel and play a sound if it is
+            foreach (var element in vowels) {
+                char vowel = element.Key;
+                if (char.ToUpperInvariant(vowel).Equals(char.ToUpperInvariant(curLetter)))
+                    sounds.PlaySound(element.Value);
+            }
 
             yield return new WaitForSecondsRealtime(speedToWrite);
         }
