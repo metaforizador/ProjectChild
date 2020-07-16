@@ -66,6 +66,8 @@ public class CharacterParent : MonoBehaviour {
 
     protected HUDCanvas hud;
 
+    private AudioSource audioSource;
+
     // Weapon and armor
     [SerializeField]
     private WeaponSO weapon = null;
@@ -76,6 +78,7 @@ public class CharacterParent : MonoBehaviour {
     public ArmorSO GetArmor() => armor;
 
     // Weapon values
+    private AudioClip weaponShootingSound;
     private float weaponDamage;
     private DamageType weaponType;
     private float weaponBulletSpeed;
@@ -94,6 +97,7 @@ public class CharacterParent : MonoBehaviour {
 
     public virtual void Start() {
         hud = CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>();
+        audioSource = GetComponent<AudioSource>();
         // Retrieve bullet point
         bulletPoint = transform.Find("BulletPoint").gameObject;
 
@@ -103,6 +107,7 @@ public class CharacterParent : MonoBehaviour {
     }
 
     private void RetrieveWeaponValues() {
+        weaponShootingSound = weapon.shootingSound;
         weaponDamage = weapon.damagePerBullet;
         weaponType = weapon.weaponType;
         weaponBulletSpeed = weapon.bulletSpeed;
@@ -202,6 +207,9 @@ public class CharacterParent : MonoBehaviour {
             if (shooting && (AMMO >= weaponBulletConsumption)) {
                 // Decrease ammo by bullet consumption amount
                 AMMO -= weaponBulletConsumption;
+
+                // Make a shooting sound
+                audioSource.PlayOneShot(weaponShootingSound);
 
                 // Create the bullet, calculate damage and initialize necessary values
                 GameObject thisBullet = Instantiate(weaponBullet);

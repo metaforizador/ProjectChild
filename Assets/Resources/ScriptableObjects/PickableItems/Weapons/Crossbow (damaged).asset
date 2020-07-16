@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Crossbow (damaged)
   m_EditorClassIdentifier: 
   name: Crossbow
+  sprite: {fileID: 0}
   condition: 0
-  weaponPrefab: {fileID: 0}
+  shootingSound: {fileID: 8300000, guid: ca44620350415ba42ad5c1c0e0e57368, type: 3}
   damagePerBullet: 200
   weaponType: 0
   bulletSpeed: 150

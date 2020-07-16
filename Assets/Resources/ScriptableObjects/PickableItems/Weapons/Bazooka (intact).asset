@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Bazooka (intact)
   m_EditorClassIdentifier: 
   name: Bazooka
+  sprite: {fileID: 0}
   condition: 1
-  weaponPrefab: {fileID: 0}
+  shootingSound: {fileID: 8300000, guid: 1ba36b1063790954f81c19be31e4b446, type: 3}
   damagePerBullet: 75
   weaponType: 1
   bulletSpeed: 400
