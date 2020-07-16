@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Player : CharacterParent {
 
+    // References to classes
+    private GameMaster gm;
+    private CanvasMaster cm;
+    private HotbarCanvas hotbar;
+
     private Inventory inventory;
     private PlayerStats stats;
 
@@ -17,7 +22,12 @@ public class Player : CharacterParent {
     private Collider triggerCollider;
 
     public override void Start() {
-        GameMaster.Instance.ShowCursor(false);
+        // Retrieve references
+        gm = GameMaster.Instance;
+        cm = CanvasMaster.Instance;
+        hotbar = cm.hotbarCanvas.GetComponent<HotbarCanvas>();
+
+        GameMaster.Instance.SetState(GameState.Movement);
         characterType = CharacterType.Player;
         stats = PlayerStats.Instance;
         inventory = Inventory.Instance;
@@ -73,29 +83,42 @@ public class Player : CharacterParent {
     protected override void Update() {
         base.Update();
 
+        bool inputEnabled = gm.gameState.Equals(GameState.Movement);
+
         // Check trigger interact presses
-        if (triggerCollider != null && Input.GetButtonDown("Interact")) {
+        if (triggerCollider != null && Input.GetButtonDown("Interact") && inputEnabled) {
             if (triggerCollider.CompareTag("Chest")) {
                 triggerCollider.GetComponent<Chest>().OpenChest();
             }
         }
 
         // Test taking damage
-        if (Input.GetKeyDown(KeyCode.U)) {
+        if (Input.GetKeyDown(KeyCode.U) && inputEnabled) {
             TakeDamage(DamageType.Piercing, testDamageKeyU, 0);
         }
         
         // Test gaining xp
-        if (Input.GetKeyDown(KeyCode.X)) {
+        if (Input.GetKeyDown(KeyCode.X) && inputEnabled) {
             stats.GainXP(testXpKeyX);
         }
 
+        // Check hotbar presses
+        bool hotbarInputEnabled = gm.gameState.Equals(GameState.Movement) ||
+            gm.gameState.Equals(GameState.Menu) || gm.gameState.Equals(GameState.Hotbar);
 
+        if (hotbarInputEnabled) {
+            int hotbarButtonAmount = hotbar.hotbarButtonAmount;
+            for (int i = 1; i <= hotbarButtonAmount; ++i) {
+                if (Input.GetKeyDown("" + i)) {
+                    hotbar.HotbarButtonClicked(i - 1); // index is 1 lower than button number
+                }
+            }
+        }
     }
 
-    void OnDestroy() {
-        if (hud != null)
-            hud.gameObject.SetActive(false);    // Hide player's hud on destroy
+    protected override void Die() {
+        base.Die();
+        cm.ShowGameOverCanvas(true);
     }
 
     /**************** Collisions ****************/
@@ -122,7 +145,7 @@ public class Player : CharacterParent {
 
         if (collider.CompareTag("Chest")) {
             hud.HideInteract();
-            CanvasMaster.Instance.chestCanvas.GetComponent<ChestCanvas>().CloseChest();
+            cm.chestCanvas.GetComponent<ChestCanvas>().CloseChest();
         }
     }
 }

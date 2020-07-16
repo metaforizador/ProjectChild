@@ -5,6 +5,8 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.SceneManagement;
 
+public enum GameState { Movement, Menu, Dialogue, Chest, Hotbar, Dead };
+
 public class GameMaster : MonoBehaviour {
     
     // Make class static and destroy if script already exists
@@ -20,9 +22,44 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    private CanvasMaster cm;
+
+    // Handle game state
+    public GameState gameState { get; private set; }
+    public void SetState(GameState state) {
+        gameState = state;
+
+        // Show crosshair if state is movement
+        cm.ShowCrosshair(gameState.Equals(GameState.Movement) ? true : false);
+
+        // Pause time if gamestate is not movement
+        Time.timeScale = gameState.Equals(GameState.Movement) ? 1 : 0;
+
+        // Hide cursor only when the state is movement
+        ShowCursor(gameState.Equals(GameState.Movement) ? false : true);
+
+        switch (gameState) {
+            case GameState.Movement:
+                cm.ShowCanvasBackround(false);
+                cm.ShowHUDCanvas(true);
+                break;
+            case GameState.Menu:
+            case GameState.Hotbar:
+                cm.ShowCanvasBackround(true);
+                cm.ShowHUDCanvas(true);
+                break;
+            case GameState.Dialogue:
+            case GameState.Chest:
+            case GameState.Dead:
+                cm.ShowCanvasBackround(true);
+                cm.ShowHUDCanvas(false);
+                break;
+        }
+    }
+
     // Handle cursor
-    public bool cursorVisible { get; private set; }
-    public void ShowCursor(bool show) {
+    private bool cursorVisible;
+    private void ShowCursor(bool show) {
         cursorVisible = show;
         Cursor.visible = cursorVisible;
 
@@ -30,6 +67,10 @@ public class GameMaster : MonoBehaviour {
             Cursor.lockState = CursorLockMode.Confined;
         else
             Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void Start() {
+        cm = CanvasMaster.Instance;
     }
 
     private Save CreateSaveGameObject() {
@@ -74,6 +115,7 @@ public class GameMaster : MonoBehaviour {
     // For testing purposes
     public void Restart() {
         SceneManager.LoadScene(0);
+        CanvasMaster.Instance.ShowGameOverCanvas(false);
     }
 
     public void QuitGame() {

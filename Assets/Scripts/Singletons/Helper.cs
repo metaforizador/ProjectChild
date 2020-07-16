@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class Helper : MonoBehaviour
 {
@@ -22,6 +24,20 @@ public class Helper : MonoBehaviour
     public delegate void WritingComplete();
     private float writeSpeed = 0.05f;
     private float writeSpeedLittlePause = 0.3f;
+
+    private CanvasSounds sounds;
+    public AudioClip a, e, i, o, u, y;
+    private Dictionary<char, AudioClip> vowels = new Dictionary<char, AudioClip>();
+
+    void Start() {
+        sounds = CanvasMaster.Instance.canvasSounds;
+        vowels.Add('a', a);
+        vowels.Add('e', e);
+        vowels.Add('i', i);
+        vowels.Add('o', o);
+        vowels.Add('u', u);
+        vowels.Add('y', y);
+    }
 
     /// <summary>
     /// Writes out text 1 letter at a time.
@@ -47,7 +63,14 @@ public class Helper : MonoBehaviour
             if (curLetter.Equals(',') || curLetter.Equals('.') || curLetter.Equals('?') || curLetter.Equals('!'))
                 speedToWrite = this.writeSpeedLittlePause;
 
-            yield return new WaitForSeconds(speedToWrite);
+            // Check if the curLetter is a vowel and play a sound if it is
+            foreach (var element in vowels) {
+                char vowel = element.Key;
+                if (char.ToUpperInvariant(vowel).Equals(char.ToUpperInvariant(curLetter)))
+                    sounds.PlaySound(element.Value);
+            }
+
+            yield return new WaitForSecondsRealtime(speedToWrite);
         }
 
         // Call listener method when writing is complete
@@ -128,5 +151,20 @@ public class Helper : MonoBehaviour
         holder.lowerOpponentsCritMultiplier.text = armor.decreaseOpponentCriticalMultiplier.ToString();
         holder.decreaseMovementSpeed.text = armor.reduceMovementSpeed.ToString();
         holder.decreaseStaminaRecoveryRate.text = armor.reduceStaminaRecoveryRate.ToString();
+    }
+
+    /// <summary>
+    /// Invokes an action while ignoring timescale.
+    /// </summary>
+    /// <param name="action">action to do after time</param>
+    /// <param name="seconds">time to wait</param>
+    public void InvokeRealTime(UnityAction action, float seconds) {
+        StartCoroutine(InvokeRealtimeCoroutine(action, seconds));
+    }
+
+    private IEnumerator InvokeRealtimeCoroutine(UnityAction action, float seconds) {
+        yield return new WaitForSecondsRealtime(seconds);
+        if (action != null)
+            action();
     }
 }

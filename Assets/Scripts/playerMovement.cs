@@ -13,7 +13,7 @@ public class playerMovement : MonoBehaviour
     public GameObject masterCanvas;
     private bool menu = false;
 
-    public float speed = 6f;
+    public float speed = Stat.BASE_MOVEMENT_SPEED;
     public float gravity = -9.81f;
     public float jumpHeight = 10f;
 
@@ -35,6 +35,8 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
+        bool inputEnabled = GameMaster.Instance.gameState.Equals(GameState.Movement);
+        
         //player control variables
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -48,7 +50,7 @@ public class playerMovement : MonoBehaviour
 
         animator.SetFloat("DirectionX", direction.x);
 
-        if (Input.GetButton("Fire1")){
+        if (Input.GetButton("Fire1") && inputEnabled){
 
             animator.SetBool("Shooting", true);
 
@@ -92,7 +94,7 @@ public class playerMovement : MonoBehaviour
         {
             animator.SetBool("isGrounded", true);
 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump") && inputEnabled)
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 animator.SetTrigger("Jump");
@@ -112,16 +114,6 @@ public class playerMovement : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime + xzMovement);
         xzMovement = new Vector3(0, 0, 0);
-
-        //toggle button for dialogue system (demo only)
-        if (Input.GetButtonDown("test"))
-        {
-            menu = !menu;
-
-            Debug.Log(menu);
-
-            masterCanvas.SetActive(menu);
-        }
 
         //Shooting mechanics
 

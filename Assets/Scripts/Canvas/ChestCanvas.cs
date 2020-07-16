@@ -34,9 +34,8 @@ public class ChestCanvas : MonoBehaviour {
             return;
         }
 
-        // Show cursor and chest close text
-        GameMaster.Instance.ShowCursor(true);
-        CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>().InteractText(HUDCanvas.CHEST_CLOSE);
+        // Change game state
+        GameMaster.Instance.SetState(GameState.Chest);
 
         this.openedChest = chest;
         this.items = items;
@@ -154,9 +153,9 @@ public class ChestCanvas : MonoBehaviour {
     /// Closes the chest view.
     /// </summary>
     public void CloseChest() {
-        // Hide cursor and show chest open text
-        GameMaster.Instance.ShowCursor(false);
-        CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>().InteractText(HUDCanvas.CHEST_OPEN);
+        // Change game state
+        GameMaster.Instance.SetState(GameState.Movement);
+
         gameObject.SetActive(false);
 
         // Remove buttons

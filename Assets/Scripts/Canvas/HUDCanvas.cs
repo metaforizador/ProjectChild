@@ -22,11 +22,15 @@ public class HUDCanvas : MonoBehaviour {
     public GameObject interactObject;
     public TextMeshProUGUI interactText;
     public LeanTweenType tweenType;
+    private float tweenTime = 0.5f;
     private float hideInteractYPos = -150f;
     public const int CHEST_OPEN = 0, CHEST_CLOSE = 1;
     private string[] interacts = new string[] { "F - Open", "F - Close" };
 
+    private UIAnimator animator;
+
     void Awake() {
+        animator = CanvasMaster.Instance.uiAnimator;
         // Hide interact
         interactObject.transform.LeanMoveLocalY(hideInteractYPos, 0f);
     }
@@ -113,11 +117,12 @@ public class HUDCanvas : MonoBehaviour {
     }
 
     public void ShowInteract(int type) {
+        interactObject.SetActive(true);
         InteractText(type);
-        LeanTween.moveLocalY(interactObject, 0, 0.5f).setEase(tweenType);
+        animator.MoveY(interactObject, 0, tweenTime, tweenType);
     }
 
     public void HideInteract() {
-        LeanTween.moveLocalY(interactObject, hideInteractYPos, 0.5f).setEase(tweenType);
+        animator.MoveY(interactObject, hideInteractYPos, tweenTime, tweenType);
     }
 }

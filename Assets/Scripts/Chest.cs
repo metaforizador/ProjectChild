@@ -7,25 +7,29 @@ public class Chest : MonoBehaviour {
     private PickableSO[] items;
     private int maxItems = 4;
 
-    private const int INTACT_VALUE = 50;
+    private const int VOLATILE_VALUE = 20, DAMAGED_VALUE = 50, INTACT_VALUE = 80;
 
     void Start() {
         // Randomize chest contents
         int itemAmount = Random.Range(1, maxItems + 1); // + 1 because max is not inclusive
 
-        // Randomize rarity
+        // Randomize condition
         Condition condition;
         float number = Random.Range(1, 101);
         number += PlayerStats.Instance.rareItemFindRate.currentValue;
 
-        if (number >= INTACT_VALUE) {
+        if (number <= VOLATILE_VALUE) {
+            condition = Condition.Volatile;
+        } else if (number <= DAMAGED_VALUE) {
+            condition = Condition.Damaged;
+        } else if (number <= INTACT_VALUE) {
             condition = Condition.Intact;
         } else {
-            condition = Condition.Damaged;
+            condition = Condition.Supercharged;
         }
 
         // Create list and add all items with correct condition to it
-        List<PickableSO> pickList = new List<PickableSO>();
+            List<PickableSO> pickList = new List<PickableSO>();
 
         // DISABLE CONSUMABLES IN CHEST FOR NOW
 

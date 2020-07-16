@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12bdc419337b6424c823d17486ae8959, type: 3}
   m_Name: ComsatLink II
   m_EditorClassIdentifier: 
-  name: Comsat Link II
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   condition: 1
   consumableType: 2
   quantity: 1
@@ -21,7 +21,7 @@ MonoBehaviour:
   boostStaminaRecoverySpeed: 1.1
   boostAmmoRecoverySpeed: 1.1
   boostTimeInSeconds: 1
-  chanceToBeSuccessful: 100
+  chanceToBeSuccessful: 40
   chanceToTurnIntoToy: 0
   creditValue: 0
   craftValue: 1

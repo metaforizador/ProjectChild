@@ -3,8 +3,6 @@ using TMPro;
 
 public class ConsumableStatHolder : MonoBehaviour{
     public TextMeshProUGUI
-        name,
-
         // Scanner
         identificationChance,
 
