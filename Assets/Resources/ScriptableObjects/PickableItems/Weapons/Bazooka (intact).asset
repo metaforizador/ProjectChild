@@ -16,6 +16,7 @@ MonoBehaviour:
   sprite: {fileID: 0}
   condition: 1
   shootingSound: {fileID: 8300000, guid: 1ba36b1063790954f81c19be31e4b446, type: 3}
+  reloadingSound: {fileID: 8300000, guid: 1ca9d8b1cf7d66541a8946a59bded37b, type: 3}
   damagePerBullet: 75
   weaponType: 1
   bulletSpeed: 400

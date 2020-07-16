@@ -79,6 +79,7 @@ public class CharacterParent : MonoBehaviour {
 
     // Weapon values
     private AudioClip weaponShootingSound;
+    private AudioClip weaponReloadSound;
     private float weaponDamage;
     private DamageType weaponType;
     private float weaponBulletSpeed;
@@ -108,6 +109,7 @@ public class CharacterParent : MonoBehaviour {
 
     private void RetrieveWeaponValues() {
         weaponShootingSound = weapon.shootingSound;
+        weaponReloadSound = weapon.reloadingSound;
         weaponDamage = weapon.damagePerBullet;
         weaponType = weapon.weaponType;
         weaponBulletSpeed = weapon.bulletSpeed;
@@ -248,8 +250,10 @@ public class CharacterParent : MonoBehaviour {
                 thisBullet.GetComponent<Rigidbody>().velocity = bulletDirection.normalized * weaponBulletSpeed;
 
                 // Enemies reload weapons when they run out of ammo
-                if (characterType == CharacterType.Enemy && AMMO < weaponBulletConsumption)
+                if (characterType == CharacterType.Enemy && AMMO < weaponBulletConsumption) {
+                    audioSource.PlayOneShot(weaponReloadSound);
                     Invoke("reloadAmmo", weaponReloadTime);
+                }
 
                 yield return new WaitForSeconds(weaponRateOfFire / fireRate); // Shorten delay by fire rate
             }

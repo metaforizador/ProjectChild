@@ -16,9 +16,10 @@ MonoBehaviour:
   sprite: {fileID: 0}
   condition: 1
   shootingSound: {fileID: 8300000, guid: b630f5a6a16f8df46804a83aa24fdca5, type: 3}
+  reloadingSound: {fileID: 8300000, guid: bda18b00d025a6c4b81672f356e179e9, type: 3}
   damagePerBullet: 13
   weaponType: 0
   bulletSpeed: 200
   ammoSize: 30
   rateOfFire: 0.3
-  reloadTime: 2
+  reloadTime: 3

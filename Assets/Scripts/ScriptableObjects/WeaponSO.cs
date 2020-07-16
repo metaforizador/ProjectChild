@@ -6,6 +6,8 @@ using UnityEngine;
 public class WeaponSO : PickableSO {
 
     public AudioClip shootingSound;
+    [Header("Only enemies reload their guns")]
+    public AudioClip reloadingSound;
 
     [Header("(Note: starting health and armor is 100, total is 200)")]
     public float damagePerBullet;
