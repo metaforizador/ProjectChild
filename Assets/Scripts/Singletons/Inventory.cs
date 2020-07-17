@@ -27,13 +27,19 @@ public class Inventory : MonoBehaviour {
         // Add test items
         PickableSO[] pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/Consumables/");
 
-        foreach (PickableSO item in pickArray) {
+        foreach (PickableSO so in pickArray) {
+            PickableSO item = Instantiate(so);
             if (item is ConsumableSO)
                 AddConsumable((ConsumableSO)item);
             else {
                 pickableItems.Add(item);
             }
         }
+
+        // Test different type battery
+        /*ConsumableSO con = Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/Battery I"));
+        con.batteryType = ConsumableSO.BatteryType.Shield;
+        AddConsumable(con);*/
     }
 
     public void LoadInventory(Save save) {

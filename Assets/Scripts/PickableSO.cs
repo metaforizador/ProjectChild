@@ -7,6 +7,7 @@ public enum Condition { Volatile, Damaged, Intact, Supercharged }
 
 public class PickableSO : ScriptableObject {
 
+    public new string name;
     public Sprite sprite;
     public Condition condition;
 
