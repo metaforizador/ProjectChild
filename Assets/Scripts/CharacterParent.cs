@@ -217,7 +217,7 @@ public class CharacterParent : MonoBehaviour {
                 AMMO -= weaponBulletConsumption;
 
                 // Make a shooting sound
-                //ERROR audioSource.PlayOneShot(weaponShootingSound);
+                audioSource.PlayOneShot(weaponShootingSound);
 
                 // Create the bullet, calculate damage and initialize necessary values
                 GameObject thisBullet = Instantiate(weaponBullet);
@@ -257,7 +257,7 @@ public class CharacterParent : MonoBehaviour {
 
                 // Enemies reload weapons when they run out of ammo
                 if (characterType == CharacterType.Enemy && AMMO < weaponBulletConsumption) {
-                    //ERROR audioSource.PlayOneShot(weaponReloadSound);
+                    audioSource.PlayOneShot(weaponReloadSound);
                     Invoke("reloadAmmo", weaponReloadTime);
                 }
 

@@ -282,6 +282,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooting: 0
+  audioPreset: {fileID: 2655988077585873504, guid: d94c49cecfc92b3478191bba8976348f,
+    type: 2}
   weapon: {fileID: 11400000, guid: 6098da7712aa93d40ba7bf515ac1939c, type: 2}
   armor: {fileID: 11400000, guid: b54fd15f6d6c1ff45b065ab1863c3975, type: 2}
   weaponBullet: {fileID: 7707216951185695408, guid: c44108d95280b76488d76f00bcc01b20,
