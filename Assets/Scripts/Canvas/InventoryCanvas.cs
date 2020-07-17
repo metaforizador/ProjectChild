@@ -6,7 +6,7 @@ using TMPro;
 
 public class InventoryCanvas : MonoBehaviour {
 
-    public GameObject menuAndCategories, categoriesParent;
+    public GameObject menuAndCategories, categoriesParent, openedCategoryParent;
     public GameObject weaponObj, armorObj, consumablesObj, miscObj;
     private GameObject[] categoryObjects;
     private float objCategoryStartX = -90;
@@ -152,6 +152,11 @@ public class InventoryCanvas : MonoBehaviour {
         itemStatsDisplay.SetActive(false); // Disable item stats display since item is not yet chosen
     }
 
+    public void CloseSubcategory() {
+        ShowRequiredCategory(NONE);
+        sounds.PlaySound(sounds.BUTTON_BACK);
+    }
+
     /// <summary>
     /// Shows item's information.
     /// </summary>
@@ -230,10 +235,12 @@ public class InventoryCanvas : MonoBehaviour {
     }
 
     public void EquipItem() {
+        sounds.PlaySound(sounds.BUTTON_SELECT);
         hotbar.SetIncomingItem(selectedItem);
     }
 
     public void UseItem() {
+        sounds.PlaySound(sounds.BUTTON_SELECT);
         Inventory.Instance.UseConsumable(selectedItem);
     }
 
@@ -289,6 +296,7 @@ public class InventoryCanvas : MonoBehaviour {
         currentlyOpen = category;
 
         // Set objects active based on if they should be currently open
+        openedCategoryParent.SetActive(currentlyOpen != NONE);
         weaponStatsObject.SetActive(currentlyOpen == WEAPON);
         armorStatsObject.SetActive(currentlyOpen == ARMOR);
         consumablesObject.SetActive(currentlyOpen == CONSUMABLES);
