@@ -20,6 +20,10 @@ public class ConsumableSO : PickableSO {
     public const string DESCRIPTION_BATTERY = "As a consumable, it can be used to restore either shields, increase " +
                     "the speed of stamina recovery or ammo recovery. To know which one of those three the battery will increase, it " +
                     "needs to be identified with a scanner.";
+
+    public enum BatteryType { Unknown, Shield, Stamina, Ammo }
+
+    public BatteryType batteryType = BatteryType.Unknown;
     [Range(0f, 100f)]
     public float shieldRecoveryPercentage;
     [Range(1.1f, 3f)]
@@ -52,4 +56,15 @@ public class ConsumableSO : PickableSO {
     public const string DESCRIPTION_TOY = "As a consumable, it gives percentage amount of exp needed for the next level.";
     [Range(0f, 100f)]
     public float expToGain;
+
+    // Use item's name as id
+    public bool EqualsConsumable(ConsumableSO otherItem) {
+        // Check battery type too if item is battery
+        if (consumableType.Equals(ConsumableType.Battery)) {
+            return this.name.Equals(otherItem.name) && this.batteryType.Equals(otherItem.batteryType);
+        }
+
+        // Else the name check is enough
+        return this.name.Equals(otherItem.name);
+    }
 }

@@ -9,4 +9,9 @@ public class PickableSO : ScriptableObject {
 
     public Sprite sprite;
     public Condition condition;
+
+    // Use item's name as id
+    public bool EqualsItem(PickableSO otherItem) {
+        return this.name.Equals(otherItem.name);
+    }
 }

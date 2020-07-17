@@ -51,12 +51,13 @@ public class Inventory : MonoBehaviour {
     public void AddConsumable(ConsumableSO consumable) {
         // If the consumable is already in inventory, add +1 to quantity and return
         foreach (PickableSO item in pickableItems) {
-            // Contains can't be used since consumable and item in inventory have different pointers
-            // So use name (since it's unique) to check for items
-            if (item.name.Equals(consumable.name)) {
+            if (item is ConsumableSO) {
                 ConsumableSO con = (ConsumableSO)item;
-                con.quantity++;
-                return;
+                // Check using different equals methods based on ConsumableType
+                if (con.EqualsConsumable(consumable)) {
+                    con.quantity++;
+                    return;
+                }
             }
         }
 

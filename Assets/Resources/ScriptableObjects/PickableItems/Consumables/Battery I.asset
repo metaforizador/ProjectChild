@@ -17,6 +17,7 @@ MonoBehaviour:
   consumableType: 1
   quantity: 1
   identificationChance: 0
+  batteryType: 0
   shieldRecoveryPercentage: 20
   boostStaminaRecoverySpeed: 1.5
   boostAmmoRecoverySpeed: 1.5
