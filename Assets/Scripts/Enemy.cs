@@ -15,28 +15,19 @@ public class Enemy : CharacterParent {
     private AI.State curState;
     public AI.State startState;
 
-    private List<Vector3> waypoints;
-
     public int level { get; private set; }
 
     public float turnSpeed;
     private float turnSmoothVelocity;
     private float turnSmoothTime = 0.1f;
 
+    public AI.Route route;
+    private Vector3 nextPoint;
+
     public override void Start() {
         //transitions to startState
         TransitionToState(startState);
 
-        //finds pathfinding routes -- IN TESTING
-        GameObject route = GameObject.Find("Route1");
-        waypoints = new List<Vector3>();
-
-        foreach (Transform child in route.transform)
-        {
-            waypoints.Add(child.position);
-        }
-
-        //
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         characterType = CharacterType.Enemy;
 
@@ -139,26 +130,86 @@ public class Enemy : CharacterParent {
 
     public void Patrol()
     {
-        Vector3 closestPoint = new Vector3(); //siirrettävä onStateEnteriin
+        setRoute();
 
-        if(closestPoint == new Vector3(0, 0, 0))
+        if(this.route == null)
         {
-            closestPoint = FindClosestPoint();
+            Debug.Log(this.gameObject.name + " - No unoccupied route found");
+            return;
         }
 
-        foreach(Vector3 waypoint in waypoints)
+        if(nextPoint == new Vector3(0, 0, 0))
         {
-            //kun enemy pääsee waypointille, lähde kulkemaan seuraavaa waypointtia kohti indexin mukaan
+            nextPoint = FindClosestPoint(this.route);
         }
 
-        //disabled for demo// MoveTowards(closestPoint);
+        nextPoint = checkIfPointReached(nextPoint);
+
+        MoveTowards(nextPoint);
     }
 
-    private Vector3 FindClosestPoint()
+    private Vector3 checkIfPointReached(Vector3 nextPoint)
+    {
+        Vector3 newPoint = nextPoint;
+
+        Transform rt = this.route.transform;
+
+        if (Vector3.Magnitude(nextPoint - transform.position) < 10)
+        {
+            for (int i = 0; i < rt.childCount; i++)
+            {
+                if (rt.GetChild(i).position == nextPoint)
+                {
+                    if (i + 1 < rt.childCount - 1)
+                    {
+                        newPoint = rt.GetChild(i + 1).position;
+                        break;
+                    }
+                    else
+                    {
+                        newPoint = rt.GetChild(0).position;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return newPoint;
+    }
+
+    private void setRoute()
+    {
+        AI.Route[] routes = GameObject.FindObjectsOfType<AI.Route>();
+        Vector3 closestPoint = new Vector3(0, 0, 0);
+        AI.Route closestRoute = null;
+
+        foreach (AI.Route route in routes)
+        {
+            if (route.occupyingEnemy != null)
+            {
+                break;
+            }
+
+            Vector3 newPoint = FindClosestPoint(route);
+            float newDist = Vector3.Magnitude(newPoint - transform.position);
+            float closestDist = Vector3.Magnitude(closestPoint - transform.position);
+
+            if (closestPoint == new Vector3(0, 0, 0) || newDist < closestDist)
+            {
+                closestPoint = newPoint;
+                closestRoute = route;
+
+                route.occupyingEnemy = this;
+                this.route = route;
+            }
+        }
+    }
+
+    private Vector3 FindClosestPoint(AI.Route route)
     {
         Vector3 closestPoint = new Vector3();
 
-        foreach (Vector3 waypoint in waypoints)
+        foreach (Vector3 waypoint in route.waypoints)
         {
             float closestDist = Vector3.Magnitude(closestPoint - transform.position);
             float distance = Vector3.Magnitude(waypoint - transform.position);
@@ -179,8 +230,6 @@ public class Enemy : CharacterParent {
         Vector3 targetDirection = targetPoint - transform.position;
         Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turnSpeed * Time.deltaTime, 0.0f);
         transform.rotation = Quaternion.LookRotation(newDirection);
-
-        Debug.Log(movementSpd);
 
         transform.position += transform.forward * movementSpd * 40 * Time.deltaTime; //movementSpd should be multiplied with base movement speed somewhere else
     }
