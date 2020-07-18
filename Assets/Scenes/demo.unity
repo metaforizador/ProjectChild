@@ -4800,6 +4800,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooting: 0
+  audioPreset: {fileID: 2655988077585873504, guid: e8f4ddaac92f1784bb8999e72d34281e,
+    type: 2}
   weapon: {fileID: 11400000, guid: 6098da7712aa93d40ba7bf515ac1939c, type: 2}
   armor: {fileID: 0}
   weaponBullet: {fileID: 7707216951185695408, guid: c44108d95280b76488d76f00bcc01b20,
@@ -11449,7 +11451,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.15818423, y: -0.0034871253, z: 0.0005586453, w: 0.98740333}
+  m_LocalRotation: {x: 0.15818441, y: -0.0031481066, z: 0.00050433376, w: 0.98740447}
   m_LocalPosition: {x: 284.6, y: 62.317062, z: -559.6763}
   m_LocalScale: {x: 7, y: 7, z: 7}
   m_Children: []
@@ -11757,6 +11759,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooting: 0
+  audioPreset: {fileID: 2655988077585873504, guid: e8f4ddaac92f1784bb8999e72d34281e,
+    type: 2}
   weapon: {fileID: 11400000, guid: 6098da7712aa93d40ba7bf515ac1939c, type: 2}
   armor: {fileID: 0}
   weaponBullet: {fileID: 7707216951185695408, guid: c44108d95280b76488d76f00bcc01b20,
@@ -20018,7 +20022,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691366957}
-  m_LocalRotation: {x: 0.15822351, y: -0.0034832056, z: 0.0005581595, w: 0.987397}
+  m_LocalRotation: {x: 0.1582237, y: -0.0031372705, z: 0.00050272583, w: 0.9873982}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -23421,6 +23425,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooting: 0
+  audioPreset: {fileID: 2655988077585873504, guid: e8f4ddaac92f1784bb8999e72d34281e,
+    type: 2}
   weapon: {fileID: 11400000, guid: 6098da7712aa93d40ba7bf515ac1939c, type: 2}
   armor: {fileID: 0}
   weaponBullet: {fileID: 7707216951185695408, guid: c44108d95280b76488d76f00bcc01b20,
@@ -25763,7 +25769,8 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1757913986837567447, guid: 41af1055f32cbcc46b4c5a6de9532058, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 41af1055f32cbcc46b4c5a6de9532058, type: 3}
 --- !u!1 &1766446994759190209
 GameObject:
@@ -26594,6 +26601,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooting: 0
+  audioPreset: {fileID: 2655988077585873504, guid: e8f4ddaac92f1784bb8999e72d34281e,
+    type: 2}
   weapon: {fileID: 11400000, guid: 6098da7712aa93d40ba7bf515ac1939c, type: 2}
   armor: {fileID: 0}
   weaponBullet: {fileID: 7707216951185695408, guid: c44108d95280b76488d76f00bcc01b20,

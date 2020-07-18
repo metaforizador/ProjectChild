@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.Presets;
 
 public class CharacterParent : MonoBehaviour {
 
@@ -66,6 +67,9 @@ public class CharacterParent : MonoBehaviour {
 
     protected HUDCanvas hud;
 
+    // Playing audio
+    [SerializeField]
+    private Preset audioPreset;
     private AudioSource audioSource;
 
     // Weapon and armor
@@ -98,7 +102,9 @@ public class CharacterParent : MonoBehaviour {
 
     public virtual void Start() {
         hud = CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>();
-        audioSource = GetComponent<AudioSource>();
+        // Create audio component and add preset
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioPreset.ApplyTo(audioSource);
         // Retrieve bullet point
         bulletPoint = transform.Find("BulletPoint").gameObject;
 
@@ -211,7 +217,7 @@ public class CharacterParent : MonoBehaviour {
                 AMMO -= weaponBulletConsumption;
 
                 // Make a shooting sound
-                //ERROR audioSource.PlayOneShot(weaponShootingSound);
+                audioSource.PlayOneShot(weaponShootingSound);
 
                 // Create the bullet, calculate damage and initialize necessary values
                 GameObject thisBullet = Instantiate(weaponBullet);
@@ -251,7 +257,7 @@ public class CharacterParent : MonoBehaviour {
 
                 // Enemies reload weapons when they run out of ammo
                 if (characterType == CharacterType.Enemy && AMMO < weaponBulletConsumption) {
-                    //ERROR audioSource.PlayOneShot(weaponReloadSound);
+                    audioSource.PlayOneShot(weaponReloadSound);
                     Invoke("reloadAmmo", weaponReloadTime);
                 }
 
