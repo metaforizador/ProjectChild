@@ -241,7 +241,6 @@ public class InventoryCanvas : MonoBehaviour {
     }
 
     public void UseItem() {
-        sounds.PlaySound(sounds.BUTTON_SELECT);
         Inventory.Instance.UseConsumable(selectedItem);
     }
 

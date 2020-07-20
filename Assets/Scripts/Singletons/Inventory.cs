@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Inventory : MonoBehaviour {
 
@@ -80,7 +81,10 @@ public class Inventory : MonoBehaviour {
                 consumables.Add((ConsumableSO) item);
         }
 
-        return consumables;
+        // Sort list by name
+        var sortedList = consumables.OrderBy(go => go.name).ToList();
+
+        return sortedList;
     }
 
     public void UseConsumable(ConsumableSO consumable) {
