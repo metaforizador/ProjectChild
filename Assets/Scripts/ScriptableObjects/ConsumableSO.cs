@@ -10,13 +10,13 @@ public class ConsumableSO : PickableSO {
     public ConsumableType consumableType;
     public int quantity;
 
-    // Scanner
+    /************ SCANNER ************/
     public const string DESCRIPTION_SCANNER = "As a consumable, Scanner can identify items.It can also be used " +
                     "on certain stations to display the location of enemies, loot in a given map and traps.";
     [Range(0f, 100f)]
     public float identificationChance;
 
-    // Battery
+    /************ BATTERY ************/
     public const string DESCRIPTION_BATTERY = "As a consumable, it can be used to restore either shields, increase " +
                     "the speed of stamina recovery or ammo recovery. To know which one of those three the battery will increase, it " +
                     "needs to be identified with a scanner.";
@@ -31,7 +31,27 @@ public class ConsumableSO : PickableSO {
     [Range(1, 60)]
     public int boostTimeInSeconds = 1;
 
-    // Comsat Link & Rig
+    /// <summary>
+    /// Determines the final battery type of the item.
+    /// 
+    /// Randomizes the battery type if it was not already set.
+    /// </summary>
+    public void DetermineFinalBatteryType() {
+        // If batterytype is not unknown, it's already set
+        if (!batteryType.Equals(BatteryType.Unknown))
+            return;
+
+        // Else batterytype needs to be randomized
+        int randomNumber = Random.Range(1, 100);
+        if (randomNumber <= 33)
+            this.batteryType = BatteryType.Shield;
+        else if (randomNumber <= 66)
+            this.batteryType = BatteryType.Stamina;
+        else
+            this.batteryType = BatteryType.Ammo;
+    }
+
+    /************ COMSAT LINK & RIG ************/
     public const string DESCRIPTION_COMSAT_LINK = "As a consumable, it can call up an airstrike. It can also be used on item " +
                     "chests to send the found item back to the home base so the player can start the game with it." +
                     "When used in level exists, it can work as a town portal to send the player back to the beginning " +
@@ -41,7 +61,7 @@ public class ConsumableSO : PickableSO {
     [Range(0f, 100f)]
     public float chanceToBeSuccessful;
 
-    // Scrap
+    /************ SCRAP ************/
     public const string DESCRIPTION_SCRAP = "As a consumable, using it has a chance of turning it into a toy, which gives XP to the " +
                     "child. Success replaces item 'Scrap' with the item 'Toy'. On stations, it can be used to craft new weapons " +
                     "or armor and in vendors, turned in for credits. Credits allow the purchase of items on vendor. Once the scrap " +
@@ -52,12 +72,19 @@ public class ConsumableSO : PickableSO {
     [Range(1, 4)]
     public int craftValue = 1;
 
-    // Toy
+    /************ TOY ************/
     public const string DESCRIPTION_TOY = "As a consumable, it gives percentage amount of exp needed for the next level.";
     [Range(0f, 100f)]
     public float expToGain;
 
-    // Use item's name as id
+    /************ GLOBAL METHODS ************/
+    /// <summary>
+    /// Checks if item is basically the same item (might have different pointer).
+    /// 
+    /// Uses name for the check in most cases.
+    /// </summary>
+    /// <param name="otherItem">item to compare with</param>
+    /// <returns>true if it's the same</returns>
     public bool EqualsConsumable(ConsumableSO otherItem) {
         // Check battery type too if item is battery
         if (consumableType.Equals(ConsumableType.Battery)) {

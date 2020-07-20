@@ -116,6 +116,33 @@ public class Player : CharacterParent {
         }
     }
 
+    public void UseConsumable(ConsumableSO consumable) {
+        switch (consumable.consumableType) {
+            /************ BATTERY ************/
+            case ConsumableType.Battery:
+                consumable.DetermineFinalBatteryType();
+                switch (consumable.batteryType) {
+                    case ConsumableSO.BatteryType.Shield:
+
+                        break;
+                    case ConsumableSO.BatteryType.Stamina:
+                        break;
+                    case ConsumableSO.BatteryType.Ammo:
+                        break;
+                }
+                break;
+            /************ COMSAT LINK ************/
+            case ConsumableType.ComsatLink:
+                break;
+            /************ RIG ************/
+            case ConsumableType.Rig:
+                break;
+            /************ TOY ************/
+            case ConsumableType.Toy:
+                break;
+        }
+    }
+
     protected override void Die() {
         base.Die();
         cm.ShowGameOverCanvas(true);

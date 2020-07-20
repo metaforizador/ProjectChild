@@ -94,5 +94,15 @@ public class Inventory : MonoBehaviour {
         CanvasMaster cm = CanvasMaster.Instance;
         cm.hotbarCanvas.GetComponent<HotbarCanvas>().RefreshHotbarImages();
         cm.inventoryCanvas.GetComponent<InventoryCanvas>().RefreshConsumables();
+
+        switch (consumable.consumableType) {
+            case ConsumableType.Battery:
+            case ConsumableType.ComsatLink:
+            case ConsumableType.Rig:
+            case ConsumableType.Toy:
+                Player player = PlayerStats.Instance.player;
+                player.UseConsumable(consumable);
+                break;
+        }
     }
 }

@@ -169,6 +169,14 @@ public class CharacterParent : MonoBehaviour {
         return oldArmor;
     }
 
+    protected void RestoreShields(float amount) {
+        SHIELD += amount;
+    }
+
+    protected void BoostStaminaRecovery(float percentage, float time) {
+
+    }
+
     protected virtual void Update() {
         for (int i = 0; i < delays.Length; i++) {
             if (delays[i] > 0)
