@@ -551,7 +551,7 @@ GameObject:
   - component: {fileID: 529386625}
   - component: {fileID: 529386624}
   m_Layer: 5
-  m_Name: StatGainText
+  m_Name: TopInfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1423,7 +1423,7 @@ GameObject:
   - component: {fileID: 1230643689}
   - component: {fileID: 7049069880509958765}
   m_Layer: 5
-  m_Name: StatGainCanvas
+  m_Name: TopInfoCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideYPosition: 101
-  statObject: {fileID: 1935868904006035469}
+  infoObject: {fileID: 1935868904006035469}
   textView: {fileID: 529386624}
   tweenType: 31
 --- !u!1 &1336498792
@@ -3073,7 +3073,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -77.361244, y: 0.000034332275}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 50, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &6460187607187975982
 CanvasRenderer:
@@ -4038,7 +4038,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7269,7 +7269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 591241639120900266}
   m_Layer: 5
-  m_Name: StatObject
+  m_Name: InfoObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19598,7 +19598,7 @@ MonoBehaviour:
   canvasBackground: {fileID: 3387918349301346990}
   crosshair: {fileID: 5679500053164640467}
   dialogueCanvas: {fileID: 5520579358866669639}
-  statGainCanvas: {fileID: 1230643687}
+  topInfoCanvas: {fileID: 1230643687}
   statsCanvas: {fileID: 7860601287461588995}
   HUDCanvas: {fileID: 1605582751}
   chestCanvas: {fileID: 513601702}
@@ -21321,7 +21321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8388508898650223422
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31146,22 +31146,22 @@ PrefabInstance:
     - target: {fileID: 3031713309513065340, guid: 79a1cfa4936932c489337bde6e18a25b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 3031713309513065340, guid: 79a1cfa4936932c489337bde6e18a25b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -61.421967
       objectReference: {fileID: 0}
     - target: {fileID: 3031713309513065340, guid: 79a1cfa4936932c489337bde6e18a25b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3031713309513065340, guid: 79a1cfa4936932c489337bde6e18a25b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 122.84393
       objectReference: {fileID: 0}
     - target: {fileID: 3031713309513065340, guid: 79a1cfa4936932c489337bde6e18a25b,
         type: 3}
@@ -31171,7 +31171,7 @@ PrefabInstance:
     - target: {fileID: 3031713309513065340, guid: 79a1cfa4936932c489337bde6e18a25b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3031713309513065340, guid: 79a1cfa4936932c489337bde6e18a25b,
         type: 3}
@@ -31181,7 +31181,7 @@ PrefabInstance:
     - target: {fileID: 3031713309513065340, guid: 79a1cfa4936932c489337bde6e18a25b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3031713309513065340, guid: 79a1cfa4936932c489337bde6e18a25b,
         type: 3}

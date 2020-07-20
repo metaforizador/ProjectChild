@@ -5,13 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class StatGainCanvas : MonoBehaviour {
+public class TopInfoCanvas : MonoBehaviour {
 
     [SerializeField]
     private float hideYPosition;
 
     [SerializeField]
-    private GameObject statObject;
+    private GameObject infoObject;
 
     [SerializeField]
     private TextMeshProUGUI textView;
@@ -36,17 +36,17 @@ public class StatGainCanvas : MonoBehaviour {
 
     public void Initialize() {
         // Hide panel
-        statObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, hideYPosition);
+        infoObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, hideYPosition);
     }
 
-    public void ShowStatGain(string statGainText) {
-        textView.text = statGainText;
-        animator.MoveY(statObject, 0, transitionSpd, tweenType).
-            setOnComplete(() => Helper.Instance.InvokeRealTime(() => HideStatGain(), timeToShow));
+    public void ShowTopInfoText(string textToShow) {
+        textView.text = textToShow;
+        animator.MoveY(infoObject, 0, transitionSpd, tweenType).
+            setOnComplete(() => Helper.Instance.InvokeRealTime(() => HideTopInfo(), timeToShow));
     }
 
-    private void HideStatGain() {
-        animator.MoveY(statObject, hideYPosition, transitionSpd, tweenType).
+    private void HideTopInfo() {
+        animator.MoveY(infoObject, hideYPosition, transitionSpd, tweenType).
             setOnComplete(() => gameObject.SetActive(false));
     }
 }

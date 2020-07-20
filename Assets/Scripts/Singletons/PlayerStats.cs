@@ -199,13 +199,13 @@ public class PlayerStats : MonoBehaviour {
             if (!increased) {
                 maxedStats.Add(index);
             } else {
-                CanvasMaster.Instance.ShowStatGain(StatGainCanvas.CreateGainStatText(stat));
+                CanvasMaster.Instance.ShowStatGain(TopInfoCanvas.CreateGainStatText(stat));
                 break;
             }
 
             if (maxedStats.Count == stats.Length) {
                 // Inform player that all stats are maxed out
-                CanvasMaster.Instance.ShowStatGain(StatGainCanvas.CreateStatsMaxedText(type));
+                CanvasMaster.Instance.ShowStatGain(TopInfoCanvas.CreateStatsMaxedText(type));
                 break;
             }
         }
