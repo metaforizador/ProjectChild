@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12bdc419337b6424c823d17486ae8959, type: 3}
   m_Name: Battery I
   m_EditorClassIdentifier: 
+  name: Battery I
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   condition: 0
   consumableType: 1
-  quantity: 1
+  quantity: 2
   identificationChance: 0
   batteryType: 0
   shieldRecoveryPercentage: 20
