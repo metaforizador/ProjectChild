@@ -126,31 +126,41 @@ public class Player : CharacterParent {
                 switch (consumable.batteryType) {
                     case ConsumableSO.BatteryType.Shield:
                         float amount = consumable.shieldRecoveryPercentage;
-                        info.ShowTopInfoText(TopInfoCanvas.CreateShieldRecoveredText(amount));
+                        info.ShowShieldRecoveredText(amount);
                         SHIELD += amount;
                         break;
                     case ConsumableSO.BatteryType.Stamina:
                         float staminaAmount = consumable.boostStaminaRecoverySpeed;
                         float staminaTime = consumable.boostTimeInSeconds;
-                        info.ShowTopInfoText(TopInfoCanvas.CreateBoostText("stamina", staminaAmount, staminaTime));
+                        info.ShowBoostText("stamina", staminaAmount, staminaTime);
                         BoostRecovery(B_STAMINA, staminaAmount, staminaTime);
                         break;
                     case ConsumableSO.BatteryType.Ammo:
                         float ammoAmount = consumable.boostAmmoRecoverySpeed;
                         float ammoTime = consumable.boostTimeInSeconds;
-                        info.ShowTopInfoText(TopInfoCanvas.CreateBoostText("ammo", ammoAmount, ammoTime));
+                        info.ShowBoostText("ammo", ammoAmount, ammoTime);
                         BoostRecovery(B_AMMO, ammoAmount, ammoTime);
                         break;
                 }
                 break;
             /************ COMSAT LINK ************/
             case ConsumableType.ComsatLink:
+                if (consumable.CheckIfUsageSuccessful()) {
+                    // Call an airstrike
+                }
                 break;
             /************ RIG ************/
             case ConsumableType.Rig:
+                if (consumable.CheckIfUsageSuccessful()) {
+                    info.ShowHealthRecoveredText();
+                    HP += ConsumableSO.RIG_HP_TO_RECOVER_PERCENTAGE;
+                }
                 break;
             /************ TOY ************/
             case ConsumableType.Toy:
+                if (consumable.CheckIfUsageSuccessful()) {
+                    
+                }
                 break;
         }
     }

@@ -19,24 +19,32 @@ public class TopInfoCanvas : MonoBehaviour {
     private UIAnimator animator;
     public LeanTweenType tweenType;
 
-    private Coroutine coroutineToHide;
+    private Coroutine coroutineToHide, coroutineToDisable;
     private float timeToShow = 3;
     private float transitionSpd = 1;
 
-    public static string CreateGainStatText(Stat stat) {
-        return $"You gained '{stat.name}' stat bonus!";
+    public void ShowGainStatText(Stat stat) {
+        ShowTopInfoText($"You gained '{stat.name}' stat bonus!");
     }
 
-    public static string CreateStatsMaxedText(WordsType type) {
-        return $"All stats for '{type.ToString()}' answers are maxed out!";
+    public void ShowStatsMaxedText(WordsType type) {
+        ShowTopInfoText($"All stats for '{type.ToString()}' answers are maxed out!");
     }
 
-    public static string CreateShieldRecoveredText(float amount) {
-        return $"You recovered shields by {amount.ToString()} %!";
+    public void ShowShieldRecoveredText(float amount) {
+        ShowTopInfoText($"You recovered shields by {amount.ToString()} %!");
     }
 
-    public static string CreateBoostText(string boostType, float amount, float time) {
-        return $"You activated {(amount * 100).ToString()} % {boostType} boost for {time.ToString()} seconds!";
+    public void ShowHealthRecoveredText() {
+        ShowTopInfoText($"You recovered health!");
+    }
+
+    public void ShowBoostText(string boostType, float amount, float time) {
+        ShowTopInfoText($"You activated {(amount * 100).ToString()} % {boostType} boost for {time.ToString()} seconds!");
+    }
+
+    public void ShowItemBrokeText(string itemName) {
+        ShowTopInfoText($"Item {itemName} broke!");
     }
 
     public void Initialize() {
@@ -49,13 +57,16 @@ public class TopInfoCanvas : MonoBehaviour {
         infoObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, hideYPosition);
     }
 
-    public void ShowTopInfoText(string textToShow) {
+    private void ShowTopInfoText(string textToShow) {
+        ResetPosition();
         gameObject.SetActive(true);
         // Stop coroutine to hide the object if multiple texts are shown simultaneously
-        if (coroutineToHide != null) {
-            ResetPosition();
+        if (coroutineToHide != null)
             StopCoroutine(coroutineToHide);
-        }
+
+        // Stop coroutine to disable the object if info is currently closing
+        if (coroutineToDisable != null)
+            StopCoroutine(coroutineToDisable);
 
         textView.text = textToShow;
 
@@ -64,7 +75,7 @@ public class TopInfoCanvas : MonoBehaviour {
     }
 
     private void HideTopInfo() {
-        animator.MoveY(infoObject, hideYPosition, transitionSpd, tweenType).
-            setOnComplete(() => gameObject.SetActive(false));
+        animator.MoveY(infoObject, hideYPosition, transitionSpd, tweenType);
+        coroutineToDisable = Helper.Instance.InvokeRealTime(() => gameObject.SetActive(false), transitionSpd);
     }
 }

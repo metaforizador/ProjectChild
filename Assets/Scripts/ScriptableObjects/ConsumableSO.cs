@@ -58,6 +58,7 @@ public class ConsumableSO : PickableSO {
                     "of the game with all his money and stats (items are lost, though).";
     public const string DESCRIPTION_RIG = "As a consumable, it repairs some HP. On stations, it can also be used to upgrade " +
                     "weapons and armor.";
+    public const int RIG_HP_TO_RECOVER_PERCENTAGE = 50;
     [Range(0f, 100f)]
     public float chanceToBeSuccessful;
 
@@ -93,5 +94,26 @@ public class ConsumableSO : PickableSO {
 
         // Else the name check is enough
         return this.name.Equals(otherItem.name);
+    }
+
+    public bool CheckIfUsageSuccessful() {
+        // For some reason Helper.Instance.CheckPercentage() can't be used here
+
+        float chance = 0f;
+
+        if (consumableType.Equals(ConsumableType.ComsatLink) || consumableType.Equals(ConsumableType.Rig))
+            chance = chanceToBeSuccessful;
+        else if (consumableType.Equals(ConsumableType.Scrap))
+            chance = chanceToTurnIntoToy;
+
+        // Randomize percentage
+        int randomPercentValue = Random.Range(1, 101); // 101 since then it returns values from 1 to 100
+
+        if (randomPercentValue <= chance)
+            return true;
+
+        // Else show item broke info
+        CanvasMaster.Instance.topInfoCanvas.ShowItemBrokeText(this.name);
+        return false;
     }
 }
