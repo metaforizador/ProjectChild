@@ -11,8 +11,9 @@ public class Enemy : CharacterParent {
 
     public Animator animator;
 
-    private enum State {Patrolling, Shooting, Dying};
-    private State curState = State.Patrolling;
+    //public enum State {Patrolling, Shooting, Dying};
+    private AI.State curState;
+    public AI.State startState;
 
     public int level { get; private set; }
 
@@ -20,7 +21,13 @@ public class Enemy : CharacterParent {
     private float turnSmoothVelocity;
     private float turnSmoothTime = 0.1f;
 
+    public AI.Route route;
+    private Vector3 nextPoint;
+
     public override void Start() {
+        //transitions to startState
+        TransitionToState(startState);
+
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         characterType = CharacterType.Enemy;
 
@@ -71,36 +78,160 @@ public class Enemy : CharacterParent {
     }
 
     protected override void Update() {
+
         base.Update();
         // Don't run update if enemy is not alive
         if (!alive)
+        {
             return;
-
-        //Shooting mechanics
-
-        // If player is close enough and enemy is able to see the player
-        if (true) {
-            curState = State.Shooting;
-            shooting = true;
-        } else {
-            curState = State.Patrolling;
-            shooting = false;
         }
 
-        //if shooting
-        if (curState == State.Shooting)
+        curState.UpdateState(this, Time.deltaTime);
+    }
+
+    public bool TransitionToState(AI.State newState)
+    {
+        if (curState != newState)
         {
-            animator.SetBool("Shooting", true);
+            Debug.Log("State transition " + curState + " -> " + newState);
 
-            //enemy turns towards player while shooting
-            Vector3 targetDirection = GameObject.Find("Player").transform.position - transform.position;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turnSpeed * Time.deltaTime, 0.0f);
-            transform.rotation = Quaternion.LookRotation(newDirection);
+            OnStateExit(curState);
+            curState = newState;
+            OnStateEnter(newState);
+
+            return true;
         }
-        else
+
+        return false;
+    }
+
+    private void OnStateEnter(AI.State newState)
+    {
+        
+    }
+
+    private void OnStateExit(AI.State curState)
+    {
+        shooting = false;
+        animator.SetBool("Shooting", false);
+        animator.SetBool("Moving", false);
+    }
+
+    public void Shoot()
+    {
+        shooting = true;
+        animator.SetBool("Shooting", true);
+
+        //enemy turns towards player while shooting
+        Vector3 targetDirection = GameObject.Find("Player").transform.position - transform.position;
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turnSpeed * Time.deltaTime, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDirection);
+    }
+
+    public void Patrol()
+    {
+        setRoute();
+
+        if(this.route == null)
         {
-            animator.SetBool("Shooting", false);
+            Debug.Log(this.gameObject.name + " - No unoccupied route found");
+            return;
         }
+
+        if(nextPoint == new Vector3(0, 0, 0))
+        {
+            nextPoint = FindClosestPoint(this.route);
+        }
+
+        nextPoint = checkIfPointReached(nextPoint);
+
+        MoveTowards(nextPoint);
+    }
+
+    private Vector3 checkIfPointReached(Vector3 nextPoint)
+    {
+        Vector3 newPoint = nextPoint;
+
+        Transform rt = this.route.transform;
+
+        if (Vector3.Magnitude(nextPoint - transform.position) < 10)
+        {
+            for (int i = 0; i < rt.childCount; i++)
+            {
+                if (rt.GetChild(i).position == nextPoint)
+                {
+                    if (i + 1 < rt.childCount - 1)
+                    {
+                        newPoint = rt.GetChild(i + 1).position;
+                        break;
+                    }
+                    else
+                    {
+                        newPoint = rt.GetChild(0).position;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return newPoint;
+    }
+
+    private void setRoute()
+    {
+        AI.Route[] routes = GameObject.FindObjectsOfType<AI.Route>();
+        Vector3 closestPoint = new Vector3(0, 0, 0);
+        AI.Route closestRoute = null;
+
+        foreach (AI.Route route in routes)
+        {
+            if (route.occupyingEnemy != null)
+            {
+                break;
+            }
+
+            Vector3 newPoint = FindClosestPoint(route);
+            float newDist = Vector3.Magnitude(newPoint - transform.position);
+            float closestDist = Vector3.Magnitude(closestPoint - transform.position);
+
+            if (closestPoint == new Vector3(0, 0, 0) || newDist < closestDist)
+            {
+                closestPoint = newPoint;
+                closestRoute = route;
+
+                route.occupyingEnemy = this;
+                this.route = route;
+            }
+        }
+    }
+
+    private Vector3 FindClosestPoint(AI.Route route)
+    {
+        Vector3 closestPoint = new Vector3();
+
+        foreach (Vector3 waypoint in route.waypoints)
+        {
+            float closestDist = Vector3.Magnitude(closestPoint - transform.position);
+            float distance = Vector3.Magnitude(waypoint - transform.position);
+
+            if (closestDist == 0 || closestDist > distance)
+            {
+                closestPoint = waypoint;
+            }
+        }
+
+        return closestPoint;
+    }
+
+    public void MoveTowards(Vector3 targetPoint)
+    {
+        animator.SetBool("Moving", true);
+
+        Vector3 targetDirection = targetPoint - transform.position;
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turnSpeed * Time.deltaTime, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDirection);
+
+        transform.position += transform.forward * movementSpd * 40 * Time.deltaTime; //movementSpd should be multiplied with base movement speed somewhere else
     }
 
     protected override void Die() {
