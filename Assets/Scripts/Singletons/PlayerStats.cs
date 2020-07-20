@@ -160,6 +160,7 @@ public class PlayerStats : MonoBehaviour {
 
     public void RandomizeGainedStat(WordsType type) {
         Stat[] stats;
+        TopInfoCanvas info = CanvasMaster.Instance.topInfoCanvas;
 
         // Set correct stats to the array
         switch (type) {
@@ -199,13 +200,13 @@ public class PlayerStats : MonoBehaviour {
             if (!increased) {
                 maxedStats.Add(index);
             } else {
-                CanvasMaster.Instance.ShowStatGain(TopInfoCanvas.CreateGainStatText(stat));
+                info.ShowTopInfoText(TopInfoCanvas.CreateGainStatText(stat));
                 break;
             }
 
             if (maxedStats.Count == stats.Length) {
                 // Inform player that all stats are maxed out
-                CanvasMaster.Instance.ShowStatGain(TopInfoCanvas.CreateStatsMaxedText(type));
+                info.ShowTopInfoText(TopInfoCanvas.CreateStatsMaxedText(type));
                 break;
             }
         }

@@ -117,13 +117,17 @@ public class Player : CharacterParent {
     }
 
     public void UseConsumable(ConsumableSO consumable) {
+        TopInfoCanvas info = CanvasMaster.Instance.topInfoCanvas;
+
         switch (consumable.consumableType) {
             /************ BATTERY ************/
             case ConsumableType.Battery:
                 consumable.DetermineFinalBatteryType();
                 switch (consumable.batteryType) {
                     case ConsumableSO.BatteryType.Shield:
-
+                        float amount = consumable.shieldRecoveryPercentage;
+                        info.ShowTopInfoText(TopInfoCanvas.CreateShieldRecoveredText(amount));
+                        SHIELD += amount;
                         break;
                     case ConsumableSO.BatteryType.Stamina:
                         break;

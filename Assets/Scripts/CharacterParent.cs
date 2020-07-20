@@ -11,7 +11,7 @@ public class CharacterParent : MonoBehaviour {
     private float hp, shield, stamina, ammo;
 
     public float HP { get { return hp; }
-        private set {
+        protected set {
             hp = value;
             if (characterType == CharacterType.Player)
                 hud.AdjustHUDBar(hud.hpBar, hp);
@@ -20,7 +20,7 @@ public class CharacterParent : MonoBehaviour {
 
     public float SHIELD {
         get { return shield; }
-        private set {
+        protected set {
             shield = value;
             if (characterType == CharacterType.Player)
                 hud.AdjustHUDBarShield(maxShield, SHIELD);
@@ -29,7 +29,7 @@ public class CharacterParent : MonoBehaviour {
 
     public float STAMINA {
         get { return stamina; }
-        private set {
+        protected set {
             stamina = value;
             if (characterType == CharacterType.Player)
                 hud.AdjustHUDBar(hud.staminaBar, stamina);
@@ -38,7 +38,7 @@ public class CharacterParent : MonoBehaviour {
 
     public float AMMO {
         get { return ammo; }
-        private set {
+        protected set {
             ammo = value;
             if (characterType == CharacterType.Player)
                 hud.AdjustAmmoAmount(weapon.ammoSize, ammo);
@@ -167,14 +167,6 @@ public class CharacterParent : MonoBehaviour {
         RetrieveArmorValues();
 
         return oldArmor;
-    }
-
-    protected void RestoreShields(float amount) {
-        SHIELD += amount;
-    }
-
-    protected void BoostStaminaRecovery(float percentage, float time) {
-
     }
 
     protected virtual void Update() {

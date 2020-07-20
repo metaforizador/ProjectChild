@@ -19598,13 +19598,13 @@ MonoBehaviour:
   canvasBackground: {fileID: 3387918349301346990}
   crosshair: {fileID: 5679500053164640467}
   dialogueCanvas: {fileID: 5520579358866669639}
-  topInfoCanvas: {fileID: 1230643687}
   statsCanvas: {fileID: 7860601287461588995}
   HUDCanvas: {fileID: 1605582751}
   chestCanvas: {fileID: 513601702}
   hotbarCanvas: {fileID: 7584817386448693930}
   inventoryCanvas: {fileID: 2645314726361284744}
   gameOverCanvas: {fileID: 8262855453088953417}
+  topInfoCanvas: {fileID: 7049069880509958765}
   canvasSounds: {fileID: 3203145661252116629}
   uiAnimator: {fileID: 1129561348169621206}
 --- !u!114 &1129561348169621206

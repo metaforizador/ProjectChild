@@ -19,6 +19,7 @@ public class TopInfoCanvas : MonoBehaviour {
     private UIAnimator animator;
     public LeanTweenType tweenType;
 
+    private Coroutine coroutineToHide;
     private float timeToShow = 3;
     private float transitionSpd = 1;
 
@@ -30,19 +31,32 @@ public class TopInfoCanvas : MonoBehaviour {
         return $"All stats for '{type.ToString()}' answers are maxed out!";
     }
 
-    void Awake() {
-        animator = CanvasMaster.Instance.uiAnimator;
+    public static string CreateShieldRecoveredText(float amount) {
+        return $"You recovered shields by {amount.ToString()} %!";
     }
 
     public void Initialize() {
         // Hide panel
+        animator = CanvasMaster.Instance.uiAnimator;
+        ResetPosition();
+    }
+
+    private void ResetPosition() {
         infoObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, hideYPosition);
     }
 
     public void ShowTopInfoText(string textToShow) {
+        gameObject.SetActive(true);
+        // Stop coroutine to hide the object if multiple texts are shown simultaneously
+        if (coroutineToHide != null) {
+            ResetPosition();
+            StopCoroutine(coroutineToHide);
+        }
+
         textView.text = textToShow;
+
         animator.MoveY(infoObject, 0, transitionSpd, tweenType).
-            setOnComplete(() => Helper.Instance.InvokeRealTime(() => HideTopInfo(), timeToShow));
+            setOnComplete(() => coroutineToHide = Helper.Instance.InvokeRealTime(() => HideTopInfo(), timeToShow));
     }
 
     private void HideTopInfo() {
