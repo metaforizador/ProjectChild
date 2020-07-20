@@ -73,6 +73,13 @@ public class ConsumableSO : PickableSO {
     [Range(1, 4)]
     public int craftValue = 1;
 
+    public ConsumableSO ConvertScrapToToy() {
+        // Get toy with same condition as the scrap
+        string cond = name.Substring(name.IndexOf(' ') + 1);
+        Debug.Log(cond);
+        return Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/Toy " + cond));
+    }
+
     /************ TOY ************/
     public const string DESCRIPTION_TOY = "As a consumable, it gives percentage amount of exp needed for the next level.";
     [Range(0f, 100f)]
@@ -97,8 +104,6 @@ public class ConsumableSO : PickableSO {
     }
 
     public bool CheckIfUsageSuccessful() {
-        // For some reason Helper.Instance.CheckPercentage() can't be used here
-
         float chance = 0f;
 
         if (consumableType.Equals(ConsumableType.ComsatLink) || consumableType.Equals(ConsumableType.Rig))
@@ -106,10 +111,7 @@ public class ConsumableSO : PickableSO {
         else if (consumableType.Equals(ConsumableType.Scrap))
             chance = chanceToTurnIntoToy;
 
-        // Randomize percentage
-        int randomPercentValue = Random.Range(1, 101); // 101 since then it returns values from 1 to 100
-
-        if (randomPercentValue <= chance)
+        if (Helper.CheckPercentage(chance))
             return true;
 
         // Else show item broke info

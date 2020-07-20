@@ -90,11 +90,7 @@ public class Inventory : MonoBehaviour {
             pickableItems.Remove(consumable);
         }
 
-        // Refresh hotbar and inventorycanvas items
-        CanvasMaster cm = CanvasMaster.Instance;
-        cm.hotbarCanvas.GetComponent<HotbarCanvas>().RefreshHotbarImages();
-        cm.inventoryCanvas.GetComponent<InventoryCanvas>().RefreshConsumables();
-
+        // Use items (Might have to be moved to somewhere else later)
         switch (consumable.consumableType) {
             case ConsumableType.Battery:
             case ConsumableType.ComsatLink:
@@ -103,6 +99,20 @@ public class Inventory : MonoBehaviour {
                 Player player = PlayerStats.Instance.player;
                 player.UseConsumable(consumable);
                 break;
+            case ConsumableType.Scrap:
+                if (consumable.CheckIfUsageSuccessful()) {
+                    ConsumableSO toy = consumable.ConvertScrapToToy();
+                    AddConsumable(toy);
+                    CanvasMaster.Instance.topInfoCanvas.ShowScrapToToy(consumable.name, toy.name);
+                }
+                break;
+            case ConsumableType.Scanner:
+                break;
         }
+
+        // Refresh hotbar and inventorycanvas items
+        CanvasMaster cm = CanvasMaster.Instance;
+        cm.hotbarCanvas.GetComponent<HotbarCanvas>().RefreshHotbarImages();
+        cm.inventoryCanvas.GetComponent<InventoryCanvas>().RefreshConsumables();
     }
 }

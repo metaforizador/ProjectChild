@@ -51,6 +51,10 @@ public class TopInfoCanvas : MonoBehaviour {
         ShowTopInfoText($"You gained {percentage.ToString()} % exp for next level!");
     }
 
+    public void ShowScrapToToy(string scrapName, string toyName) {
+        ShowTopInfoText($"{scrapName} successfully turned into a {toyName}!");
+    }
+
     public void Initialize() {
         // Hide panel
         animator = CanvasMaster.Instance.uiAnimator;
