@@ -17,8 +17,8 @@ public class ConsumableSO : PickableSO {
     public float identificationChance;
 
     /************ BATTERY ************/
-    public const string DESCRIPTION_BATTERY = "As a consumable, it can be used to restore either shields, increase " +
-                    "the speed of stamina recovery or ammo recovery. To know which one of those three the battery will increase, it " +
+    public const string DESCRIPTION_BATTERY = "As a consumable, it can be used to restore either shields or increase " +
+                    "the speed of stamina recovery or ammo recovery (same type speeds do not stack). To know which one of those three the battery will increase, it " +
                     "needs to be identified with a scanner.";
 
     public enum BatteryType { Unknown, Shield, Stamina, Ammo }

@@ -130,8 +130,16 @@ public class Player : CharacterParent {
                         SHIELD += amount;
                         break;
                     case ConsumableSO.BatteryType.Stamina:
+                        float staminaAmount = consumable.boostStaminaRecoverySpeed;
+                        float staminaTime = consumable.boostTimeInSeconds;
+                        info.ShowTopInfoText(TopInfoCanvas.CreateBoostText("stamina", staminaAmount, staminaTime));
+                        BoostRecovery(B_STAMINA, staminaAmount, staminaTime);
                         break;
                     case ConsumableSO.BatteryType.Ammo:
+                        float ammoAmount = consumable.boostAmmoRecoverySpeed;
+                        float ammoTime = consumable.boostTimeInSeconds;
+                        info.ShowTopInfoText(TopInfoCanvas.CreateBoostText("ammo", ammoAmount, ammoTime));
+                        BoostRecovery(B_AMMO, ammoAmount, ammoTime);
                         break;
                 }
                 break;

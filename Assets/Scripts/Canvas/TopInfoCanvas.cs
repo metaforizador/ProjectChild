@@ -35,6 +35,10 @@ public class TopInfoCanvas : MonoBehaviour {
         return $"You recovered shields by {amount.ToString()} %!";
     }
 
+    public static string CreateBoostText(string boostType, float amount, float time) {
+        return $"You activated {(amount * 100).ToString()} % {boostType} boost for {time.ToString()} seconds!";
+    }
+
     public void Initialize() {
         // Hide panel
         animator = CanvasMaster.Instance.uiAnimator;

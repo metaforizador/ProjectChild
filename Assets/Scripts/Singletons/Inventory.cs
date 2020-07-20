@@ -37,8 +37,8 @@ public class Inventory : MonoBehaviour {
         }
 
         // Test different type battery
-        ConsumableSO con = Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/Battery I"));
-        con.batteryType = ConsumableSO.BatteryType.Shield;
+        ConsumableSO con = Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/Battery IV"));
+        con.batteryType = ConsumableSO.BatteryType.Ammo;
         AddConsumable(con);
     }
 
