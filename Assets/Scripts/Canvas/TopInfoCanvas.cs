@@ -47,6 +47,10 @@ public class TopInfoCanvas : MonoBehaviour {
         ShowTopInfoText($"Item {itemName} broke!");
     }
 
+    public void ShowXpPercentageGainedText(float percentage) {
+        ShowTopInfoText($"You gained {percentage.ToString()} % exp for next level!");
+    }
+
     public void Initialize() {
         // Hide panel
         animator = CanvasMaster.Instance.uiAnimator;

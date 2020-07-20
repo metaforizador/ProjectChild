@@ -158,9 +158,9 @@ public class Player : CharacterParent {
                 break;
             /************ TOY ************/
             case ConsumableType.Toy:
-                if (consumable.CheckIfUsageSuccessful()) {
-                    
-                }
+                float xpToGain = consumable.expToGain;
+                info.ShowXpPercentageGainedText(xpToGain);
+                stats.GainPercentageXP(xpToGain);
                 break;
         }
     }

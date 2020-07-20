@@ -233,7 +233,14 @@ public class PlayerStats : MonoBehaviour {
         while (xp >= nextLevelUpXp)
                 LevelUp();
 
+        // Adjust hud bar here too since player is able to gain multiple levels
         hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, xp);
+    }
+
+    public void GainPercentageXP(float percentage) {
+        float fullPercentage = nextLevelUpXp - lastLevelUpXp;
+        float xpToGain = fullPercentage * (percentage / 100);
+        GainXP((int)xpToGain);
     }
 
     private void LevelUp() {
