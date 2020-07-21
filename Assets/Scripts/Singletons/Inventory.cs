@@ -88,12 +88,7 @@ public class Inventory : MonoBehaviour {
     }
 
     public void UseConsumable(ConsumableSO consumable) {
-        consumable.quantity--;
-        // If all consumables are used, remove item from inventory
-        if (consumable.quantity <= 0) {
-            pickableItems.Remove(consumable);
-        }
-
+        bool removeItem = true;
         // Use items (Might have to be moved to somewhere else later)
         switch (consumable.consumableType) {
             case ConsumableType.Battery:
@@ -111,9 +106,33 @@ public class Inventory : MonoBehaviour {
                 }
                 break;
             case ConsumableType.Scanner:
+                removeItem = false; // Don't remove scanner at this point
+                IdentifyCanvas ic = CanvasMaster.Instance.identifyCanvas;
+                ic.OpenIdentifyCanvas(consumable);
+
+                // If there are no identifiable items, close the canvas
+                if (ic.isEmpty) {
+                    CanvasMaster.Instance.topInfoCanvas.ShowIdentifiableEmpty();
+                    ic.CloseIdenfityCanvas();
+                }
                 break;
         }
 
+        if (removeItem)
+            RemoveConsumable(consumable);
+    }
+
+    public void RemoveConsumable(ConsumableSO consumable) {
+        consumable.quantity--;
+        // If all consumables are used, remove item from inventory
+        if (consumable.quantity <= 0) {
+            pickableItems.Remove(consumable);
+        }
+
+        RefreshInventoryItems();
+    }
+
+    public void RefreshInventoryItems() {
         // Refresh hotbar and inventorycanvas items
         CanvasMaster cm = CanvasMaster.Instance;
         cm.hotbarCanvas.GetComponent<HotbarCanvas>().RefreshHotbarImages();

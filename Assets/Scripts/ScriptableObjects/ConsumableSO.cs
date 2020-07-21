@@ -110,6 +110,8 @@ public class ConsumableSO : PickableSO {
             chance = chanceToBeSuccessful;
         else if (consumableType.Equals(ConsumableType.Scrap))
             chance = chanceToTurnIntoToy;
+        else if (consumableType.Equals(ConsumableType.Scanner))
+            chance = identificationChance;
 
         if (Helper.CheckPercentage(chance))
             return true;

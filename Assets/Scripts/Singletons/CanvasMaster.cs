@@ -24,6 +24,7 @@ public class CanvasMaster : MonoBehaviour {
         HUDCanvas, chestCanvas, hotbarCanvas, inventoryCanvas,
         gameOverCanvas;
     public TopInfoCanvas topInfoCanvas;
+    public IdentifyCanvas identifyCanvas;
     public CanvasSounds canvasSounds;
     public UIAnimator uiAnimator;
 
@@ -38,7 +39,10 @@ public class CanvasMaster : MonoBehaviour {
         // Enable canvases when game starts to fix fps hiccups when opening them
         dialogueCanvas.GetComponent<DialogueScript>().Initialize();
         topInfoCanvas.Initialize();
+
+        // Disable some canvases in case they are left open
         canvasBackground.SetActive(false);
+        identifyCanvas.gameObject.SetActive(false);
 
         // Initialize saved questions and replies
         askedQuestions = new Dictionary<Mood, List<string>>();

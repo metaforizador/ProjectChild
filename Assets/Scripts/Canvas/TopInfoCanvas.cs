@@ -23,6 +23,14 @@ public class TopInfoCanvas : MonoBehaviour {
     private float timeToShow = 3;
     private float transitionSpd = 1;
 
+    /************** 
+     * METHODS FOR DIFFERENT TEXTS
+     * 
+     * I am using a system like this, since I don't have time to learn how to use xml string resources
+     * in Unity. If I would know how to do that, then I would only need one method. Using a system like
+     * this also collects all the important strings on the same class, so it's easy to make adjustments
+     * to them and possibly use different languages.
+     * **************/
     public void ShowGainStatText(Stat stat) {
         ShowTopInfoText($"You gained '{stat.name}' stat bonus!");
     }
@@ -54,6 +62,16 @@ public class TopInfoCanvas : MonoBehaviour {
     public void ShowScrapToToy(string scrapName, string toyName) {
         ShowTopInfoText($"{scrapName} successfully turned into a {toyName}!");
     }
+
+    public void ShowIdentifiableEmpty() {
+        ShowTopInfoText("You don't have any identifiable items!");
+    }
+
+    public void ShowBatteryIdentified(string batteryType) {
+        ShowTopInfoText($"Battery is '{batteryType}' type!");
+    }
+
+    /************** CLASS METHODS **************/
 
     public void Initialize() {
         // Hide panel
