@@ -68,7 +68,7 @@ public class TopInfoCanvas : MonoBehaviour {
     }
 
     public void ShowBatteryIdentified(string batteryType) {
-        ShowTopInfoText($"Battery is '{batteryType}' type!");
+        ShowTopInfoText($"Battery is of '{batteryType}' type!");
     }
 
     /************** CLASS METHODS **************/
