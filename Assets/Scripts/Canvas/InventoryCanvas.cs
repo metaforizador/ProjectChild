@@ -31,7 +31,7 @@ public class InventoryCanvas : MonoBehaviour {
     public GameObject weaponStatsObject, armorStatsObject, consumablesObject;
 
     // ConsumableItems
-    public GameObject consumableItemPrefab, consumableContent;
+    public ConsumablesScrollSystem consumableScrollSystem;
     public TextMeshProUGUI selectedItemName, selectedItemDescription;
     public GameObject itemStatsDisplay, scannerStats, batteryStats, comsatLinkStats, rigStats, scrapStats, toyStats;
     private ConsumableSO selectedItem;
@@ -132,20 +132,14 @@ public class InventoryCanvas : MonoBehaviour {
     /// </summary>
     public void ToggleConsumables() {
         // Destroy all previous consumable item buttons
-        foreach (Transform child in consumableContent.transform) {
-            Destroy(child.gameObject);
-        }
+        consumableScrollSystem.ClearAllItems();
 
         // Get consumables from inventory
         List<ConsumableSO> consumables = Inventory.Instance.GetConsumables();
         foreach (ConsumableSO con in consumables) {
-            // Create button for each consumable
-            GameObject btn = Helper.Instance.CreateObjectChild(consumableItemPrefab, consumableContent);
-            // Add name and quantity to the consumable
-            btn.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = con.name;
-            btn.transform.Find("Quantity").GetComponent<TextMeshProUGUI>().text = con.quantity.ToString();
-            // Show item information when clicked
-            btn.GetComponent<Button>().onClick.AddListener(() => ShowItemInfo(con));
+            consumableScrollSystem.AddItem(con).
+                // Show item information when clicked
+                onClick.AddListener(() => ShowItemInfo(con));
         }
 
         ShowRequiredCategory(CONSUMABLES);
