@@ -6,7 +6,7 @@ using TMPro;
 
 public class InventoryCanvas : MonoBehaviour {
 
-    public GameObject menuAndCategories, categoriesParent;
+    public GameObject menuAndCategories, categoriesParent, openedCategoryParent;
     public GameObject weaponObj, armorObj, consumablesObj, miscObj;
     private GameObject[] categoryObjects;
     private float objCategoryStartX = -90;
@@ -31,7 +31,7 @@ public class InventoryCanvas : MonoBehaviour {
     public GameObject weaponStatsObject, armorStatsObject, consumablesObject;
 
     // ConsumableItems
-    public GameObject consumableItemPrefab, consumableContent;
+    public ConsumablesScrollSystem consumableScrollSystem;
     public TextMeshProUGUI selectedItemName, selectedItemDescription;
     public GameObject itemStatsDisplay, scannerStats, batteryStats, comsatLinkStats, rigStats, scrapStats, toyStats;
     private ConsumableSO selectedItem;
@@ -132,24 +132,23 @@ public class InventoryCanvas : MonoBehaviour {
     /// </summary>
     public void ToggleConsumables() {
         // Destroy all previous consumable item buttons
-        foreach (Transform child in consumableContent.transform) {
-            Destroy(child.gameObject);
-        }
+        consumableScrollSystem.ClearAllItems();
 
         // Get consumables from inventory
         List<ConsumableSO> consumables = Inventory.Instance.GetConsumables();
         foreach (ConsumableSO con in consumables) {
-            // Create button for each consumable
-            GameObject btn = Helper.Instance.CreateObjectChild(consumableItemPrefab, consumableContent);
-            // Add name and quantity to the consumable
-            btn.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = con.name;
-            btn.transform.Find("Quantity").GetComponent<TextMeshProUGUI>().text = con.quantity.ToString();
-            // Show item information when clicked
-            btn.GetComponent<Button>().onClick.AddListener(() => ShowItemInfo(con));
+            consumableScrollSystem.AddItem(con).
+                // Show item information when clicked
+                onClick.AddListener(() => ShowItemInfo(con));
         }
 
         ShowRequiredCategory(CONSUMABLES);
         itemStatsDisplay.SetActive(false); // Disable item stats display since item is not yet chosen
+    }
+
+    public void CloseSubcategory() {
+        ShowRequiredCategory(NONE);
+        sounds.PlaySound(sounds.BUTTON_BACK);
     }
 
     /// <summary>
@@ -182,6 +181,7 @@ public class InventoryCanvas : MonoBehaviour {
                 holder.boostStaminaRecoverySpeed.text = (con.boostStaminaRecoverySpeed * 100).ToString() + "%";
                 holder.boostAmmoRecoverySpeed.text = (con.boostAmmoRecoverySpeed * 100).ToString() + "%";
                 holder.boostTimeInSeconds.text = con.boostTimeInSeconds.ToString();
+                holder.batteryType.text = con.batteryType.ToString();
                 break;
             case ConsumableType.ComsatLink:
                 selectedItemDescription.text = ConsumableSO.DESCRIPTION_COMSAT_LINK;
@@ -230,6 +230,7 @@ public class InventoryCanvas : MonoBehaviour {
     }
 
     public void EquipItem() {
+        sounds.PlaySound(sounds.BUTTON_SELECT);
         hotbar.SetIncomingItem(selectedItem);
     }
 
@@ -289,6 +290,7 @@ public class InventoryCanvas : MonoBehaviour {
         currentlyOpen = category;
 
         // Set objects active based on if they should be currently open
+        openedCategoryParent.SetActive(currentlyOpen != NONE);
         weaponStatsObject.SetActive(currentlyOpen == WEAPON);
         armorStatsObject.SetActive(currentlyOpen == ARMOR);
         consumablesObject.SetActive(currentlyOpen == CONSUMABLES);

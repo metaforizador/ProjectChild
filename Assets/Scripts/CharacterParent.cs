@@ -11,7 +11,7 @@ public class CharacterParent : MonoBehaviour {
     private float hp, shield, stamina, ammo;
 
     public float HP { get { return hp; }
-        private set {
+        protected set {
             hp = value;
             if (characterType == CharacterType.Player)
                 hud.AdjustHUDBar(hud.hpBar, hp);
@@ -20,7 +20,7 @@ public class CharacterParent : MonoBehaviour {
 
     public float SHIELD {
         get { return shield; }
-        private set {
+        protected set {
             shield = value;
             if (characterType == CharacterType.Player)
                 hud.AdjustHUDBarShield(maxShield, SHIELD);
@@ -29,7 +29,7 @@ public class CharacterParent : MonoBehaviour {
 
     public float STAMINA {
         get { return stamina; }
-        private set {
+        protected set {
             stamina = value;
             if (characterType == CharacterType.Player)
                 hud.AdjustHUDBar(hud.staminaBar, stamina);
@@ -38,7 +38,7 @@ public class CharacterParent : MonoBehaviour {
 
     public float AMMO {
         get { return ammo; }
-        private set {
+        protected set {
             ammo = value;
             if (characterType == CharacterType.Player)
                 hud.AdjustAmmoAmount(weapon.ammoSize, ammo);
@@ -62,6 +62,12 @@ public class CharacterParent : MonoBehaviour {
     private const float RECOVERY_DELAY_TIME = 1.5f;
     private const int D_SHIELD = 0, D_STAMINA = 1;
     private float[] delays = new float[] { 0, 0 };
+
+    // Stamina and ammo boosts
+    private const int DEFAULT_BOOST = 1;
+    protected const int B_STAMINA = 0, B_AMMO = 1;
+    private float[] boostMultiPlier = new float[] { DEFAULT_BOOST, DEFAULT_BOOST };
+    private float[] boostTime = new float[] { 0, 0 };
 
     protected CharacterType characterType;
 
@@ -169,10 +175,27 @@ public class CharacterParent : MonoBehaviour {
         return oldArmor;
     }
 
+    protected void BoostRecovery(int boostType, float multiplier, float time) {
+        boostMultiPlier[boostType] = multiplier;
+        boostTime[boostType] = time;
+    }
+
     protected virtual void Update() {
+        // Count down shield and stamina recovery delay times
         for (int i = 0; i < delays.Length; i++) {
             if (delays[i] > 0)
                 delays[i] -= Time.deltaTime;
+        }
+
+        // Count down stamina and ammo recovery boost times
+        for (int i = 0; i < boostTime.Length; i++) {
+            if (boostTime[i] > 0) {
+                boostTime[i] -= Time.deltaTime;
+
+                // Reset multiplier if boost time ends
+                if (boostTime[i] <= 0)
+                    boostMultiPlier[i] = DEFAULT_BOOST;
+            }
         }
     }
 
@@ -192,7 +215,7 @@ public class CharacterParent : MonoBehaviour {
 
             // Recover stamina
             if (STAMINA < MAX_VALUE && delays[D_STAMINA] <= 0) {
-                STAMINA += staminaRecovery;
+                STAMINA += staminaRecovery * boostMultiPlier[B_STAMINA];
 
                 if (STAMINA > MAX_VALUE)
                     STAMINA = MAX_VALUE;
@@ -200,7 +223,7 @@ public class CharacterParent : MonoBehaviour {
 
             // Recover ammo
             if (AMMO < MAX_VALUE && characterType == CharacterType.Player) {
-                AMMO += ammoRecovery;
+                AMMO += ammoRecovery * boostMultiPlier[B_AMMO];
 
                 if (AMMO > MAX_VALUE)
                     AMMO = MAX_VALUE;

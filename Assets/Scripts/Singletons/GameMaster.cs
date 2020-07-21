@@ -5,7 +5,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.SceneManagement;
 
-public enum GameState { Movement, Menu, Dialogue, Chest, Hotbar, Dead };
+public enum GameState { Movement, Menu, Dialogue, Chest, Hotbar, Identify, Dead };
 
 public class GameMaster : MonoBehaviour {
     
@@ -53,6 +53,9 @@ public class GameMaster : MonoBehaviour {
             case GameState.Dead:
                 cm.ShowCanvasBackround(true);
                 cm.ShowHUDCanvas(false);
+                break;
+            case GameState.Identify:
+                cm.ShowCanvasBackround(true);
                 break;
         }
     }

@@ -37,8 +37,9 @@ public class Chest : MonoBehaviour {
         PickableSO[] pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/Weapons/");
 
         foreach (PickableSO item in pickArray) {
-            if (item.condition.Equals(condition))
+            if (item.condition.Equals(condition)) {
                 pickList.Add(item);
+            }
         }
 
         pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/Armors/");

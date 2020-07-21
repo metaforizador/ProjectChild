@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Inventory : MonoBehaviour {
 
@@ -27,13 +28,19 @@ public class Inventory : MonoBehaviour {
         // Add test items
         PickableSO[] pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/Consumables/");
 
-        foreach (PickableSO item in pickArray) {
+        foreach (PickableSO so in pickArray) {
+            PickableSO item = Instantiate(so);
             if (item is ConsumableSO)
                 AddConsumable((ConsumableSO)item);
             else {
                 pickableItems.Add(item);
             }
         }
+
+        // Test different type battery
+        ConsumableSO con = Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/Battery IV"));
+        con.batteryType = ConsumableSO.BatteryType.Ammo;
+        AddConsumable(con);
     }
 
     public void LoadInventory(Save save) {
@@ -51,12 +58,13 @@ public class Inventory : MonoBehaviour {
     public void AddConsumable(ConsumableSO consumable) {
         // If the consumable is already in inventory, add +1 to quantity and return
         foreach (PickableSO item in pickableItems) {
-            // Contains can't be used since consumable and item in inventory have different pointers
-            // So use name (since it's unique) to check for items
-            if (item.name.Equals(consumable.name)) {
+            if (item is ConsumableSO) {
                 ConsumableSO con = (ConsumableSO)item;
-                con.quantity++;
-                return;
+                // Check using different equals methods based on ConsumableType
+                if (con.EqualsConsumable(consumable)) {
+                    con.quantity++;
+                    return;
+                }
             }
         }
 
@@ -73,16 +81,58 @@ public class Inventory : MonoBehaviour {
                 consumables.Add((ConsumableSO) item);
         }
 
-        return consumables;
+        // Sort list by name
+        var sortedList = consumables.OrderBy(go => go.name).ToList();
+
+        return sortedList;
     }
 
     public void UseConsumable(ConsumableSO consumable) {
+        bool removeItem = true;
+        // Use items (Might have to be moved to somewhere else later)
+        switch (consumable.consumableType) {
+            case ConsumableType.Battery:
+            case ConsumableType.ComsatLink:
+            case ConsumableType.Rig:
+            case ConsumableType.Toy:
+                Player player = PlayerStats.Instance.player;
+                player.UseConsumable(consumable);
+                break;
+            case ConsumableType.Scrap:
+                if (consumable.CheckIfUsageSuccessful()) {
+                    ConsumableSO toy = consumable.ConvertScrapToToy();
+                    AddConsumable(toy);
+                    CanvasMaster.Instance.topInfoCanvas.ShowScrapToToy(consumable.name, toy.name);
+                }
+                break;
+            case ConsumableType.Scanner:
+                removeItem = false; // Don't remove scanner at this point
+                IdentifyCanvas ic = CanvasMaster.Instance.identifyCanvas;
+                ic.OpenIdentifyCanvas(consumable);
+
+                // If there are no identifiable items, close the canvas
+                if (ic.isEmpty) {
+                    CanvasMaster.Instance.topInfoCanvas.ShowIdentifiableEmpty();
+                    ic.CloseIdenfityCanvas();
+                }
+                break;
+        }
+
+        if (removeItem)
+            RemoveConsumable(consumable);
+    }
+
+    public void RemoveConsumable(ConsumableSO consumable) {
         consumable.quantity--;
         // If all consumables are used, remove item from inventory
         if (consumable.quantity <= 0) {
             pickableItems.Remove(consumable);
         }
 
+        RefreshInventoryItems();
+    }
+
+    public void RefreshInventoryItems() {
         // Refresh hotbar and inventorycanvas items
         CanvasMaster cm = CanvasMaster.Instance;
         cm.hotbarCanvas.GetComponent<HotbarCanvas>().RefreshHotbarImages();
