@@ -4,6 +4,29 @@ using UnityEngine;
 
 public enum ConsumableType { Scanner, Battery, ComsatLink, Rig, Scrap, Toy }
 
+/// <summary>
+/// Use this to save and load ConsumableSO instances.
+/// 
+/// All variables that are changed from code needs to be added here
+/// in order to saving and loading work correctly. ConsumableSO will
+/// be generated in SOCreator class, so if you add new variables,
+/// remember to add them there too.
+/// </summary>
+[System.Serializable]
+public class SerializableConsumableSO {
+    public string name;
+    public int quantity;
+    public string batteryTypeString;
+    public string toyWordsTypeString;
+
+    public SerializableConsumableSO(ConsumableSO consumable) {
+        name = consumable.name;
+        quantity = consumable.quantity;
+        batteryTypeString = consumable.batteryType.ToString();
+        toyWordsTypeString = consumable.toyWordsType.ToString();
+    }
+}
+
 [CreateAssetMenu(fileName = "New Consumable", menuName = "Consumable")]
 public class ConsumableSO : PickableSO {
 
@@ -81,11 +104,27 @@ public class ConsumableSO : PickableSO {
     }
 
     /************ TOY ************/
-    public const string DESCRIPTION_TOY = "As a consumable, it gives percentage amount of exp needed for the next level.";
+    public const string DESCRIPTION_TOY = "As a consumable, it gives percentage amount of exp needed for the next level. If the player " +
+                    "gains a level when using the toy, he will gain a stat boost determined by the type of the toy.";
     [Range(0f, 100f)]
     public float expToGain;
+    public WordsType toyWordsType;
 
     /************ GLOBAL METHODS ************/
+
+    public void Initialize() {
+        Debug.Log("Initialize");
+        switch (consumableType) {
+            case ConsumableType.Toy:
+                // Randomize toy type if it's null
+                if (toyWordsType.Equals(WordsType.None)) {
+                    toyWordsType = (WordsType)Random.Range(1, System.Enum.GetValues(typeof(WordsType)).Length);
+                    Debug.Log("Type: " + toyWordsType);
+                }
+                break;
+        }
+    }
+
     /// <summary>
     /// Checks if item is basically the same item (might have different pointer).
     /// 

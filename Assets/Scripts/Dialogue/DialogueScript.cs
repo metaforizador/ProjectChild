@@ -6,8 +6,8 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 
-public enum WordsType { Stoic, Nurturing, Idealistic, Nihilistic, Rational };
-public enum Mood { Uncertain, Joyful, Hopeless, Gloomy, Curious }
+public enum WordsType { None, Stoic, Nurturing, Idealistic, Nihilistic, Rational }
+public enum Mood { None, Uncertain, Joyful, Hopeless, Gloomy, Curious }
 
 public class DialogueScript : MonoBehaviour {
 
@@ -63,7 +63,7 @@ public class DialogueScript : MonoBehaviour {
         // Change game state
         GameMaster.Instance.SetState(GameState.Dialogue);
         // Randomize mood for testing purposes
-        curMood = (Mood)Mood.ToObject(typeof(Mood), Random.Range(0, 4));
+        curMood = (Mood)Mood.ToObject(typeof(Mood), Random.Range(1, System.Enum.GetValues(typeof(Mood)).Length));
 
         // Set question text and answers
         Answer[] answers = new Answer[0];

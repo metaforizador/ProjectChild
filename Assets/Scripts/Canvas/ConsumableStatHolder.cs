@@ -16,5 +16,5 @@ public class ConsumableStatHolder : MonoBehaviour{
         chanceToTurnIntoToy, creditValue, craftValue,
 
         // Toy
-        expToGain;
+        toyWordsType, expToGain;
 }

@@ -25,10 +25,10 @@ public class Save {
     public Dictionary<WordsType, List<string>> givenReplies;
 
     //////// Inventory ////////
-    public WeaponSO equippedWeapon;
-    public ArmorSO equippedArmor;
-    public List<PickableSO> inventoryItems;
+    public string equippedWeapon;
+    public string equippedArmor;
+    public List<SerializableConsumableSO> inventoryConsumables;
 
     //////// Hotbar ////////
-    public ConsumableSO[] hotbarItems;
+    public SerializableConsumableSO[] hotbarConsumables;
 }

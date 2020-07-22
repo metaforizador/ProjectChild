@@ -203,6 +203,7 @@ public class InventoryCanvas : MonoBehaviour {
             case ConsumableType.Toy:
                 selectedItemDescription.text = ConsumableSO.DESCRIPTION_TOY;
                 holder = toyStats.GetComponent<ConsumableStatHolder>();
+                holder.toyWordsType.text = con.toyWordsType.ToString();
                 holder.expToGain.text = con.expToGain.ToString() + "%";
                 break;
         }
