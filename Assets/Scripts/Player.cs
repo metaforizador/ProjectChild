@@ -188,7 +188,7 @@ public class Player : CharacterParent {
 
         if (collider.CompareTag("Chest")) {
             hud.HideInteract();
-            cm.chestCanvas.GetComponent<ChestCanvas>().CloseChest();
+            cm.chestCanvas.CloseChest();
         }
     }
 }
