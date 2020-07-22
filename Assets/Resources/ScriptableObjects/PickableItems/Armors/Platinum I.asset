@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad44ce9fe6f571641863c3793400d699, type: 3}
   m_Name: Platinum I
   m_EditorClassIdentifier: 
+  name: Platinum I
   sprite: {fileID: 0}
   condition: 0
   decreaseShieldRecoveryDelay: 5.9

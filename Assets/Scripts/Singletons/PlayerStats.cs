@@ -160,6 +160,7 @@ public class PlayerStats : MonoBehaviour {
 
     public void RandomizeGainedStat(WordsType type) {
         Stat[] stats;
+        TopInfoCanvas info = CanvasMaster.Instance.topInfoCanvas;
 
         // Set correct stats to the array
         switch (type) {
@@ -199,13 +200,13 @@ public class PlayerStats : MonoBehaviour {
             if (!increased) {
                 maxedStats.Add(index);
             } else {
-                CanvasMaster.Instance.ShowStatGain(StatGainCanvas.CreateGainStatText(stat));
+                info.ShowGainStatText(stat);
                 break;
             }
 
             if (maxedStats.Count == stats.Length) {
                 // Inform player that all stats are maxed out
-                CanvasMaster.Instance.ShowStatGain(StatGainCanvas.CreateStatsMaxedText(type));
+                info.ShowStatsMaxedText(type);
                 break;
             }
         }
@@ -232,7 +233,14 @@ public class PlayerStats : MonoBehaviour {
         while (xp >= nextLevelUpXp)
                 LevelUp();
 
+        // Adjust hud bar here too since player is able to gain multiple levels
         hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, xp);
+    }
+
+    public void GainPercentageXP(float percentage) {
+        float fullPercentage = nextLevelUpXp - lastLevelUpXp;
+        float xpToGain = fullPercentage * (percentage / 100);
+        GainXP((int)xpToGain);
     }
 
     private void LevelUp() {

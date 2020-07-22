@@ -20,9 +20,11 @@ public class CanvasMaster : MonoBehaviour {
     private GameMaster gm;
 
     public GameObject canvasBackground, crosshair;
-    public GameObject dialogueCanvas, statGainCanvas, statsCanvas,
+    public GameObject dialogueCanvas, statsCanvas,
         HUDCanvas, chestCanvas, hotbarCanvas, inventoryCanvas,
         gameOverCanvas;
+    public TopInfoCanvas topInfoCanvas;
+    public IdentifyCanvas identifyCanvas;
     public CanvasSounds canvasSounds;
     public UIAnimator uiAnimator;
 
@@ -36,8 +38,11 @@ public class CanvasMaster : MonoBehaviour {
         
         // Enable canvases when game starts to fix fps hiccups when opening them
         dialogueCanvas.GetComponent<DialogueScript>().Initialize();
-        statGainCanvas.GetComponent<StatGainCanvas>().Initialize();
+        topInfoCanvas.Initialize();
+
+        // Disable some canvases in case they are left open
         canvasBackground.SetActive(false);
+        identifyCanvas.gameObject.SetActive(false);
 
         // Initialize saved questions and replies
         askedQuestions = new Dictionary<Mood, List<string>>();
@@ -79,11 +84,6 @@ public class CanvasMaster : MonoBehaviour {
 
     public void OpenDialogue() {
         dialogueCanvas.SetActive(true);
-    }
-
-    public void ShowStatGain(string gainedStats) {
-        statGainCanvas.SetActive(true);
-        statGainCanvas.GetComponent<StatGainCanvas>().ShowStatGain(gainedStats);
     }
 
     public void ShowStats() {

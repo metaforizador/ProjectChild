@@ -116,6 +116,55 @@ public class Player : CharacterParent {
         }
     }
 
+    public void UseConsumable(ConsumableSO consumable) {
+        TopInfoCanvas info = CanvasMaster.Instance.topInfoCanvas;
+
+        switch (consumable.consumableType) {
+            /************ BATTERY ************/
+            case ConsumableType.Battery:
+                consumable.DetermineFinalBatteryType();
+                switch (consumable.batteryType) {
+                    case ConsumableSO.BatteryType.Shield:
+                        float amount = consumable.shieldRecoveryPercentage;
+                        info.ShowShieldRecoveredText(amount);
+                        SHIELD += amount;
+                        break;
+                    case ConsumableSO.BatteryType.Stamina:
+                        float staminaAmount = consumable.boostStaminaRecoverySpeed;
+                        float staminaTime = consumable.boostTimeInSeconds;
+                        info.ShowBoostText("stamina", staminaAmount, staminaTime);
+                        BoostRecovery(B_STAMINA, staminaAmount, staminaTime);
+                        break;
+                    case ConsumableSO.BatteryType.Ammo:
+                        float ammoAmount = consumable.boostAmmoRecoverySpeed;
+                        float ammoTime = consumable.boostTimeInSeconds;
+                        info.ShowBoostText("ammo", ammoAmount, ammoTime);
+                        BoostRecovery(B_AMMO, ammoAmount, ammoTime);
+                        break;
+                }
+                break;
+            /************ COMSAT LINK ************/
+            case ConsumableType.ComsatLink:
+                if (consumable.CheckIfUsageSuccessful()) {
+                    // Call an airstrike
+                }
+                break;
+            /************ RIG ************/
+            case ConsumableType.Rig:
+                if (consumable.CheckIfUsageSuccessful()) {
+                    info.ShowHealthRecoveredText();
+                    HP += ConsumableSO.RIG_HP_TO_RECOVER_PERCENTAGE;
+                }
+                break;
+            /************ TOY ************/
+            case ConsumableType.Toy:
+                float xpToGain = consumable.expToGain;
+                info.ShowXpPercentageGainedText(xpToGain);
+                stats.GainPercentageXP(xpToGain);
+                break;
+        }
+    }
+
     protected override void Die() {
         base.Die();
         cm.ShowGameOverCanvas(true);

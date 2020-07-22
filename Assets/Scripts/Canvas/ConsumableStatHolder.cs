@@ -7,7 +7,7 @@ public class ConsumableStatHolder : MonoBehaviour{
         identificationChance,
 
         // Battery
-        shieldRecoveryPercentage, boostStaminaRecoverySpeed, boostAmmoRecoverySpeed, boostTimeInSeconds,
+        batteryType, shieldRecoveryPercentage, boostStaminaRecoverySpeed, boostAmmoRecoverySpeed, boostTimeInSeconds,
 
         // Comsat Link & Rig
         chanceToBeSuccessful,

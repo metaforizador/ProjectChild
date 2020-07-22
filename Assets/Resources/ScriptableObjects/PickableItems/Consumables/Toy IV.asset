@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12bdc419337b6424c823d17486ae8959, type: 3}
   m_Name: Toy IV
   m_EditorClassIdentifier: 
+  name: Toy IV
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   condition: 3
   consumableType: 5
   quantity: 1
   identificationChance: 0
+  batteryType: 0
   shieldRecoveryPercentage: 0
   boostStaminaRecoverySpeed: 1.1
   boostAmmoRecoverySpeed: 1.1

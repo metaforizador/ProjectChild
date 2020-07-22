@@ -7,7 +7,7 @@ using UnityEngine;
 public class ConsumableSOEditor : Editor {
 
     public SerializedProperty
-        sprite, condition, consumableType,
+        nameProp, sprite, condition, consumableType,
         // Scanner
         identificationChance,
 
@@ -25,6 +25,7 @@ public class ConsumableSOEditor : Editor {
 
     void OnEnable() {
         // Setup the SerializedProperties
+        nameProp = serializedObject.FindProperty("name");
         sprite = serializedObject.FindProperty("sprite");
         condition = serializedObject.FindProperty("condition");
         consumableType = serializedObject.FindProperty("consumableType");
@@ -52,7 +53,8 @@ public class ConsumableSOEditor : Editor {
 
     public override void OnInspectorGUI() {
         serializedObject.Update();
-        
+
+        EditorGUILayout.PropertyField(nameProp);
         EditorGUILayout.PropertyField(sprite);
         EditorGUILayout.PropertyField(consumableType);
         EditorGUILayout.PropertyField(condition);

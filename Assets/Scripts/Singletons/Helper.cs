@@ -158,13 +158,13 @@ public class Helper : MonoBehaviour
     /// </summary>
     /// <param name="action">action to do after time</param>
     /// <param name="seconds">time to wait</param>
-    public void InvokeRealTime(UnityAction action, float seconds) {
-        StartCoroutine(InvokeRealtimeCoroutine(action, seconds));
+    /// <returns>invoked coroutine</returns>
+    public Coroutine InvokeRealTime(UnityAction action, float seconds) {
+        return StartCoroutine(InvokeRealtimeCoroutine(action, seconds));
     }
 
     private IEnumerator InvokeRealtimeCoroutine(UnityAction action, float seconds) {
         yield return new WaitForSecondsRealtime(seconds);
-        if (action != null)
-            action();
+        action?.Invoke();
     }
 }

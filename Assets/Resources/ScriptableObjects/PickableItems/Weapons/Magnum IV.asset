@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f622394048bc7341976b4bd1422a2a3, type: 3}
   m_Name: Magnum IV
   m_EditorClassIdentifier: 
+  name: Magnum IV
   sprite: {fileID: 0}
   condition: 3
   shootingSound: {fileID: 8300000, guid: ca44620350415ba42ad5c1c0e0e57368, type: 3}
