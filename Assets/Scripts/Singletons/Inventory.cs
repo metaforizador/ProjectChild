@@ -90,9 +90,11 @@ public class Inventory : MonoBehaviour {
             case ConsumableType.Battery:
             case ConsumableType.ComsatLink:
             case ConsumableType.Rig:
-            case ConsumableType.Toy:
                 Player player = PlayerStats.Instance.player;
                 player.UseConsumable(consumable);
+                break;
+            case ConsumableType.Toy:
+                PlayerStats.Instance.UseToy(consumable);
                 break;
             case ConsumableType.Scrap:
                 if (consumable.CheckIfUsageSuccessful()) {

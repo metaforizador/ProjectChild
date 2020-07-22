@@ -220,10 +220,8 @@ public class PlayerStats : MonoBehaviour {
 
     private void RefreshPlayerForStatChanges() {
         // Refresh player stats
-        GameObject go = GameObject.FindWithTag("Player");
-
-        if (go != null)
-            go.GetComponent<Player>().RefreshStats();
+        if (player != null)
+            player.RefreshStats();
     }
 
     public void GainXP(int amount) {
@@ -237,10 +235,19 @@ public class PlayerStats : MonoBehaviour {
         hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, xp);
     }
 
-    public void GainPercentageXP(float percentage) {
+    public void UseToy(ConsumableSO toy) {
+        int currentLevel = level;
         float fullPercentage = nextLevelUpXp - lastLevelUpXp;
-        float xpToGain = fullPercentage * (percentage / 100);
+        float xpToGain = fullPercentage * (toy.expToGain / 100);
         GainXP((int)xpToGain);
+
+        if (currentLevel != level) {
+            // If player gained a level, use that level to increase stats
+            RandomizeGainedStat(toy.toyWordsType);
+        } else {
+            // Else show info text that player gained xp
+            CanvasMaster.Instance.topInfoCanvas.ShowXpPercentageGainedText(toy.expToGain);
+        }
     }
 
     private void LevelUp() {

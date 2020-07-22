@@ -156,12 +156,6 @@ public class Player : CharacterParent {
                     HP += ConsumableSO.RIG_HP_TO_RECOVER_PERCENTAGE;
                 }
                 break;
-            /************ TOY ************/
-            case ConsumableType.Toy:
-                float xpToGain = consumable.expToGain;
-                info.ShowXpPercentageGainedText(xpToGain);
-                stats.GainPercentageXP(xpToGain);
-                break;
         }
     }
 
