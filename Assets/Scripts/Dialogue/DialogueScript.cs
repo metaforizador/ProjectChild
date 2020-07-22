@@ -124,6 +124,10 @@ public class DialogueScript : MonoBehaviour {
         sounds.PlaySound(audios[type]);
     }
 
+    public void SkipChildSpeech() {
+        Helper.Instance.skipTextWrite = true;
+    }
+
     /// <summary>
     /// Closes dialogue after child has replied.
     /// </summary>

@@ -25,6 +25,7 @@ public class Helper : MonoBehaviour
     private float writeSpeed = 0.05f;
     private float writeSpeedLittlePause = 0.3f;
 
+    public bool skipTextWrite = false;
     private CanvasSounds sounds;
     public AudioClip a, e, i, o, u, y;
     private Dictionary<char, AudioClip> vowels = new Dictionary<char, AudioClip>();
@@ -50,10 +51,16 @@ public class Helper : MonoBehaviour
     }
 
     private IEnumerator TypeSentence(string textToWrite, TextMeshProUGUI textView, WritingComplete methodToCall) {
+        skipTextWrite = false;
         textView.text = textToWrite;
         textView.maxVisibleCharacters = 0;
 
         for (int i = 1; i <= textToWrite.Length; i++) {
+            if (skipTextWrite) {
+                textView.maxVisibleCharacters = textToWrite.Length;
+                break;
+            }
+
             textView.maxVisibleCharacters = i;
             char curLetter = textToWrite[i - 1];    // Get current character to know when to pause
 
