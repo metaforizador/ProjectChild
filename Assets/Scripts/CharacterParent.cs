@@ -261,6 +261,7 @@ public class CharacterParent : MonoBehaviour {
                     {
                         crosshairPoint = hit.point;
                         bulletDirection = crosshairPoint - bulletPoint.transform.position;
+                        Debug.Log(hit.collider.gameObject.name);
                     }
                     else
                     {
@@ -317,6 +318,7 @@ public class CharacterParent : MonoBehaviour {
     }
 
     protected virtual void TakeDamage(DamageType type, float amount, float criticalRate) {
+        Debug.Log("takeDamage");
         // Check if damage got dodged
         if (Helper.CheckPercentage(dodgeRate)) {
             Debug.Log("Dodged");

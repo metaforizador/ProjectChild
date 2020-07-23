@@ -72,6 +72,11 @@ public class Enemy : CharacterParent {
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
+
     protected override void TakeDamage(DamageType type, float amount, float criticalRate) {
         base.TakeDamage(type, amount, criticalRate);
         hud.ShowEnemyStats(this);
@@ -134,7 +139,6 @@ public class Enemy : CharacterParent {
 
         if(this.route == null)
         {
-            Debug.Log(this.gameObject.name + " - No unoccupied route found");
             return;
         }
 
@@ -179,28 +183,31 @@ public class Enemy : CharacterParent {
 
     private void setRoute()
     {
+        if(this.route == null)
+        {
+            return;
+        }
+
         AI.Route[] routes = GameObject.FindObjectsOfType<AI.Route>();
         Vector3 closestPoint = new Vector3(0, 0, 0);
         AI.Route closestRoute = null;
 
-        foreach (AI.Route route in routes)
+        foreach (AI.Route newRoute in routes)
         {
-            if (route.occupyingEnemy != null)
+            if (newRoute.occupyingEnemy == null)
             {
-                break;
-            }
+                Vector3 newPoint = FindClosestPoint(newRoute);
+                float newDist = Vector3.Magnitude(newPoint - transform.position);
+                float closestDist = Vector3.Magnitude(closestPoint - transform.position);
 
-            Vector3 newPoint = FindClosestPoint(route);
-            float newDist = Vector3.Magnitude(newPoint - transform.position);
-            float closestDist = Vector3.Magnitude(closestPoint - transform.position);
+                if (closestPoint == new Vector3(0, 0, 0) || newDist < closestDist)
+                {
+                    closestPoint = newPoint;
+                    closestRoute = newRoute;
 
-            if (closestPoint == new Vector3(0, 0, 0) || newDist < closestDist)
-            {
-                closestPoint = newPoint;
-                closestRoute = route;
-
-                route.occupyingEnemy = this;
-                this.route = route;
+                    newRoute.occupyingEnemy = this;
+                    this.route = newRoute;
+                }
             }
         }
     }
