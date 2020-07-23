@@ -11,7 +11,8 @@ public class ChestCanvas : MonoBehaviour {
 
     private Chest openedChest;
 
-    public TextMeshProUGUI currentItemView, foundItemView;
+    public TextMeshProUGUI currentItemView, foundItemView, swapAndUseView;
+    private const string SWAP_TEXT = "Swap", USE_TEXT = "Use";
 
     private List<Button> createdItemButtons = new List<Button>();
 
@@ -20,9 +21,16 @@ public class ChestCanvas : MonoBehaviour {
     private int selectedItemIndex;
     private PickableSO selectedItem;
 
-    // Item stats
+    public GameObject buttons;
+
+    // Weapon and armor stats
     public GameObject weaponStatsPrefabLeft, weaponStatsPrefabRight, armorStatsPrefabLeft, armorStatsPrefabRight;
     public GameObject currentItemStats, selectedItemStats;
+    public GameObject currentItemButton, foundItemButton;
+
+    // Consumables
+    public GameObject itemDisplayObject;
+    public ItemDisplay itemDisplay;
 
     void OnEnable() {
         itemSelectedObject.SetActive(false);
@@ -81,7 +89,6 @@ public class ChestCanvas : MonoBehaviour {
         selectedItem = items[index];
 
         itemSelectedObject.SetActive(true); // Activate item select elements
-        foundItemView.text = selectedItem.name;     // Change found item text
 
         // Set item texts and stats
         if (selectedItem is WeaponSO) {
@@ -90,6 +97,26 @@ public class ChestCanvas : MonoBehaviour {
         } else if (selectedItem is ArmorSO) {
             currentItemView.text = PlayerStats.Instance.player.GetArmor().name;
             ShowArmorStats();
+        } else if (selectedItem is ConsumableSO) {
+            itemDisplay.ShowItemDisplay((ConsumableSO) selectedItem);
+        }
+
+        ToggleItemTypeStuff();
+    }
+
+    private void ToggleItemTypeStuff() {
+        bool isConsumable = selectedItem is ConsumableSO;
+
+        // Enable / disable correct objects
+        itemDisplayObject.SetActive(isConsumable);
+        currentItemButton.SetActive(!isConsumable);
+        foundItemButton.SetActive(!isConsumable);
+
+        // Determine swap / use button text
+        swapAndUseView.text = isConsumable ? USE_TEXT : SWAP_TEXT;
+
+        if (!isConsumable) {
+            foundItemView.text = selectedItem.name;     // Change found item text
         }
     }
 
@@ -122,9 +149,9 @@ public class ChestCanvas : MonoBehaviour {
     }
 
     /// <summary>
-    /// Swaps player's weapon or armor.
+    /// Swaps player's weapon or armor or uses an consumable.
     /// </summary>
-    public void SwapItem() {
+    public void SwapOrUseItem() {
         Player player = PlayerStats.Instance.player;
 
         PickableSO oldItem = null;
