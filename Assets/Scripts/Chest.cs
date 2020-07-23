@@ -31,10 +31,8 @@ public class Chest : MonoBehaviour {
         // Create list and add all items with correct condition to it
         List<PickableSO> pickList = new List<PickableSO>();
 
-        // DISABLE CONSUMABLES IN CHEST FOR NOW
-
         // Load all pickable items from resources
-        List<PickableSO> loaded = SOCreator.Instance.LoadAllWeaponsAndArmor();
+        List<PickableSO> loaded = SOCreator.Instance.GetAllPickableItems();
 
         // Filter list based on condition
         foreach (PickableSO item in loaded) {

@@ -101,8 +101,8 @@ public class ConsumableSO : PickableSO {
     public ConsumableSO ConvertScrapToToy() {
         // Get toy with same condition as the scrap
         string cond = name.Substring(name.IndexOf(' ') + 1);
-        Debug.Log(cond);
-        return Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/Toy " + cond));
+        string condName = "Toy " + cond;
+        return SOCreator.Instance.CreateConsumable(condName);
     }
 
     /************ TOY ************/
@@ -114,14 +114,19 @@ public class ConsumableSO : PickableSO {
 
     /************ GLOBAL METHODS ************/
 
-    public void Initialize() {
-        Debug.Log("Initialize");
+    /// <summary>
+    /// Initializes randomized values on certain items.
+    /// 
+    /// Force is used mainly in SOCreator so that consumables does not need to be
+    /// loaded every single time again from resources.
+    /// </summary>
+    /// <param name="force">true if to randomize regardless if they are already randomized</param>
+    public void Initialize(bool force) {
         switch (consumableType) {
             case ConsumableType.Toy:
-                // Randomize toy type if it's null
-                if (toyWordsType.Equals(WordsType.None)) {
+                // Randomize toy type if it's None
+                if (force || toyWordsType.Equals(WordsType.None)) {
                     toyWordsType = (WordsType)Random.Range(1, System.Enum.GetValues(typeof(WordsType)).Length);
-                    Debug.Log("Type: " + toyWordsType);
                 }
                 break;
         }

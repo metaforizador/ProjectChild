@@ -26,15 +26,10 @@ public class Inventory : MonoBehaviour {
 
     void Start() {
         // Add test items
-        List<ConsumableSO> consumables = SOCreator.Instance.LoadAllConsumables();
+        List<ConsumableSO> consumables = SOCreator.Instance.GetAllConsumables();
 
         foreach (ConsumableSO con in consumables)
             AddConsumable(con);
-
-        // Test different type battery
-        ConsumableSO bat = Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/Battery IV"));
-        bat.batteryType = ConsumableSO.BatteryType.Ammo;
-        AddConsumable(bat);
     }
 
     public void LoadInventory(Save save) {

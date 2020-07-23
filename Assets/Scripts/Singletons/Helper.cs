@@ -141,7 +141,7 @@ public class Helper : MonoBehaviour
         holder.damage.text = weapon.damagePerBullet.ToString();
         holder.bulletSpeed.text = weapon.bulletSpeed.ToString();
         holder.ammoSize.text = weapon.ammoSize.ToString();
-        holder.rateOfFire.text = (60 / weapon.rateOfFire).ToString();   // Rounds per minute
+        holder.rateOfFire.text = ((int)(60 / weapon.rateOfFire)).ToString();   // Rounds per minute
     }
 
     /// <summary>

@@ -8,40 +8,51 @@ public class SOCreator : MonoBehaviour {
     private static SOCreator _instance; // **<- reference link to the class
     public static SOCreator Instance { get { return _instance; } }
 
+    private List<PickableSO> weaponsAndArmors = new List<PickableSO>();
+    private List<ConsumableSO> consumables = new List<ConsumableSO>();
+
     private void Awake() {
         if (_instance == null) {
             _instance = this;
             DontDestroyOnLoad(gameObject);
+            // Load all static pickable items at start
+            LoadAllPickableItems();
         } else {
             Destroy(gameObject);
         }
     }
 
-    public List<PickableSO> LoadAllWeaponsAndArmor() {
-        PickableSO[] weapons = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/Weapons/");
-        PickableSO[] armors = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/Armors/");
+    private void LoadAllPickableItems() {
+        PickableSO[] items = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/");
 
-        List<PickableSO> list = new List<PickableSO>();
-        list.AddRange(weapons);
-        list.AddRange(armors);
-
-        return list;
+        foreach (PickableSO item in items) {
+            if (item is ConsumableSO) {
+                // Instantiate so that if code changes it's values, the Asset values won't get changed
+                ConsumableSO inst = Instantiate((ConsumableSO) item);
+                consumables.Add(inst);
+            } else {
+                // Weapons and armors are static at the moment, so they don't need to be instantiated
+                weaponsAndArmors.Add(item);
+            }
+        }
     }
 
-    public List<ConsumableSO> LoadAllConsumables() {
-        ConsumableSO[] loaded = Resources.LoadAll<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/");
+    public List<PickableSO> GetAllPickableItems() {
+        // Create list using static pickable items
+        List<PickableSO> items = weaponsAndArmors;
+        // Add randomized consumables to the list
+        items.AddRange(GetAllConsumables());
 
-        List<ConsumableSO> list = new List<ConsumableSO>();
+        return items;
+    }
 
-        foreach (ConsumableSO item in loaded) {
-            // Instantiate so that if code changes it's values, the Asset values won't get changed
-            ConsumableSO inst = Instantiate(item);
-            // Initialize consumable in case some values need to be generated
-            inst.Initialize();
-            list.Add(inst);
+    public List<ConsumableSO> GetAllConsumables() {
+        foreach (ConsumableSO item in consumables) {
+            // Randomize consumables values
+            item.Initialize(true);
         }
 
-        return list;
+        return consumables;
     }
 
     /// <summary>
@@ -72,11 +83,21 @@ public class SOCreator : MonoBehaviour {
     /// <param name="serialized">serialized consumable scriptable object</param>
     /// <returns>created consumable</returns>
     public ConsumableSO CreateConsumable(SerializableConsumableSO serialized) {
-        Debug.Log(serialized.name);
         ConsumableSO con = Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/" + serialized.name));
         con.batteryType = (ConsumableSO.BatteryType)System.Enum.Parse(typeof(ConsumableSO.BatteryType), serialized.batteryTypeString);
         con.toyWordsType = (WordsType)System.Enum.Parse(typeof(WordsType), serialized.toyWordsTypeString);
         con.quantity = serialized.quantity;
+        return con;
+    }
+
+    /// <summary>
+    /// Creates an instantiated consumable from assets.
+    /// </summary>
+    /// <param name="name">name of the consumable scriptable object</param>
+    /// <returns>created consumable</returns>
+    public ConsumableSO CreateConsumable(string name) {
+        ConsumableSO con = Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/" + name));
+        con.Initialize(false);
         return con;
     }
 }
