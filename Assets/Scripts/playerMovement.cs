@@ -17,6 +17,8 @@ public class playerMovement : MonoBehaviour
     public float gravity = -9.81f;
     public float jumpHeight = 10f;
 
+    public bool dashing = false;
+
     private Vector3 xzMovement;
 
     public Transform groundCheck;
@@ -69,6 +71,16 @@ public class playerMovement : MonoBehaviour
             animator.SetBool("Strafing", false);
         }
 
+        if (Input.GetButtonDown("Fire2") && inputEnabled)
+        {
+            animator.SetTrigger("Melee");
+        }
+
+        if (Input.GetButtonDown("Dash"))
+        {
+            animator.SetTrigger("Dash");
+        }
+
         if(isGrounded && velocity.y < 0)
         {
             velocity.y = 0;
@@ -112,7 +124,11 @@ public class playerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
 
-        controller.Move(velocity * Time.deltaTime + xzMovement);
+        if (!dashing)
+        {
+            controller.Move(velocity * Time.deltaTime + xzMovement);
+        }
+        
         xzMovement = new Vector3(0, 0, 0);
 
         //Shooting mechanics
