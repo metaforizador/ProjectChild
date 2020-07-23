@@ -531,6 +531,7 @@ MonoBehaviour:
   swapAndUseView: {fileID: 620359824660032277}
   itemSelectedObject: {fileID: 878937161}
   buttons: {fileID: 3229571939417540962}
+  collectButton: {fileID: 1963394556011199229}
   weaponStatsPrefabLeft: {fileID: 7818729412227567886, guid: fdc22bde09fe11b4e8ea36420356a64d,
     type: 3}
   weaponStatsPrefabRight: {fileID: 7818729412227567886, guid: ea736aa6685c86840ac971641320a647,
@@ -27215,7 +27216,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2833164491860255163}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 513601707}
+        m_MethodName: CollectItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3132656872544080841
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -79,6 +79,10 @@ public class TopInfoCanvas : MonoBehaviour {
         ShowTopInfoText("You don't have any comsat links!");
     }
 
+    public void ShowItemCollected(PickableSO item) {
+        ShowTopInfoText($"You collected '{item.name}'!");
+    }
+
     /************** CLASS METHODS **************/
 
     public void Initialize() {

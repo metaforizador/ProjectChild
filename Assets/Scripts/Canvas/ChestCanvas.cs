@@ -22,6 +22,7 @@ public class ChestCanvas : MonoBehaviour {
     private PickableSO selectedItem;
 
     public GameObject buttons;
+    public Button collectButton;
 
     // Weapon and armor stats
     public GameObject weaponStatsPrefabLeft, weaponStatsPrefabRight, armorStatsPrefabLeft, armorStatsPrefabRight;
@@ -115,6 +116,9 @@ public class ChestCanvas : MonoBehaviour {
         // Determine swap / use button text
         swapAndUseView.text = isConsumable ? USE_TEXT : SWAP_TEXT;
 
+        // Enable / disable correct buttons
+        collectButton.interactable = isConsumable ? true : false;
+
         if (!isConsumable) {
             foundItemView.text = selectedItem.name;     // Change found item text
         }
@@ -146,6 +150,12 @@ public class ChestCanvas : MonoBehaviour {
             GetComponent<ArmorStatHolder>();
         armor = (ArmorSO)items[selectedItemIndex];
         Helper.Instance.SetupArmorStats(holder, armor);
+    }
+
+    public void CollectItem() {
+        Inventory.Instance.AddConsumable((ConsumableSO) selectedItem);
+        CanvasMaster.Instance.topInfoCanvas.ShowItemCollected(selectedItem);
+        RemoveItemFromChest();
     }
 
     /// <summary>
