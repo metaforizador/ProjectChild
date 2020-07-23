@@ -10,7 +10,9 @@ public enum ConsumableType { Scanner, Battery, ComsatLink, Rig, Scrap, Toy }
 /// All variables that are changed from code needs to be added here
 /// in order to saving and loading work correctly. ConsumableSO will
 /// be generated in SOCreator class, so if you add new variables,
-/// remember to add them there too.
+/// remember to add them there too. Also remember to add them to the
+/// ConsumableSO.Equals() so that items with different values will
+/// show correctly in inventory.
 /// </summary>
 [System.Serializable]
 public class SerializableConsumableSO {
@@ -133,9 +135,12 @@ public class ConsumableSO : PickableSO {
     /// <param name="otherItem">item to compare with</param>
     /// <returns>true if it's the same</returns>
     public bool EqualsConsumable(ConsumableSO otherItem) {
-        // Check battery type too if item is battery
         if (consumableType.Equals(ConsumableType.Battery)) {
+            // Check battery type too if item is battery
             return this.name.Equals(otherItem.name) && this.batteryType.Equals(otherItem.batteryType);
+        } else if (consumableType.Equals(ConsumableType.Toy)) {
+            // Check toy words type too if item is toy
+            return this.name.Equals(otherItem.name) && this.toyWordsType.Equals(otherItem.toyWordsType);
         }
 
         // Else the name check is enough
