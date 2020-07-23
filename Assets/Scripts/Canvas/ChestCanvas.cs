@@ -11,17 +11,27 @@ public class ChestCanvas : MonoBehaviour {
 
     private Chest openedChest;
 
-    public TextMeshProUGUI currentItemView, foundItemView;
+    public TextMeshProUGUI currentItemView, foundItemView, swapAndUseView;
+    private const string SWAP_TEXT = "Swap", USE_TEXT = "Use";
 
     private List<Button> createdItemButtons = new List<Button>();
 
     public GameObject itemSelectedObject;
     private PickableSO[] items;
     private int selectedItemIndex;
+    private PickableSO selectedItem;
 
-    // Item stats
+    public GameObject buttons;
+    public Button collectButton;
+
+    // Weapon and armor stats
     public GameObject weaponStatsPrefabLeft, weaponStatsPrefabRight, armorStatsPrefabLeft, armorStatsPrefabRight;
     public GameObject currentItemStats, selectedItemStats;
+    public GameObject currentItemButton, foundItemButton;
+
+    // Consumables
+    public GameObject itemDisplayObject;
+    public ItemDisplay itemDisplay;
 
     void OnEnable() {
         itemSelectedObject.SetActive(false);
@@ -45,18 +55,20 @@ public class ChestCanvas : MonoBehaviour {
         for (int i = 0; i < items.Length; i++) {
             PickableSO item = items[i];
 
-            Button button = Instantiate(itemPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            // Add button to the list and set the scale to 1 (parent.transform changes it to around 0,6)
-            button.transform.SetParent(buttonLayout.transform);
-            button.transform.localScale = Vector3.one;
+            if (item != null) {
+                Button button = Instantiate(itemPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                // Add button to the list and set the scale to 1 (parent.transform changes it to around 0,6)
+                button.transform.SetParent(buttonLayout.transform);
+                button.transform.localScale = Vector3.one;
 
-            // Set name to the button
-            button.GetComponentInChildren<TextMeshProUGUI>().text = item.name;
-            createdItemButtons.Add(button);
+                // Set name to the button
+                button.GetComponentInChildren<TextMeshProUGUI>().text = item.name;
+                createdItemButtons.Add(button);
 
-            // Set button click listener
-            int index = i;  // Local variable needed because of for loop
-            button.onClick.AddListener(() => ItemSelected(index));
+                // Set button click listener
+                int index = i;  // Local variable needed because of for loop
+                button.onClick.AddListener(() => ItemSelected(index));
+            }
         }
     }
 
@@ -75,18 +87,40 @@ public class ChestCanvas : MonoBehaviour {
 
         // Save index to local variable
         selectedItemIndex = index;
-        PickableSO item = items[index];
+        selectedItem = items[index];
 
         itemSelectedObject.SetActive(true); // Activate item select elements
-        foundItemView.text = item.name;     // Change found item text
 
         // Set item texts and stats
-        if (item is WeaponSO) {
+        if (selectedItem is WeaponSO) {
             currentItemView.text = PlayerStats.Instance.player.GetWeapon().name;
             ShowWeaponStats();
-        } else if (item is ArmorSO) {
+        } else if (selectedItem is ArmorSO) {
             currentItemView.text = PlayerStats.Instance.player.GetArmor().name;
             ShowArmorStats();
+        } else if (selectedItem is ConsumableSO) {
+            itemDisplay.ShowItemDisplay((ConsumableSO) selectedItem);
+        }
+
+        ToggleItemTypeStuff();
+    }
+
+    private void ToggleItemTypeStuff() {
+        bool isConsumable = selectedItem is ConsumableSO;
+
+        // Enable / disable correct objects
+        itemDisplayObject.SetActive(isConsumable);
+        currentItemButton.SetActive(!isConsumable);
+        foundItemButton.SetActive(!isConsumable);
+
+        // Determine swap / use button text
+        swapAndUseView.text = isConsumable ? USE_TEXT : SWAP_TEXT;
+
+        // Enable / disable correct buttons
+        collectButton.interactable = isConsumable ? true : false;
+
+        if (!isConsumable) {
+            foundItemView.text = selectedItem.name;     // Change found item text
         }
     }
 
@@ -118,25 +152,58 @@ public class ChestCanvas : MonoBehaviour {
         Helper.Instance.SetupArmorStats(holder, armor);
     }
 
+    public void CollectItem() {
+        Inventory.Instance.AddConsumable((ConsumableSO) selectedItem);
+        CanvasMaster.Instance.topInfoCanvas.ShowItemCollected(selectedItem);
+        RemoveItemFromChest();
+    }
+
     /// <summary>
-    /// Swaps player's weapon or armor.
+    /// Swaps player's weapon or armor or uses an consumable.
     /// </summary>
-    public void SwapItem() {
-        Player player = PlayerStats.Instance.player;
+    public void SwapOrUseItem() {
+        if (selectedItem is ConsumableSO) {
+            // Use item
+            Inventory.Instance.UseConsumable((ConsumableSO) selectedItem);
+            RemoveItemFromChest();
+        } else {
+            // Swap item
+            Player player = PlayerStats.Instance.player;
 
-        PickableSO selectedItem = items[selectedItemIndex];
-        PickableSO oldItem = null;
+            PickableSO oldItem = null;
 
-        // Check the type of PickableSO
-        if (selectedItem is WeaponSO) {
-            oldItem = player.ChangeWeapon((WeaponSO)selectedItem);
-        } else if (selectedItem is ArmorSO) {
-            oldItem = player.ChangeArmor((ArmorSO)selectedItem);
+            // Check the type of PickableSO
+            if (selectedItem is WeaponSO) {
+                oldItem = player.ChangeWeapon((WeaponSO)selectedItem);
+            } else if (selectedItem is ArmorSO) {
+                oldItem = player.ChangeArmor((ArmorSO)selectedItem);
+            }
+
+            // Replace selected item with the player's old item
+            items[selectedItemIndex] = oldItem;
         }
 
-        // Replace selected item with the player's old item
-        items[selectedItemIndex] = oldItem;
+        RefreshChestContents();
+    }
 
+    public void StorageClicked() {
+        // CHECK HERE LATER IF THERE ARE AVAILABLE STORAGE SLOTS BEFORE OPENING CANVAS
+
+        ItemSelectorCanvas isc = CanvasMaster.Instance.itemSelectorCanvas;
+        isc.OpenSendWeaponOrArmorToStorageCanvas(selectedItem);
+
+        if (isc.isEmpty) {
+            isc.CloseItemSelectorCanvas();
+            CanvasMaster.Instance.topInfoCanvas.ShowComsatLinkEmpty();
+        }
+    }
+
+    public void RemoveItemFromChest() {
+        items[selectedItemIndex] = null;
+        RefreshChestContents();
+    }
+
+    private void RefreshChestContents() {
         // Change item contents inside the chest
         openedChest.ChangeItems(items);
 

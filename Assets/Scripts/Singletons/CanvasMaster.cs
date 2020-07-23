@@ -21,10 +21,11 @@ public class CanvasMaster : MonoBehaviour {
 
     public GameObject canvasBackground, crosshair;
     public GameObject dialogueCanvas, statsCanvas,
-        HUDCanvas, chestCanvas, hotbarCanvas, inventoryCanvas,
+        HUDCanvas, hotbarCanvas, inventoryCanvas,
         gameOverCanvas;
+    public ChestCanvas chestCanvas;
     public TopInfoCanvas topInfoCanvas;
-    public IdentifyCanvas identifyCanvas;
+    public ItemSelectorCanvas itemSelectorCanvas;
     public CanvasSounds canvasSounds;
     public UIAnimator uiAnimator;
 
@@ -42,7 +43,7 @@ public class CanvasMaster : MonoBehaviour {
 
         // Disable some canvases in case they are left open
         canvasBackground.SetActive(false);
-        identifyCanvas.gameObject.SetActive(false);
+        itemSelectorCanvas.gameObject.SetActive(false);
 
         // Initialize saved questions and replies
         askedQuestions = new Dictionary<Mood, List<string>>();

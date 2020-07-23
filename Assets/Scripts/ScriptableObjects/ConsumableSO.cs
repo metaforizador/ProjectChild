@@ -4,6 +4,31 @@ using UnityEngine;
 
 public enum ConsumableType { Scanner, Battery, ComsatLink, Rig, Scrap, Toy }
 
+/// <summary>
+/// Use this to save and load ConsumableSO instances.
+/// 
+/// All variables that are changed from code needs to be added here
+/// in order to saving and loading work correctly. ConsumableSO will
+/// be generated in SOCreator class, so if you add new variables,
+/// remember to add them there too. Also remember to add them to the
+/// ConsumableSO.Equals() so that items with different values will
+/// show correctly in inventory.
+/// </summary>
+[System.Serializable]
+public class SerializableConsumableSO {
+    public string name;
+    public int quantity;
+    public string batteryTypeString;
+    public string toyWordsTypeString;
+
+    public SerializableConsumableSO(ConsumableSO consumable) {
+        name = consumable.name;
+        quantity = consumable.quantity;
+        batteryTypeString = consumable.batteryType.ToString();
+        toyWordsTypeString = consumable.toyWordsType.ToString();
+    }
+}
+
 [CreateAssetMenu(fileName = "New Consumable", menuName = "Consumable")]
 public class ConsumableSO : PickableSO {
 
@@ -76,16 +101,37 @@ public class ConsumableSO : PickableSO {
     public ConsumableSO ConvertScrapToToy() {
         // Get toy with same condition as the scrap
         string cond = name.Substring(name.IndexOf(' ') + 1);
-        Debug.Log(cond);
-        return Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/Toy " + cond));
+        string condName = "Toy " + cond;
+        return SOCreator.Instance.CreateConsumable(condName);
     }
 
     /************ TOY ************/
-    public const string DESCRIPTION_TOY = "As a consumable, it gives percentage amount of exp needed for the next level.";
+    public const string DESCRIPTION_TOY = "As a consumable, it gives percentage amount of exp needed for the next level. If the player " +
+                    "gains a level when using the toy, he will gain a stat boost determined by the type of the toy.";
     [Range(0f, 100f)]
     public float expToGain;
+    public WordsType toyWordsType;
 
     /************ GLOBAL METHODS ************/
+
+    /// <summary>
+    /// Initializes randomized values on certain items.
+    /// 
+    /// Force is used mainly in SOCreator so that consumables does not need to be
+    /// loaded every single time again from resources.
+    /// </summary>
+    /// <param name="force">true if to randomize regardless if they are already randomized</param>
+    public void Initialize(bool force) {
+        switch (consumableType) {
+            case ConsumableType.Toy:
+                // Randomize toy type if it's None
+                if (force || toyWordsType.Equals(WordsType.None)) {
+                    toyWordsType = (WordsType)Random.Range(1, System.Enum.GetValues(typeof(WordsType)).Length);
+                }
+                break;
+        }
+    }
+
     /// <summary>
     /// Checks if item is basically the same item (might have different pointer).
     /// 
@@ -94,9 +140,12 @@ public class ConsumableSO : PickableSO {
     /// <param name="otherItem">item to compare with</param>
     /// <returns>true if it's the same</returns>
     public bool EqualsConsumable(ConsumableSO otherItem) {
-        // Check battery type too if item is battery
         if (consumableType.Equals(ConsumableType.Battery)) {
+            // Check battery type too if item is battery
             return this.name.Equals(otherItem.name) && this.batteryType.Equals(otherItem.batteryType);
+        } else if (consumableType.Equals(ConsumableType.Toy)) {
+            // Check toy words type too if item is toy
+            return this.name.Equals(otherItem.name) && this.toyWordsType.Equals(otherItem.toyWordsType);
         }
 
         // Else the name check is enough

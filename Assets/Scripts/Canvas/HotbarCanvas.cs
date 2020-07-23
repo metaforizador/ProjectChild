@@ -101,12 +101,32 @@ public class HotbarCanvas : MonoBehaviour {
     }
 
     public void LoadHotbar(Save save) {
-        hotbarItems = save.hotbarItems;
+        // Convert serialized consumables to ConsumableSO
+        SOCreator creator = SOCreator.Instance;
+        for (int i = 0; i < hotbarButtonAmount; i++) {
+            SerializableConsumableSO serialized = save.hotbarConsumables[i];
+            ConsumableSO con = null;
+            if (serialized != null) {
+                con = creator.CreateConsumable(serialized);
+            }
+            hotbarItems[i] = con;
+        }
 
         RefreshHotbarImages();
     }
 
     public void SaveHotbar(Save save) {
-        save.hotbarItems = hotbarItems;
+        // Convert hotbar consumables to a serializable format
+        SerializableConsumableSO[] serializableConsumables = new SerializableConsumableSO[hotbarButtonAmount];
+        for (int i = 0; i < hotbarButtonAmount; i++) {
+            ConsumableSO con = hotbarItems[i];
+            if (con != null) {
+                serializableConsumables[i] = new SerializableConsumableSO(con);
+            } else {
+                serializableConsumables[i] = null;
+            }
+            
+        }
+        save.hotbarConsumables = serializableConsumables;
     }
 }

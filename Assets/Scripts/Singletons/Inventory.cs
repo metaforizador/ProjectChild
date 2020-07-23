@@ -22,67 +22,58 @@ public class Inventory : MonoBehaviour {
     public WeaponSO equippedWeapon;
     public ArmorSO equippedArmor;
 
-    private List<PickableSO> pickableItems = new List<PickableSO>();
+    private List<ConsumableSO> inventoryConsumables = new List<ConsumableSO>();
 
     void Start() {
         // Add test items
-        PickableSO[] pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/Consumables/");
+        List<ConsumableSO> consumables = SOCreator.Instance.GetAllConsumables();
 
-        foreach (PickableSO so in pickArray) {
-            PickableSO item = Instantiate(so);
-            if (item is ConsumableSO)
-                AddConsumable((ConsumableSO)item);
-            else {
-                pickableItems.Add(item);
-            }
-        }
-
-        // Test different type battery
-        ConsumableSO con = Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/Battery IV"));
-        con.batteryType = ConsumableSO.BatteryType.Ammo;
-        AddConsumable(con);
+        foreach (ConsumableSO con in consumables)
+            AddConsumable(con);
     }
 
     public void LoadInventory(Save save) {
-        save.equippedWeapon = equippedWeapon;
-        save.equippedArmor = equippedArmor;
-        save.inventoryItems = pickableItems;
+        SOCreator creator = SOCreator.Instance;
+        equippedWeapon = creator.CreateWeapon(save.equippedWeapon);
+        equippedArmor = creator.CreateArmor(save.equippedArmor);
+        // Load consumables
+        inventoryConsumables.Clear();
+        foreach (SerializableConsumableSO serialized in save.inventoryConsumables) {
+            ConsumableSO con = creator.CreateConsumable(serialized);
+            inventoryConsumables.Add(con);
+        }
     }
 
     public void SaveInventory(Save save) {
-        equippedWeapon = save.equippedWeapon;
-        equippedArmor = save.equippedArmor;
-        pickableItems = save.inventoryItems;
+        save.equippedWeapon = equippedWeapon.name;
+        save.equippedArmor = equippedArmor.name;
+        // Save consumables
+        List<SerializableConsumableSO> serializableConsumables = new List<SerializableConsumableSO>();
+        foreach (ConsumableSO con in inventoryConsumables) {
+            SerializableConsumableSO serialized = new SerializableConsumableSO(con);
+            serializableConsumables.Add(serialized);
+        }
+        save.inventoryConsumables = serializableConsumables;
     }
 
     public void AddConsumable(ConsumableSO consumable) {
         // If the consumable is already in inventory, add +1 to quantity and return
-        foreach (PickableSO item in pickableItems) {
-            if (item is ConsumableSO) {
-                ConsumableSO con = (ConsumableSO)item;
-                // Check using different equals methods based on ConsumableType
-                if (con.EqualsConsumable(consumable)) {
-                    con.quantity++;
-                    return;
-                }
+        foreach (ConsumableSO item in inventoryConsumables) {
+            // Check using different equals methods based on ConsumableType
+            if (item.EqualsConsumable(consumable)) {
+                item.quantity++;
+                return;
             }
         }
 
         // Else add new item
         consumable.quantity = 1;
-        pickableItems.Add(consumable);
+        inventoryConsumables.Add(consumable);
     }
 
     public List<ConsumableSO> GetConsumables() {
-        List<ConsumableSO> consumables = new List<ConsumableSO>();
-
-        foreach (PickableSO item in pickableItems) {
-            if (item is ConsumableSO)
-                consumables.Add((ConsumableSO) item);
-        }
-
         // Sort list by name
-        var sortedList = consumables.OrderBy(go => go.name).ToList();
+        var sortedList = inventoryConsumables.OrderBy(go => go.name).ToList();
 
         return sortedList;
     }
@@ -94,9 +85,11 @@ public class Inventory : MonoBehaviour {
             case ConsumableType.Battery:
             case ConsumableType.ComsatLink:
             case ConsumableType.Rig:
-            case ConsumableType.Toy:
                 Player player = PlayerStats.Instance.player;
                 player.UseConsumable(consumable);
+                break;
+            case ConsumableType.Toy:
+                PlayerStats.Instance.UseToy(consumable);
                 break;
             case ConsumableType.Scrap:
                 if (consumable.CheckIfUsageSuccessful()) {
@@ -107,13 +100,13 @@ public class Inventory : MonoBehaviour {
                 break;
             case ConsumableType.Scanner:
                 removeItem = false; // Don't remove scanner at this point
-                IdentifyCanvas ic = CanvasMaster.Instance.identifyCanvas;
+                ItemSelectorCanvas ic = CanvasMaster.Instance.itemSelectorCanvas;
                 ic.OpenIdentifyCanvas(consumable);
 
                 // If there are no identifiable items, close the canvas
                 if (ic.isEmpty) {
                     CanvasMaster.Instance.topInfoCanvas.ShowIdentifiableEmpty();
-                    ic.CloseIdenfityCanvas();
+                    ic.CloseItemSelectorCanvas();
                 }
                 break;
         }
@@ -126,7 +119,7 @@ public class Inventory : MonoBehaviour {
         consumable.quantity--;
         // If all consumables are used, remove item from inventory
         if (consumable.quantity <= 0) {
-            pickableItems.Remove(consumable);
+            inventoryConsumables.Remove(consumable);
         }
 
         RefreshInventoryItems();

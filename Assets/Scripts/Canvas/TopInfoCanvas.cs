@@ -71,6 +71,18 @@ public class TopInfoCanvas : MonoBehaviour {
         ShowTopInfoText($"Battery is of '{batteryType}' type!");
     }
 
+    public void ShowItemSentToStorage(string itemName) {
+        ShowTopInfoText($"Item '{itemName}' successfully sent to the storage!");
+    }
+
+    public void ShowComsatLinkEmpty() {
+        ShowTopInfoText("You don't have any comsat links!");
+    }
+
+    public void ShowItemCollected(PickableSO item) {
+        ShowTopInfoText($"You collected '{item.name}'!");
+    }
+
     /************** CLASS METHODS **************/
 
     public void Initialize() {

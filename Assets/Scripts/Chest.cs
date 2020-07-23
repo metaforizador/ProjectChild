@@ -29,24 +29,16 @@ public class Chest : MonoBehaviour {
         }
 
         // Create list and add all items with correct condition to it
-            List<PickableSO> pickList = new List<PickableSO>();
+        List<PickableSO> pickList = new List<PickableSO>();
 
-        // DISABLE CONSUMABLES IN CHEST FOR NOW
+        // Load all pickable items from resources
+        List<PickableSO> loaded = SOCreator.Instance.GetAllPickableItems();
 
-        // Load all pickable items from resources which have correct rarity
-        PickableSO[] pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/Weapons/");
-
-        foreach (PickableSO item in pickArray) {
+        // Filter list based on condition
+        foreach (PickableSO item in loaded) {
             if (item.condition.Equals(condition)) {
                 pickList.Add(item);
             }
-        }
-
-        pickArray = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/Armors/");
-
-        foreach (PickableSO item in pickArray) {
-            if (item.condition.Equals(condition))
-                pickList.Add(item);
         }
 
         // Create new items array based on random size
@@ -62,8 +54,7 @@ public class Chest : MonoBehaviour {
     }
 
     public void OpenChest() {
-        ChestCanvas cc = CanvasMaster.Instance.chestCanvas.GetComponent<ChestCanvas>();
-        cc.ShowChest(this, items);
+        CanvasMaster.Instance.chestCanvas.ShowChest(this, items);
     }
 
     public void ChangeItems(PickableSO[] items) {
