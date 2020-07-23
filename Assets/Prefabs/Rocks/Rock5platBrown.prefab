@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 3034807406619835110}
   - component: {fileID: 8728332502508717599}
   m_Layer: 0
-  m_Name: Rock5plat
+  m_Name: Rock5platBrown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6288938224933109968
 Transform:
