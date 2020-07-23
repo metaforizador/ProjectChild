@@ -152,19 +152,26 @@ public class ChestCanvas : MonoBehaviour {
     /// Swaps player's weapon or armor or uses an consumable.
     /// </summary>
     public void SwapOrUseItem() {
-        Player player = PlayerStats.Instance.player;
+        if (selectedItem is ConsumableSO) {
+            // Use item
+            Inventory.Instance.UseConsumable((ConsumableSO) selectedItem);
+            RemoveItemFromChest();
+        } else {
+            // Swap item
+            Player player = PlayerStats.Instance.player;
 
-        PickableSO oldItem = null;
+            PickableSO oldItem = null;
 
-        // Check the type of PickableSO
-        if (selectedItem is WeaponSO) {
-            oldItem = player.ChangeWeapon((WeaponSO)selectedItem);
-        } else if (selectedItem is ArmorSO) {
-            oldItem = player.ChangeArmor((ArmorSO)selectedItem);
+            // Check the type of PickableSO
+            if (selectedItem is WeaponSO) {
+                oldItem = player.ChangeWeapon((WeaponSO)selectedItem);
+            } else if (selectedItem is ArmorSO) {
+                oldItem = player.ChangeArmor((ArmorSO)selectedItem);
+            }
+
+            // Replace selected item with the player's old item
+            items[selectedItemIndex] = oldItem;
         }
-
-        // Replace selected item with the player's old item
-        items[selectedItemIndex] = oldItem;
 
         RefreshChestContents();
     }
