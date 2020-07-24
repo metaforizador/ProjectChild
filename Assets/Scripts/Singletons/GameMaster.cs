@@ -72,6 +72,10 @@ public class GameMaster : MonoBehaviour {
             Cursor.lockState = CursorLockMode.Locked;
     }
 
+    // Storage chest
+    private int unlockedStorageChestsAmount = 1;
+
+
     void Start() {
         cm = CanvasMaster.Instance;
     }

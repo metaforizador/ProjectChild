@@ -25,8 +25,8 @@ public class Save {
     public Dictionary<WordsType, List<string>> givenReplies;
 
     //////// Inventory ////////
-    public string equippedWeapon;
-    public string equippedArmor;
+    public SerializablePickableSO equippedWeapon;
+    public SerializablePickableSO equippedArmor;
     public List<SerializableConsumableSO> inventoryConsumables;
 
     //////// Hotbar ////////

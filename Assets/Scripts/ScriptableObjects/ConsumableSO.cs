@@ -15,14 +15,12 @@ public enum ConsumableType { Scanner, Battery, ComsatLink, Rig, Scrap, Toy }
 /// show correctly in inventory.
 /// </summary>
 [System.Serializable]
-public class SerializableConsumableSO {
-    public string name;
+public class SerializableConsumableSO : SerializablePickableSO {
     public int quantity;
     public string batteryTypeString;
     public string toyWordsTypeString;
 
-    public SerializableConsumableSO(ConsumableSO consumable) {
-        name = consumable.name;
+    public SerializableConsumableSO(ConsumableSO consumable) : base(consumable) {
         quantity = consumable.quantity;
         batteryTypeString = consumable.batteryType.ToString();
         toyWordsTypeString = consumable.toyWordsType.ToString();

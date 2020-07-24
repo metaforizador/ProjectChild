@@ -45,8 +45,8 @@ public class Inventory : MonoBehaviour {
     }
 
     public void SaveInventory(Save save) {
-        save.equippedWeapon = equippedWeapon.name;
-        save.equippedArmor = equippedArmor.name;
+        save.equippedWeapon = new SerializablePickableSO(equippedWeapon);
+        save.equippedArmor = new SerializablePickableSO(equippedArmor);
         // Save consumables
         List<SerializableConsumableSO> serializableConsumables = new List<SerializableConsumableSO>();
         foreach (ConsumableSO con in inventoryConsumables) {

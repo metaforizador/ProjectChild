@@ -62,8 +62,8 @@ public class SOCreator : MonoBehaviour {
     /// </summary>
     /// <param name="name">name of the weapon</param>
     /// <returns>retrieved weapon</returns>
-    public WeaponSO CreateWeapon(string name) {
-        return Resources.Load<WeaponSO>("ScriptableObjects/PickableItems/Weapons/" + name);
+    public WeaponSO CreateWeapon(SerializablePickableSO serialized) {
+        return Resources.Load<WeaponSO>("ScriptableObjects/PickableItems/Weapons/" + serialized.name);
     }
 
     /// <summary>
@@ -73,8 +73,8 @@ public class SOCreator : MonoBehaviour {
     /// </summary>
     /// <param name="name">name of the armor</param>
     /// <returns> retrieved armor</returns>
-    public ArmorSO CreateArmor(string name) {
-        return Resources.Load<ArmorSO>("ScriptableObjects/PickableItems/Armors/" + name);
+    public ArmorSO CreateArmor(SerializablePickableSO serialized) {
+        return Resources.Load<ArmorSO>("ScriptableObjects/PickableItems/Armors/" + serialized.name);
     }
 
     /// <summary>
