@@ -17,6 +17,10 @@ public class playerMovement : MonoBehaviour
     public float gravity = -9.81f;
     public float jumpHeight = 10f;
 
+    // Stamina usage
+    private const float DASH_COST = 50;
+    private const float MELEE_COST = 25;
+
     public bool dashing = false;
 
     private Vector3 xzMovement;
@@ -71,12 +75,12 @@ public class playerMovement : MonoBehaviour
             animator.SetBool("Strafing", false);
         }
 
-        if (Input.GetButtonDown("Fire2") && inputEnabled)
+        if (Input.GetButtonDown("Fire2") && playerScript.IsEnoughStamina(MELEE_COST) && inputEnabled)
         {
             animator.SetTrigger("Melee");
         }
 
-        if (Input.GetButtonDown("Dash"))
+        if (Input.GetButtonDown("Dash") && playerScript.IsEnoughStamina(DASH_COST) && inputEnabled)
         {
             animator.SetTrigger("Dash");
         }

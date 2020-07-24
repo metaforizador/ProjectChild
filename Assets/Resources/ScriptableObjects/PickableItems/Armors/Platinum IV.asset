@@ -20,4 +20,4 @@ MonoBehaviour:
   decreaseOpponentCriticalRate: 53.8
   decreaseOpponentCriticalMultiplier: 65.6
   reduceMovementSpeed: 25
-  reduceStaminaRecoveryRate: 0
+  increaseStaminaRecoveryDelay: 25

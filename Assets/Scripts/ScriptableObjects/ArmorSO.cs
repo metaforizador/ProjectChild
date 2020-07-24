@@ -23,6 +23,6 @@ public class ArmorSO : PickableSO {
     [Header("Decrease movement speed by % (because armor is heavy)")]
     public float reduceMovementSpeed;
 
-    [Header("Decrease stamina recovery rate by % (because armor is heavy)")]
-    public float reduceStaminaRecoveryRate;
+    [Header("Increase stamina recovery delay by % (because armor is heavy)")]
+    public float increaseStaminaRecoveryDelay;
 }

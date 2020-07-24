@@ -102,7 +102,7 @@ public class CharacterParent : MonoBehaviour {
     private float armorDecreaseShieldRecoveryDelay;
     private float armorDecreaseOpponentCriticalRate;
     private float armorDecreaseOpponentCriticalMultiplier;
-    private float armorReduceStaminaRecoveryRate;
+    private float armorIncreaseStaminaRecoveryDelay;
 
     public virtual void Start() {
         hud = CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>();
@@ -136,8 +136,10 @@ public class CharacterParent : MonoBehaviour {
             maxShield += armor.increaseShield;
             armorDecreaseOpponentCriticalRate = armor.decreaseOpponentCriticalRate;
             armorDecreaseOpponentCriticalMultiplier = armor.decreaseOpponentCriticalMultiplier / 100;
+            // Divide by 100 to make for example 80% to 0.8, then multiply by base value
             movementSpeedMultiplier = movementSpd - ((armor.reduceMovementSpeed / 100) * movementSpd);
-            armorReduceStaminaRecoveryRate = armor.reduceStaminaRecoveryRate;
+            // Divide by 100 to make for example 80% to 0.8, then multiply by base value
+            armorIncreaseStaminaRecoveryDelay = (armor.increaseStaminaRecoveryDelay / 100) * RECOVERY_DELAY_TIME;
         }
     }
 
@@ -293,6 +295,24 @@ public class CharacterParent : MonoBehaviour {
     /// </summary>
     private void reloadAmmo() {
         AMMO = 100;
+    }
+
+    /// <summary>
+    /// Calculates if character has enough stamina to do the action.
+    /// 
+    /// If there is enough stamina, it will be used.
+    /// </summary>
+    /// <param name="amount">amount of stamina the action uses</param>
+    /// <returns>true if there is enough</returns>
+    public bool IsEnoughStamina(float amount) {
+        if (STAMINA >= amount) {
+            STAMINA -= amount;
+            // Add delay to shield recovery
+            delays[D_STAMINA] = RECOVERY_DELAY_TIME + armorIncreaseStaminaRecoveryDelay;
+            return true;
+        }
+
+        return false;
     }
 
     private float CalculateBulletDamage() {

@@ -157,7 +157,7 @@ public class Helper : MonoBehaviour
         holder.lowerOpponentsCritChance.text = armor.decreaseOpponentCriticalRate.ToString();
         holder.lowerOpponentsCritMultiplier.text = armor.decreaseOpponentCriticalMultiplier.ToString();
         holder.decreaseMovementSpeed.text = armor.reduceMovementSpeed.ToString();
-        holder.decreaseStaminaRecoveryRate.text = armor.reduceStaminaRecoveryRate.ToString();
+        holder.increaseStaminaRecoveryDelay.text = armor.increaseStaminaRecoveryDelay.ToString();
     }
 
     /// <summary>

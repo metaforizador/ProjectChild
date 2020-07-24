@@ -1549,7 +1549,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Decrease stamina recovery rate
+  m_text: Increase stamina recovery delay
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1618,7 +1618,7 @@ MonoBehaviour:
   m_margin: {x: -8.316957, y: 5.4032087, z: 20.631796, w: 21.929838}
   m_textInfo:
     textComponent: {fileID: 1366221569721931554}
-    characterCount: 30
+    characterCount: 31
     spriteCount: 0
     spaceCount: 3
     wordCount: 4
@@ -2952,7 +2952,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6336068541368237723}
   m_Layer: 5
-  m_Name: DecreaseStaminaRecoveryRate
+  m_Name: IncreaseStaminaRecoveryDelay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
