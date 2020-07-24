@@ -1216,7 +1216,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 124, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &912281773
 CanvasRenderer:
@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 60.616096, y: 3.092371, z: 45.76664, w: 21.174623}
+  m_margin: {x: 22.0067, y: 5.2436614, z: 8.249961, w: 23.63322}
   m_textInfo:
     textComponent: {fileID: 912281772}
     characterCount: 6
@@ -6891,7 +6891,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 124.9, y: 54.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6384965596148039966
 CanvasRenderer:
@@ -6986,7 +6986,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 45.88005, y: 3.2090726, z: 59.8942, w: 21.196606}
+  m_margin: {x: 8.266763, y: 5.0528517, z: 22.649664, w: 23.409159}
   m_textInfo:
     textComponent: {fileID: 2933107917142756657}
     characterCount: 7
@@ -22595,7 +22595,7 @@ MonoBehaviour:
   lowerOpponentsCritChance: {fileID: 3809707831328904395}
   lowerOpponentsCritMultiplier: {fileID: 5976167327537034728}
   decreaseMovementSpeed: {fileID: 6769769145397587623}
-  decreaseStaminaRecoveryRate: {fileID: 7023463112805646045}
+  increaseStaminaRecoveryDelay: {fileID: 0}
 --- !u!1 &6692941253223457826
 GameObject:
   m_ObjectHideFlags: 0
@@ -24068,7 +24068,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 124.9, y: 54.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &104621800668708663
 CanvasRenderer:
@@ -24163,7 +24163,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 60.358868, y: 3.2090726, z: 46.104866, w: 21.196606}
+  m_margin: {x: 22.938025, y: 5.356185, z: 8.070498, w: 23.650457}
   m_textInfo:
     textComponent: {fileID: 620359824660032277}
     characterCount: 4
@@ -26414,7 +26414,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 124, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5973500041488930728
 CanvasRenderer:
@@ -26509,7 +26509,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 46.062984, y: 3.092371, z: 60.07313, w: 21.174623}
+  m_margin: {x: 8.120111, y: 5.4540896, z: 22.441286, w: 23.53634}
   m_textInfo:
     textComponent: {fileID: 1334484317630149027}
     characterCount: 7
