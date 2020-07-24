@@ -72,19 +72,17 @@ public class GameMaster : MonoBehaviour {
             Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Storage chest
-    private int unlockedStorageChestsAmount = 1;
-
-
     void Start() {
         cm = CanvasMaster.Instance;
     }
 
     private Save CreateSaveGameObject() {
         Save save = new Save();
+        // Save values of other classes
         PlayerStats.Instance.SavePlayerStats(save);
         CanvasMaster.Instance.SaveCanvasValues(save);
         Inventory.Instance.SaveInventory(save);
+        Storage.Instance.SaveStorage(save);
 
         return save;
     }
@@ -106,10 +104,11 @@ public class GameMaster : MonoBehaviour {
             FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
             Save save = (Save)bf.Deserialize(file);
 
-            // Load different class values
+            // Load values of other classes
             PlayerStats.Instance.LoadPlayerStats(save);
             CanvasMaster.Instance.LoadCanvasValues(save);
             Inventory.Instance.LoadInventory(save);
+            Storage.Instance.LoadStorage(save);
 
             file.Close();
 

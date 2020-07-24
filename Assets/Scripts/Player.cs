@@ -16,7 +16,7 @@ public class Player : CharacterParent {
 
     // Testing purposes
     public float testDamageKeyU = 20;
-    public int testXpKeyX = 20;
+    public int testXpKeyX = 100;
 
     // Checking trigger presses to avoid "input not always registering"
     private Collider triggerCollider;
@@ -92,14 +92,17 @@ public class Player : CharacterParent {
             }
         }
 
-        // Test taking damage
-        if (Input.GetKeyDown(KeyCode.U) && inputEnabled) {
-            TakeDamage(DamageType.Piercing, testDamageKeyU, 0);
-        }
-        
-        // Test gaining xp
-        if (Input.GetKeyDown(KeyCode.X) && inputEnabled) {
-            stats.GainXP(testXpKeyX);
+        // Debug tests
+        if (Application.isEditor) {
+            // Test taking damage
+            if (Input.GetKeyDown(KeyCode.U) && inputEnabled) {
+                TakeDamage(DamageType.Piercing, testDamageKeyU, 0);
+            }
+
+            // Test gaining xp
+            if (Input.GetKeyDown(KeyCode.X) && inputEnabled) {
+                stats.GainXP(testXpKeyX);
+            }
         }
 
         // Check hotbar presses

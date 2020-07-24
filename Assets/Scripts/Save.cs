@@ -31,4 +31,8 @@ public class Save {
 
     //////// Hotbar ////////
     public SerializableConsumableSO[] hotbarConsumables;
+
+    //////// Storage ////////
+    public int unlockedStorageSlotsAmount;
+    public List<SerializablePickableSO> storageContent;
 }

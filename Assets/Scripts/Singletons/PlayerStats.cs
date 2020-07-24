@@ -263,6 +263,7 @@ public class PlayerStats : MonoBehaviour {
         // Calculate next level up xp
         nextLevelUpXp += xpToAdd;
 
-        // ADD LEVEL UP STUFF TO OPEN DIALOGUE LATER
+        // Check if storage slot is unlocked
+        Storage.Instance.CheckStorageUnlock(level);
     }
 }
