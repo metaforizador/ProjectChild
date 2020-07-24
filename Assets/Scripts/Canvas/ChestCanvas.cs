@@ -187,7 +187,10 @@ public class ChestCanvas : MonoBehaviour {
     }
 
     public void StorageClicked() {
-        // CHECK HERE LATER IF THERE ARE AVAILABLE STORAGE SLOTS BEFORE OPENING CANVAS
+        if (!Storage.Instance.CheckIfEmptyStorageSlots()) {
+            CanvasMaster.Instance.topInfoCanvas.ShowStorageFull();
+            return;
+        }
 
         ItemSelectorCanvas isc = CanvasMaster.Instance.itemSelectorCanvas;
         isc.OpenSendWeaponOrArmorToStorageCanvas(selectedItem);

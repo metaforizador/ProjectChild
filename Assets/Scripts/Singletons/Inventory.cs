@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour {
         equippedArmor = creator.CreateArmor(save.equippedArmor);
         // Load consumables
         inventoryConsumables.Clear();
-        foreach (SerializableConsumableSO serialized in save.inventoryConsumables) {
+        foreach (SerializablePickableSO serialized in save.inventoryConsumables) {
             ConsumableSO con = creator.CreateConsumable(serialized);
             inventoryConsumables.Add(con);
         }
@@ -48,9 +48,9 @@ public class Inventory : MonoBehaviour {
         save.equippedWeapon = new SerializablePickableSO(equippedWeapon);
         save.equippedArmor = new SerializablePickableSO(equippedArmor);
         // Save consumables
-        List<SerializableConsumableSO> serializableConsumables = new List<SerializableConsumableSO>();
+        List<SerializablePickableSO> serializableConsumables = new List<SerializablePickableSO>();
         foreach (ConsumableSO con in inventoryConsumables) {
-            SerializableConsumableSO serialized = new SerializableConsumableSO(con);
+            SerializablePickableSO serialized = new SerializablePickableSO(con);
             serializableConsumables.Add(serialized);
         }
         save.inventoryConsumables = serializableConsumables;

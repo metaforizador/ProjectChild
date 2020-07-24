@@ -4,29 +4,6 @@ using UnityEngine;
 
 public enum ConsumableType { Scanner, Battery, ComsatLink, Rig, Scrap, Toy }
 
-/// <summary>
-/// Use this to save and load ConsumableSO instances.
-/// 
-/// All variables that are changed from code needs to be added here
-/// in order to saving and loading work correctly. ConsumableSO will
-/// be generated in SOCreator class, so if you add new variables,
-/// remember to add them there too. Also remember to add them to the
-/// ConsumableSO.Equals() so that items with different values will
-/// show correctly in inventory.
-/// </summary>
-[System.Serializable]
-public class SerializableConsumableSO : SerializablePickableSO {
-    public int quantity;
-    public string batteryTypeString;
-    public string toyWordsTypeString;
-
-    public SerializableConsumableSO(ConsumableSO consumable) : base(consumable) {
-        quantity = consumable.quantity;
-        batteryTypeString = consumable.batteryType.ToString();
-        toyWordsTypeString = consumable.toyWordsType.ToString();
-    }
-}
-
 [CreateAssetMenu(fileName = "New Consumable", menuName = "Consumable")]
 public class ConsumableSO : PickableSO {
 

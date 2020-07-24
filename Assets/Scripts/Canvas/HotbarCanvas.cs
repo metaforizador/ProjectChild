@@ -104,7 +104,7 @@ public class HotbarCanvas : MonoBehaviour {
         // Convert serialized consumables to ConsumableSO
         SOCreator creator = SOCreator.Instance;
         for (int i = 0; i < hotbarButtonAmount; i++) {
-            SerializableConsumableSO serialized = save.hotbarConsumables[i];
+            SerializablePickableSO serialized = save.hotbarConsumables[i];
             ConsumableSO con = null;
             if (serialized != null) {
                 con = creator.CreateConsumable(serialized);
@@ -117,11 +117,11 @@ public class HotbarCanvas : MonoBehaviour {
 
     public void SaveHotbar(Save save) {
         // Convert hotbar consumables to a serializable format
-        SerializableConsumableSO[] serializableConsumables = new SerializableConsumableSO[hotbarButtonAmount];
+        SerializablePickableSO[] serializableConsumables = new SerializablePickableSO[hotbarButtonAmount];
         for (int i = 0; i < hotbarButtonAmount; i++) {
             ConsumableSO con = hotbarItems[i];
             if (con != null) {
-                serializableConsumables[i] = new SerializableConsumableSO(con);
+                serializableConsumables[i] = new SerializablePickableSO(con);
             } else {
                 serializableConsumables[i] = null;
             }

@@ -75,6 +75,10 @@ public class TopInfoCanvas : MonoBehaviour {
         ShowTopInfoText($"Item '{itemName}' successfully sent to the storage!");
     }
 
+    public void ShowStorageFull() {
+        ShowTopInfoText("Your storage is full!");
+    }
+
     public void ShowComsatLinkEmpty() {
         ShowTopInfoText("You don't have any comsat links!");
     }

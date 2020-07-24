@@ -103,15 +103,17 @@ public class ItemSelectorCanvas : MonoBehaviour {
 
     private void SendItemToStorage(ConsumableSO comsatLink) {
         Inventory inv = Inventory.Instance;
+        CanvasMaster cv = CanvasMaster.Instance;
 
         if (comsatLink.CheckIfUsageSuccessful()) {
             // Remove the item from the chest
-            CanvasMaster.Instance.chestCanvas.RemoveItemFromChest();
+            cv.chestCanvas.RemoveItemFromChest();
 
-            // SEND ITEM TO STORAGE LATER
+            // Add item to the storage
+            Storage.Instance.AddToStorage(itemToSend);
 
             // Show info about sending the item
-            CanvasMaster.Instance.topInfoCanvas.ShowItemSentToStorage(itemToSend.name);
+            cv.topInfoCanvas.ShowItemSentToStorage(itemToSend.name);
         }
 
         // Remove the comsat link from inventory and close the canvas

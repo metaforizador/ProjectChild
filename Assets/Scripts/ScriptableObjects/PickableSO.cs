@@ -5,17 +5,31 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Use this to save and load PickableSO items.
-/// 
-/// ConsumableSO extends this to determine the name and itemtype of the
-/// PickableSO. Weapon and armor rely solely on this, since they only
-/// need to save the name and itemType.
 /// </summary>
 [System.Serializable]
 public class SerializablePickableSO {
+
+    // Empty is needed for save and load to function correctly
+    public const int EMPTY = -1, WEAPON_TYPE = 0, ARMOR_TYPE = 1, CONSUMABLE_TYPE = 2;
+
     public string name;
     public int itemType;
 
-    public const int WEAPON_TYPE = 0, ARMOR_TYPE = 1, CONSUMABLE_TYPE = 2;
+    /*  CONSUMABLES
+        All variables that are changed from code needs to be added here
+        in order to saving and loading work correctly. ConsumableSO will
+        be generated in SOCreator class, so if you add new variables,
+        remember to add them there too. Also remember to add them to the
+        ConsumableSO.Equals() so that items with different values will
+        show correctly in inventory.
+     */
+    public int quantity;
+    public string batteryTypeString;
+    public string toyWordsTypeString;
+
+    public SerializablePickableSO() {
+        itemType = EMPTY;
+    }
 
     public SerializablePickableSO(PickableSO item) {
         name = item.name;
@@ -25,6 +39,10 @@ public class SerializablePickableSO {
             itemType = ARMOR_TYPE;
         } else if (item is ConsumableSO) {
             itemType = CONSUMABLE_TYPE;
+            ConsumableSO con = (ConsumableSO)item;
+            quantity = con.quantity;
+            batteryTypeString = con.batteryType.ToString();
+            toyWordsTypeString = con.toyWordsType.ToString();
         }
     }
 }

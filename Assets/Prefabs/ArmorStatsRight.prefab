@@ -2564,7 +2564,7 @@ MonoBehaviour:
   lowerOpponentsCritChance: {fileID: 104167858672669329}
   lowerOpponentsCritMultiplier: {fileID: 8777961485025439900}
   decreaseMovementSpeed: {fileID: 4616321694235070798}
-  decreaseStaminaRecoveryRate: {fileID: 5644124894425718069}
+  increaseStaminaRecoveryDelay: {fileID: 5644124894425718069}
 --- !u!1 &8042355285005721189
 GameObject:
   m_ObjectHideFlags: 0

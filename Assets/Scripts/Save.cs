@@ -27,10 +27,10 @@ public class Save {
     //////// Inventory ////////
     public SerializablePickableSO equippedWeapon;
     public SerializablePickableSO equippedArmor;
-    public List<SerializableConsumableSO> inventoryConsumables;
+    public List<SerializablePickableSO> inventoryConsumables;
 
     //////// Hotbar ////////
-    public SerializableConsumableSO[] hotbarConsumables;
+    public SerializablePickableSO[] hotbarConsumables;
 
     //////// Storage ////////
     public int unlockedStorageSlotsAmount;

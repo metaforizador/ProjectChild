@@ -82,7 +82,7 @@ public class SOCreator : MonoBehaviour {
     /// </summary>
     /// <param name="serialized">serialized consumable scriptable object</param>
     /// <returns>created consumable</returns>
-    public ConsumableSO CreateConsumable(SerializableConsumableSO serialized) {
+    public ConsumableSO CreateConsumable(SerializablePickableSO serialized) {
         ConsumableSO con = Instantiate(Resources.Load<ConsumableSO>("ScriptableObjects/PickableItems/Consumables/" + serialized.name));
         con.batteryType = (ConsumableSO.BatteryType)System.Enum.Parse(typeof(ConsumableSO.BatteryType), serialized.batteryTypeString);
         con.toyWordsType = (WordsType)System.Enum.Parse(typeof(WordsType), serialized.toyWordsTypeString);
