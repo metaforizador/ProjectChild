@@ -75,7 +75,10 @@ public class playerMovement : MonoBehaviour
             animator.SetBool("Strafing", false);
         }
 
-        if (Input.GetButtonDown("Fire2") && playerScript.IsEnoughStamina(MELEE_COST) && inputEnabled)
+        if (Input.GetButtonDown("Fire2") &&             // If user presses melee button
+            playerScript.IsAbleToMelee() &&             // If player's last melee delay is over
+            playerScript.IsEnoughStamina(MELEE_COST) && // If player has enough stamina to melee
+            inputEnabled)                               // If player is able to control the character
         {
             animator.SetTrigger("Melee");
         }

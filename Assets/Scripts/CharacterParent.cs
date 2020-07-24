@@ -57,10 +57,11 @@ public class CharacterParent : MonoBehaviour {
     // Movement speed when taking armor values to account
     public float movementSpeedMultiplier { get; private set; }
 
-    // Recovery delay values
+    // Delay values
     private const float RECOVERY_DELAY_TIME = 1.5f;
-    private const int D_SHIELD = 0, D_STAMINA = 1;
-    private float[] delays = new float[] { 0, 0 };
+    private const float MELEE_DELAY_TIME = 3f;
+    private const int D_SHIELD = 0, D_STAMINA = 1, D_MELEE = 2;
+    private float[] delays = new float[] { 0, 0, 0 };
 
     // Stamina and ammo boosts
     private const int DEFAULT_BOOST = 1;
@@ -180,7 +181,7 @@ public class CharacterParent : MonoBehaviour {
     }
 
     protected virtual void Update() {
-        // Count down shield and stamina recovery delay times
+        // Count down different delay times
         for (int i = 0; i < delays.Length; i++) {
             if (delays[i] > 0)
                 delays[i] -= Time.deltaTime;
@@ -309,6 +310,19 @@ public class CharacterParent : MonoBehaviour {
             STAMINA -= amount;
             // Add delay to shield recovery
             delays[D_STAMINA] = RECOVERY_DELAY_TIME + armorIncreaseStaminaRecoveryDelay;
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Checks if last melee hit delay has ended.
+    /// </summary>
+    /// <returns>true if character is able to melee</returns>
+    public bool IsAbleToMelee() {
+        if (delays[D_MELEE] <= 0) {
+            delays[D_MELEE] = MELEE_DELAY_TIME / attackSpd;
             return true;
         }
 
