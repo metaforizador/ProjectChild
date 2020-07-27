@@ -4,12 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public interface Chests {
+    void OpenChest();
+    void ChangeItems(PickableSO[] items);
+}
+
 public class ChestCanvas : MonoBehaviour {
 
     public GameObject buttonLayout;
     public Button itemPrefab;
 
-    private Chest openedChest;
+    private Chests openedChest;
 
     public TextMeshProUGUI currentItemView, foundItemView, swapAndUseView;
     private const string SWAP_TEXT = "Swap", USE_TEXT = "Use";
@@ -37,7 +42,7 @@ public class ChestCanvas : MonoBehaviour {
         itemSelectedObject.SetActive(false);
     }
 
-    public void ShowChest(Chest chest, PickableSO[] items) {
+    public void ShowChest(Chests chest, PickableSO[] items) {
         // Close if already open
         if (gameObject.activeSelf) {
             CloseChest();

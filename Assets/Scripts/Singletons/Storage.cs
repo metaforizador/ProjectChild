@@ -18,7 +18,10 @@ public class Storage : MonoBehaviour {
 
     private const int MAX_STORAGE_SLOTS = 6;
     private const int STORAGE_SLOT_UNLOCK_LEVEL_RATE = 5;
+
     private int unlockedStorageSlotsAmount = 1;
+    public int GetUnlockedStorageSlotsAmount() => unlockedStorageSlotsAmount;
+
     private List<SerializablePickableSO> storageContent = new List<SerializablePickableSO>();
 
     void Start() {
@@ -52,7 +55,31 @@ public class Storage : MonoBehaviour {
         }
     }
 
+    public PickableSO GetFromStorageSlot(int slot) {
+        // If slot is higher than unlocked slots, quit method
+        if (slot > unlockedStorageSlotsAmount)
+            return null;
+
+        SerializablePickableSO ser = storageContent[slot - 1];  // -1 since index starts at 0
+
+        SOCreator creator = SOCreator.Instance;
+
+        if (ser.itemType == SerializablePickableSO.CONSUMABLE_TYPE) {
+            return creator.CreateConsumable(ser);
+        } else if (ser.itemType == SerializablePickableSO.WEAPON_TYPE) {
+            return creator.CreateWeapon(ser);
+        } else if (ser.itemType == SerializablePickableSO.ARMOR_TYPE) {
+            return creator.CreateArmor(ser);
+        }
+
+        return null;
+    }
+
     public void CheckStorageUnlock(int level) {
+        // If all available storage chests are unlocked, quit method
+        if (unlockedStorageSlotsAmount >= MAX_STORAGE_SLOTS)
+            return;
+        
         // + 1 to check what the next unlock level using the rate is
         int nextUnlockLevel = (unlockedStorageSlotsAmount + 1) * STORAGE_SLOT_UNLOCK_LEVEL_RATE;
 

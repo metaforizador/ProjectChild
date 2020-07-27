@@ -88,7 +88,7 @@ public class Player : CharacterParent {
         // Check trigger interact presses
         if (triggerCollider != null && Input.GetButtonDown("Interact") && inputEnabled) {
             if (triggerCollider.CompareTag("Chest")) {
-                triggerCollider.GetComponent<Chest>().OpenChest();
+                triggerCollider.GetComponent<Chests>().OpenChest();
             }
         }
 

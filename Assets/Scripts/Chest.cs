@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chest : MonoBehaviour {
+public class Chest : MonoBehaviour, Chests {
 
     private PickableSO[] items;
     private int maxItems = 4;
