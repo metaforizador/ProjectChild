@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Comsat Link IV
   m_EditorClassIdentifier: 
   name: Comsat Link IV
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  sprite: {fileID: 0}
   condition: 3
   consumableType: 2
   quantity: 1

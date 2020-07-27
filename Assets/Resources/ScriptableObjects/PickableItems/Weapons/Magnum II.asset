@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Magnum II
   m_EditorClassIdentifier: 
   name: Magnum II
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 0e0203e11e6ee044c8f4ed52ae871ce7, type: 3}
   condition: 1
   shootingSound: {fileID: 8300000, guid: ca44620350415ba42ad5c1c0e0e57368, type: 3}
   reloadingSound: {fileID: 8300000, guid: d35143dfc27dcb947ba183ecbec16278, type: 3}

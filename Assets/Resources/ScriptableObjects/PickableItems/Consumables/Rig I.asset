@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Rig I
   m_EditorClassIdentifier: 
   name: Rig I
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  sprite: {fileID: 0}
   condition: 0
   consumableType: 3
   quantity: 1
   identificationChance: 0
+  batteryType: 0
   shieldRecoveryPercentage: 0
   boostStaminaRecoverySpeed: 1.1
   boostAmmoRecoverySpeed: 1.1
@@ -27,3 +28,4 @@ MonoBehaviour:
   creditValue: 0
   craftValue: 1
   expToGain: 0
+  toyWordsType: 0

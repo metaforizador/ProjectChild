@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rig III
   m_EditorClassIdentifier: 
   name: Rig III
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  sprite: {fileID: 0}
   condition: 2
   consumableType: 3
   quantity: 1
@@ -28,3 +28,4 @@ MonoBehaviour:
   creditValue: 0
   craftValue: 1
   expToGain: 0
+  toyWordsType: 0

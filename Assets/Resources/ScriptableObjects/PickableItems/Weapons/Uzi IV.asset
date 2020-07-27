@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Uzi IV
   m_EditorClassIdentifier: 
   name: Uzi IV
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: ae4b565d4ed8e4549b14f93a81d69c92, type: 3}
   condition: 3
   shootingSound: {fileID: 8300000, guid: b630f5a6a16f8df46804a83aa24fdca5, type: 3}
   reloadingSound: {fileID: 8300000, guid: bda18b00d025a6c4b81672f356e179e9, type: 3}

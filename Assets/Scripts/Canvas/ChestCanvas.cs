@@ -66,8 +66,12 @@ public class ChestCanvas : MonoBehaviour {
                 button.transform.SetParent(buttonLayout.transform);
                 button.transform.localScale = Vector3.one;
 
-                // Set name to the button
-                button.GetComponentInChildren<TextMeshProUGUI>().text = item.name;
+                // Set name or image to the button
+                if (item.sprite == null)
+                    button.GetComponentInChildren<TextMeshProUGUI>().text = item.name;
+                else
+                    button.GetComponent<Image>().sprite = item.sprite;
+
                 createdItemButtons.Add(button);
 
                 // Set button click listener

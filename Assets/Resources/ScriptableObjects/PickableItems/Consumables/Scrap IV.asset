@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Scrap IV
   m_EditorClassIdentifier: 
   name: Scrap IV
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  sprite: {fileID: 0}
   condition: 3
   consumableType: 4
   quantity: 1
@@ -28,3 +28,4 @@ MonoBehaviour:
   creditValue: 10
   craftValue: 4
   expToGain: 0
+  toyWordsType: 0

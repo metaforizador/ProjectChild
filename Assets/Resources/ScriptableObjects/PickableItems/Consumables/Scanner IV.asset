@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Scanner IV
   m_EditorClassIdentifier: 
   name: Scanner IV
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  sprite: {fileID: 0}
   condition: 3
   consumableType: 0
   quantity: 1
@@ -28,3 +28,4 @@ MonoBehaviour:
   creditValue: 0
   craftValue: 1
   expToGain: 0
+  toyWordsType: 0
