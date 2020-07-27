@@ -7,6 +7,7 @@ public class CanvasSounds : MonoBehaviour {
     private AudioSource source;
 
     public AudioClip BUTTON_SELECT, BUTTON_BACK;
+    public AudioClip ITEM_BREAK, ITEM_USAGE_NOTIFICATION;
 
     /// <summary>
     /// Get audio source component

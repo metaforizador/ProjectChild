@@ -6680,6 +6680,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BUTTON_SELECT: {fileID: 8300000, guid: 2525e2d40be123b4dbc3465fd6206d1e, type: 3}
   BUTTON_BACK: {fileID: 8300000, guid: 457dfaaffec6bc94fb8b9f37bd95cdda, type: 3}
+  ITEM_BREAK: {fileID: 8300000, guid: 890bd18560bce7244934cdcab7e8ed3e, type: 3}
+  ITEM_USAGE_NOTIFICATION: {fileID: 8300000, guid: 087414c7c4b03f34b8892e2ccf91d301,
+    type: 3}
 --- !u!1 &1835036427178289489
 GameObject:
   m_ObjectHideFlags: 0

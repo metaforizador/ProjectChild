@@ -16,6 +16,8 @@ public class TopInfoCanvas : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI textView;
 
+    private CanvasSounds sounds;
+
     private UIAnimator animator;
     public LeanTweenType tweenType;
 
@@ -32,59 +34,73 @@ public class TopInfoCanvas : MonoBehaviour {
      * to them and possibly use different languages.
      * **************/
     public void ShowGainStatText(Stat stat) {
-        ShowTopInfoText($"You gained '{stat.name}' stat bonus!");
+        ShowTopInfoText($"You gained '{stat.name}' stat bonus!",
+            null);
     }
 
     public void ShowStatsMaxedText(WordsType type) {
-        ShowTopInfoText($"All stats for '{type.ToString()}' answers are maxed out!");
+        ShowTopInfoText($"All stats for '{type.ToString()}' answers are maxed out!",
+            null);
     }
 
     public void ShowShieldRecoveredText(float amount) {
-        ShowTopInfoText($"You recovered shields by {amount.ToString()} %!");
+        ShowTopInfoText($"You recovered shields by {amount.ToString()} %!", 
+            sounds.ITEM_USAGE_NOTIFICATION);
     }
 
     public void ShowHealthRecoveredText() {
-        ShowTopInfoText($"You recovered health!");
+        ShowTopInfoText($"You recovered health!", 
+            sounds.ITEM_USAGE_NOTIFICATION);
     }
 
     public void ShowBoostText(string boostType, float amount, float time) {
-        ShowTopInfoText($"You activated {(amount * 100).ToString()} % {boostType} boost for {time.ToString()} seconds!");
+        ShowTopInfoText($"You activated {(amount * 100).ToString()} % {boostType} boost for {time.ToString()} seconds!",
+            sounds.ITEM_USAGE_NOTIFICATION);
     }
 
     public void ShowItemBrokeText(string itemName) {
-        ShowTopInfoText($"Item {itemName} broke!");
+        ShowTopInfoText($"Item {itemName} broke!",
+            sounds.ITEM_BREAK);
     }
 
     public void ShowXpPercentageGainedText(float percentage) {
-        ShowTopInfoText($"You gained {percentage.ToString()} % exp for next level!");
+        ShowTopInfoText($"You gained {percentage.ToString()} % exp for next level!",
+            sounds.ITEM_USAGE_NOTIFICATION);
     }
 
     public void ShowScrapToToy(string scrapName, string toyName) {
-        ShowTopInfoText($"{scrapName} successfully turned into a {toyName}!");
+        ShowTopInfoText($"{scrapName} successfully turned into a {toyName}!",
+            sounds.ITEM_USAGE_NOTIFICATION);
     }
 
     public void ShowIdentifiableEmpty() {
-        ShowTopInfoText("You don't have any identifiable items!");
+        ShowTopInfoText("You don't have any identifiable items!",
+            sounds.ITEM_USAGE_NOTIFICATION);
     }
 
     public void ShowBatteryIdentified(string batteryType) {
-        ShowTopInfoText($"Battery is of '{batteryType}' type!");
+        ShowTopInfoText($"Battery is of '{batteryType}' type!",
+            sounds.ITEM_USAGE_NOTIFICATION);
     }
 
     public void ShowItemSentToStorage(string itemName) {
-        ShowTopInfoText($"Item '{itemName}' successfully sent to the storage!");
+        ShowTopInfoText($"Item '{itemName}' successfully sent to the storage!",
+            sounds.ITEM_USAGE_NOTIFICATION);
     }
 
     public void ShowStorageFull() {
-        ShowTopInfoText("Your storage is full!");
+        ShowTopInfoText("Your storage is full!",
+            sounds.ITEM_USAGE_NOTIFICATION);
     }
 
     public void ShowComsatLinkEmpty() {
-        ShowTopInfoText("You don't have any comsat links!");
+        ShowTopInfoText("You don't have any comsat links!",
+            sounds.ITEM_USAGE_NOTIFICATION);
     }
 
     public void ShowItemCollected(PickableSO item) {
-        ShowTopInfoText($"You collected '{item.name}'!");
+        ShowTopInfoText($"You collected '{item.name}'!",
+            sounds.ITEM_USAGE_NOTIFICATION);
     }
 
     /************** CLASS METHODS **************/
@@ -93,13 +109,19 @@ public class TopInfoCanvas : MonoBehaviour {
         // Hide panel
         animator = CanvasMaster.Instance.uiAnimator;
         ResetPosition();
+
+        // Setup sounds
+        sounds = CanvasMaster.Instance.canvasSounds;
     }
 
     private void ResetPosition() {
         infoObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, hideYPosition);
     }
 
-    private void ShowTopInfoText(string textToShow) {
+    private void ShowTopInfoText(string textToShow, AudioClip audioToPlay) {
+        if (audioToPlay != null)
+            sounds.PlaySound(audioToPlay);
+
         ResetPosition();
         gameObject.SetActive(true);
         // Stop coroutine to hide the object if multiple texts are shown simultaneously
