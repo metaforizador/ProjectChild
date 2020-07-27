@@ -125,6 +125,10 @@ public class PlayerStats : MonoBehaviour {
         save.nextLevelUpXp = nextLevelUpXp;
         save.lastLevelUpXp = lastLevelUpXp;
         save.redeemableLevelPoints = redeemableLevelPoints;
+
+        // Save position
+        save.playerPosition = player.transform.position;
+        save.playerQuaternion = player.transform.rotation;
     }
 
     public void LoadPlayerStats(Save save) {
@@ -154,6 +158,10 @@ public class PlayerStats : MonoBehaviour {
         nextLevelUpXp = save.nextLevelUpXp;
         lastLevelUpXp = save.lastLevelUpXp;
         redeemableLevelPoints = save.redeemableLevelPoints;
+
+        // Load position
+        player.transform.position = save.playerPosition;
+        player.transform.rotation = save.playerQuaternion;
 
         RefreshPlayerForStatChanges();
     }

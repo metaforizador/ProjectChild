@@ -84,6 +84,9 @@ public class GameMaster : MonoBehaviour {
         Inventory.Instance.SaveInventory(save);
         Storage.Instance.SaveStorage(save);
 
+        // Save global values
+        save.sceneName = SceneManager.GetActiveScene().name;
+
         return save;
     }
 
@@ -103,6 +106,9 @@ public class GameMaster : MonoBehaviour {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
             Save save = (Save)bf.Deserialize(file);
+
+            // Load global values
+            //SceneManager.LoadScene(save.sceneName); //Disable for now since it's not properly tested
 
             // Load values of other classes
             PlayerStats.Instance.LoadPlayerStats(save);

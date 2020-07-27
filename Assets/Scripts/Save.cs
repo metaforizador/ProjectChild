@@ -4,6 +4,11 @@ using UnityEngine;
 
 [System.Serializable]
 public class Save {
+    //////// Global ////////
+    public string sceneName;
+    public SerializableVector3 playerPosition;
+    public SerializableQuaternion playerQuaternion;
+
     //////// Player stats ////////
     // Nurturing
     public Stat shieldRecovery, staminaRecovery, ammoRecovery;

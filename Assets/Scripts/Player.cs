@@ -103,6 +103,16 @@ public class Player : CharacterParent {
             if (Input.GetKeyDown(KeyCode.X) && inputEnabled) {
                 stats.GainXP(testXpKeyX);
             }
+
+            // Test saving
+            if (Input.GetKeyDown(KeyCode.O) && inputEnabled) {
+                GameMaster.Instance.SaveGame();
+            }
+
+            // Test loading
+            if (Input.GetKeyDown(KeyCode.P) && inputEnabled) {
+                GameMaster.Instance.LoadGame();
+            }
         }
 
         // Check hotbar presses
