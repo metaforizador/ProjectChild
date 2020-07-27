@@ -532,6 +532,7 @@ MonoBehaviour:
   itemSelectedObject: {fileID: 878937161}
   buttons: {fileID: 3229571939417540962}
   collectButton: {fileID: 1963394556011199229}
+  storageButton: {fileID: 2162751872169096263}
   weaponStatsPrefabLeft: {fileID: 7818729412227567886, guid: fdc22bde09fe11b4e8ea36420356a64d,
     type: 3}
   weaponStatsPrefabRight: {fileID: 7818729412227567886, guid: ea736aa6685c86840ac971641320a647,

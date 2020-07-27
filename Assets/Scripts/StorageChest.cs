@@ -12,8 +12,8 @@ public class StorageChest : MonoBehaviour, Chests {
     private int itemAmount = 1;
 
     void Start() {
-        // Create item array so ChangeItems works correctly and there's a possibility
-        // to modify the amount later easily
+        // Create item array so ChangeItems works correctly and it's easier
+        // to modify the amount later
         items = new PickableSO[itemAmount];
 
         // Destroy chest if player has not unlocked enough slots
@@ -23,13 +23,17 @@ public class StorageChest : MonoBehaviour, Chests {
     }
 
     public void OpenChest() {
-        // Retrieve item from storage, this could be moved to Start(), but for
-        // testing purposes it's simpler if it's here
+        // Retrieve item from storage. This could be moved to Start(),
+        // but for testing purposes it's simpler if it's here.
         items[0] = Storage.Instance.GetFromStorageSlot(storageSlot);
         CanvasMaster.Instance.chestCanvas.ShowChest(this, items);
     }
 
     public void ChangeItems(PickableSO[] items) {
         this.items = items;
+    }
+
+    public void RemoveStorageItem() {
+        Storage.Instance.RemoveItemFromStorageSlot(storageSlot);
     }
 }

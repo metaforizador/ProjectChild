@@ -17,7 +17,7 @@ public class ChestCanvas : MonoBehaviour {
     private Chests openedChest;
 
     public TextMeshProUGUI currentItemView, foundItemView, swapAndUseView;
-    private const string SWAP_TEXT = "Swap", USE_TEXT = "Use";
+    private const string SWAP_TEXT = "Swap", USE_TEXT = "Use", EQUIP_TEXT = "Equip";
 
     private List<Button> createdItemButtons = new List<Button>();
 
@@ -27,7 +27,7 @@ public class ChestCanvas : MonoBehaviour {
     private PickableSO selectedItem;
 
     public GameObject buttons;
-    public Button collectButton;
+    public Button collectButton, storageButton;
 
     // Weapon and armor stats
     public GameObject weaponStatsPrefabLeft, weaponStatsPrefabRight, armorStatsPrefabLeft, armorStatsPrefabRight;
@@ -117,12 +117,17 @@ public class ChestCanvas : MonoBehaviour {
         itemDisplayObject.SetActive(isConsumable);
         currentItemButton.SetActive(!isConsumable);
         foundItemButton.SetActive(!isConsumable);
-
-        // Determine swap / use button text
-        swapAndUseView.text = isConsumable ? USE_TEXT : SWAP_TEXT;
+        
+        // Determine swap / use / equip button text
+        if (openedChest is Chest) {
+            swapAndUseView.text = isConsumable ? USE_TEXT : SWAP_TEXT;
+        } else if (openedChest is StorageChest) {
+            swapAndUseView.text = isConsumable ? USE_TEXT : EQUIP_TEXT;
+        }
 
         // Enable / disable correct buttons
         collectButton.interactable = isConsumable ? true : false;
+        storageButton.interactable = openedChest is StorageChest ? false : true;
 
         if (!isConsumable) {
             foundItemView.text = selectedItem.name;     // Change found item text
@@ -184,8 +189,15 @@ public class ChestCanvas : MonoBehaviour {
                 oldItem = player.ChangeArmor((ArmorSO)selectedItem);
             }
 
-            // Replace selected item with the player's old item
+            // Rreplace selected item with the player's old item
             items[selectedItemIndex] = oldItem;
+        }
+
+        // If openedChest is StorageChest, leave it empty and remove item from Storage
+        if (openedChest is StorageChest) {
+            items[selectedItemIndex] = null;
+            StorageChest sto = (StorageChest)openedChest;
+            sto.RemoveStorageItem();
         }
 
         RefreshChestContents();

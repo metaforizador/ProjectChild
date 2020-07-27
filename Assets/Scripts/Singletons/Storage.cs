@@ -75,6 +75,17 @@ public class Storage : MonoBehaviour {
         return null;
     }
 
+    /// <summary>
+    /// Removes item from provided slot.
+    /// 
+    /// SerializablePickableSO() creates an empty object, since these values
+    /// can't be null for some reason.
+    /// </summary>
+    /// <param name="slot"></param>
+    public void RemoveItemFromStorageSlot(int slot) {
+        storageContent[slot - 1] = new SerializablePickableSO();
+    }
+
     public void CheckStorageUnlock(int level) {
         // If all available storage chests are unlocked, quit method
         if (unlockedStorageSlotsAmount >= MAX_STORAGE_SLOTS)
