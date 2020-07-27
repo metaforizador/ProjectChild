@@ -30,15 +30,17 @@ public class Storage : MonoBehaviour {
             storageContent.Add(new SerializablePickableSO());
     }
 
-    public bool CheckIfEmptyStorageSlots() {
+    public int EmptyStorageSlotsAmount() {
+        int amount = 0;
+
         // If there are empty values, there is an empty slot
         for (int i = 0; i < storageContent.Count; i++) {
             SerializablePickableSO serialized = storageContent[i];
             if (serialized.itemType == SerializablePickableSO.EMPTY)
-                return true;
+                amount++;
         }
 
-        return false;
+        return amount;
     }
 
     public void AddToStorage(PickableSO item) {

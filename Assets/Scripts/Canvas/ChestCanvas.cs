@@ -16,7 +16,7 @@ public class ChestCanvas : MonoBehaviour {
 
     private Chests openedChest;
 
-    public TextMeshProUGUI currentItemView, foundItemView, swapAndUseView;
+    public TextMeshProUGUI currentItemView, foundItemView, swapAndUseView, storageAmount;
     private const string SWAP_TEXT = "Swap", USE_TEXT = "Use", EQUIP_TEXT = "Equip";
 
     private List<Button> createdItemButtons = new List<Button>();
@@ -99,6 +99,11 @@ public class ChestCanvas : MonoBehaviour {
         selectedItem = items[index];
 
         itemSelectedObject.SetActive(true); // Activate item select elements
+
+        // Change storage button amount text
+        Storage storage = Storage.Instance;
+        int unlocked = storage.GetUnlockedStorageSlotsAmount();
+        storageAmount.text = $"{unlocked - storage.EmptyStorageSlotsAmount()} / {unlocked}";
 
         // Set item texts and stats
         if (selectedItem is WeaponSO) {
@@ -208,7 +213,7 @@ public class ChestCanvas : MonoBehaviour {
     }
 
     public void StorageClicked() {
-        if (!Storage.Instance.CheckIfEmptyStorageSlots()) {
+        if (Storage.Instance.EmptyStorageSlotsAmount() == 0) {
             CanvasMaster.Instance.topInfoCanvas.ShowStorageFull();
             return;
         }
