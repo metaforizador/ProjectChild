@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 2861027865768019012}
   - component: {fileID: 5968928102536206342}
   - component: {fileID: 5558091043828344557}
+  - component: {fileID: 6352079328102158650}
   m_Layer: 5
   m_Name: ConsumableVerticalItem
   m_TagString: Untagged
@@ -262,6 +263,20 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: 1
   m_LayoutPriority: 1
+--- !u!114 &6352079328102158650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2977672564776387864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea7004cc540f9644b3da926da5a6940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muteClickSound: 0
+  playBackSound: 0
 --- !u!1 &5233118258881816046
 GameObject:
   m_ObjectHideFlags: 0

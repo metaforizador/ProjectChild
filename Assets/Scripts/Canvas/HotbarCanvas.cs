@@ -41,18 +41,23 @@ public class HotbarCanvas : MonoBehaviour {
     public void HotbarButtonClicked(int index) {
         GameMaster gm = GameMaster.Instance;
         ConsumableSO clickedItem = hotbarItems[index];
+        // Play sound
+        CanvasSounds sounds = CanvasMaster.Instance.canvasSounds;
 
         if (gm.gameState.Equals(GameState.Hotbar)) {
             // Swap hotbar button item
             SwapHotbarItem(index);
+            sounds.PlaySound(sounds.BUTTON_SELECT);
         } else if (gm.gameState.Equals(GameState.Menu)) {
             // Show item info in InventoryCanvas
             if (clickedItem != null)
                 CanvasMaster.Instance.inventoryCanvas.GetComponent<InventoryCanvas>().ShowHotbarItemInfo(clickedItem);
         } else if (gm.gameState.Equals(GameState.Movement)) {
             // Use item
-            if (clickedItem != null)
+            if (clickedItem != null) {
                 Inventory.Instance.UseConsumable(clickedItem);
+                sounds.PlaySound(sounds.BUTTON_SELECT);
+            }
         }
     }
 

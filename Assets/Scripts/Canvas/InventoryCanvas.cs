@@ -146,9 +146,13 @@ public class InventoryCanvas : MonoBehaviour {
         itemStatsDisplay.SetActive(false); // Disable item stats display since item is not yet chosen
     }
 
+    /// <summary>
+    /// Closes all sub categories.
+    /// 
+    /// Close button calls this method.
+    /// </summary>
     public void CloseSubcategory() {
         ShowRequiredCategory(NONE);
-        sounds.PlaySound(sounds.BUTTON_BACK);
     }
 
     /// <summary>
@@ -156,7 +160,6 @@ public class InventoryCanvas : MonoBehaviour {
     /// </summary>
     /// <param name="con">item to get the information from</param>
     private void ShowItemInfo(ConsumableSO con) {
-        sounds.PlaySound(sounds.BUTTON_SELECT);
         // Activate correct objects
         itemStatsDisplay.SetActive(true);
         // Set selected item for equip and use buttons
@@ -174,7 +177,6 @@ public class InventoryCanvas : MonoBehaviour {
     }
 
     public void EquipItem() {
-        sounds.PlaySound(sounds.BUTTON_SELECT);
         hotbar.SetIncomingItem(selectedItem);
     }
 
@@ -216,18 +218,11 @@ public class InventoryCanvas : MonoBehaviour {
     /// </summary>
     /// <param name="category">category which should be open</param>
     private void ShowRequiredCategory(int category) {
-        // If category was open and player clicked the same category, close it
-        if (category == currentlyOpen && category != NONE) {
-            sounds.PlaySound(sounds.BUTTON_BACK);
-            category = NONE;
-        }
-        
         // If element is none, reset menu and categories scale
         if (category == NONE) {
             ScaleMenuAndCategories(false);
         } else {
             // Else category is opened, so play sound
-            sounds.PlaySound(sounds.BUTTON_SELECT);
             ScaleMenuAndCategories(true);
         }
 
