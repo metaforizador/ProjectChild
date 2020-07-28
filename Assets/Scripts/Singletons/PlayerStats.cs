@@ -26,6 +26,8 @@ public class PlayerStats : MonoBehaviour {
     public Player player;
 
     // Stats to save and load
+    public bool loadPlayer;
+
     // Nurturing
     public Stat shieldRecovery { get; private set; }
     public Stat staminaRecovery { get; private set; }
@@ -126,13 +128,10 @@ public class PlayerStats : MonoBehaviour {
         save.lastLevelUpXp = lastLevelUpXp;
         save.redeemableLevelPoints = redeemableLevelPoints;
 
-        // Save position
-        save.playerPosition = player.transform.position;
-        save.playerQuaternion = player.transform.rotation;
+        player.SavePlayer(save);
     }
 
     public void LoadPlayerStats(Save save) {
-        Debug.Log(save.piercingDmg.name);
         shieldRecovery.LoadStat(save.shieldRecovery);
         staminaRecovery.LoadStat(save.staminaRecovery);
         ammoRecovery.LoadStat(save.ammoRecovery);
@@ -159,9 +158,8 @@ public class PlayerStats : MonoBehaviour {
         lastLevelUpXp = save.lastLevelUpXp;
         redeemableLevelPoints = save.redeemableLevelPoints;
 
-        // Load position
-        player.transform.position = save.playerPosition;
-        player.transform.rotation = save.playerQuaternion;
+        // Inform player that it should load it's stuff
+        loadPlayer = true;
 
         RefreshPlayerForStatChanges();
     }

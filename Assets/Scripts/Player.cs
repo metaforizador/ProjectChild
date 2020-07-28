@@ -27,7 +27,7 @@ public class Player : CharacterParent {
         cm = CanvasMaster.Instance;
         hotbar = cm.hotbarCanvas.GetComponent<HotbarCanvas>();
 
-        GameMaster.Instance.SetState(GameState.Movement);
+        gm.SetState(GameState.Movement);
         characterType = CharacterType.Player;
         stats = PlayerStats.Instance;
         inventory = Inventory.Instance;
@@ -40,6 +40,12 @@ public class Player : CharacterParent {
         RefreshStats();
 
         base.Start();
+
+        // Load player stuff if game is loaded
+        if (stats.loadPlayer) {
+            stats.loadPlayer = false;   // Inform that player has loaded
+            LoadPlayer(gm.latestSave);  // Load player stuff
+        }
 
         // Show player's hud
         hud.gameObject.SetActive(true);
@@ -68,6 +74,18 @@ public class Player : CharacterParent {
 
         // Some armor values are affected by stats
         RetrieveArmorValues();
+    }
+
+    public void SavePlayer(Save save) {
+        // Save position
+        save.playerPosition = transform.position;
+        save.playerQuaternion = transform.rotation;
+    }
+
+    public void LoadPlayer(Save save) {
+        // Load position
+        transform.position = save.playerPosition;
+        transform.rotation = save.playerQuaternion;
     }
 
     public override WeaponSO ChangeWeapon(WeaponSO weapon) {

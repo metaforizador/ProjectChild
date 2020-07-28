@@ -25,6 +25,8 @@ public class GameMaster : MonoBehaviour {
 
     private CanvasMaster cm;
 
+    public Save latestSave { get; private set; }
+
     // Handle game state
     public GameState gameState { get; private set; }
     public void SetState(GameState state) {
@@ -85,7 +87,7 @@ public class GameMaster : MonoBehaviour {
         Inventory.Instance.SaveInventory(save);
         Storage.Instance.SaveStorage(save);
 
-        // Save global values
+        // Save Scene name
         save.sceneName = SceneManager.GetActiveScene().name;
 
         return save;
@@ -107,15 +109,16 @@ public class GameMaster : MonoBehaviour {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
             Save save = (Save)bf.Deserialize(file);
-
-            // Load global values
-            //SceneManager.LoadScene(save.sceneName); //Disable for now since it's not properly tested
+            latestSave = save; // Player needs to access this when it spawns
 
             // Load values of other classes
             PlayerStats.Instance.LoadPlayerStats(save);
             CanvasMaster.Instance.LoadCanvasValues(save);
             Inventory.Instance.LoadInventory(save);
             Storage.Instance.LoadStorage(save);
+
+            // Load saved scene
+            SceneManager.LoadScene(save.sceneName);
 
             file.Close();
 
