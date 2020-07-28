@@ -14,7 +14,8 @@ public class GameMaster : MonoBehaviour {
     public static GameMaster Instance { get { return _instance; } }
 
     private void Awake() {
-        if (_instance == null) {
+        // If instance not yet created, or player goes back to the MainMenu, create new instance
+        if (_instance == null || SceneManager.GetActiveScene().name.Equals("MainMenu")) {
             _instance = this;
             DontDestroyOnLoad(gameObject);
         } else {

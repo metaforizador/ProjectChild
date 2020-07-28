@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CanvasMaster : MonoBehaviour {
     // Make class static and destroy if script already exists
@@ -9,7 +10,8 @@ public class CanvasMaster : MonoBehaviour {
     public static CanvasMaster Instance { get { return _instance; } }
 
     private void Awake() {
-        if (_instance == null) {
+        // If instance not yet created, or player goes back to the MainMenu, create new instance
+        if (_instance == null || SceneManager.GetActiveScene().name.Equals("MainMenu")) {
             _instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
@@ -22,7 +24,7 @@ public class CanvasMaster : MonoBehaviour {
     public GameObject canvasBackground, crosshair;
     public GameObject dialogueCanvas, statsCanvas,
         HUDCanvas, hotbarCanvas, inventoryCanvas,
-        gameOverCanvas;
+        gameOverCanvas, mainMenuCanvas;
     public ChestCanvas chestCanvas;
     public TopInfoCanvas topInfoCanvas;
     public ItemSelectorCanvas itemSelectorCanvas;
@@ -44,6 +46,9 @@ public class CanvasMaster : MonoBehaviour {
         // Disable some canvases in case they are left open
         canvasBackground.SetActive(false);
         itemSelectorCanvas.gameObject.SetActive(false);
+
+        // Enable main menu canvas if game starts at main menu
+        mainMenuCanvas.SetActive(SceneManager.GetActiveScene().name.Equals("MainMenu") ? true : false);
 
         // Initialize saved questions and replies
         askedQuestions = new Dictionary<Mood, List<string>>();

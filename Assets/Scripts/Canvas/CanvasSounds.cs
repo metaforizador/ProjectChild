@@ -25,4 +25,9 @@ public class CanvasSounds : MonoBehaviour {
     /// Plays an audio when cursor hovers on top of a button.
     /// </summary>
     public void PlayButtonEnter() => source.PlayOneShot(BUTTON_ENTER);
+
+    /// <summary>
+    /// Plays an audio when cursor clicks a button.
+    /// </summary>
+    public void PlayButtonClick() => source.PlayOneShot(BUTTON_SELECT);
 }
