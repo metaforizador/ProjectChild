@@ -128,7 +128,7 @@ public class Inventory : MonoBehaviour {
     public void RefreshInventoryItems() {
         // Refresh hotbar and inventorycanvas items
         CanvasMaster cm = CanvasMaster.Instance;
-        cm.hotbarCanvas.GetComponent<HotbarCanvas>().RefreshHotbarImages();
+        cm.hotbarCanvas.RefreshHotbarImages();
         cm.inventoryCanvas.GetComponent<InventoryCanvas>().RefreshConsumables();
     }
 }

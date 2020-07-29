@@ -23,10 +23,11 @@ public class CanvasMaster : MonoBehaviour {
 
     public GameObject canvasBackground, crosshair;
     public GameObject dialogueCanvas, statsCanvas,
-        HUDCanvas, hotbarCanvas, inventoryCanvas,
+        HUDCanvas, inventoryCanvas,
         gameOverCanvas, mainMenuCanvas;
     public ChestCanvas chestCanvas;
     public TopInfoCanvas topInfoCanvas;
+    public HotbarCanvas hotbarCanvas;
     public ItemSelectorCanvas itemSelectorCanvas;
     public CanvasSounds canvasSounds;
     public UIAnimator uiAnimator;
@@ -42,10 +43,12 @@ public class CanvasMaster : MonoBehaviour {
         // Enable canvases when game starts to fix fps hiccups when opening them
         dialogueCanvas.GetComponent<DialogueScript>().Initialize();
         topInfoCanvas.Initialize();
+        hotbarCanvas.Initialize();  // Fixes bugs when loading a save
 
         // Disable some canvases in case they are left open
         canvasBackground.SetActive(false);
         itemSelectorCanvas.gameObject.SetActive(false);
+        HUDCanvas.SetActive(false);
 
         // Enable main menu canvas if game starts at main menu
         mainMenuCanvas.SetActive(SceneManager.GetActiveScene().name.Equals("MainMenu") ? true : false);
@@ -79,13 +82,13 @@ public class CanvasMaster : MonoBehaviour {
     public void SaveCanvasValues(Save save) {
         save.askedQuestions = askedQuestions;
         save.givenReplies = givenReplies;
-        hotbarCanvas.GetComponent<HotbarCanvas>().SaveHotbar(save);
+        hotbarCanvas.SaveHotbar(save);
     }
 
     public void LoadCanvasValues(Save save) {
         askedQuestions = save.askedQuestions;
         givenReplies = save.givenReplies;
-        hotbarCanvas.GetComponent<HotbarCanvas>().LoadHotbar(save);
+        hotbarCanvas.LoadHotbar(save);
     }
 
     public void OpenDialogue() {

@@ -21,7 +21,7 @@ public class HotbarCanvas : MonoBehaviour {
         changingItemsPanel.SetActive(false);
     }
 
-    void Start() {
+    public void Initialize() {
         hotbarButtonAmount = buttonLayout.transform.childCount;
         hotbarButtons = new GameObject[hotbarButtonAmount];
         hotbarItems = new ConsumableSO[hotbarButtonAmount];

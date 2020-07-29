@@ -111,14 +111,14 @@ public class GameMaster : MonoBehaviour {
             Save save = (Save)bf.Deserialize(file);
             latestSave = save; // Player needs to access this when it spawns
 
+            // Load saved scene (Needs to be called before loading values from other classes)
+            SceneManager.LoadScene(save.sceneName);
+
             // Load values of other classes
             PlayerStats.Instance.LoadPlayerStats(save);
             CanvasMaster.Instance.LoadCanvasValues(save);
             Inventory.Instance.LoadInventory(save);
             Storage.Instance.LoadStorage(save);
-
-            // Load saved scene
-            SceneManager.LoadScene(save.sceneName);
 
             file.Close();
 

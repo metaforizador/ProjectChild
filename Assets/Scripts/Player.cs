@@ -25,7 +25,7 @@ public class Player : CharacterParent {
         // Retrieve references
         gm = GameMaster.Instance;
         cm = CanvasMaster.Instance;
-        hotbar = cm.hotbarCanvas.GetComponent<HotbarCanvas>();
+        hotbar = cm.hotbarCanvas;
 
         gm.SetState(GameState.Movement);
         characterType = CharacterType.Player;

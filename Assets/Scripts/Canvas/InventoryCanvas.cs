@@ -46,7 +46,7 @@ public class InventoryCanvas : MonoBehaviour {
         CanvasMaster cv = CanvasMaster.Instance;
         animator = cv.uiAnimator;
         sounds = cv.canvasSounds;
-        hotbar = cv.hotbarCanvas.GetComponent<HotbarCanvas>();
+        hotbar = cv.hotbarCanvas;
         categoryObjects = new GameObject[] { weaponObj, armorObj, consumablesObj, miscObj };
 
         // Hide debug menu stuff
