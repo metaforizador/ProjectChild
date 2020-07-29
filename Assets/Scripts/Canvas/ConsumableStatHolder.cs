@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Holds all the stats that Consumables has.
+/// 
+/// It's used for displaying the stats in UI text at
+/// chests and at inventory.
+/// </summary>
 public class ConsumableStatHolder : MonoBehaviour{
     public TextMeshProUGUI
         // Scanner

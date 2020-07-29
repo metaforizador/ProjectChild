@@ -4,11 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Interface for different kinds of chests, which share the same ChestCanvas.
+/// 
+/// Holds all the methods that the chests need to have in order for this
+/// canvas to work correctly.
+/// </summary>
 public interface Chests {
     void OpenChest();
     void ChangeItems(PickableSO[] items);
 }
 
+/// <summary>
+/// Displays the chest's content in UI.
+/// 
+/// Used for displaying a normal chest content and
+/// a storage chest content. It also modifies chest
+/// content when needed.
+/// </summary>
 public class ChestCanvas : MonoBehaviour {
 
     public GameObject buttonLayout;
@@ -39,9 +52,15 @@ public class ChestCanvas : MonoBehaviour {
     public ItemDisplay itemDisplay;
 
     void OnEnable() {
+        // Don't show any item info when chest opens
         itemSelectedObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Shows the content of the chest.
+    /// </summary>
+    /// <param name="chest">opened chest</param>
+    /// <param name="items">items that the chest holds</param>
     public void ShowChest(Chests chest, PickableSO[] items) {
         // Close if already open
         if (gameObject.activeSelf) {
@@ -57,6 +76,7 @@ public class ChestCanvas : MonoBehaviour {
 
         gameObject.SetActive(true);
 
+        // Create a button for all of the chest items
         for (int i = 0; i < items.Length; i++) {
             PickableSO item = items[i];
 
@@ -119,6 +139,13 @@ public class ChestCanvas : MonoBehaviour {
         ToggleItemTypeStuff();
     }
 
+    /// <summary>
+    /// Toggles all necessary item type UI elements.
+    /// 
+    /// Weapons and armors show different UI elements than consumables
+    /// and storage chest modifies some UI elements compared to a
+    /// normal chest.
+    /// </summary>
     private void ToggleItemTypeStuff() {
         bool isConsumable = selectedItem is ConsumableSO;
 
@@ -143,6 +170,9 @@ public class ChestCanvas : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Displays weapon stats for current and found weapon.
+    /// </summary>
     private void ShowWeaponStats() {
         // Setup current weapon stats
         WeaponStatHolder holder = Helper.Instance.CreateObjectChild(weaponStatsPrefabLeft, currentItemStats).
@@ -157,6 +187,9 @@ public class ChestCanvas : MonoBehaviour {
         Helper.Instance.SetupWeaponStats(holder, weapon);
     }
 
+    /// <summary>
+    /// Displays armor stats for current and found armor.
+    /// </summary>
     private void ShowArmorStats() {
         // Setup current armor stats
         ArmorStatHolder holder = Helper.Instance.CreateObjectChild(armorStatsPrefabLeft, currentItemStats).
@@ -171,10 +204,13 @@ public class ChestCanvas : MonoBehaviour {
         Helper.Instance.SetupArmorStats(holder, armor);
     }
 
+    /// <summary>
+    /// Adds the selected consumable to the inventory.
+    /// </summary>
     public void CollectItem() {
-        Inventory.Instance.AddConsumable((ConsumableSO) selectedItem);
-        CanvasMaster.Instance.topInfoCanvas.ShowItemCollected(selectedItem);
-        RemoveItemFromChest();
+        Inventory.Instance.AddConsumable((ConsumableSO) selectedItem);      // Add item
+        CanvasMaster.Instance.topInfoCanvas.ShowItemCollected(selectedItem);// Show top info about item collected
+        RemoveItemFromChest();                                              // Removes the item from chest
     }
 
     /// <summary>
@@ -198,11 +234,11 @@ public class ChestCanvas : MonoBehaviour {
                 oldItem = player.ChangeArmor((ArmorSO)selectedItem);
             }
 
-            // Rreplace selected item with the player's old item
+            // Replace selected item with the player's old item
             items[selectedItemIndex] = oldItem;
         }
 
-        // If openedChest is StorageChest, leave it empty and remove item from Storage
+        // If openedChest is StorageChest, leave the slot empty and remove item from Storage
         if (openedChest is StorageChest) {
             items[selectedItemIndex] = null;
             StorageChest sto = (StorageChest)openedChest;
@@ -212,19 +248,17 @@ public class ChestCanvas : MonoBehaviour {
         RefreshChestContents();
     }
 
+    /// <summary>
+    /// Sends the item to storage.
+    /// </summary>
     public void StorageClicked() {
+        // If storage is full, exit
         if (Storage.Instance.EmptyStorageSlotsAmount() == 0) {
             CanvasMaster.Instance.topInfoCanvas.ShowStorageFull();
             return;
         }
 
-        ItemSelectorCanvas isc = CanvasMaster.Instance.itemSelectorCanvas;
-        isc.OpenSendWeaponOrArmorToStorageCanvas(selectedItem);
-
-        if (isc.isEmpty) {
-            isc.CloseItemSelectorCanvas();
-            CanvasMaster.Instance.topInfoCanvas.ShowComsatLinkEmpty();
-        }
+        CanvasMaster.Instance.itemSelectorCanvas.OpenSendItemToStorageCanvas(selectedItem);
     }
 
     public void RemoveItemFromChest() {
@@ -241,6 +275,9 @@ public class ChestCanvas : MonoBehaviour {
         ShowChest(openedChest, items);
     }
 
+    /// <summary>
+    /// Hide selected item info.
+    /// </summary>
     public void Cancel() {
         itemSelectedObject.SetActive(false);
     }

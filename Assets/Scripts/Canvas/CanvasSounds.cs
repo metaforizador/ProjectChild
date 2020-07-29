@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Used for playing UI canvas sounds using a single audio source.
+/// 
+/// This way 2 sounds will never play at the same time. It will
+/// stop the previous sound when a new sound begins playing.
+/// </summary>
 public class CanvasSounds : MonoBehaviour {
 
     private AudioSource source;

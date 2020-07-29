@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controls the hotbar items on the bottom of the screen.
+/// </summary>
 public class HotbarCanvas : MonoBehaviour {
 
     public GameObject buttonLayout;
@@ -18,9 +21,16 @@ public class HotbarCanvas : MonoBehaviour {
     private ConsumableSO incomingItem;
 
     void Awake() {
+        // Hide equipping item panel if it's left open
         changingItemsPanel.SetActive(false);
     }
 
+    /// <summary>
+    /// Initializes necessay values.
+    /// 
+    /// These need to be initialized in CanvasMaster so that
+    /// loading the hotbar values work correctly.
+    /// </summary>
     public void Initialize() {
         hotbarButtonAmount = buttonLayout.transform.childCount;
         hotbarButtons = new GameObject[hotbarButtonAmount];
@@ -38,10 +48,13 @@ public class HotbarCanvas : MonoBehaviour {
         RefreshHotbarImages();
     }
 
+    /// <summary>
+    /// Handles hotbar button clicks.
+    /// </summary>
+    /// <param name="index">index of the button clicked</param>
     public void HotbarButtonClicked(int index) {
         GameMaster gm = GameMaster.Instance;
         ConsumableSO clickedItem = hotbarItems[index];
-        // Play sound
         CanvasSounds sounds = CanvasMaster.Instance.canvasSounds;
 
         if (gm.gameState.Equals(GameState.Hotbar)) {
@@ -61,12 +74,21 @@ public class HotbarCanvas : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Changes the hotbar item.
+    /// 
+    /// Used when equipping hotbar items.
+    /// </summary>
+    /// <param name="index">index of the item to change</param>
     private void SwapHotbarItem(int index) {
         hotbarItems[index] = incomingItem;
         RefreshHotbarImages();
         DisableIncomingItem();
     }
 
+    /// <summary>
+    /// Refreshes hotbar images when items are changed.
+    /// </summary>
     public void RefreshHotbarImages() {
         for (int i = 0; i < hotbarItems.Length; i++) {
             Image img = hotbarButtons[i].GetComponent<Image>();
@@ -76,6 +98,7 @@ public class HotbarCanvas : MonoBehaviour {
                 // If all selected consumables are used, set value to null
                 if (consumable.quantity <= 0) {
                     consumable = null;
+                    hotbarItems[i] = null;
                 } else {
                     img.sprite = consumable.sprite;
                     img.color = Color.white;
@@ -93,12 +116,19 @@ public class HotbarCanvas : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Sets incoming item when equipping items to hotbar.
+    /// </summary>
+    /// <param name="consumable">incoming item</param>
     public void SetIncomingItem(ConsumableSO consumable) {
         GameMaster.Instance.SetState(GameState.Hotbar);
         changingItemsPanel.SetActive(true);
         incomingItem = consumable;
     }
 
+    /// <summary>
+    /// Disables incoming item when closing the equipping panel.
+    /// </summary>
     public void DisableIncomingItem() {
         GameMaster.Instance.SetState(GameState.Menu);
         changingItemsPanel.SetActive(false);
