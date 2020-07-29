@@ -17604,7 +17604,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4667670427813406038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17701,6 +17701,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   continueButton: {fileID: 3643044232415979888}
   loadGameButton: {fileID: 7157694090229570550}
+  speeches:
+  - {fileID: 8300000, guid: ea24f1a85afe5b749b899da77cdad61f, type: 3}
+  - {fileID: 8300000, guid: 0c74a7df10151304d8ec07e78e859cd9, type: 3}
+  - {fileID: 8300000, guid: 57968d2a091d4234686370d4595716f2, type: 3}
+  - {fileID: 8300000, guid: 87a6831204e2a4942aed6e90964ae16e, type: 3}
 --- !u!1 &4829836751578149339
 GameObject:
   m_ObjectHideFlags: 0
@@ -31503,8 +31508,8 @@ RectTransform:
   m_Father: {fileID: 3167581106079132165}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.55569196}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}

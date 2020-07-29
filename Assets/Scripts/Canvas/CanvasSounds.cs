@@ -4,9 +4,6 @@ using UnityEngine;
 
 /// <summary>
 /// Used for playing UI canvas sounds using a single audio source.
-/// 
-/// This way 2 sounds will never play at the same time. It will
-/// stop the previous sound when a new sound begins playing.
 /// </summary>
 public class CanvasSounds : MonoBehaviour {
 
@@ -23,6 +20,9 @@ public class CanvasSounds : MonoBehaviour {
 
     /// <summary>
     /// Plays provided sound once.
+    /// 
+    /// Plays the sound from start to finish even if another
+    /// sounds starts playing.
     /// </summary>
     /// <param name="clip">sound to play</param>
     public void PlaySound(AudioClip clip) => source.PlayOneShot(clip);

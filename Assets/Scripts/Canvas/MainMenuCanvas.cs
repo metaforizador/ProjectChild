@@ -9,10 +9,21 @@ public class MainMenuCanvas : MonoBehaviour {
     [SerializeField]
     private Button continueButton, loadGameButton;
 
+    // Speech
+    [SerializeField]
+    private AudioClip[] speeches;
+
     void Start() {
         bool saveExists = GameMaster.Instance.CheckIfSaveExists();
         continueButton.interactable = saveExists;
         loadGameButton.interactable = saveExists;
+
+        Invoke("PlayRandomAudio", 0.5f);
+    }
+
+    private void PlayRandomAudio() {
+        AudioClip sound = speeches[Random.Range(0, speeches.Length)];
+        CanvasMaster.Instance.canvasSounds.PlaySound(sound);
     }
 
     public void NewGame() {
