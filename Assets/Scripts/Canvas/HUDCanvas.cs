@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Displays everything that is inside the player HUD.
+/// </summary>
 public class HUDCanvas : MonoBehaviour {
     // Player
     public Image hpBar, shieldBar, staminaBar, xpBar;
@@ -38,8 +41,8 @@ public class HUDCanvas : MonoBehaviour {
     public void Update() {
         // Hp and shield needs to be updated all the time in case they get recovered
         if (enemyAlive) {
-            enemyShieldBar.fillAmount = currentEnemy.SHIELD / currentEnemy.maxShield;
-            enemyHpBar.fillAmount = currentEnemy.HP / 100;
+            AdjustHUDBar(enemyHpBar, currentEnemy.HP);
+            AdjustHUDBarShield(enemyShieldBar, currentEnemy.maxShield, currentEnemy.SHIELD);
 
             // If enemy health is 0, reset texts
             if (currentEnemy.HP == 0) {
@@ -50,12 +53,22 @@ public class HUDCanvas : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Adjusts the provided hud bar by the provided amount.
+    /// </summary>
+    /// <param name="bar">hud bar image fill to adjust</param>
+    /// <param name="amount">percentage amount to fill</param>
     public void AdjustHUDBar(Image bar, float amount) {
         bar.fillAmount = amount / 100;
     }
 
-    public void AdjustHUDBarShield(float maxShield, float curShield) {
-        shieldBar.fillAmount = curShield / maxShield;
+    /// <summary>
+    /// Adjusts the shield bar 
+    /// </summary>
+    /// <param name="maxShield"></param>
+    /// <param name="curShield"></param>
+    public void AdjustHUDBarShield(Image bar, float maxShield, float curShield) {
+        bar.fillAmount = curShield / maxShield;
     }
 
     public void AdjustHUDBarXP(float lastLevelXP, float nextLevelXP, float curXP) {
@@ -109,6 +122,8 @@ public class HUDCanvas : MonoBehaviour {
     }
 
     private void HideEnemyStats() {
+        // Disable 'enemyAlive' so update doesn't have to be called
+        enemyAlive = false;
         enemyObject.SetActive(false);
     }
 

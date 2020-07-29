@@ -14,8 +14,8 @@ public class GameMaster : MonoBehaviour {
     public static GameMaster Instance { get { return _instance; } }
 
     private void Awake() {
-        // If instance not yet created, or player goes back to the MainMenu, create new instance
-        if (_instance == null || SceneManager.GetActiveScene().name.Equals("MainMenu")) {
+        // If instance not yet created
+        if (_instance == null) {
             _instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
@@ -32,6 +32,7 @@ public class GameMaster : MonoBehaviour {
     public GameState gameState { get; private set; }
     public void SetState(GameState state) {
         gameState = state;
+        cm = CanvasMaster.Instance;
 
         // Show crosshair if state is movement
         cm.ShowCrosshair(gameState.Equals(GameState.Movement) ? true : false);
@@ -54,8 +55,10 @@ public class GameMaster : MonoBehaviour {
                 break;
             case GameState.Dialogue:
             case GameState.Chest:
-            case GameState.Dead:
                 cm.ShowCanvasBackround(true);
+                cm.ShowHUDCanvas(false);
+                break;
+            case GameState.Dead:
                 cm.ShowHUDCanvas(false);
                 break;
             case GameState.ItemSelector:
@@ -133,10 +136,12 @@ public class GameMaster : MonoBehaviour {
         return File.Exists(Application.persistentDataPath + SAVE_PATH);
     }
 
-    // For testing purposes
-    public void Restart() {
+    public void BackToMainMenu() {
+        // Destroy singletons when moving to main menu so necessary values
+        // gets reset
+        DestroyImmediate(GameMaster.Instance.gameObject);
+        DestroyImmediate(CanvasMaster.Instance.gameObject);
         SceneManager.LoadScene(0);
-        CanvasMaster.Instance.ShowGameOverCanvas(false);
     }
 
     public void QuitGame() {
