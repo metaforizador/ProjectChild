@@ -1,9 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenuCanvas : MonoBehaviour {
+
+    [SerializeField]
+    private Button continueButton, loadGameButton;
+
+    void Start() {
+        bool saveExists = GameMaster.Instance.CheckIfSaveExists();
+        continueButton.interactable = saveExists;
+        loadGameButton.interactable = saveExists;
+    }
 
     public void NewGame() {
         // Number 1 should be the first scene in game after the main menu

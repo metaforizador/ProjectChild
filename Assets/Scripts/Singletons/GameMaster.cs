@@ -25,6 +25,7 @@ public class GameMaster : MonoBehaviour {
 
     private CanvasMaster cm;
 
+    public const string SAVE_PATH = "/gamesave.save";
     public Save latestSave { get; private set; }
 
     // Handle game state
@@ -97,7 +98,7 @@ public class GameMaster : MonoBehaviour {
         Save save = CreateSaveGameObject();
 
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/gamesave.save");
+        FileStream file = File.Create(Application.persistentDataPath + SAVE_PATH);
         bf.Serialize(file, save);
         file.Close();
 
@@ -105,9 +106,9 @@ public class GameMaster : MonoBehaviour {
     }
 
     public void LoadGame() {
-        if (File.Exists(Application.persistentDataPath + "/gamesave.save")) {
+        if (File.Exists(Application.persistentDataPath + SAVE_PATH)) {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + SAVE_PATH, FileMode.Open);
             Save save = (Save)bf.Deserialize(file);
             latestSave = save; // Player needs to access this when it spawns
 
@@ -126,6 +127,10 @@ public class GameMaster : MonoBehaviour {
         } else {
             Debug.Log("No game saved!");
         }
+    }
+
+    public bool CheckIfSaveExists() {
+        return File.Exists(Application.persistentDataPath + SAVE_PATH);
     }
 
     // For testing purposes

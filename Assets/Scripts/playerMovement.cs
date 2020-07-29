@@ -18,7 +18,7 @@ public class playerMovement : MonoBehaviour
     public float jumpHeight = 10f;
 
     // Stamina usage
-    private const float DASH_COST = 50;
+    private const float DASH_COST = 30;
     private const float MELEE_COST = 25;
 
     public bool dashing = false;

@@ -33,10 +33,17 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler, IPointerCli
         if (muteClickSound)
             return;
 
-        sounds.PlaySound(playBackSound ? sounds.BUTTON_BACK : sounds.BUTTON_SELECT);
+        PlaySound(playBackSound ? sounds.BUTTON_BACK : sounds.BUTTON_SELECT);
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        sounds.PlaySound(sounds.BUTTON_ENTER);
+        PlaySound(sounds.BUTTON_ENTER);
+    }
+
+    private void PlaySound(AudioClip sound) {
+        if (!thisButton.interactable)
+            return;
+
+        sounds.PlaySound(sound);
     }
 }
