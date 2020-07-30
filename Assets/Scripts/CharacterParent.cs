@@ -97,7 +97,7 @@ public class CharacterParent : MonoBehaviour {
     private float weaponReloadTime;
     // Weapon prefab stuff
     public GameObject weaponBullet;
-    private GameObject bulletPoint;
+    private List<GameObject> bulletPoints = new List<GameObject>();
 
     // Armor values
     private float armorDecreaseShieldRecoveryDelay;
@@ -109,8 +109,14 @@ public class CharacterParent : MonoBehaviour {
         hud = CanvasMaster.Instance.HUDCanvas.GetComponent<HUDCanvas>();
         // Create audio component and add preset
         audioSource = gameObject.GetComponent<AudioSource>();
-        // Retrieve bullet point
-        bulletPoint = transform.Find("BulletPoint").gameObject;
+        // Retrieve bullet points
+        foreach (GameObject bulletPoint in GameObject.FindGameObjectsWithTag("BulletPoint"))
+        {
+            if (bulletPoint.transform.IsChildOf(this.transform))
+            {
+                bulletPoints.Add(bulletPoint);
+            }
+        }
 
         RetrieveWeaponValues();
         RetrieveArmorValues();
@@ -250,6 +256,32 @@ public class CharacterParent : MonoBehaviour {
                 // Set bulletDirection towards crosshair point for the player / towards player for enemies
                 Vector3 bulletDirection = transform.forward;
 
+                GameObject bulletPoint = bulletPoints[0];
+
+                if (bulletPoints.Count > 1)
+                {
+                    for(int i = 0; i < bulletPoints.Count; i++)
+                    {
+                        if (bulletPoints[i].GetComponent<bulletPoint>().lastShot)
+                        {
+                            bulletPoints[i].GetComponent<bulletPoint>().lastShot = false;
+
+                            if((i + 1) < bulletPoints.Count)
+                            {
+                                bulletPoint = bulletPoints[i + 1];
+                                bulletPoints[i + 1].GetComponent<bulletPoint>().lastShot = true;
+                            }
+                            else
+                            {
+                                bulletPoint = bulletPoints[0];
+                                bulletPoints[0].GetComponent<bulletPoint>().lastShot = true;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+                 
                 if (characterType == CharacterType.Player)
                 {
                     Vector3 crosshairPoint = new Vector3(0, 0, 0);
@@ -271,7 +303,8 @@ public class CharacterParent : MonoBehaviour {
                 }
                 else if (characterType == CharacterType.Enemy)
                 {
-                    bulletDirection = GameObject.Find("Player").transform.position - bulletPoint.transform.position;
+                    //bulletDirection = GameObject.Find("Player").transform.position - bulletPoint.transform.position;
+                    bulletDirection = transform.forward;
                 }
 
                 // Set bullets position and speed
