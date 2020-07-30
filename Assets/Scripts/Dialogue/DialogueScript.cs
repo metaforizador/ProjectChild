@@ -134,6 +134,11 @@ public class DialogueScript : MonoBehaviour {
         sounds.PlaySound(audios[type]);
     }
 
+    /// <summary>
+    /// Skips the child speech.
+    /// 
+    /// Called when the player click skip button on canvas.
+    /// </summary>
     public void SkipChildSpeech() {
         Helper.Instance.skipTextWrite = true;
     }
