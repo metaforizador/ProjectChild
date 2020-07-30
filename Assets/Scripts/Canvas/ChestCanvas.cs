@@ -243,6 +243,12 @@ public class ChestCanvas : MonoBehaviour {
             // Check the type of PickableSO
             if (selectedItem is WeaponSO) {
                 oldItem = player.ChangeWeapon((WeaponSO)selectedItem);
+
+                // Play a weapon pickup sound if not yet played
+                if (!weaponPickupSoundPlayed) {
+                    weaponPickupSoundPlayed = true;
+                    PlayerSounds.Instance.PlayWeaponPickup();
+                }
             } else if (selectedItem is ArmorSO) {
                 oldItem = player.ChangeArmor((ArmorSO)selectedItem);
             }
@@ -250,10 +256,6 @@ public class ChestCanvas : MonoBehaviour {
             // Replace selected item with the player's old item
             items[selectedItemIndex] = oldItem;
 
-            if (!weaponPickupSoundPlayed) {
-                weaponPickupSoundPlayed = true;
-                PlayerSounds.Instance.PlayWeaponPickup();
-            }
         }
 
         // If openedChest is StorageChest, leave the slot empty and remove item from Storage
