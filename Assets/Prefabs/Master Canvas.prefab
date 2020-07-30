@@ -6988,6 +6988,7 @@ MonoBehaviour:
   ITEM_BREAK: {fileID: 8300000, guid: 890bd18560bce7244934cdcab7e8ed3e, type: 3}
   ITEM_USAGE_NOTIFICATION: {fileID: 8300000, guid: 087414c7c4b03f34b8892e2ccf91d301,
     type: 3}
+  LEVEL_UP: {fileID: 8300000, guid: c0a1645f6eea50e43a02bf14871fb9ef, type: 3}
 --- !u!1 &1835036427178289489
 GameObject:
   m_ObjectHideFlags: 0

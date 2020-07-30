@@ -259,9 +259,21 @@ public class PlayerStats : MonoBehaviour {
     public void GainXP(int amount) {
         xp += amount;
 
+        // Save current level to memory before leveling up
+        int currentLevel = level;
+
         // Check if you gain level or multiple levels
         while (xp >= nextLevelUpXp)
                 LevelUp();
+
+        // If player gained a level, play the level up sound
+        // (This can't be played in LevelUp(), since otherwise the
+        // sound will play multiple times if player gains multiple levels)
+        if (currentLevel != level) {
+            CanvasSounds sounds = CanvasMaster.Instance.canvasSounds;
+            sounds.PlaySound(sounds.LEVEL_UP);
+        }
+            
 
         // Adjust hud bar here too since player is able to gain multiple levels
         hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, xp);
