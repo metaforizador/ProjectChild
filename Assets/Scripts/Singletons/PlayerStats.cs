@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Different damage types that guns can deal.
+/// 
+/// This should probably be moved to CharacterParent.
+/// </summary>
 public enum DamageType { Piercing, Kinetic, Energy };
 
+/// <summary>
+/// Holds the stats of the player.
+/// </summary>
 public class PlayerStats : MonoBehaviour {
 
     // Make class static and destroy if script already exists
@@ -73,6 +81,9 @@ public class PlayerStats : MonoBehaviour {
         SetDefaultStats();
     }
 
+    /// <summary>
+    /// Sets the starting values for stats.
+    /// </summary>
     private void SetDefaultStats() {
         shieldRecovery = new Stat("Shield recovery", Stat.STARTING_STAT, Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED);
         staminaRecovery = new Stat("Stamina recovery", Stat.STARTING_STAT, Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED);
@@ -101,6 +112,10 @@ public class PlayerStats : MonoBehaviour {
         redeemableLevelPoints = 0;
     }
 
+    /// <summary>
+    /// Saves player's stats to a save object.
+    /// </summary>
+    /// <param name="save">save object to save to</param>
     public void SavePlayerStats(Save save) {
         save.shieldRecovery = shieldRecovery;
         save.staminaRecovery = staminaRecovery;
@@ -131,6 +146,10 @@ public class PlayerStats : MonoBehaviour {
         player.SavePlayer(save);
     }
 
+    /// <summary>
+    /// Loads player's stats to a save object.
+    /// </summary>
+    /// <param name="save">save object to load from</param>
     public void LoadPlayerStats(Save save) {
         shieldRecovery.LoadStat(save.shieldRecovery);
         staminaRecovery.LoadStat(save.staminaRecovery);
@@ -164,6 +183,10 @@ public class PlayerStats : MonoBehaviour {
         RefreshPlayerForStatChanges();
     }
 
+    /// <summary>
+    /// Randomizes a gained stat when leveling up.
+    /// </summary>
+    /// <param name="type">type of level to gain</param>
     public void RandomizeGainedStat(WordsType type) {
         Stat[] stats;
         TopInfoCanvas info = CanvasMaster.Instance.topInfoCanvas;
@@ -225,11 +248,14 @@ public class PlayerStats : MonoBehaviour {
     }
 
     private void RefreshPlayerForStatChanges() {
-        // Refresh player stats
         if (player != null)
             player.RefreshStats();
     }
 
+    /// <summary>
+    /// Adds exp to the player.
+    /// </summary>
+    /// <param name="amount">amount to add</param>
     public void GainXP(int amount) {
         xp += amount;
 
@@ -241,8 +267,15 @@ public class PlayerStats : MonoBehaviour {
         hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, xp);
     }
 
+    /// <summary>
+    /// Uses a toy to gain xp.
+    /// </summary>
+    /// <param name="toy">toy to use</param>
     public void UseToy(ConsumableSO toy) {
+        // Save current level to a variable
         int currentLevel = level;
+
+        // Calculate the percentage to gain
         float fullPercentage = nextLevelUpXp - lastLevelUpXp;
         float xpToGain = fullPercentage * (toy.expToGain / 100);
         GainXP((int)xpToGain);
@@ -256,6 +289,9 @@ public class PlayerStats : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Gains a level for the player.
+    /// </summary>
     private void LevelUp() {
         level ++; // Increase level
         redeemableLevelPoints ++; // Increase level points

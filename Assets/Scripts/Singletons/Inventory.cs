@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Holds the current inventory that the player has.
+/// </summary>
 public class Inventory : MonoBehaviour {
 
     // Make class singleton and destroy if script already exists
@@ -32,6 +35,10 @@ public class Inventory : MonoBehaviour {
             AddConsumable(con);
     }
 
+    /// <summary>
+    /// Loads inventory from a save object.
+    /// </summary>
+    /// <param name="save">save to load from</param>
     public void LoadInventory(Save save) {
         SOCreator creator = SOCreator.Instance;
         equippedWeapon = creator.CreateWeapon(save.equippedWeapon);
@@ -44,6 +51,10 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Saves inventory to a save object.
+    /// </summary>
+    /// <param name="save">save to save to</param>
     public void SaveInventory(Save save) {
         save.equippedWeapon = new SerializablePickableSO(equippedWeapon);
         save.equippedArmor = new SerializablePickableSO(equippedArmor);
@@ -56,6 +67,13 @@ public class Inventory : MonoBehaviour {
         save.inventoryConsumables = serializableConsumables;
     }
 
+    /// <summary>
+    /// Adds a consumable to the inventory.
+    /// 
+    /// Either adds + 1 quantity to an item or an completely
+    /// new item.
+    /// </summary>
+    /// <param name="consumable">item to add</param>
     public void AddConsumable(ConsumableSO consumable) {
         // If the consumable is already in inventory, add +1 to quantity and return
         foreach (ConsumableSO item in inventoryConsumables) {
@@ -71,6 +89,10 @@ public class Inventory : MonoBehaviour {
         inventoryConsumables.Add(consumable);
     }
 
+    /// <summary>
+    /// Returns all the consumables in a sorted list.
+    /// </summary>
+    /// <returns>all consumables from inventory</returns>
     public List<ConsumableSO> GetConsumables() {
         // Sort list by name
         var sortedList = inventoryConsumables.OrderBy(go => go.name).ToList();
@@ -78,6 +100,13 @@ public class Inventory : MonoBehaviour {
         return sortedList;
     }
 
+    /// <summary>
+    /// Uses an consumable.
+    /// 
+    /// Different types consumable types have different
+    /// effects when using them.
+    /// </summary>
+    /// <param name="consumable">consumable to use</param>
     public void UseConsumable(ConsumableSO consumable) {
         bool removeItem = true;
         // Use items (Might have to be moved to somewhere else later)
@@ -108,6 +137,10 @@ public class Inventory : MonoBehaviour {
             RemoveConsumable(consumable);
     }
 
+    /// <summary>
+    /// Removes a consumable from the inventory.
+    /// </summary>
+    /// <param name="consumable">consumable to remove</param>
     public void RemoveConsumable(ConsumableSO consumable) {
         consumable.quantity--;
         // If all consumables are used, remove item from inventory
@@ -118,8 +151,12 @@ public class Inventory : MonoBehaviour {
         RefreshInventoryItems();
     }
 
+    /// <summary>
+    /// Refreshes the inventory and hotbar items.
+    /// 
+    /// Called when consumables are removed from the inventory.
+    /// </summary>
     public void RefreshInventoryItems() {
-        // Refresh hotbar and inventorycanvas items
         CanvasMaster cm = CanvasMaster.Instance;
         cm.hotbarCanvas.RefreshHotbarImages();
         cm.inventoryCanvas.GetComponent<InventoryCanvas>().RefreshConsumables();
