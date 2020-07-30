@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Displays everything that is inside the player HUD.
+/// </summary>
 public class HUDCanvas : MonoBehaviour {
     // Player
     public Image hpBar, shieldBar, staminaBar, xpBar;
@@ -38,8 +41,8 @@ public class HUDCanvas : MonoBehaviour {
     public void Update() {
         // Hp and shield needs to be updated all the time in case they get recovered
         if (enemyAlive) {
-            enemyShieldBar.fillAmount = currentEnemy.SHIELD / currentEnemy.maxShield;
-            enemyHpBar.fillAmount = currentEnemy.HP / 100;
+            AdjustHUDBar(enemyHpBar, currentEnemy.HP);
+            AdjustHUDBarShield(enemyShieldBar, currentEnemy.maxShield, currentEnemy.SHIELD);
 
             // If enemy health is 0, reset texts
             if (currentEnemy.HP == 0) {
@@ -50,32 +53,61 @@ public class HUDCanvas : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Adjusts the provided hud bar by the provided amount.
+    /// </summary>
+    /// <param name="bar">hud bar image fill to adjust</param>
+    /// <param name="amount">percentage amount to fill</param>
     public void AdjustHUDBar(Image bar, float amount) {
         bar.fillAmount = amount / 100;
     }
 
-    public void AdjustHUDBarShield(float maxShield, float curShield) {
-        shieldBar.fillAmount = curShield / maxShield;
+    /// <summary>
+    /// Adjusts the shield bar.
+    /// </summary>
+    /// <param name="maxShield"></param>
+    /// <param name="curShield"></param>
+    public void AdjustHUDBarShield(Image bar, float maxShield, float curShield) {
+        bar.fillAmount = curShield / maxShield;
     }
 
+    /// <summary>
+    /// Adjusts the experience bar.
+    /// </summary>
+    /// <param name="lastLevelXP">xp required for the last gained level</param>
+    /// <param name="nextLevelXP">xp required for the next level</param>
+    /// <param name="curXP">current xp gained</param>
     public void AdjustHUDBarXP(float lastLevelXP, float nextLevelXP, float curXP) {
-        nextLevelXP -= lastLevelXP;
-        curXP -= lastLevelXP;
-        xpBar.fillAmount = curXP / nextLevelXP;
+        nextLevelXP -= lastLevelXP;             // Example (1000 - 700 = 300)
+        curXP -= lastLevelXP;                   // Example (830 - 700 = 130)
+        xpBar.fillAmount = curXP / nextLevelXP; // Example (130 / 300 = 0,43 (43%))
     }
 
+    /// <summary>
+    /// Adjusts the ammo text.
+    /// </summary>
+    /// <param name="max">maximum ammo</param>
+    /// <param name="current">current ammo</param>
     public void AdjustAmmoAmount(int max, float current) {
-        int currentAmmo = (int)Mathf.Floor(max * (current / 100));
+        int currentAmmo = (int)Mathf.Floor(max * (current / 100)); // Floor example (7.2 = 7)
         ammoText.text = $"{currentAmmo}/{max}";
     }
 
+    /// <summary>
+    /// Adjusts the player's level text.
+    /// </summary>
+    /// <param name="level">level of the player</param>
     public void AdjustPlayerLevel(int level) {
         playerLevel.text = level.ToString();
     }
 
+    /// <summary>
+    /// Checks if there are redeemable level up points.
+    /// </summary>
     public void CheckRedeemableLevelPoints() {
         int points = PlayerStats.Instance.redeemableLevelPoints;
 
+        // If there are points, enable level up button and show how many points left
         if (points > 0 ) {
             levelUpButton.SetActive(true);
             levelUpPoint.text = points.ToString();
@@ -108,20 +140,30 @@ public class HUDCanvas : MonoBehaviour {
         Invoke("HideEnemyStats", HIDE_ENEMY_STATS_TIME);
     }
 
+    /// <summary>
+    /// Hides enemy's stats.
+    /// 
+    /// Called after a certain amount of time after the enemy is hit.
+    /// </summary>
     private void HideEnemyStats() {
+        // Disable 'enemyAlive' so update doesn't have to be called
+        enemyAlive = false;
         enemyObject.SetActive(false);
     }
 
-    public void InteractText(int type) {
-        interactText.text = interacts[type];
-    }
-
+    /// <summary>
+    /// Shows the interact panel on the bottom.
+    /// </summary>
+    /// <param name="type">type of interaction</param>
     public void ShowInteract(int type) {
         interactObject.SetActive(true);
-        InteractText(type);
+        interactText.text = interacts[type];
         animator.MoveY(interactObject, 0, tweenTime, tweenType);
     }
 
+    /// <summary>
+    /// Hides the interact panel on the bottom.
+    /// </summary>
     public void HideInteract() {
         animator.MoveY(interactObject, hideInteractYPos, tweenTime, tweenType);
     }

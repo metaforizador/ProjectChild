@@ -100,14 +100,7 @@ public class Inventory : MonoBehaviour {
                 break;
             case ConsumableType.Scanner:
                 removeItem = false; // Don't remove scanner at this point
-                ItemSelectorCanvas ic = CanvasMaster.Instance.itemSelectorCanvas;
-                ic.OpenIdentifyCanvas(consumable);
-
-                // If there are no identifiable items, close the canvas
-                if (ic.isEmpty) {
-                    CanvasMaster.Instance.topInfoCanvas.ShowIdentifiableEmpty();
-                    ic.CloseItemSelectorCanvas();
-                }
+                CanvasMaster.Instance.itemSelectorCanvas.OpenIdentifyCanvas(consumable);
                 break;
         }
 

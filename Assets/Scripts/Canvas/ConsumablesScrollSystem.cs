@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Adds consumables to a scrollables system.
+/// 
+/// Used in InventoryCanvas and ItemSelectorCanvas.
+/// </summary>
 public class ConsumablesScrollSystem : MonoBehaviour {
 
     [SerializeField]

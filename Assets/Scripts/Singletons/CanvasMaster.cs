@@ -10,8 +10,8 @@ public class CanvasMaster : MonoBehaviour {
     public static CanvasMaster Instance { get { return _instance; } }
 
     private void Awake() {
-        // If instance not yet created, or player goes back to the MainMenu, create new instance
-        if (_instance == null || SceneManager.GetActiveScene().name.Equals("MainMenu")) {
+        // If instance not yet created
+        if (_instance == null) {
             _instance = this;
             DontDestroyOnLoad(gameObject);
         } else {

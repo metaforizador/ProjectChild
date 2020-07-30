@@ -828,7 +828,7 @@ GameObject:
   - component: {fileID: 708066019}
   - component: {fileID: 8192910215625850616}
   m_Layer: 5
-  m_Name: Restart
+  m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -936,7 +936,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5509095400073917003, guid: 73e82742c32c3c84bb0f9cd85d8594ee,
           type: 3}
-        m_MethodName: Restart
+        m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1645,7 +1645,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Restart
+  m_text: Main Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1714,10 +1714,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1338677810}
-    characterCount: 7
+    characterCount: 9
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -17701,6 +17701,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   continueButton: {fileID: 3643044232415979888}
   loadGameButton: {fileID: 7157694090229570550}
+  speeches:
+  - {fileID: 8300000, guid: ea24f1a85afe5b749b899da77cdad61f, type: 3}
+  - {fileID: 8300000, guid: 0c74a7df10151304d8ec07e78e859cd9, type: 3}
+  - {fileID: 8300000, guid: 57968d2a091d4234686370d4595716f2, type: 3}
+  - {fileID: 8300000, guid: 87a6831204e2a4942aed6e90964ae16e, type: 3}
 --- !u!1 &4829836751578149339
 GameObject:
   m_ObjectHideFlags: 0

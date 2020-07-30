@@ -21,7 +21,6 @@ public class ItemSelectorCanvas : MonoBehaviour {
     private PickableSO itemToSend;
 
     private GameState previousGameState;
-    public bool isEmpty { get; private set; }
 
     private List<ConsumableSO> OpenThisCanvas() {
         gameObject.SetActive(true);
@@ -50,21 +49,26 @@ public class ItemSelectorCanvas : MonoBehaviour {
             }
         }
 
+        // If there are no identifiable items, close the canvas
+        if (identifiableItems.Count == 0) {
+            CanvasMaster.Instance.topInfoCanvas.ShowIdentifiableEmpty();
+            CloseItemSelectorCanvas();
+            return;
+        }
+
         // Add items to the scroll system and listen for their clicks
         foreach (ConsumableSO con in identifiableItems) {
             consumablesScrollSystem.AddItem(con)
                 .onClick.AddListener(() => IdentifyItem(con));
         }
-
-        isEmpty = identifiableItems.Count == 0;
     }
 
-    public void OpenSendWeaponOrArmorToStorageCanvas(PickableSO itemToSend) {
+    public void OpenSendItemToStorageCanvas(PickableSO itemToSend) {
         List<ConsumableSO> consumables = OpenThisCanvas();
         this.itemToSend = itemToSend;
         headerText.text = STORAGE_HEADER;
 
-        // Get only items which are identifiable
+        // Get only items which are used for sending items to storage
         List<ConsumableSO> comsatLinks = new List<ConsumableSO>();
         foreach (ConsumableSO con in consumables) {
             if (con.consumableType.Equals(ConsumableType.ComsatLink)) {
@@ -72,13 +76,18 @@ public class ItemSelectorCanvas : MonoBehaviour {
             }
         }
 
+        // If player does not have any comsat links, close the item selector
+        if (comsatLinks.Count == 0) {
+            CanvasMaster.Instance.topInfoCanvas.ShowComsatLinkEmpty();
+            CloseItemSelectorCanvas();
+            return;
+        }
+
         // Add items to the scroll system and listen for their clicks
         foreach (ConsumableSO con in comsatLinks) {
             consumablesScrollSystem.AddItem(con)
                 .onClick.AddListener(() => SendItemToStorage(con));
         }
-
-        isEmpty = comsatLinks.Count == 0;
     }
 
     private void IdentifyItem(ConsumableSO item) {

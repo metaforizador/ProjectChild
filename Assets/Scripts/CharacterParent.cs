@@ -22,7 +22,7 @@ public class CharacterParent : MonoBehaviour {
         protected set {
             shield = value;
             if (characterType == CharacterType.Player)
-                hud.AdjustHUDBarShield(maxShield, SHIELD);
+                hud.AdjustHUDBarShield(hud.shieldBar, maxShield, SHIELD);
         }
     }
 
