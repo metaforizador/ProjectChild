@@ -27,10 +27,22 @@ public class SerializablePickableSO {
     public string batteryTypeString;
     public string toyWordsTypeString;
 
+    /// <summary>
+    /// Creates an empty serializable object.
+    /// 
+    /// Used when saving items to storage, since these
+    /// values can't be null for some reason.
+    /// </summary>
     public SerializablePickableSO() {
         itemType = EMPTY;
     }
 
+    /// <summary>
+    /// Creates an serializable version of an item.
+    /// 
+    /// Sets values based on the type of item.
+    /// </summary>
+    /// <param name="item">item to serialize</param>
     public SerializablePickableSO(PickableSO item) {
         name = item.name;
         if (item is WeaponSO) {
@@ -47,8 +59,15 @@ public class SerializablePickableSO {
     }
 }
 
+/// <summary>
+/// All the different conditions that the items can have.
+/// </summary>
 public enum Condition { Volatile, Damaged, Intact, Supercharged }
 
+/// <summary>
+/// Scriptable object parent which holds all the values that
+/// item scriptable objects share.
+/// </summary>
 public class PickableSO : ScriptableObject {
 
     public new string name;
