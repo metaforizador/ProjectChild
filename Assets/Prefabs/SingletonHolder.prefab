@@ -93,7 +93,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 559be7ae988493c4cbb69273c0071327, type: 3}
   - {fileID: 8300000, guid: 461e1452f72570447a91467f959c5ab6, type: 3}
   - {fileID: 8300000, guid: eb5a4a4c076f4cd43a09097d981ed0a7, type: 3}
-  WEAPON_PICKUP: {fileID: 8300000, guid: 24061ec53571fce47a5e3c8506a210d3, type: 3}
+  weaponPickup: {fileID: 8300000, guid: 24061ec53571fce47a5e3c8506a210d3, type: 3}
 --- !u!114 &5509095400073917003
 MonoBehaviour:
   m_ObjectHideFlags: 0

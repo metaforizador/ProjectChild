@@ -32,6 +32,8 @@ public class ChestCanvas : MonoBehaviour {
     public TextMeshProUGUI currentItemView, foundItemView, swapAndUseView, storageAmount;
     private const string SWAP_TEXT = "Swap", USE_TEXT = "Use", EQUIP_TEXT = "Equip";
 
+    private bool weaponPickupSoundPlayed;
+
     private List<Button> createdItemButtons = new List<Button>();
 
     public GameObject itemSelectedObject;
@@ -51,11 +53,6 @@ public class ChestCanvas : MonoBehaviour {
     public GameObject itemDisplayObject;
     public ItemDisplay itemDisplay;
 
-    void OnEnable() {
-        // Don't show any item info when chest opens
-        itemSelectedObject.SetActive(false);
-    }
-
     /// <summary>
     /// Shows the content of the chest.
     /// </summary>
@@ -71,10 +68,26 @@ public class ChestCanvas : MonoBehaviour {
         // Change game state
         GameMaster.Instance.SetState(GameState.Chest);
 
+        // Play pickup sound only once per opening a chest
+        weaponPickupSoundPlayed = false;
+
         this.openedChest = chest;
         this.items = items;
 
         gameObject.SetActive(true);
+
+        RefreshChestCanvasContent();
+    }
+
+    private void RefreshChestCanvasContent() {
+        // Don't show any item info when chest opens
+        itemSelectedObject.SetActive(false);
+
+        // Remove old buttons
+        foreach (Button btn in createdItemButtons) {
+            Destroy(btn.gameObject);
+        }
+        createdItemButtons.Clear();
 
         // Create a button for all of the chest items
         for (int i = 0; i < items.Length; i++) {
@@ -236,6 +249,11 @@ public class ChestCanvas : MonoBehaviour {
 
             // Replace selected item with the player's old item
             items[selectedItemIndex] = oldItem;
+
+            if (!weaponPickupSoundPlayed) {
+                weaponPickupSoundPlayed = true;
+                PlayerSounds.Instance.PlayWeaponPickup();
+            }
         }
 
         // If openedChest is StorageChest, leave the slot empty and remove item from Storage
@@ -270,9 +288,8 @@ public class ChestCanvas : MonoBehaviour {
         // Change item contents inside the chest
         openedChest.ChangeItems(items);
 
-        // Refresh chest contents
-        CloseChest();
-        ShowChest(openedChest, items);
+        // Refresh chest canvas contents
+        RefreshChestCanvasContent();
     }
 
     /// <summary>
@@ -290,11 +307,5 @@ public class ChestCanvas : MonoBehaviour {
         GameMaster.Instance.SetState(GameState.Movement);
 
         gameObject.SetActive(false);
-
-        // Remove buttons
-        foreach (Button btn in createdItemButtons) {
-            Destroy(btn.gameObject);
-        }
-        createdItemButtons.Clear();
     }
 }

@@ -17,8 +17,8 @@ public class PlayerSounds : MonoBehaviour {
         }
     }
 
-    private enum SpeechType { None, HealthLow, Grunt }
-    private SpeechType curSpeechType;
+    private const int LOW = 0, MEDIUM = 1, HIGH = 2;
+    private int curSpeechPriority;
 
     public static readonly int[] HIT_SPEECH_PERCENTAGES = new int[] { 75 };
 
@@ -31,25 +31,39 @@ public class PlayerSounds : MonoBehaviour {
     [SerializeField]
     private AudioClip[] takeHitGrunts;
 
-    public AudioClip WEAPON_PICKUP;
+    [SerializeField]
+    private AudioClip weaponPickup;
 
     public void PlayRandomTakeHitGrunt() {
-        // Don't play grunt sounds if player is saying something
-        if (source.isPlaying)
+        if (NotAbleToPlay(LOW))
             return;
 
-        curSpeechType = SpeechType.Grunt;
+        curSpeechPriority = LOW;
         AudioClip sound = takeHitGrunts[Random.Range(0, takeHitGrunts.Length)];
         PlayAudio(sound);
     }
 
     public void PlayHealthLowAudio(int index) {
-        // If player is already saying some health low speech, don't cut it out
-        if (source.isPlaying && curSpeechType.Equals(SpeechType.HealthLow))
+        if (NotAbleToPlay(MEDIUM))
             return;
 
-        curSpeechType = SpeechType.HealthLow;
         PlayAudio(hitSpeechAudios[index]);
+    }
+
+    public void PlayWeaponPickup() {
+        if (NotAbleToPlay(MEDIUM))
+            return;
+
+        PlayAudio(weaponPickup);
+    }
+
+    private bool NotAbleToPlay(int priority) {
+        bool notAble = source.isPlaying && curSpeechPriority >= priority;
+
+        if (!notAble)
+            curSpeechPriority = priority;
+
+        return notAble;
     }
 
     private void PlayAudio(AudioClip clip) {
