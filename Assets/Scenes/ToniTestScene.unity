@@ -1306,8 +1306,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.30600178
-      value: 0.5755184
+      time: 0.06940663
+      value: 0.3434475
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4995,8 +4995,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.30600178
-      value: 0.5755184
+      time: 0.06940663
+      value: 0.3434475
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -12858,8 +12858,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.30600178
-      value: 0.5755184
+      time: 0.06940663
+      value: 0.3434475
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -23431,6 +23431,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: SingletonHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 6528494915463056395, guid: 73e82742c32c3c84bb0f9cd85d8594ee,
+        type: 3}
+      propertyPath: HIT_SPEECH_AUDIOS.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528494915463056395, guid: 73e82742c32c3c84bb0f9cd85d8594ee,
+        type: 3}
+      propertyPath: HIT_SPEECH_AUDIOS.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: c00f9899def8d9149a98324bce7299d5, type: 3}
+    - target: {fileID: 6528494915463056395, guid: 73e82742c32c3c84bb0f9cd85d8594ee,
+        type: 3}
+      propertyPath: hitSpeechAudios.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: c00f9899def8d9149a98324bce7299d5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73e82742c32c3c84bb0f9cd85d8594ee, type: 3}
 --- !u!1 &1887365827

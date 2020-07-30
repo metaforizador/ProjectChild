@@ -12,6 +12,9 @@ public class Player : CharacterParent {
     private Inventory inventory;
     private PlayerStats stats;
 
+    // Setting up player speech sounds
+    private PlayerSounds sounds;
+
     private Stat[] recoveryStats;
 
     // Testing purposes
@@ -30,6 +33,7 @@ public class Player : CharacterParent {
         gm.SetState(GameState.Movement);
         characterType = CharacterType.Player;
         stats = PlayerStats.Instance;
+        sounds = PlayerSounds.Instance;
         inventory = Inventory.Instance;
         stats.player = this;    // Add this player to singleton variable for better access
 
@@ -187,6 +191,29 @@ public class Player : CharacterParent {
                     HP += ConsumableSO.RIG_HP_TO_RECOVER_PERCENTAGE;
                 }
                 break;
+        }
+    }
+
+    protected override void TakeDamage(DamageType type, float amount, float criticalRate) {
+        float hpBefore = HP;
+        base.TakeDamage(type, amount, criticalRate);
+
+        // Quit method if hp did not take damage
+        if (hpBefore == HP) {
+            return;
+        } else {
+            for (int i = 0; i < PlayerSounds.HIT_SPEECH_PERCENTAGES.Length; i++) {
+                int percentage = PlayerSounds.HIT_SPEECH_PERCENTAGES[i];
+
+                if (hpBefore > percentage && HP <= percentage) {
+                    sounds.PlayHealthLowAudio(i);
+                    return;
+                }
+            }
+
+            // If code makes it this far, then hit speech was not played,
+            // so play a hit grunt sound
+            sounds.PlayRandomTakeHitGrunt();
         }
     }
 
