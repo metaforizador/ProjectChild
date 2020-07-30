@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Holds references to all the other canvases.
+/// 
+/// Handles their instantiation and saving and loading.
+/// </summary>
 public class CanvasMaster : MonoBehaviour {
     // Make class static and destroy if script already exists
     private static CanvasMaster _instance; // **<- reference link to the class
@@ -59,14 +64,48 @@ public class CanvasMaster : MonoBehaviour {
     }
 
     void Update() {
-        bool inputEnabled = gm.gameState.Equals(GameState.Movement) || gm.gameState.Equals(GameState.Menu);
+        bool menuInputEnabled = gm.gameState.Equals(GameState.Movement) || gm.gameState.Equals(GameState.Menu);
 
         // Toggle menu
-        if (Input.GetButtonDown("Menu") && inputEnabled) {
+        if (Input.GetButtonDown("Menu") && menuInputEnabled) {
             inventoryCanvas.GetComponent<InventoryCanvas>().ToggleMenu();
         }
     }
 
+    /// <summary>
+    /// Saves all canvas values.
+    /// 
+    /// Called when saving the game.
+    /// </summary>
+    /// <param name="save">save file to save to</param>
+    public void SaveCanvasValues(Save save) {
+        save.askedQuestions = askedQuestions;
+        save.givenReplies = givenReplies;
+        hotbarCanvas.SaveHotbar(save);
+    }
+
+    /// <summary>
+    /// Loads all canvas values.
+    /// 
+    /// Called when loading the game.
+    /// </summary>
+    /// <param name="save">save file to load from</param>
+    public void LoadCanvasValues(Save save) {
+        askedQuestions = save.askedQuestions;
+        givenReplies = save.givenReplies;
+        hotbarCanvas.LoadHotbar(save);
+    }
+
+    /// <summary>
+    /// Opens the dialogue.
+    /// 
+    /// Called when pressing the level up button.
+    /// </summary>
+    public void OpenDialogue() {
+        dialogueCanvas.SetActive(true);
+    }
+
+    /********** TOGGLE DIFFERENT CANVASES **********/
     public void ShowCanvasBackround(bool show) {
         canvasBackground.SetActive(show);
     }
@@ -79,28 +118,14 @@ public class CanvasMaster : MonoBehaviour {
         crosshair.SetActive(show);
     }
 
-    public void SaveCanvasValues(Save save) {
-        save.askedQuestions = askedQuestions;
-        save.givenReplies = givenReplies;
-        hotbarCanvas.SaveHotbar(save);
-    }
-
-    public void LoadCanvasValues(Save save) {
-        askedQuestions = save.askedQuestions;
-        givenReplies = save.givenReplies;
-        hotbarCanvas.LoadHotbar(save);
-    }
-
-    public void OpenDialogue() {
-        dialogueCanvas.SetActive(true);
-    }
-
     public void ShowStats() {
         statsCanvas.SetActive(!statsCanvas.activeSelf);
     }
 
     public void ShowGameOverCanvas(bool show) {
         gameOverCanvas.SetActive(show);
-        GameMaster.Instance.SetState(GameState.Dead);
+
+        if (show)
+            GameMaster.Instance.SetState(GameState.Dead);
     }
 }

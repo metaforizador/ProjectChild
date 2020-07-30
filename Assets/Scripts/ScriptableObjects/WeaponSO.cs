@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Scriptable object which holds all the values that an weapon has.
+/// </summary>
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
 public class WeaponSO : PickableSO {
 

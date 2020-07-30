@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the enemy values.
+/// </summary>
 public class Enemy : CharacterParent {
 
     [SerializeField]
@@ -63,6 +66,10 @@ public class Enemy : CharacterParent {
             ChangeArmor(scriptableObject.startingArmor);
     }
 
+    /// <summary>
+    /// Checks for collision with player bullets.
+    /// </summary>
+    /// <param name="collision">happened collision</param>
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Bullet")) {
             bulletController bullet = collision.gameObject.GetComponent<bulletController>();
@@ -77,8 +84,17 @@ public class Enemy : CharacterParent {
         
     }
 
+    /// <summary>
+    /// Shows enemy stats on hud when taking damage.
+    /// </summary>
+    /// <param name="type">type of damage</param>
+    /// <param name="amount">damage amount</param>
+    /// <param name="criticalRate">critical rate of damage</param>
     protected override void TakeDamage(DamageType type, float amount, float criticalRate) {
+        // Call the base method
         base.TakeDamage(type, amount, criticalRate);
+
+        // Show stats in hud
         hud.ShowEnemyStats(this);
     }
 
@@ -241,6 +257,9 @@ public class Enemy : CharacterParent {
         transform.position += transform.forward * movementSpd * 40 * Time.deltaTime; //movementSpd should be multiplied with base movement speed somewhere else
     }
 
+    /// <summary>
+    /// Give xp to the player when the enemy dies.
+    /// </summary>
     protected override void Die() {
         PlayerStats.Instance.GainXP(scriptableObject.xp);
         base.Die();

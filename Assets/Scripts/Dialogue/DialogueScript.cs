@@ -6,9 +6,19 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 
+/// <summary>
+/// Words types are used for gaining different kinds of stats.
+/// </summary>
 public enum WordsType { None, Stoic, Nurturing, Idealistic, Nihilistic, Rational }
+
+/// <summary>
+/// Mood determines what kind of a question the child asks.
+/// </summary>
 public enum Mood { None, Uncertain, Joyful, Hopeless, Gloomy, Curious }
 
+/// <summary>
+/// Handles the dialogue system.
+/// </summary>
 public class DialogueScript : MonoBehaviour {
 
     [SerializeField]
@@ -124,6 +134,11 @@ public class DialogueScript : MonoBehaviour {
         sounds.PlaySound(audios[type]);
     }
 
+    /// <summary>
+    /// Skips the child speech.
+    /// 
+    /// Called when the player click skip button on canvas.
+    /// </summary>
     public void SkipChildSpeech() {
         Helper.Instance.skipTextWrite = true;
     }

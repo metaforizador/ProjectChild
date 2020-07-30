@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// All the consumable types which consumables can be.
+/// </summary>
 public enum ConsumableType { Scanner, Battery, ComsatLink, Rig, Scrap, Toy }
 
+/// <summary>
+/// Scriptable object which holds all the values that an consumable has.
+/// </summary>
 [CreateAssetMenu(fileName = "New Consumable", menuName = "Consumable")]
 public class ConsumableSO : PickableSO {
 
@@ -127,9 +133,14 @@ public class ConsumableSO : PickableSO {
         return this.name.Equals(otherItem.name);
     }
 
+    /// <summary>
+    /// Checks if using the consumable was a success or not.
+    /// </summary>
+    /// <returns>true if it was successful</returns>
     public bool CheckIfUsageSuccessful() {
         float chance = 0f;
 
+        // Check using different variables based on the consumable type
         if (consumableType.Equals(ConsumableType.ComsatLink) || consumableType.Equals(ConsumableType.Rig))
             chance = chanceToBeSuccessful;
         else if (consumableType.Equals(ConsumableType.Scrap))

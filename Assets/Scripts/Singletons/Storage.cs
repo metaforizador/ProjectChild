@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Holds the items that go to storage.
+/// </summary>
 public class Storage : MonoBehaviour {
     // Make class static and destroy if script already exists
     private static Storage _instance; // **<- reference link to the class
@@ -43,6 +46,11 @@ public class Storage : MonoBehaviour {
         return amount;
     }
 
+    /// <summary>
+    /// Converts the item to a serialized object and adds
+    /// it to the storage.
+    /// </summary>
+    /// <param name="item">item to add</param>
     public void AddToStorage(PickableSO item) {
         for (int i = 0; i < storageContent.Count; i++) {
             SerializablePickableSO serialized = storageContent[i];
@@ -57,6 +65,11 @@ public class Storage : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Returns an item from the provided storage slot.
+    /// </summary>
+    /// <param name="slot">slot the get the item from</param>
+    /// <returns>item from the storage slot</returns>
     public PickableSO GetFromStorageSlot(int slot) {
         // If slot is higher than unlocked slots, quit method
         if (slot > unlockedStorageSlotsAmount)
@@ -66,6 +79,7 @@ public class Storage : MonoBehaviour {
 
         SOCreator creator = SOCreator.Instance;
 
+        // Create correct type of item based on the item type
         if (ser.itemType == SerializablePickableSO.CONSUMABLE_TYPE) {
             return creator.CreateConsumable(ser);
         } else if (ser.itemType == SerializablePickableSO.WEAPON_TYPE) {
@@ -88,6 +102,10 @@ public class Storage : MonoBehaviour {
         storageContent[slot - 1] = new SerializablePickableSO();
     }
 
+    /// <summary>
+    /// Checks if player has gained a new storage slot.
+    /// </summary>
+    /// <param name="level">level to check</param>
     public void CheckStorageUnlock(int level) {
         // If all available storage chests are unlocked, quit method
         if (unlockedStorageSlotsAmount >= MAX_STORAGE_SLOTS)
@@ -103,11 +121,19 @@ public class Storage : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Saves the storage to an save object.
+    /// </summary>
+    /// <param name="save">save object to save to</param>
     public void SaveStorage(Save save) {
         save.unlockedStorageSlotsAmount = unlockedStorageSlotsAmount;
         save.storageContent = storageContent;
     }
 
+    /// <summary>
+    /// Loads the storage from an save object.
+    /// </summary>
+    /// <param name="save">save object to load from</param>
     public void LoadStorage(Save save) {
         unlockedStorageSlotsAmount = save.unlockedStorageSlotsAmount;
         storageContent = save.storageContent;

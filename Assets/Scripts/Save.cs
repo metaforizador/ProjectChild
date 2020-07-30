@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Holds all the values which needs to be saved.
+/// </summary>
 [System.Serializable]
 public class Save {
     //////// Global ////////

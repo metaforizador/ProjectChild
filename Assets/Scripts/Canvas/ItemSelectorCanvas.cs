@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Shows a scrollable list of items in the middle of the screen.
+/// 
+/// Currently this class is used for showing the identifiable items
+/// (Batteries) when player uses a Scanner and Comsat Links when player
+/// is sending an item to the storage.
+/// </summary>
 public class ItemSelectorCanvas : MonoBehaviour {
 
     [SerializeField]
@@ -22,8 +29,18 @@ public class ItemSelectorCanvas : MonoBehaviour {
 
     private GameState previousGameState;
 
+    /// <summary>
+    /// Sets up all the stuff which is needed when opening the canvas.
+    /// 
+    /// No matter which type of items are shown, they all need to change
+    /// these values.
+    /// </summary>
+    /// <returns>all the consumables from the inventory</returns>
     private List<ConsumableSO> OpenThisCanvas() {
         gameObject.SetActive(true);
+
+        // Change previous state to a variable so that after
+        // this canvas is closed the correct state can be chosen
         previousGameState = GameMaster.Instance.gameState;
         GameMaster.Instance.SetState(GameState.ItemSelector);
 
@@ -34,6 +51,12 @@ public class ItemSelectorCanvas : MonoBehaviour {
         return Inventory.Instance.GetConsumables();
     }
 
+    /// <summary>
+    /// Displays all the identifiable items.
+    /// 
+    /// Called when using a scanner as a consumable.
+    /// </summary>
+    /// <param name="usedScanner">used scanner</param>
     public void OpenIdentifyCanvas(ConsumableSO usedScanner) {
         List<ConsumableSO> consumables = OpenThisCanvas();
         this.usedScanner = usedScanner;
@@ -63,6 +86,12 @@ public class ItemSelectorCanvas : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Displays all the Comsat Links.
+    /// 
+    /// Called when player tries to send an item to the storage.
+    /// </summary>
+    /// <param name="itemToSend">item to send</param>
     public void OpenSendItemToStorageCanvas(PickableSO itemToSend) {
         List<ConsumableSO> consumables = OpenThisCanvas();
         this.itemToSend = itemToSend;
@@ -90,9 +119,14 @@ public class ItemSelectorCanvas : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Uses the scanner and tries to identify an item.
+    /// </summary>
+    /// <param name="item">item to identify</param>
     private void IdentifyItem(ConsumableSO item) {
         Inventory inv = Inventory.Instance;
 
+        // Check if usage was successful
         if (usedScanner.CheckIfUsageSuccessful()) {
             // Remove the item from the inventory
             inv.RemoveConsumable(item);
@@ -110,10 +144,15 @@ public class ItemSelectorCanvas : MonoBehaviour {
         CloseItemSelectorCanvas();
     }
 
+    /// <summary>
+    /// Uses the comsat link and tries to send the item to the storage.
+    /// </summary>
+    /// <param name="comsatLink">used comsat link</param>
     private void SendItemToStorage(ConsumableSO comsatLink) {
         Inventory inv = Inventory.Instance;
         CanvasMaster cv = CanvasMaster.Instance;
 
+        // Check if usage was successful
         if (comsatLink.CheckIfUsageSuccessful()) {
             // Remove the item from the chest
             cv.chestCanvas.RemoveItemFromChest();
@@ -130,10 +169,14 @@ public class ItemSelectorCanvas : MonoBehaviour {
         CloseItemSelectorCanvas();
     }
 
+    /// <summary>
+    /// Closes this canvas.
+    /// </summary>
     public void CloseItemSelectorCanvas() {
         GameMaster.Instance.SetState(previousGameState);
         gameObject.SetActive(false);
 
+        // Refreshes inventory for changes
         Inventory.Instance.RefreshInventoryItems();
     }
 }

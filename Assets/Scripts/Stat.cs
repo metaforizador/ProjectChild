@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the stats of the characters.
+/// </summary>
 [System.Serializable]
 public class Stat {
+    // Level of the stat is the only value which needs to be saved
     public int level { get; private set; }
 
+    // Constant default values
     public const int STARTING_STAT = 0, MAX_BASE_STAT_VALUES = 15;
     public const float RECOVERY_DELAY = 0.2f;
     public const float CRITICAL_HIT_MULTIPLIER = 2; // Doubles the damage

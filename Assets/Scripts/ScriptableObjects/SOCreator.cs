@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Creates scriptable objects and holds loaded resources.
+/// 
+/// Creates objects by using their name or their serialized version.
+/// </summary>
 public class SOCreator : MonoBehaviour {
 
     // Make class singleton and destroy if script already exists
@@ -22,6 +27,12 @@ public class SOCreator : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Loads all the pickable items from memory.
+    /// 
+    /// Saves the items to variables, so they are needed to be
+    /// loaded only once during play session.
+    /// </summary>
     private void LoadAllPickableItems() {
         PickableSO[] items = Resources.LoadAll<PickableSO>("ScriptableObjects/PickableItems/");
 
@@ -37,8 +48,12 @@ public class SOCreator : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Returns all the pickable items.
+    /// </summary>
+    /// <returns>all pickable items</returns>
     public List<PickableSO> GetAllPickableItems() {
-        // Create list using static pickable items
+        // Create list and add static pickable items there first
         List<PickableSO> items = weaponsAndArmors;
         // Add randomized consumables to the list
         items.AddRange(GetAllConsumables());
@@ -46,6 +61,10 @@ public class SOCreator : MonoBehaviour {
         return items;
     }
 
+    /// <summary>
+    /// Returns all the consumables.
+    /// </summary>
+    /// <returns>randomized consumables</returns>
     public List<ConsumableSO> GetAllConsumables() {
         foreach (ConsumableSO item in consumables) {
             // Randomize consumables values

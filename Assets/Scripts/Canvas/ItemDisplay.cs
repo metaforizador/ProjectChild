@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Displays the info about selected consumable.
+/// </summary>
 public class ItemDisplay : MonoBehaviour{
     public TextMeshProUGUI selectedItemName, selectedItemDescription;
     public GameObject scannerStats, batteryStats, comsatLinkStats, rigStats, scrapStats, toyStats;
 
+    /// <summary>
+    /// Shows the correct info about the provided consumable.
+    /// </summary>
+    /// <param name="item">selected consumable</param>
     public void ShowItemDisplay(ConsumableSO item) {
         ConsumableStatHolder holder;
         ConsumableType type = item.consumableType;
@@ -17,8 +24,11 @@ public class ItemDisplay : MonoBehaviour{
         // Set description text and other stat texts based on consumable type
         switch (type) {
             case ConsumableType.Scanner:
+                // Set the description text of the consumable
                 selectedItemDescription.text = ConsumableSO.DESCRIPTION_SCANNER;
+                // Get consumable stat holder from the correct object
                 holder = scannerStats.GetComponent<ConsumableStatHolder>();
+                // Show required text stats which the consumable has
                 holder.identificationChance.text = item.identificationChance.ToString() + "%";
                 break;
             case ConsumableType.Battery:

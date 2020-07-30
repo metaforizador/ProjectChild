@@ -5,8 +5,12 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 
-public class Helper : MonoBehaviour
-{
+/// <summary>
+/// Holds all kinds of useful methods which are needed in
+/// multiple different classes.
+/// </summary>
+public class Helper : MonoBehaviour {
+
     // Make Helper static and destroy if script already exists
     private static Helper _instance; // **<- reference link to Helper
     public static Helper Instance { get { return _instance; } }

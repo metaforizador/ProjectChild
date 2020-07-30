@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Scriptable object which holds all the values that an enemy has.
+/// </summary>
 [CreateAssetMenu(fileName = "New Enemy", menuName = "Enemy")]
 public class EnemySO : ScriptableObject {
 
@@ -9,6 +12,8 @@ public class EnemySO : ScriptableObject {
     public int level;
     public int xp;
 
+    // If the enemy's weapon and armor has not been set from inspector
+    // it will use these
     public WeaponSO startingWeapon;
     public ArmorSO startingArmor;
 

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the content inside chests.
+/// </summary>
 public class Chest : MonoBehaviour, Chests {
 
     private PickableSO[] items;
@@ -53,10 +56,19 @@ public class Chest : MonoBehaviour, Chests {
         }
     }
 
+    /// <summary>
+    /// Opens a chestCanvas which displays the chest content.
+    /// </summary>
     public void OpenChest() {
         CanvasMaster.Instance.chestCanvas.ShowChest(this, items);
     }
 
+    /// <summary>
+    /// Changes items inside the chest.
+    /// 
+    /// Used when player swaps, picks up or uses an item.
+    /// </summary>
+    /// <param name="items">modified items array</param>
     public void ChangeItems(PickableSO[] items) {
         this.items = items;
     }

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Scriptable object which holds all the values that an armor has.
+/// </summary>
 [CreateAssetMenu(fileName = "New Armor", menuName = "Armor")]
 public class ArmorSO : PickableSO {
 
