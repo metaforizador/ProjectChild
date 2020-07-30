@@ -1306,8 +1306,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.30600178
-      value: 0.5755184
+      time: 0.05678761
+      value: 0.61728173
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4992,8 +4992,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.30600178
-      value: 0.5755184
+      time: 0.05678761
+      value: 0.61728173
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -12116,7 +12116,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.15818426, y: -0.0034118672, z: 0.0005465888, w: 0.9874036}
+  m_LocalRotation: {x: 0.15818441, y: -0.0031481069, z: 0.00050433376, w: 0.98740447}
   m_LocalPosition: {x: 284.6, y: 62.317062, z: -559.6763}
   m_LocalScale: {x: 7, y: 7, z: 7}
   m_Children: []
@@ -12562,8 +12562,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.30600178
-      value: 0.5755184
+      time: 0.05678761
+      value: 0.61728173
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -20961,7 +20961,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691366957}
-  m_LocalRotation: {x: 0.15822355, y: -0.0034064122, z: 0.00054585416, w: 0.9873973}
+  m_LocalRotation: {x: 0.1582237, y: -0.0031372707, z: 0.0005027261, w: 0.9873982}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
