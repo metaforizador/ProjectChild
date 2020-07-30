@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Displays everything that is only visible when the
+/// player opens the inventory.
+/// </summary>
 public class InventoryCanvas : MonoBehaviour {
 
     public GameObject menuAndCategories, categoriesParent, openedCategoryParent;
@@ -43,11 +47,11 @@ public class InventoryCanvas : MonoBehaviour {
     private float tweenTime = 0.35f;
 
     void Awake() {
+        // Retrieve required references
         CanvasMaster cv = CanvasMaster.Instance;
         animator = cv.uiAnimator;
         sounds = cv.canvasSounds;
         hotbar = cv.hotbarCanvas;
-        categoryObjects = new GameObject[] { weaponObj, armorObj, consumablesObj, miscObj };
 
         // Hide debug menu stuff
         debugMenu.SetActive(false);
@@ -55,6 +59,8 @@ public class InventoryCanvas : MonoBehaviour {
 
         // Hide categories
         categoriesParent.SetActive(false);
+        categoryObjects = new GameObject[] { weaponObj, armorObj, consumablesObj, miscObj };
+
         foreach (GameObject obj in categoryObjects) {
             obj.transform.LeanMoveLocalX(objCategoryStartX, 0f);
             obj.transform.localScale = Vector3.zero;
@@ -168,7 +174,15 @@ public class InventoryCanvas : MonoBehaviour {
         itemDisplay.ShowItemDisplay(selectedItem);
     }
 
+    /// <summary>
+    /// Displays the info of the item equipped to the hotbar.
+    /// 
+    /// Player opens this if he clicks the hotbar button or
+    /// presses the hotbar number button when inside the inventory.
+    /// </summary>
+    /// <param name="consumable">consumable item to display</param>
     public void ShowHotbarItemInfo(ConsumableSO consumable) {
+        // If consumables subcaterogy is not open at the moment, open it
         if (currentlyOpen != CONSUMABLES) {
             ToggleConsumables();
         }
@@ -176,10 +190,22 @@ public class InventoryCanvas : MonoBehaviour {
         ShowItemInfo(consumable);
     }
 
+    /// <summary>
+    /// Opens the hot bar panel for equipping a consumable to the hotbar.
+    /// 
+    /// Called when the player has an consumable info open and clicks
+    /// the "Equip" button.
+    /// </summary>
     public void EquipItem() {
         hotbar.SetIncomingItem(selectedItem);
     }
 
+    /// <summary>
+    /// Uses the displayed item.
+    /// 
+    /// Called when the player has an consumable info open and clicks
+    /// the "Use" button.
+    /// </summary>
     public void UseItem() {
         Inventory.Instance.UseConsumable(selectedItem);
     }
@@ -187,14 +213,15 @@ public class InventoryCanvas : MonoBehaviour {
     /// <summary>
     /// Refresh consumables when they are used.
     /// 
-    /// This method is called from Inventory singleton.
+    /// Called from Inventory singleton.
     /// </summary>
     public void RefreshConsumables() {
         // Refresh only if menu is open
         if (GameMaster.Instance.gameState.Equals(GameState.Menu)) {
             ShowRequiredCategory(NONE);
             ToggleConsumables();
-            Debug.Log(selectedItem.quantity);
+
+            // If there is still the selectedItem left, open it again
             if (selectedItem.quantity > 0)
                 ShowItemInfo(selectedItem);
             else

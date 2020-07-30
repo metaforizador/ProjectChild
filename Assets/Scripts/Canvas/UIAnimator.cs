@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Animates the UI elements.
+/// 
+/// Sets an ease for all the animations and 
+/// plays them even when Timescale is set to 0.
+/// </summary>
 public class UIAnimator : MonoBehaviour {
 
     public LTDescr MoveX(GameObject obj, float to, float time, LeanTweenType ease) {

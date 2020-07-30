@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Displays different information texts on top of the screen.
+/// </summary>
 public class TopInfoCanvas : MonoBehaviour {
 
     [SerializeField]
@@ -114,16 +117,25 @@ public class TopInfoCanvas : MonoBehaviour {
         sounds = CanvasMaster.Instance.canvasSounds;
     }
 
+    /// <summary>
+    /// Hides the top information panel on the top.
+    /// </summary>
     private void ResetPosition() {
         infoObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, hideYPosition);
     }
 
+    /// <summary>
+    /// Shows the text panel on top.
+    /// </summary>
+    /// <param name="textToShow">text to show</param>
+    /// <param name="audioToPlay">audio to play</param>
     private void ShowTopInfoText(string textToShow, AudioClip audioToPlay) {
         if (audioToPlay != null)
             sounds.PlaySound(audioToPlay);
 
         ResetPosition();
         gameObject.SetActive(true);
+
         // Stop coroutine to hide the object if multiple texts are shown simultaneously
         if (coroutineToHide != null)
             StopCoroutine(coroutineToHide);
@@ -138,6 +150,9 @@ public class TopInfoCanvas : MonoBehaviour {
             setOnComplete(() => coroutineToHide = Helper.Instance.InvokeRealTime(() => HideTopInfo(), timeToShow));
     }
 
+    /// <summary>
+    /// Hides the top info panel and disables it after that.
+    /// </summary>
     private void HideTopInfo() {
         animator.MoveY(infoObject, hideYPosition, transitionSpd, tweenType);
         coroutineToDisable = Helper.Instance.InvokeRealTime(() => gameObject.SetActive(false), transitionSpd);
