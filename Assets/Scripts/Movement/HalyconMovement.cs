@@ -2,7 +2,7 @@
 
 namespace ProjectChild.Movement
 {
-    public class PlayerMovement : CharacterMovement
+    public class HalyconMovement : CharacterMovement
     {
         [SerializeField] private float movementThreshold = .1f;
 
@@ -17,7 +17,7 @@ namespace ProjectChild.Movement
 
         private void Update()
         {
-            // TODO: Handler input via an input manager
+            // TODO: Handle input via an input manager
             var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
             Move(input);
@@ -33,6 +33,7 @@ namespace ProjectChild.Movement
             // var grounded = Physics.CheckBox(Vector3.zero, new Vector3(3, groundDistance, 3), Quaternion.identity, groundMask);
             var grounded = Grounded();
             var groundedAnimator = animator.GetBool("isGrounded");
+            Debug.Log($"Physics Grounded: {grounded}\tAnimator Grounded: {groundedAnimator}");
 
             Vector3 velocity = new Vector3();
             float targetAngle = Mathf.Atan2(movement.x, movement.y) * Mathf.Rad2Deg;
@@ -60,11 +61,15 @@ namespace ProjectChild.Movement
 
             velocity.y += gravity * Time.deltaTime;
 
-
+            Debug.Log($"{velocity}");
             animator.SetFloat("DirectionX", movement.x);
             if (direction.magnitude >= movementThreshold)
             {
                 characterController.Move(velocity * Time.deltaTime + xzMovement);
+            }
+            else
+            {
+                characterController.Move(velocity);
             }
         }
 
@@ -75,7 +80,7 @@ namespace ProjectChild.Movement
 
         public override bool Grounded()
         {
-            Debug.DrawRay(transform.position, Vector3.down * ((characterController.height / 2f) + groundedOffset));
+            Debug.DrawRay(transform.position, Vector3.down * ((characterController.height / 2f) + groundedOffset), Color.red);
             return Physics.Raycast(transform.position, Vector3.down, (characterController.height / 2f) + groundedOffset);
         }
     }

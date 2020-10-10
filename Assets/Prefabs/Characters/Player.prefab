@@ -195,10 +195,10 @@ GameObject:
   m_Component:
   - component: {fileID: 848748347327133904}
   - component: {fileID: 848748347416161312}
-  - component: {fileID: 848748347416161318}
   - component: {fileID: 7386830214452768265}
   - component: {fileID: 6638571742688106473}
   - component: {fileID: 1791301917005347366}
+  - component: {fileID: 848748347416161318}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -240,6 +240,57 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: -0.33, y: 0.4, z: 0}
+--- !u!114 &7386830214452768265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848748347416161317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87314fbc0c9887a44802ba45bd41644d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 6638571742688106473}
+--- !u!114 &6638571742688106473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848748347416161317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2fde7a7697107468f633289826fb6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  shield: 0
+  stamina: 0
+--- !u!114 &1791301917005347366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848748347416161317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8e06e0fe5d788d4f87d145544c75ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 848748349138325482}
+  characterController: {fileID: 848748347416161312}
+  movementThreshold: 0.1
+  groundDistance: 0.4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  speed: 30
+  gravity: -50
+  jumpHeight: 30
+  groundedOffset: 7
 --- !u!82 &848748347416161318
 AudioSource:
   m_ObjectHideFlags: 0
@@ -336,57 +387,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7386830214452768265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 848748347416161317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87314fbc0c9887a44802ba45bd41644d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 6638571742688106473}
---- !u!114 &6638571742688106473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 848748347416161317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d2fde7a7697107468f633289826fb6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 0
-  shield: 0
-  stamina: 0
---- !u!114 &1791301917005347366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 848748347416161317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e06e0fe5d788d4f87d145544c75ba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 848748349138325482}
-  characterController: {fileID: 848748347416161312}
-  movementThreshold: 0.1
-  groundDistance: 0.4
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
-  speed: 30
-  gravity: -50
-  jumpHeight: 30
-  groundedOffset: 0.1
 --- !u!1 &848748347475330239
 GameObject:
   m_ObjectHideFlags: 0
