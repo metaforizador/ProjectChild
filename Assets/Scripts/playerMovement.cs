@@ -49,7 +49,7 @@ public class playerMovement : MonoBehaviour
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         //checks if player is the air
-        isGrounded = Physics.CheckBox(groundCheck.position, new Vector3(3, groundDistance, 3), Quaternion.identity, groundMask);
+        isGrounded = Physics.CheckBox(Vector3.zero, new Vector3(3, groundDistance, 3), Quaternion.identity, groundMask);
 
         //sets animator attributes
         animator.SetFloat("Speed", GetComponent<CharacterController>().velocity.magnitude);
