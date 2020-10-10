@@ -5,6 +5,9 @@ using System.Xml.Serialization;
 using System.IO;
 using System;
 
+/// <summary>
+/// Holds the question variables which child asks.
+/// </summary>
 public struct Question {
     [XmlElement("mood")]
     public Mood mood;
@@ -17,6 +20,9 @@ public struct Question {
     public Answer[] answers;
 }
 
+/// <summary>
+/// Holds the answer variables which player chooses.
+/// </summary>
 public struct Answer {
     [XmlElement("answerType")]
     public WordsType answerType;
@@ -25,6 +31,9 @@ public struct Answer {
     public string answerText;
 }
 
+/// <summary>
+/// Holds the replies which child gives to player's answers.
+/// </summary>
 public struct Reply {
     [XmlElement("replyType")]
     public WordsType replyType;
@@ -33,6 +42,9 @@ public struct Reply {
     public string replyText;
 }
 
+/// <summary>
+/// Parses the xml file for dialogues.
+/// </summary>
 [XmlRoot("root"), XmlType("questions")]
 public class XMLDialogueParser {
 
@@ -46,6 +58,10 @@ public class XMLDialogueParser {
 
     private static string path = Path.Combine(Application.streamingAssetsPath, "XMLFiles/Dialogues.xml");
 
+    /// <summary>
+    /// Loads the xml file from memory and parses it's content.
+    /// </summary>
+    /// <returns></returns>
     public static XMLDialogueParser Load() {
         try {
             XmlSerializer serializer = new XmlSerializer(typeof(XMLDialogueParser));

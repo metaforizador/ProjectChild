@@ -9,15 +9,19 @@ public class playerMovement : MonoBehaviour
     public Animator animator;
     public Player playerScript;
 
-    public GameObject crosshair;
-
     //only used for test purposes
     public GameObject masterCanvas;
     private bool menu = false;
 
-    public float speed = 6f;
+    public float speed = Stat.BASE_MOVEMENT_SPEED;
     public float gravity = -9.81f;
     public float jumpHeight = 10f;
+
+    // Stamina usage
+    private const float DASH_COST = 30;
+    private const float MELEE_COST = 25;
+
+    public bool dashing = false;
 
     private Vector3 xzMovement;
 
@@ -31,35 +35,28 @@ public class playerMovement : MonoBehaviour
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
-    public GameObject bullet;
-    public GameObject bulletPoint;
-
-    //these need to be retrieved from the player script at some point
-    public float bulletSpeed;
-    public float firingSpeed;
-
-    private float fireCounter = 0;
-
     void Start() {
         playerScript = GetComponent<Player>();
     }
 
     void Update()
     {
+        bool inputEnabled = GameMaster.Instance.gameState.Equals(GameState.Movement);
+        
         //player control variables
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         //checks if player is the air
-        isGrounded = Physics.CheckBox(groundCheck.position, new Vector3(5, groundDistance, 5), Quaternion.identity, groundMask);
+        isGrounded = Physics.CheckBox(Vector3.zero, new Vector3(3, groundDistance, 3), Quaternion.identity, groundMask);
 
         //sets animator attributes
         animator.SetFloat("Speed", GetComponent<CharacterController>().velocity.magnitude);
 
         animator.SetFloat("DirectionX", direction.x);
 
-        if (Input.GetButton("Fire1")){
+        if (Input.GetButton("Fire1") && inputEnabled){
 
             animator.SetBool("Shooting", true);
 
@@ -76,6 +73,19 @@ public class playerMovement : MonoBehaviour
         {
             animator.SetBool("Shooting", false);
             animator.SetBool("Strafing", false);
+        }
+
+        if (Input.GetButtonDown("Fire2") &&             // If user presses melee button
+            playerScript.IsAbleToMelee() &&             // If player's last melee delay is over
+            playerScript.IsEnoughStamina(MELEE_COST) && // If player has enough stamina to melee
+            inputEnabled)                               // If player is able to control the character
+        {
+            animator.SetTrigger("Melee");
+        }
+
+        if (Input.GetButtonDown("Dash") && playerScript.IsEnoughStamina(DASH_COST) && inputEnabled)
+        {
+            animator.SetTrigger("Dash");
         }
 
         if(isGrounded && velocity.y < 0)
@@ -96,35 +106,37 @@ public class playerMovement : MonoBehaviour
             }
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            xzMovement = moveDir.normalized * speed * Time.deltaTime;
+            xzMovement = moveDir.normalized * (speed * playerScript.movementSpeedMultiplier)* Time.deltaTime;
         }
 
         if (isGrounded)
         {
-            animator.SetBool("Jumping", false);
+            animator.SetBool("isGrounded", true);
 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump") && inputEnabled)
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 animator.SetTrigger("Jump");
-                animator.SetBool("Jumping", true);
+                animator.SetBool("isGrounded", false);
+            }
+        }
+        else
+        {
+            if (animator.GetBool("isGrounded"))
+            {
+                animator.SetBool("isGrounded", false);
+                animator.SetTrigger("Jump");
             }
         }
 
         velocity.y += gravity * Time.deltaTime;
 
-        controller.Move(velocity * Time.deltaTime + xzMovement);
-        xzMovement = new Vector3(0, 0, 0);
-
-        //toggle button for dialogue system (demo only)
-        if (Input.GetButtonDown("test"))
+        if (!dashing)
         {
-            menu = !menu;
-
-            Debug.Log(menu);
-
-            masterCanvas.SetActive(menu);
+            controller.Move(velocity * Time.deltaTime + xzMovement);
         }
+        
+        xzMovement = new Vector3(0, 0, 0);
 
         //Shooting mechanics
 
@@ -134,49 +146,13 @@ public class playerMovement : MonoBehaviour
 
             //player turns towards camera while shooting
             float targetAngle = Mathf.Atan2(0, 1) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
-            Debug.Log(direction.x + " " + direction.z);
-            //set rotation to angle for smoothing effect
+            //set rotation to angle for smoothing effect / targetAngle for no smoothing
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
         else
         {
           playerScript.shooting = false;
-        }
-
-        //if raycast doesnt hit, get a point along the ray
-
-        if(fireCounter < 0)
-        {
-            Vector3 crosshairPoint = new Vector3(0, 0, 0);
-            Vector3 bulletDirection = new Vector3(0, 0, 0);
-
-            RaycastHit hit;
-            Ray ray = cam.ScreenPointToRay(crosshair.transform.position);
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~9))
-            {
-                crosshairPoint = hit.point;
-                bulletDirection = crosshairPoint - bulletPoint.transform.position;
-            }
-            else
-            {
-                crosshairPoint = ray.GetPoint(1000);
-                bulletDirection = crosshairPoint - bulletPoint.transform.position;
-            }
-
-            GameObject thisBullet = Instantiate(bullet);
-            thisBullet.transform.position = bulletPoint.transform.position;
-            thisBullet.transform.rotation = bulletPoint.transform.rotation;
-            thisBullet.GetComponent<Rigidbody>().velocity = bulletDirection.normalized * bulletSpeed;
-
-            fireCounter = firingSpeed;
-        }
-
-        //resets firing interval counter after shooting
-        if(animator.GetBool("Shooting") == false)
-        {
-            fireCounter = 0;
         }
     }
 }

@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Different damage types that guns can deal.
+/// 
+/// This should probably be moved to CharacterParent.
+/// </summary>
 public enum DamageType { Piercing, Kinetic, Energy };
 
+/// <summary>
+/// Holds the stats of the player.
+/// </summary>
 public class PlayerStats : MonoBehaviour {
 
     // Make class static and destroy if script already exists
@@ -23,7 +31,11 @@ public class PlayerStats : MonoBehaviour {
 
     private HUDCanvas hud;
 
+    public Player player;
+
     // Stats to save and load
+    public bool loadPlayer;
+
     // Nurturing
     public Stat shieldRecovery { get; private set; }
     public Stat staminaRecovery { get; private set; }
@@ -50,10 +62,17 @@ public class PlayerStats : MonoBehaviour {
     public Stat fireRate { get; private set; }
 
     // Other stats
-    private int LEVEL, XP;
+    private int LEVEL, XP, REDEEMABLE_LEVEL_POINTS;
     // Update canvas UI element when level changes
-    public int level { get { return LEVEL; }private set { LEVEL = value; hud.AdjustPlayerLevel(LEVEL); } }
-    public int xp { get { return XP; } private set { XP = value; hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, XP); } }
+    public int level { get { return LEVEL; }
+        private set { LEVEL = value; hud.AdjustPlayerLevel(LEVEL); } }
+    // Update canvas UI element when xp changes
+    public int xp { get { return XP; }
+        private set { XP = value; hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, XP); } }
+    // Show canvas UI element when level points are gained
+    public int redeemableLevelPoints { get { return REDEEMABLE_LEVEL_POINTS; }
+        private set { REDEEMABLE_LEVEL_POINTS = value; hud.CheckRedeemableLevelPoints(); } }
+
     public int nextLevelUpXp { get; private set; }
     public int lastLevelUpXp { get; private set; }
 
@@ -62,6 +81,9 @@ public class PlayerStats : MonoBehaviour {
         SetDefaultStats();
     }
 
+    /// <summary>
+    /// Sets the starting values for stats.
+    /// </summary>
     private void SetDefaultStats() {
         shieldRecovery = new Stat("Shield recovery", Stat.STARTING_STAT, Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED);
         staminaRecovery = new Stat("Stamina recovery", Stat.STARTING_STAT, Stat.RECOVERY_MIN_SPEED, Stat.RECOVERY_MAX_SPEED);
@@ -87,8 +109,13 @@ public class PlayerStats : MonoBehaviour {
         xp = 0;
         nextLevelUpXp = XP_MULTIPLIER;
         lastLevelUpXp = 0;
+        redeemableLevelPoints = 0;
     }
 
+    /// <summary>
+    /// Saves player's stats to a save object.
+    /// </summary>
+    /// <param name="save">save object to save to</param>
     public void SavePlayerStats(Save save) {
         save.shieldRecovery = shieldRecovery;
         save.staminaRecovery = staminaRecovery;
@@ -114,10 +141,16 @@ public class PlayerStats : MonoBehaviour {
         save.xp = xp;
         save.nextLevelUpXp = nextLevelUpXp;
         save.lastLevelUpXp = lastLevelUpXp;
+        save.redeemableLevelPoints = redeemableLevelPoints;
+
+        player.SavePlayer(save);
     }
 
+    /// <summary>
+    /// Loads player's stats to a save object.
+    /// </summary>
+    /// <param name="save">save object to load from</param>
     public void LoadPlayerStats(Save save) {
-        Debug.Log(save.piercingDmg.name);
         shieldRecovery.LoadStat(save.shieldRecovery);
         staminaRecovery.LoadStat(save.staminaRecovery);
         ammoRecovery.LoadStat(save.ammoRecovery);
@@ -142,12 +175,21 @@ public class PlayerStats : MonoBehaviour {
         xp = save.xp;
         nextLevelUpXp = save.nextLevelUpXp;
         lastLevelUpXp = save.lastLevelUpXp;
+        redeemableLevelPoints = save.redeemableLevelPoints;
+
+        // Inform player that it should load it's stuff
+        loadPlayer = true;
 
         RefreshPlayerForStatChanges();
     }
 
+    /// <summary>
+    /// Randomizes a gained stat when leveling up.
+    /// </summary>
+    /// <param name="type">type of level to gain</param>
     public void RandomizeGainedStat(WordsType type) {
         Stat[] stats;
+        TopInfoCanvas info = CanvasMaster.Instance.topInfoCanvas;
 
         // Set correct stats to the array
         switch (type) {
@@ -187,40 +229,84 @@ public class PlayerStats : MonoBehaviour {
             if (!increased) {
                 maxedStats.Add(index);
             } else {
-                CanvasMaster.Instance.ShowStatGain(StatGainCanvas.CreateGainStatText(stat));
+                info.ShowGainStatText(stat);
                 break;
             }
 
             if (maxedStats.Count == stats.Length) {
                 // Inform player that all stats are maxed out
-                CanvasMaster.Instance.ShowStatGain(StatGainCanvas.CreateStatsMaxedText(type));
+                info.ShowStatsMaxedText(type);
                 break;
             }
         }
+
+        // Decrease level up points by 1 and check if points left
+        redeemableLevelPoints --;
+        hud.CheckRedeemableLevelPoints();
 
         RefreshPlayerForStatChanges();
     }
 
     private void RefreshPlayerForStatChanges() {
-        // Refresh player stats
-        GameObject go = GameObject.FindWithTag("Player");
-
-        if (go != null)
-            go.GetComponent<Player>().RefreshStats();
+        if (player != null)
+            player.RefreshStats();
     }
 
+    /// <summary>
+    /// Adds exp to the player.
+    /// </summary>
+    /// <param name="amount">amount to add</param>
     public void GainXP(int amount) {
         xp += amount;
+
+        // Save current level to memory before leveling up
+        int currentLevel = level;
 
         // Check if you gain level or multiple levels
         while (xp >= nextLevelUpXp)
                 LevelUp();
 
+        // If player gained a level, play the level up sound
+        // (This can't be played in LevelUp(), since otherwise the
+        // sound will play multiple times if player gains multiple levels)
+        if (currentLevel != level) {
+            CanvasSounds sounds = CanvasMaster.Instance.canvasSounds;
+            sounds.PlaySound(sounds.LEVEL_UP);
+        }
+            
+
+        // Adjust hud bar here too since player is able to gain multiple levels
         hud.AdjustHUDBarXP(lastLevelUpXp, nextLevelUpXp, xp);
     }
 
+    /// <summary>
+    /// Uses a toy to gain xp.
+    /// </summary>
+    /// <param name="toy">toy to use</param>
+    public void UseToy(ConsumableSO toy) {
+        // Save current level to a variable
+        int currentLevel = level;
+
+        // Calculate the percentage to gain
+        float fullPercentage = nextLevelUpXp - lastLevelUpXp;
+        float xpToGain = fullPercentage * (toy.expToGain / 100);
+        GainXP((int)xpToGain);
+
+        if (currentLevel != level) {
+            // If player gained a level, use that level to increase stats
+            RandomizeGainedStat(toy.toyWordsType);
+        } else {
+            // Else show info text that player gained xp
+            CanvasMaster.Instance.topInfoCanvas.ShowXpPercentageGainedText(toy.expToGain);
+        }
+    }
+
+    /// <summary>
+    /// Gains a level for the player.
+    /// </summary>
     private void LevelUp() {
         level ++; // Increase level
+        redeemableLevelPoints ++; // Increase level points
 
         // Get next xp multiplier
         int xpToAdd = level * XP_MULTIPLIER;   // Level 5 = 500;
@@ -231,6 +317,7 @@ public class PlayerStats : MonoBehaviour {
         // Calculate next level up xp
         nextLevelUpXp += xpToAdd;
 
-        // ADD LEVEL UP STUFF TO OPEN DIALOGUE LATER
+        // Check if storage slot is unlocked
+        Storage.Instance.CheckStorageUnlock(level);
     }
 }
