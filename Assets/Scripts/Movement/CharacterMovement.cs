@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using ProjectChild.Inputs;
 
 namespace ProjectChild.Movement
 {
     public interface ICharacterMovement
     {
-        void Move(Vector3 direction);
-        void Fire(Vector3 direction);
+        void Move(MovementInput input);
+        void Attack(AttackInput input);
 
         bool Grounded();
     }
@@ -15,9 +16,9 @@ namespace ProjectChild.Movement
         [SerializeField] protected Animator animator = null;
         [SerializeField] protected CharacterController characterController = null;
 
-        public virtual void Fire(Vector3 direction) {}
+        public virtual void Attack(AttackInput Input) {}
 
-        public virtual void Move(Vector3 direction) {}
+        public virtual void Move(MovementInput input) {}
 
         public virtual bool Grounded() { return false; }
     }

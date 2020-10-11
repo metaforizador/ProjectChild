@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using ProjectChild.Inputs;
 
 namespace ProjectChild.Movement
 {
@@ -20,20 +21,21 @@ namespace ProjectChild.Movement
             // TODO: Handle input via an input manager
             var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-            Move(input);
+            Move(new MovementInput());
            
             animator.SetFloat("Speed", characterController.velocity.magnitude);
         }
 
-        public override void Move(Vector3 direction)
+        public override void Move(MovementInput input)
         {
             // get movement inputs
-            var movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+            var direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            var movement = direction.normalized;
             var jump = Input.GetButtonDown("Jump");
-            // var grounded = Physics.CheckBox(Vector3.zero, new Vector3(3, groundDistance, 3), Quaternion.identity, groundMask);
+
             var grounded = Grounded();
             var groundedAnimator = animator.GetBool("isGrounded");
-            Debug.Log($"Physics Grounded: {grounded}\tAnimator Grounded: {groundedAnimator}");
+            // Debug.Log($"Physics Grounded: {grounded}\tAnimator Grounded: {groundedAnimator}");
 
             Vector3 velocity = new Vector3();
             float targetAngle = Mathf.Atan2(movement.x, movement.y) * Mathf.Rad2Deg;
@@ -61,7 +63,7 @@ namespace ProjectChild.Movement
 
             velocity.y += gravity * Time.deltaTime;
 
-            Debug.Log($"{velocity}");
+            // Debug.Log($"{velocity}");
             animator.SetFloat("DirectionX", movement.x);
             if (direction.magnitude >= movementThreshold)
             {
@@ -71,11 +73,6 @@ namespace ProjectChild.Movement
             {
                 characterController.Move(velocity);
             }
-        }
-
-        public override void Fire(Vector3 direction)
-        {
-            
         }
 
         public override bool Grounded()

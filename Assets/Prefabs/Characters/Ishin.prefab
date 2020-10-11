@@ -2873,10 +2873,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7113609477011224629}
-  - component: {fileID: 7113609477011224618}
   - component: {fileID: 7113609477011224619}
+  - component: {fileID: 4125873867803653635}
+  - component: {fileID: 2976377684316934371}
+  - component: {fileID: 8679056876063470180}
   m_Layer: 0
-  m_Name: ChainsawAngel
+  m_Name: Ishin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2898,29 +2900,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7113609477011224618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7113609477011224617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2284ce256198574da82b9417f119c66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shooting: 0
-  audioSource: {fileID: 0}
-  weapon: {fileID: 11400000, guid: 0d88a6fc30a604a4a9c40c8d7d2a13c8, type: 2}
-  armor: {fileID: 11400000, guid: cc9fbe3a6590ab845816c4240dac5ffd, type: 2}
-  weaponBullet: {fileID: 7707216951185695408, guid: c44108d95280b76488d76f00bcc01b20,
-    type: 3}
-  scriptableObject: {fileID: 11400000, guid: 6ebdebf7526581448bbd6f6103fe6bce, type: 2}
-  animator: {fileID: 1268171450355502685}
-  startState: {fileID: 11400000, guid: a50dd5861ea1aba4192c4eff512f694b, type: 2}
-  turnSpeed: 1
-  route: {fileID: 0}
 --- !u!136 &7113609477011224619
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2935,6 +2914,53 @@ CapsuleCollider:
   m_Height: 13.75234
   m_Direction: 1
   m_Center: {x: -1.2613602, y: -0.093037605, z: -1.193039}
+--- !u!114 &4125873867803653635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7113609477011224617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f91ad6f89191f74b9feebe0103ac659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 0}
+  movement: {fileID: 2976377684316934371}
+  data: {fileID: 11400000, guid: 6ebdebf7526581448bbd6f6103fe6bce, type: 2}
+  followDistanceThreshold: 350
+  shootDistanceThreshold: 100
+  stateMachine: {fileID: 8679056876063470180}
+--- !u!114 &2976377684316934371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7113609477011224617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0abe8288de61cdc4a8424058c1c544ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1268171450355502685}
+  characterController: {fileID: 0}
+  speedBase: 25
+  speedMultiplier: 1
+  speedTurn: 1
+--- !u!114 &8679056876063470180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7113609477011224617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9f29e9043b2f5d4fbd2e1e2ef779e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7113609477338772746
 GameObject:
   m_ObjectHideFlags: 0
