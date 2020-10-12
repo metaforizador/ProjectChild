@@ -3,8 +3,9 @@ using ProjectChild.Data;
 
 namespace ProjectChild.Weapons
 {
-    public class Gun<T> : Weapon<T>  where T : GunData
+    public class Gun : Weapon
     {
-        
+        [SerializeField] private GameObject bulletPrefab = null;
+        [SerializeField] private Transform firingPosition = null;
     }
 }

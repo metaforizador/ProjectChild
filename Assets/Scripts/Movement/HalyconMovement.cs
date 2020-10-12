@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using ProjectChild.Inputs;
 
 namespace ProjectChild.Movement
 {
-    public class PlayerMovement : CharacterMovement
+    public class HalyconMovement : CharacterMovement
     {
         [SerializeField] private float movementThreshold = .1f;
 
@@ -10,34 +11,43 @@ namespace ProjectChild.Movement
         [SerializeField] private float groundDistance = .4f;
         [SerializeField] LayerMask groundMask;
 
-        public float speed = Stat.BASE_MOVEMENT_SPEED;
+        public float speedBase = Stat.BASE_MOVEMENT_SPEED;
+        public float speedMultiplierDash = 200f;
+        public float speedMultiplierDashExit = -100f;
         public float gravity = -9.81f;
         public float jumpHeight = 10f;
         public float groundedOffset = .1f;
 
+        private float angularVelocity;
+        private float angularVelocitySmoothTime = .1f;
+
         private void Update()
         {
-            // TODO: Handler input via an input manager
+            // TODO: Handle input via an input manager
             var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-            Move(input);
+            Move(new MovementInput());
            
             animator.SetFloat("Speed", characterController.velocity.magnitude);
         }
 
-        public override void Move(Vector3 direction)
+        public override void Move(MovementInput input)
         {
             // get movement inputs
-            var movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+            var direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            var movement = direction.normalized;
             var jump = Input.GetButtonDown("Jump");
-            // var grounded = Physics.CheckBox(Vector3.zero, new Vector3(3, groundDistance, 3), Quaternion.identity, groundMask);
+            input.dash = Input.GetButtonDown("Dash");
+
             var grounded = Grounded();
             var groundedAnimator = animator.GetBool("isGrounded");
 
             Vector3 velocity = new Vector3();
             float targetAngle = Mathf.Atan2(movement.x, movement.y) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref angularVelocity, angularVelocitySmoothTime);
+
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            Vector3 xzMovement = moveDir.normalized * speed * Time.deltaTime;
+            Vector3 xzMovement = moveDir.normalized * speedBase * Time.deltaTime;
 
 
             if(grounded)
@@ -60,22 +70,37 @@ namespace ProjectChild.Movement
 
             velocity.y += gravity * Time.deltaTime;
 
+            // handle dashing inputs
+            if (input.dash)
+            {
+                animator.SetTrigger("Dash");
+            }
+            else if (input.dashing)
+            {
+                xzMovement *= speedMultiplierDash;
+            }
+            else if(input.exitingDash)
+            {
+                xzMovement *= speedMultiplierDashExit;
+            }
 
+            // Debug.Log($"{velocity}");
             animator.SetFloat("DirectionX", movement.x);
             if (direction.magnitude >= movementThreshold)
             {
                 characterController.Move(velocity * Time.deltaTime + xzMovement);
             }
-        }
+            else
+            {
+                characterController.Move(velocity);
+            }
 
-        public override void Fire(Vector3 direction)
-        {
-            
+            transform.rotation = Quaternion.Euler(0, angle, 0);
         }
 
         public override bool Grounded()
         {
-            Debug.DrawRay(transform.position, Vector3.down * ((characterController.height / 2f) + groundedOffset));
+            Debug.DrawRay(transform.position, Vector3.down * ((characterController.height / 2f) + groundedOffset), Color.red);
             return Physics.Raycast(transform.position, Vector3.down, (characterController.height / 2f) + groundedOffset);
         }
     }

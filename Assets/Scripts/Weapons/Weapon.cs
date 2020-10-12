@@ -8,9 +8,9 @@ namespace ProjectChild.Weapons
         WeaponType GetWeaponType();
     }
 
-    public class Weapon<T> : MonoBehaviour, IWeapon where T : WeaponData
+    public class Weapon : MonoBehaviour, IWeapon 
     {
-        [SerializeField] private T data = null;
+        [SerializeField] private WeaponData data = null;
 
         public WeaponType GetWeaponType()
         {

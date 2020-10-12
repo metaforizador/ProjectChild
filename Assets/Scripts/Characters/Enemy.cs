@@ -5,12 +5,11 @@ namespace ProjectChild.Characters
 {
     public class Enemy : Character
     {
-        [SerializeField] EnemySO data = null;
-
+        [SerializeField] protected EnemySO data = null;
 
         public override CharacterType GetCharacterType()
         {
-            return CharacterType.Enemy;
+            return CharacterType.EnemyGeneric;
         }
     }
 }

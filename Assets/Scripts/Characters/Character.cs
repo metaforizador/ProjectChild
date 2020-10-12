@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using ProjectChild.Inputs;
 using ProjectChild.Weapons;
 using ProjectChild.Models;
+using ProjectChild.Movement;
 
 namespace ProjectChild.Characters
 {
@@ -17,6 +19,7 @@ namespace ProjectChild.Characters
     public class Character : MonoBehaviour, ICharacter 
     {
         [SerializeField] protected CharacterModel model;
+        [SerializeField] protected CharacterMovement movement;
 
         public virtual void DealDamage() {}
 
@@ -25,6 +28,22 @@ namespace ProjectChild.Characters
         public virtual void Init() {}
 
         public virtual void TakeDamage() {}
+
+        public virtual void Move(MovementInput input)
+        {
+            if(movement != null)
+            {
+                movement.Move(input);
+            }
+        }
+
+        public virtual void Attack(AttackInput input)
+        {
+            if(movement != null)
+            {
+                movement.Attack(input);
+            }
+        }
 
         public virtual CharacterType GetCharacterType()
         {
@@ -36,6 +55,7 @@ namespace ProjectChild.Characters
     {
         Undefined,
         Player,
-        Enemy
+        EnemyGeneric,
+        EnemyIshin
     }
 }
