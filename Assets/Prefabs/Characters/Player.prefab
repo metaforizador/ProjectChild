@@ -288,7 +288,9 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 0
-  speed: 70
+  speedBase: 70
+  speedMultiplierDash: 200
+  speedMultiplierDashExit: -100
   gravity: -50
   jumpHeight: 30
   groundedOffset: 7

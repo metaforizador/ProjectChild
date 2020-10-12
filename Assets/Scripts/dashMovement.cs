@@ -14,7 +14,7 @@ public class dashMovement : StateMachineBehaviour
         //player.GetComponent<playerMovement>().dashing = true;
         dashSpeed = 200;
 
-        character = animator.GetComponent<Character>();
+        character = animator.GetComponentInParent<Character>();
         player = character.gameObject;
     }
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

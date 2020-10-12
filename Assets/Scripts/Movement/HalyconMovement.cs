@@ -18,6 +18,9 @@ namespace ProjectChild.Movement
         public float jumpHeight = 10f;
         public float groundedOffset = .1f;
 
+        private float angularVelocity;
+        private float angularVelocitySmoothTime = .1f;
+
         private void Update()
         {
             // TODO: Handle input via an input manager
@@ -38,10 +41,11 @@ namespace ProjectChild.Movement
 
             var grounded = Grounded();
             var groundedAnimator = animator.GetBool("isGrounded");
-            // Debug.Log($"Physics Grounded: {grounded}\tAnimator Grounded: {groundedAnimator}");
 
             Vector3 velocity = new Vector3();
             float targetAngle = Mathf.Atan2(movement.x, movement.y) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref angularVelocity, angularVelocitySmoothTime);
+
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             Vector3 xzMovement = moveDir.normalized * speedBase * Time.deltaTime;
 
@@ -90,6 +94,8 @@ namespace ProjectChild.Movement
             {
                 characterController.Move(velocity);
             }
+
+            transform.rotation = Quaternion.Euler(0, angle, 0);
         }
 
         public override bool Grounded()
