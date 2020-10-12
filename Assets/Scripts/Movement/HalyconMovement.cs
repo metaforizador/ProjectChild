@@ -11,7 +11,9 @@ namespace ProjectChild.Movement
         [SerializeField] private float groundDistance = .4f;
         [SerializeField] LayerMask groundMask;
 
-        public float speed = Stat.BASE_MOVEMENT_SPEED;
+        public float speedBase = Stat.BASE_MOVEMENT_SPEED;
+        public float speedMultiplierDash = 200f;
+        public float speedMultiplierDashExit = -100f;
         public float gravity = -9.81f;
         public float jumpHeight = 10f;
         public float groundedOffset = .1f;
@@ -32,6 +34,7 @@ namespace ProjectChild.Movement
             var direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             var movement = direction.normalized;
             var jump = Input.GetButtonDown("Jump");
+            input.dash = Input.GetButtonDown("Dash");
 
             var grounded = Grounded();
             var groundedAnimator = animator.GetBool("isGrounded");
@@ -40,7 +43,7 @@ namespace ProjectChild.Movement
             Vector3 velocity = new Vector3();
             float targetAngle = Mathf.Atan2(movement.x, movement.y) * Mathf.Rad2Deg;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            Vector3 xzMovement = moveDir.normalized * speed * Time.deltaTime;
+            Vector3 xzMovement = moveDir.normalized * speedBase * Time.deltaTime;
 
 
             if(grounded)
@@ -62,6 +65,20 @@ namespace ProjectChild.Movement
             }
 
             velocity.y += gravity * Time.deltaTime;
+
+            // handle dashing inputs
+            if (input.dash)
+            {
+                animator.SetTrigger("Dash");
+            }
+            else if (input.dashing)
+            {
+                xzMovement *= speedMultiplierDash;
+            }
+            else if(input.exitingDash)
+            {
+                xzMovement *= speedMultiplierDashExit;
+            }
 
             // Debug.Log($"{velocity}");
             animator.SetFloat("DirectionX", movement.x);

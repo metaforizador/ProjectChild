@@ -4,6 +4,8 @@ using ProjectChild.AI;
 using ProjectChild.Movement;
 using System.Collections.Generic;
 using System;
+using ProjectChild.Inputs;
+using ProjectChild.Weapons;
 
 namespace ProjectChild.Characters
 {
@@ -14,6 +16,9 @@ namespace ProjectChild.Characters
 
         [Header("AI")]
         [SerializeField] private StateMachine stateMachine = null;
+
+        [Header("Weapons")]
+        [SerializeField] private MeleeWeapon chainsaw = null;
 
         private void Awake()
         {
@@ -31,9 +36,17 @@ namespace ProjectChild.Characters
         private void Update()
         {
 
-        }
+        }       
 
-        
+        public override void Attack(AttackInput input)
+        {
+            base.Attack(input);
+
+            if(input.melee)
+            {
+
+            }
+        }
 
 
         public override CharacterType GetCharacterType()

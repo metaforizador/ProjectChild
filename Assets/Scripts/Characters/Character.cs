@@ -31,12 +31,18 @@ namespace ProjectChild.Characters
 
         public virtual void Move(MovementInput input)
         {
-            movement.Move(input);
+            if(movement != null)
+            {
+                movement.Move(input);
+            }
         }
 
         public virtual void Attack(AttackInput input)
         {
-            movement.Attack(input);
+            if(movement != null)
+            {
+                movement.Attack(input);
+            }
         }
 
         public virtual CharacterType GetCharacterType()

@@ -253,6 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 6638571742688106473}
+  movement: {fileID: 0}
 --- !u!114 &6638571742688106473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +288,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 0
-  speed: 30
+  speed: 70
   gravity: -50
   jumpHeight: 30
   groundedOffset: 7
