@@ -6,11 +6,13 @@ namespace ProjectChild.Data
     public class WeaponData : ScriptableObject
     {
         public WeaponType type;
+        public float damageBase = 1f;
     }
 
     public enum WeaponType
     {
         Undefined,
-        GenericGun
+        GenericGun,
+        GenericMelee
     }
 }

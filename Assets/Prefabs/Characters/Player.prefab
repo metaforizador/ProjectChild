@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 6638571742688106473}
-  movement: {fileID: 0}
+  movement: {fileID: 1791301917005347366}
 --- !u!114 &6638571742688106473
 MonoBehaviour:
   m_ObjectHideFlags: 0

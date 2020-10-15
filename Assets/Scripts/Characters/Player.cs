@@ -12,11 +12,18 @@ namespace ProjectChild.Characters
             if(Instance == null && Instance != this)
             {
                 Instance = this;
+                Init();
             }
             else
             {
                 Destroy(gameObject);
             }
+        }
+
+        private void Init()
+        {
+            var collider = GetComponent<Collider>();
+            collider.isTrigger = true;
         }
     }
 }
