@@ -10,7 +10,7 @@ namespace ProjectChild.Weapons
 
     public class Weapon : MonoBehaviour, IWeapon 
     {
-        [SerializeField] private WeaponData data = null;
+        [SerializeField] protected WeaponData data = null;
 
         public WeaponType GetWeaponType()
         {

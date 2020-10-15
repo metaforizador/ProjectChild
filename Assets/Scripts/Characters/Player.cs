@@ -3,11 +3,14 @@ using ProjectChild.Data;
 
 namespace ProjectChild.Characters
 {
-    public class Player : Character
+    public class Player : MonoBehaviour
     {
+        [SerializeField] private Character character = null;
+        public Character Character { get => character; }
+
         public static Player Instance;
 
-        private void Start()
+        private void Awake()
         {
             if(Instance == null && Instance != this)
             {
@@ -17,6 +20,11 @@ namespace ProjectChild.Characters
             {
                 Destroy(gameObject);
             }
+        }
+
+        private void Start()
+        {
+            character.Init();
         }
     }
 }
