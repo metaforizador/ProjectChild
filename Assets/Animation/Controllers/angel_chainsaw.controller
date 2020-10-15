@@ -83,7 +83,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature_Shooting
+  m_Name: Ishin Melee
   m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions:
@@ -97,8 +97,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -4552515205397978273, guid: cb92e0d76fb371c418c04e19e57d6e63,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: f51ca96d0c3b0f840b393f76ff7ac751, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -136,7 +135,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature_Fly Forward
+  m_Name: Ishin Fly Foward
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -356,7 +355,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature_Idle
+  m_Name: Ishin Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

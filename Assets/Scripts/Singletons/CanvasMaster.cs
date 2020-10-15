@@ -53,7 +53,7 @@ public class CanvasMaster : MonoBehaviour {
         // Disable some canvases in case they are left open
         canvasBackground.SetActive(false);
         itemSelectorCanvas.gameObject.SetActive(false);
-        HUDCanvas.SetActive(false);
+        // HUDCanvas.SetActive(false);
 
         // Enable main menu canvas if game starts at main menu
         mainMenuCanvas.SetActive(SceneManager.GetActiveScene().name.Equals("MainMenu") ? true : false);

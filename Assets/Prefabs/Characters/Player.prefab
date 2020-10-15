@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 848748347327133904}
   - component: {fileID: 848748347416161312}
   - component: {fileID: 7386830214452768265}
-  - component: {fileID: 6638571742688106473}
+  - component: {fileID: 9028378457322894552}
   - component: {fileID: 1791301917005347366}
   - component: {fileID: 848748347416161318}
   m_Layer: 0
@@ -252,9 +252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87314fbc0c9887a44802ba45bd41644d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 6638571742688106473}
-  movement: {fileID: 1791301917005347366}
---- !u!114 &6638571742688106473
+  character: {fileID: 9028378457322894552}
+--- !u!114 &9028378457322894552
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,12 +262,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 848748347416161317}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d2fde7a7697107468f633289826fb6f, type: 3}
+  m_Script: {fileID: 11500000, guid: 82096156b960ee247854ce42c51f4cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
-  shield: 0
-  stamina: 0
+  stats: {fileID: 11400000, guid: 19a8b70d9ba193240b65b94112529323, type: 2}
+  movement: {fileID: 1791301917005347366}
 --- !u!114 &1791301917005347366
 MonoBehaviour:
   m_ObjectHideFlags: 0

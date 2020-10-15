@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd5b8d306c7ddc64d9a89193c98c9f08, type: 3}
-  m_Name: Chainsaw
+  m_Script: {fileID: 11500000, guid: 6c567e8566d18d24aa350e993ae7f1b9, type: 3}
+  m_Name: New Character Stats
   m_EditorClassIdentifier: 
-  type: 2
-  damageBase: 1
+  maxHP: 0
+  recoveryRateHP: 0
+  maxShield: 0
+  recoveryRateShielf: 0
+  maxStamina: 0
+  recoveryRateStamina: 0

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ProjectChild.Stats;
+using System;
 using UnityEngine;
 
 namespace ProjectChild.Models
 {
-    public class CharacterModel : MonoBehaviour
+    public class CharacterModel 
     {
         [Header("Stats")]
         [SerializeField] protected float hp;
@@ -13,7 +14,7 @@ namespace ProjectChild.Models
             protected set 
             {
                 hp = value;
-                OnHPUpdated.Invoke(value);
+                OnHPUpdated?.Invoke(value);
             }
         }
 
@@ -24,7 +25,7 @@ namespace ProjectChild.Models
             protected set 
             { 
                 shield = value;
-                OnShieldUpdated.Invoke(value);
+                OnShieldUpdated?.Invoke(value);
             }
         }
 
@@ -35,12 +36,34 @@ namespace ProjectChild.Models
             protected set 
             { 
                 stamina = value;
-                OnStaminaUpdated.Invoke(value);
+                OnStaminaUpdated?.Invoke(value);
             }
         }
 
         public Action<float> OnHPUpdated;
         public Action<float> OnShieldUpdated;
         public Action<float> OnStaminaUpdated;
+
+        public void Init(CharacterStats stats)
+        {
+            UpdateHP(stats.maxHP);
+            UpdateShield(stats.maxShield);
+            UpdateStamina(stats.maxStamina);
+        }
+
+        public void UpdateHP(float hp)
+        {
+            HP += hp;
+        }
+
+        public void UpdateShield(float shield)
+        {
+            Shield += shield;
+        }
+
+        public void UpdateStamina(float stamina)
+        {
+            Stamina += stamina;
+        }
     }
 }

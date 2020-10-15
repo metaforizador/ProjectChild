@@ -3,16 +3,18 @@ using ProjectChild.Data;
 
 namespace ProjectChild.Characters
 {
-    public class Player : Character
+    public class Player : MonoBehaviour
     {
+        [SerializeField] private Character character = null;
+        public Character Character { get => character; }
+
         public static Player Instance;
 
-        private void Start()
+        private void Awake()
         {
             if(Instance == null && Instance != this)
             {
                 Instance = this;
-                Init();
             }
             else
             {
@@ -20,10 +22,9 @@ namespace ProjectChild.Characters
             }
         }
 
-        private void Init()
+        private void Start()
         {
-            var collider = GetComponent<Collider>();
-            collider.isTrigger = true;
+            character.Init();
         }
     }
 }

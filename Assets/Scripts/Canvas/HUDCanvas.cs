@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using ProjectChild.Characters;
 
 /// <summary>
 /// Displays everything that is inside the player HUD.
@@ -32,7 +33,14 @@ public class HUDCanvas : MonoBehaviour {
 
     private UIAnimator animator;
 
-    void Awake() {
+    void Start() {
+        //  register to player events and enemy events
+        var playerModel = ProjectChild.Characters.Player.Instance.Character.Model;
+        if(playerModel != null)
+        {
+            playerModel.OnHPUpdated += OnHPUpdated_Player;
+        }
+
         animator = CanvasMaster.Instance.uiAnimator;
         // Hide interact
         interactObject.transform.LeanMoveLocalY(hideInteractYPos, 0f);
@@ -51,6 +59,12 @@ public class HUDCanvas : MonoBehaviour {
                 enemyShieldBar.fillAmount = 0;
             }
         }
+    }
+
+    private void OnHPUpdated_Player(float hp)
+    {
+        var alpha = hp / ProjectChild.Characters.Player.Instance.Character.Stats.maxHP;
+        hpBar.fillAmount = alpha;
     }
 
     /// <summary>

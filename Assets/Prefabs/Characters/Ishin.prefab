@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3334013212996881605}
   - component: {fileID: 7105294729440110791}
   m_Layer: 0
-  m_Name: ChainsawCollider
+  m_Name: ChainsawWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -679,6 +679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2864899522758032449}
   - component: {fileID: 1268171450355502685}
+  - component: {fileID: 842077405916226092}
   m_Layer: 0
   m_Name: CHILD_Chainsaw_Angel
   m_TagString: Untagged
@@ -726,6 +727,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &842077405916226092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268171450355502674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43685c52275ac1949bb2bc9d09d29366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 7105294729440110791}
 --- !u!1 &2038792943660544858
 GameObject:
   m_ObjectHideFlags: 0
