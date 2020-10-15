@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: cb92e0d76fb371c418c04e19e57d6e63
 ModelImporter:
-  serializedVersion: 19300
+  serializedVersion: 19301
   internalIDToNameTable:
   - first:
       74: 4781951162920444690
@@ -39,6 +39,15 @@ ModelImporter:
   - first:
       74: 3210497589869791802
     second: Plane.001|Idle.001
+  - first:
+      74: 6093225430303232669
+    second: Armature|ArmatureAction.002
+  - first:
+      74: -4552515205397978273
+    second: Armature|Attack1
+  - first:
+      74: -7327508980018778147
+    second: Armature|FlyBackwards.001
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -79,6 +88,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
