@@ -1,11 +1,65 @@
 fileFormatVersion: 2
-guid: 50f7ea808365ef342897fb76150193a5
+guid: 6867d01a865e9d84c8df21bdcc089679
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
-      74: -623603649343465320
-    second: Scene
+      74: 2264077025236624520
+    second: Armature.001|Armature.001Action
+  - first:
+      74: 975118207978229581
+    second: Armature.001|Mech Walking
+  - first:
+      74: -2206609910228610534
+    second: Armature.001|Missile Mech Crit Hit 1
+  - first:
+      74: -9118602675053473988
+    second: Armature.001|Missile Mech Dying 3
+  - first:
+      74: 4088321676061511513
+    second: Armature.001|Missile Mech Hurt High
+  - first:
+      74: 4602537906092693589
+    second: Armature.001|Missile Mech Hurt Medium
+  - first:
+      74: 5132095488686650442
+    second: Armature.001|Missile Mech Light Hurt
+  - first:
+      74: -9002296903841153288
+    second: Armature.001|Missile Mech Shooting 1A
+  - first:
+      74: 5629654724199664816
+    second: Armature.001|Missile Mech Shooting 1C
+  - first:
+      74: -4238548689066792177
+    second: Armature.001|Missile Mech Turning
+  - first:
+      74: -4292238707999293794
+    second: Armature.001|MissileMechDeathSpecialAttack
+  - first:
+      74: 5832476132172117324
+    second: Armature.001|MissileMechForwardJumpEnd
+  - first:
+      74: 8621294371971437067
+    second: Armature.001|MissileMechForwardJumpStart
+  - first:
+      74: -272840973354416794
+    second: Armature.001|MissileMechGetUp
+  - first:
+      74: -8774319181323963457
+    second: Armature.001|MissileMechJumpEnd
+  - first:
+      74: -8981725983325840302
+    second: Armature.001|MissileMechJumpStart
+  - first:
+      74: 2085343074088701795
+    second: Armature.001|MissileMechRunning
+  - first:
+      74: 5865989967632374143
+    second: Armature.001|MissileMechSidelineAttack
+  - first:
+      74: -2982984514128833403
+    second: Armature.001|Rocket Mech Shooting 1B
   externalObjects: {}
   materials:
     materialImportMode: 1
